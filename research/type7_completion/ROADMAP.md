@@ -286,6 +286,22 @@ Exact reconstruction and all 322 emitted incidence minors are checked
 against independent rational physical coordinates. Its 9,140-assertion
 query at `tau*` returned `UNKNOWN (timeout)` in one 30,000 ms trial.
 
+The new [finite chamber compiler](solver_compilation.md) removes the
+repeated Boolean search. Exact enumeration and an independently checked
+RUP trace cover 1,888 generic sign completions. The 16 marked symmetries
+preserving the canonical phase reduce these to **132 necessary metric
+chambers**. Cofactor and Grassmann--Pluecker implications prove 64--69
+brackets nonzero in each chamber, leaving only **2--16** of the original
+524 actual circuit tests. Nonclique zero boundaries are retained where
+nonvanishing has not been proved. Redundant nearest-image inequalities
+also reduce from 252 to eight. Each exported query has **297--311
+assertions, no Boolean variables, and 92--108 kB**, with the same 27
+reals and 19 quartic metric equations. The independent verifier binds
+the coverage CNF to the exact manifest and replays every strictness
+witness and omitted circuit. Initial 3,000 ms trials of three chambers
+still returned `UNKNOWN`; this is an exhaustive search reduction,
+not a marking exclusion or a demonstrated nonlinear solve speedup.
+
 The [nonparallel-corner theorem](relative_cap_bounds.md#5-a-certified-exclusion-of-the-tested-nonparallel-two-stick-corner)
 now excludes one complete asymptotic construction family: clusters
 `014` and `236`, with tips `5` and `7` limiting to nonparallel transverse
