@@ -3,8 +3,9 @@
 Status: **109 necessary orientation classes for regular planar seeds,
 121 for arbitrary nondegenerate planar seeds.** No class surviving the
 screen is asserted feasible. No new spatial embedding or universality
-theorem. The reduction concerns the planar-inflation approach, not
-arbitrary three-dimensional Type 4 realizations.
+theorem. The reduction concerns planar seeds in the archived marking,
+and covers regular inflatable seeds by the strict-marking argument
+below, not arbitrary three-dimensional Type 4 realizations.
 
 The constructive work in flip_ready_type6.md used a particular
 convex-coplanar quad and three marked inverse-flip classes. This
@@ -51,10 +52,9 @@ They require no uniform lower bound on any face area.
 
 ### Weak marking qualification
 
-The enumeration uses the archived sharp-ray cocycle. In fact
-weak shortestness gives the same list of possible triangle periods
-at the hexagon as strict shortestness: each edge vector belongs
-to the closed hexagonal Voronoi cell. A triangular cycle of three
+The enumeration uses the archived sharp-ray cocycle. One cannot automatically transfer the strict shortest-lift
+triangle-period argument to every weak planar realization: each
+edge vector belongs to the closed hexagonal Voronoi cell. A triangular cycle of three
 such vectors has its period in three times that cell; boundary
 periods could include longer lattice vectors. Consequently the
 claimed exhaustiveness for *all* planar seeds is conditional on
