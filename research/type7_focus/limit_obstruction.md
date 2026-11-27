@@ -2,7 +2,7 @@
 
 ## Status
 
-New results: (i) an exact positive transportation identity for **all** ray_4 embeddings, at every modulus on the sharp ray, and (ii) a global asymptotic obstruction to both limiting rings spanning a plane, including the case of one vanishing side in each ring. The second conclusion uses the earlier elongated orientation archive, joint symmetry reduction, and bounded compactification; their audit qualifications remain. This does not exclude actual embeddings with collapsing rings as y tends to infinity. No claim of ray_4 or Type 7 nonuniversality.
+New results: (i) an exact positive transportation identity for **all** ray_4 embeddings, at every modulus on the sharp ray, and (ii) a global asymptotic obstruction to both limiting rings spanning a plane, including the case of one vanishing side in each ring. The second conclusion uses the earlier elongated orientation archive, joint symmetry reduction, and bounded compactification; their audit qualifications remain. Section 6 strengthens the asymptotic result to two collinear rings in a common transverse direction. This does not exclude actual embeddings with collapsing rings as y tends to infinity. No claim of ray_4 or Type 7 nonuniversality.
 
 ## 1. Exact transport identity, not an asymptotic approximation
 
@@ -91,8 +91,34 @@ contradicting (*). This excludes every 3+1 limit with both rings spanning the pl
 
 This is a uniform exclusion of all limits with two spanning rings, not merely of the symmetric two-plane construction or of nondegenerate parallelograms. No assertion that the limit itself must be embedded has been used. The orientation signs of nonclique quadruples were imposed only weakly.
 
-If exactly one ring is collinear while the other spans R^2, the same Laplacian matrix has rank one. There is a single two-vertex block and two singleton blocks. Every singleton column (or row on the collinear side) forces the corresponding edge to be zero because the other ring spans. Thus the collinear ring has exactly two nonzero edges of lengths 1/2, necessarily opposite, and the other two edges vanish. The remaining possibilities are one spanning ring and one such collapsed two-stick ring, or two collinear rings (possibly in distinct directions). These are the next targets. The previously certified fully collinear t=0 witness still exists, so this theorem does not prove eventual nonexistence. Neither positive-t R1 nor R2 has been closed.
+If exactly one ring is collinear while the other spans R^2, the same Laplacian matrix has rank one. There is a single two-vertex block and two singleton blocks. Every singleton column (or row on the collinear side) forces the corresponding edge to be zero because the other ring spans. Thus the collinear ring has exactly two nonzero edges of lengths 1/2, necessarily opposite, and the other two edges vanish. The remaining rank-one possibilities are eliminated in Section 6. The previously certified fully collinear t=0 witness still exists, so this theorem does not prove eventual nonexistence. Neither positive-t R1 nor R2 has been closed.
 
 ## Reproduction
 
 Run the companion check_limit.py using Python 3 with SymPy and assertions enabled. It checks the exact finite shift, sign and polynomial identities; the balanced-Laplacian and half-angle inequalities are the hand proof above. The earlier compactification and SAT orientation archives must be independently audited/replayed for the full implication.
+
+## 6. Eliminate rank one: both limiting rings are collinear in the same direction
+
+The only remaining case with a nonzero cross-product matrix has rank one. By the balanced-Laplacian argument there is exactly one two-index block and two singleton blocks. At least one ring is collinear by Sections 3–4. We may choose that ring to be B: the relabeling v -> 1-v modulo 8 preserves the two canonical weak mixed sign patterns up to ambient reflection and preserves the marking up to gauge and a lattice isometry (checked in the verifier). The all-ring minors vanish in this limit. Since the matrix is assumed nonzero, at least one A edge is not parallel to the B line. Thus a zero column necessarily means a zero B edge. The two singleton columns give two zero edges, and the other two B edges are opposite, each of length 1/2. By the simultaneous rotation symmetry, the nonzero edge indices are (0,2) or (0,1).
+
+**Opposite B sticks (0,2).** In the plane perpendicular to the long axis write B's four vertices as (0,n/2,n/2,0) in cyclic order, where n is a unit vector. In either full weak sign model, the three A chords with cyclic indices (0,1), (0,2), (2,3) have both signs imposed on their cross product with n: compare the mixed quadruples using the different nonzero B chords, taking account of their directions. These three chord cross products must therefore vanish. They connect all four A vertices, so all A edges are parallel to n, contrary to the nonzero rank-one assumption. This is an exact finite sign calculation in the companion checker.
+
+**Adjacent B sticks (0,1).** Now f0=n/2, f1=-n/2, f2=f3=0. Put h_i=e_i dot n and keep a_i=|e_i|. Then sum h_i=0 and sum a_i=1. Substituting b0=b1=1/2, b2=b3=0 and e_i dot f0=h_i/2, e_i dot f1=-h_i/2 into the exact residual N0+N1 gives
+    0 = -a0 - 2*a1 - a2 + h0 - h2 + 1.                 (**)
+The companion script checks this polynomial identity.
+
+In R1 the two active rows are 3,0, so e1 and e2 are parallel to n, while e0 and e3 are not. Orient plane coordinates with n along positive x. The mixed determinant sign of e0,f0 implies that the cyclic A vertex 0 is strictly above the common horizontal line of vertices 1,2,3. All cyclic A triples have nonpositive oriented area. Applying this to triples (0,1,2) and (0,2,3) gives h1=-a1 and h2=-a2, including zero-length edges. Then (**) simplifies using closure and perimeter to
+    0 = 2*a2+a3-h3 > 0,
+because e3 is nonparallel to n. Contradiction.
+
+In R2 the two active rows are 1,2, so e3 and e0 are parallel to n and e1,e2 are not. The mixed determinant sign of e1,f0 implies that cyclic A vertex 2 is strictly above the line of vertices 3,0,1. The same cyclic triple argument gives h3=-a3 and h0=-a0. Now (**) becomes
+    0 = -2*a0-a1+h1 < 0,
+because e1 is nonparallel to n. Contradiction.
+
+This eliminates rank one whether A spans the plane or is collinear in a different direction. Rank zero means every planar A-edge/B-edge cross product is zero. Each ring has total limiting perimeter one, so each contains a nonzero edge; all its edges and all edges of the other ring must lie along the same direction.
+
+**Strengthened conditional theorem:** Every convergent normalized limit of embedded ray_4 tori whose aspect ratios tend to infinity consists of two collinear rings in the same transverse direction. Since P0=P1=0, all eight normalized vertices lie in one plane through the long axis. This excludes every genuinely two-dimensional transverse limit, including unequal rings, degenerate triangles, half-stick rings with a spanning opposite ring, and two nonparallel collinear rings. The conclusion is uniform by compactness: the minimum transverse strip width containing both normalized rings tends to zero along any such sequence.
+
+**Still open:** The known degenerate parallel-collinear limit witness survives. The proof does not imply that any finite positive t is impossible. A useful next gate is to blow up the transverse width around this common-line limit while controlling the O(t) axial corrections, keeping the strict mixed signs and strict shortest slacks. The other three ray markings also remain open.
+
+The expanded exact checker was executed locally against the transcribed ray_4 cocycle and the two representative sign strings from the current archives, including the rank-one identities; all four checks passed. It does not replay the original SAT UNSAT certificates and is not a Lean formalization.
