@@ -1,0 +1,130 @@
+{
+  "schema": 1,
+  "date": "2026-11-27",
+  "scope": "Research algebra, exact finite audit, and solver observations; no cell exclusion and no new Lean proof.",
+  "base_checkpoint": "635984d671988e32e77fa9ad9ad761e4ff2bbf9e",
+  "target": {
+    "real_part": "1/2",
+    "imaginary_part": 1000000,
+    "squared_vertical_scale": 1000000000000,
+    "F1_cells": [
+      "00020220",
+      "00020221",
+      "00020222",
+      "00120220",
+      "00120221"
+    ]
+  },
+  "status": {
+    "F1_excluded": 0,
+    "F1_total": 5,
+    "elongated_excluded": 0,
+    "elongated_total": 19,
+    "full_witness_found": false,
+    "new_lean_theorem": false
+  },
+  "runtime": {
+    "python": "3.12.14",
+    "sympy": "1.14.0",
+    "native_z3": "4.13.3.0"
+  },
+  "source_sha256": {
+    "OrigamiTorus/Type5/Reconstruction.lean": "e3a8d3a589bcbaedaafd1103388446e06ff43c66c558d9ce166dac5108ab7c2b",
+    "OrigamiTorus/Winding/WindingCocycle.lean": "72d8669555f4c09b543511333f489846e7d32557a76b1bcb0d01217440433ed0",
+    "OrigamiTorus/Winding/WindingOrbits.lean": "ab156b7c3a9bf16d1443516249d97579aac1984717ffc2111db7b84b518034f6",
+    "research/torus_type5_reconstruction_certificate/type5_algebraic_certificate/verify.py": "3fc790cf880ecb16a6b951e795f5c7c97f1438c9eb02281d31e87db63640c627",
+    "research/type5_completion/coverage.json": "65cbbc803dac7b2ca82eb2e3b814a693fe4aab4f54217a894151f12620cfaaeb",
+    "research/type5_completion/coverage_constraints.py": "367be6b3be7f8665d8d7e200ec4b6e8493a0235b5ef929a749bef65ffea60edb",
+    "research/type5_completion/f1_algebra_projective.py": "8bb07bdd459cef74f6f74997846ac9a8000a7c270526cec561ef5ebc3acab804",
+    "research/type5_completion/f1_algebra_verify.py": "2c80116ab3216d42774e3e3bd87e46fcecf7c0498850a3c621cad0dba286bc80",
+    "research/type5_completion/f1_geometry_verify.py": "71be153e79ccc0569e642fc8f5d9a327b12da47c6e067ca7bb9c870cc0722685",
+    "research/type5_completion/verify_coverage.py": "c8d52a5e1a80c52ccbab03773cb70ed23a3b1878645bfcdab90e783468c352bc",
+    "research/type5_focus/cases.json": "98bfd4425dbf0a510cde35e0353ff51bcbda27d8db8f50b0634d6d71f6e2b4ab",
+    "research/type5_focus/fixed_elongated/README.md": "7bd7b7afceae98797716127a5c9144522ee63f234b1a73e74f56086e8b15d73f",
+    "research/type5_focus/fixed_elongated/cubic.py": "09da64f39f31607d8926a1c52a3e204e9cd7f0691f02b81cd58cba70f81841d3",
+    "research/type5_focus/fixed_elongated/generate.py": "948418bb566bf70f75547c071a7e1db81cc585d7c9c59e20cc375a9ff2af0e01",
+    "research/type5_focus/fixed_elongated/phase.py": "323cb0335e60a850d12a7af369a0b3e9db7ffe2eaebe72504706bf2a043e5dd5",
+    "research/type5_focus/fixed_elongated/phase_witnesses.json": "03ad12d44aeff08c8d8241bb2c29f660c90719f3bca80558c80f194e6aca6ec4",
+    "research/type5_focus/lutz_faces.json": "200cec31055b2673ee326a23fc2f2af0991cee80d7a381c608d2959cdd74dc99",
+    "research/type5_focus/solve.py": "03bb32d9898272cd2f894c8a9a89ffcc0a8140fcd499c6ca913f809a881ea8e5"
+  },
+  "verification": {
+    "result": "PASS",
+    "commands": [
+      "python3 research/type5_completion/f1_algebra_verify.py",
+      "python3 research/type5_completion/f1_geometry_verify.py",
+      "python3 research/type5_completion/verify_coverage.py",
+      "python3 research/type5_completion/coverage_constraints.py --check-square"
+    ],
+    "pass_lines": 27,
+    "stdout": "PASS signed rational elimination and polynomial comparisons\nPASS positive-atom denominator LCM, repeated aliases, and negative-factor counterexample\nPASS symbolic cofactor denominator coverage: det G = w*r*D^2/(A*C)\nPASS symbolic pivot inverse, linear elimination, and rank-one identities\nPASS additional five-ray cubic inequality identity and both zero-slack cases\nPASS five-cell localization in common normalized coordinates on all five exact phase witnesses\nPASS circuit pruning: all pairs distinct, all relevant triples noncollinear, 23 clique quadruples independent\nPASS strict-support cover: 83 four-point and 150 five-point additional partitions, including size-four positive parts\nPASS signed circuit correction: 50112 cases, both denominator signs and all zero-cofactor strata\nPASS exact rank-three sample: w=1, chart=9, four recovered slacks, all Gram entries and affine minors\nPASS exact rank-three sample: w=1, chart=8, four recovered slacks, all Gram entries and affine minors\nPASS exact rank-three sample: w=1000000000000, chart=8, four recovered slacks, all Gram entries and affine minors\nPASS exact square support: 83 four-point and 150 five-point tests with 200-bit integer intervals\nPASS full F1 maximal cell chart 8: 15 declarations, no undefined symbols or variable divisions\nPASS full F1 maximal cell chart 9: 15 declarations, no undefined symbols or variable divisions\nPASS full F1 union chart 8: 15 declarations, no undefined symbols or variable divisions\nPASS full F1 union chart 9: 15 declarations, no undefined symbols or variable divisions\nPASS projective formulation checks; no cell exclusion or new embedded torus asserted\nPASS: cap Gram decomposition, product determinant, two division-free SOS identities\nPASS: orthogonal horizontal normal form for the two cap vector combinations\nPASS: scaled determinant identity for an arbitrary nonzero lattice period\nPASS: all three cap-collapse boundary kernels, including their intersections\nPASS: exact cosine difference for cap exterior and intrinsic turns\nPASS: archived sharp cocycle substitutions for 014 and 356 in all five F1 cells\nAll checks passed. No localized cell is excluded by these identities alone.\nPASS: Lean inputs agree; 36 cells / 19 representatives; F1-F4 cover 5/9/9/3 cells.\nPASS: primitive cap cycles; 21 antipodal link cuts; 8 K5 star witnesses; 23 K4s; rational margins.\nScope: no full elongated cell has been excluded by this checker.\nPASS: exact square witness satisfies all 21 new minors and 144 strict lift-tie sums.\n",
+    "limitations": [
+      "Symbolic identities and finite checks do not replace the remaining geometric assembly.",
+      "Constructed rational algebra samples are not asserted to be embedded tori.",
+      "No Lean build or Comparator run was performed in this checkpoint."
+    ]
+  },
+  "solver_configuration": {
+    "tactic": "qfnra-nlsat",
+    "factor": false,
+    "statistics": true,
+    "execution": "Two independent solver processes ran concurrently; timings are observations, not a controlled performance comparison."
+  },
+  "solver_runs": [
+    {
+      "chart": 8,
+      "query_filename": "F1-chart8.smt2",
+      "query_sha256": "32df44091261805486b7e9a1c6d0e4258f5c60e077d83dbdf7a838437113676a",
+      "query_bytes": 432623,
+      "declared_real_variables": 15,
+      "metric_equations": 7,
+      "assertions": 1027,
+      "timeout_ms": 60000,
+      "result": "UNKNOWN",
+      "reason_unknown": "canceled",
+      "statistics": {
+        "max-memory": 388.43,
+        "memory": 20.73,
+        "num-allocs": 1879300072,
+        "rlimit-count": 481469,
+        "solve-eqs-elim-vars": 1,
+        "solve-eqs-steps": 68,
+        "time": 60.0
+      },
+      "nlsat_search_counters_present": false,
+      "stdout": "F1-chart8.smt2 unknown\n(:max-memory          388.43\n :memory              20.73\n :num-allocs          1879300072\n :rlimit-count        481469\n :solve-eqs-elim-vars 1\n :solve-eqs-steps     68\n :time                60.00)\n(:reason-unknown \"canceled\")\n\n"
+    },
+    {
+      "chart": 9,
+      "query_filename": "F1-chart9.smt2",
+      "query_sha256": "a75e7120e98f5d3198d1d06312312f7202c5436694a2b5445a243e6b27b3c958",
+      "query_bytes": 432623,
+      "declared_real_variables": 15,
+      "metric_equations": 7,
+      "assertions": 1027,
+      "timeout_ms": 60000,
+      "result": "UNKNOWN",
+      "reason_unknown": "canceled",
+      "statistics": {
+        "max-memory": 303.45,
+        "memory": 20.68,
+        "num-allocs": 2460372608,
+        "rlimit-count": 1437610,
+        "solve-eqs-elim-vars": 1,
+        "solve-eqs-steps": 68,
+        "time": 60.02
+      },
+      "nlsat_search_counters_present": false,
+      "stdout": "F1-chart9.smt2 unknown\n(:max-memory          303.45\n :memory              20.68\n :num-allocs          2460372608\n :rlimit-count        1437610\n :solve-eqs-elim-vars 1\n :solve-eqs-steps     68\n :time                60.02)\n(:reason-unknown \"canceled\")\n\n"
+    }
+  ],
+  "interpretation": "Both complete five-cell F1 queries remain undecided. Statistics contain solve-eqs preprocessing counters and no nlsat search counters; a preprocessing bottleneck is an inference, not an infeasibility result.",
+  "reproduce": [
+    "python3 research/type5_completion/f1_algebra_verify.py",
+    "python3 research/type5_completion/f1_geometry_verify.py",
+    "python3 research/type5_completion/verify_coverage.py",
+    "python3 research/type5_completion/coverage_constraints.py --check-square",
+    "python3 research/type5_completion/f1_algebra_projective.py /tmp/type5-f1 --cell F1 --solver nlsat-no-factor --statistics",
+    "python3 research/type5_focus/solve.py 60000 /tmp/type5-f1/F1-chart8.smt2 /tmp/type5-f1/F1-chart9.smt2"
+  ]
+}

@@ -77,6 +77,24 @@ These polynomial identities prove the inequality even for arbitrarily
 small positive shortest-edge margins. Their closed versions remain valid
 on every boundary stratum.
 
+There is also a useful normal form for the cap vectors themselves. Write
+`R1,R2` for the spatial vectors whose Gram matrix is `B`, and put
+
+    Wplus  = h2*R1+h1*R2,    Pplus  = h2*b1+h1*b2,
+    Wminus = h2*R1-h1*R2,    Pminus = h2*b1-h1*b2.
+
+Then exact polarization gives
+
+    |Wplus|^2  = Pplus^2  + h1*h2*u3,
+    |Wminus|^2 = Pminus^2 + h1*h2*u1*u2,
+    Wplus dot Wminus = Pplus*Pminus.
+
+After subtracting the coherent vertical rank-one contribution, these two
+combinations are orthogonal. Their squared horizontal lengths explicitly
+separate the `u3=0` boundary from the `u1*u2=0` boundary. They provide a
+coordinate-free form of the cap collapse conditions that does not invert
+`B` or divide by any small margin.
+
 ## 3. The three collapse faces and their kernels
 
 Suppose a convergent sequence of such cap data has spatial cap determinant

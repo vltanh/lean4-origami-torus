@@ -36,6 +36,15 @@ zero(h2**2 * (B.det() - D) - (h2**2*b1 + c*b2)**2 - D*b2**2)
 zero(h1**2 * (B.det() - D) - (h1**2*b2 + c*b1)**2 - D*b1**2)
 print("PASS: cap Gram decomposition, product determinant, two division-free SOS identities")
 
+plus = sp.Matrix([h2, h1])
+minus = sp.Matrix([h2, -h1])
+phase_plus = h2*b1+h1*b2
+phase_minus = h2*b1-h1*b2
+zero((plus.T*B*plus)[0] - phase_plus**2 - h1*h2*(1-2*h3))
+zero((minus.T*B*minus)[0] - phase_minus**2 - h1*h2*(1-2*h1)*(1-2*h2))
+zero((plus.T*B*minus)[0] - phase_plus*phase_minus)
+print("PASS: orthogonal horizontal normal form for the two cap vector combinations")
+
 w = sp.symbols("w")
 zero((w*B).det() - w**2*(D+(b.T*T.adjugate()*b)[0]))
 print("PASS: scaled determinant identity for an arbitrary nonzero lattice period")

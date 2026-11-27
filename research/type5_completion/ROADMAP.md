@@ -2,8 +2,9 @@
 
 **Status: universality open; 0/19 elongated cells excluded; hexagonal B1.1 remains 0/14 excluded.**
 
-This is a research roadmap on `research/origami-torus-checkpoint`, not a new
-proof or a change to the formal release on `main`. Its first target is the
+This research workstream is on `research/type5-completion`, based on
+`research/origami-torus-checkpoint`; it does not change the formal release
+on `main`. Its first target is the
 **entire F1 block at `tau = 1/2 + 10^6 i`**, including its five finite cells.
 The other three blocks and the exact assembly gate are specified below.
 The hexagonal investigation is an alternative target, with a separate ledger.
@@ -34,6 +35,28 @@ transcribed inputs:
   [`f1_geometry_verify.py`](f1_geometry_verify.py) checks the identities and
   their substitutions for both caps in all five F1 cells. This controls
   where collapse can occur; it does not exclude that collapse regime.
+- The primary algebraic model is now
+  [`f1_algebra_projective.py`](f1_algebra_projective.py), justified in
+  [`f1_algebra_projective.md`](f1_algebra_projective.md). Two bounded ratio
+  charts each use **15 variables and seven metric equations**, replacing
+  the 23-variable / 15-equation signed-Gram model. A cofactor identity
+  proves that all eliminated denominators are nonzero on actual embeddings.
+  `--cell F1` retains the complete five-cell disjunction with common variables.
+  Three fixed Gram coordinates replace the five-coordinate incidence model;
+  the sign of the sole remaining incidence denominator is handled explicitly.
+  The complete tests include 21 new cyclic cubic inequalities and 233
+  strict-support circuit exclusions. No cap-area lower constant or generic
+  nonclique sign is assumed.
+- [`f1_algebra_verify.py`](f1_algebra_verify.py) checks both ratio charts,
+  elimination and reconstruction identities, the full five-cell conversion,
+  circuit coverage and signed denominators, and compatibility of all 233
+  support tests with the existing exact square embedding. The recorded
+  verifier and solver results are in [`verification.json`](verification.json).
+  All completed whole-F1 solver probes remain `UNKNOWN`. The final queries
+  each contain 15 variables, 1,027 assertions, and 432,623 bytes; explicit
+  `qfnra-nlsat` with factoring disabled returned `UNKNOWN (canceled)` in
+  both charts at a 60,000 ms timeout. Neither chart nor any full cell has
+  an infeasibility certificate.
 
 The remaining geometric assembly includes extraction of lifted-face data
 and formalization of the quantitative two-gap localization. The next
@@ -192,7 +215,12 @@ does not pass the gate.
 
 ### Gate B — choose one complete algebraic model
 
-Use either of these existing baselines:
+Use the two-chart projective model above as the primary implementation. Its
+full F1 union shares the fourteen intrinsic variables and one bounded ratio
+across all five cells. Both charts must be decided. The exact verifier proves
+the chart and denominator conditions and checks the retained incidence tests.
+The following older models remain independent baselines for reconstruction
+and witness checking:
 
 - [`fixed_elongated/generate.py`](../type5_focus/fixed_elongated/generate.py)
   with `--full`: 14 intrinsic variables and four missing squared distances;
@@ -362,6 +390,17 @@ Run from the repository root; generated systems belong outside the source
 tree. These commands reproduce inputs and certificates, not a new solution:
 
 ```sh
+python3 research/type5_completion/verify_coverage.py
+python3 research/type5_completion/coverage_constraints.py --check-square
+python3 research/type5_completion/f1_geometry_verify.py
+python3 research/type5_completion/f1_algebra_verify.py
+python3 research/type5_completion/f1_algebra_projective.py /tmp/type5-f1 --cell F1 --solver nlsat-no-factor --statistics
+python3 research/type5_focus/solve.py 60000 /tmp/type5-f1/F1-chart8.smt2 /tmp/type5-f1/F1-chart9.smt2
+```
+
+The earlier baselines and historical certificates remain reproducible:
+
+```sh
 python3 research/type5_focus/elongated/verify.py
 node research/type5_focus/elongated/verify_hulls.cjs
 python3 research/type5_focus/fixed_elongated/generate.py /tmp/type5-fixed-full --full
@@ -401,8 +440,8 @@ promote a small hexagonal subchamber result to a whole-type milestone.
 
 ## PR boundary
 
-This draft now contains the roadmap, the source-pinned coverage audit, and
-checked necessary geometry and solver constraints described above. It
+This draft now contains the roadmap, the source-pinned coverage audit,
+checked necessary geometry, and the complete reduced F1 solver described above. It
 changes no Lean theorem, historical archive index, or completion count.
 Type 5 proof commits remain separately reviewable on the research branch;
 a formal release change comes only after the relevant proof and verification
