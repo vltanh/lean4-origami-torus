@@ -263,7 +263,7 @@ through that angular region. Full `ray3_phase0` remains open.
 
 **Extension:** the [arbitrary-rate proof](exhaustive_nonparallel_corner.md)
 now removes the comparability hypothesis below. The original
-common-scale proof is retained here as the simpler first step. The
+common-scale proof is retained here as the original first step. The
 stronger result still concerns the same labeled nonparallel limiting
 family and does not exclude the full fixed-height phase.
 

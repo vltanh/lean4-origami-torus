@@ -151,6 +151,44 @@ The coefficients are nonnegative because
 leg heights are one. Consequently `F>F_0>=0`, contradicting `F=0`.
 This proves the theorem.
 
+## 4. Closed-base extension with normalized edge directions
+
+The same trapezoid contradiction applies when one base in either cap
+has length zero, provided both caps have positive leg heights and the
+vanishing bases retain the parallel directions prescribed by the weak
+line-order argument. This includes all nine choices of no zero base or
+one zero base in each cap.
+
+One must preserve a vanishing base's direction when evaluating signs.
+For example, if `A=0`, a bracket containing the actual edge `50` is
+divided by that edge's positive length **before** taking the limit.
+Its transverse edge direction converges to the prescribed negative
+base direction. Its normalized axial component tends to zero by the
+relative height bound. Multilinearity then identifies the limit with
+the corresponding trapezoid determinant divided by `A`, up to a positive
+scale. This remains valid however fast that edge shrinks relative to
+`t`. The analogous argument applies to bases `14`, `72`, and `36`.
+
+The exact checker verifies the needed factorization for every one of
+the seventy brackets. Every nonzero trapezoid bracket lost at such a
+boundary contains its collapsed base and factors by that base length;
+normalizing restores a nonzero expression. If both collapsed bases are
+present, their limiting directions are parallel and the planar bracket
+is identically zero, so no sign constraint is imposed. The relative
+two-edge determinant bound justifies this simultaneous normalization
+without comparing the two collapse rates.
+
+After these normalizations, all eighteen boundary/orientation checks
+give the same separation inequalities (2), with the appropriate base
+lengths set to zero. The rational cone proof already covers nonnegative
+base lengths. Both caps' positive leg heights still make
+`(dh+dj)(dk+dl)>0`, so the strict stress contradiction persists.
+
+The [exhaustive shape classification](exhaustive_cap_shapes.md) uses this
+extension to strengthen the conclusion: at least one limiting cap lies
+entirely on a line, including all possible vertex coincidences in the
+other noncollinear cap cases.
+
 ## Reproduction and scope
 
 ```sh

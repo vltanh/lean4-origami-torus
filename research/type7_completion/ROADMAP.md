@@ -10,7 +10,7 @@ solver run does not close this target.
 
 Type 7 is a credible alternative to prioritizing Type 4. One of its four
 sharp-ray markings now has an audited hand-proof exclusion, and ray 3 has
-one localized phase with 18 real variables. Its reconstruction, symmetry,
+one localized phase with several exact coordinate formulations. Its reconstruction, symmetry,
 and mandatory linking constraints are particularly concrete. A successful
 ray-3 proof would close a second whole marking at the common modulus.
 However, its metric relaxation is rigorously feasible, the full system has
@@ -296,21 +296,27 @@ physical metric, all 322 incidence minors, the factor identities, and the
 two-arc nonedge reduction. This is a more tractable exact formulation;
 it does not by itself exclude a chamber.
 
-The new [finite chamber compiler](solver_compilation.md) removes the
-repeated Boolean search. Exact enumeration and an independently checked
-RUP trace cover 1,888 generic sign completions. The 16 marked symmetries
-preserving the canonical phase reduce these to **132 necessary metric
-chambers**. Cofactor and Grassmann--Pluecker implications prove 64--69
-brackets nonzero in each chamber, leaving only **2--16** of the original
-524 actual circuit tests. Nonclique zero boundaries are retained where
-nonvanishing has not been proved. Redundant nearest-image inequalities
-also reduce from 252 to eight. Each exported query has **297--311
-assertions, no Boolean variables, and 92--108 kB**, with the same 27
-reals and 19 quartic metric equations. The independent verifier binds
-the coverage CNF to the exact manifest and replays every strictness
-witness and omitted circuit. Initial 3,000 ms trials of three chambers
-still returned `UNKNOWN`; this is an exhaustive search reduction,
-not a marking exclusion or a demonstrated nonlinear solve speedup.
+The [finite chamber compiler](solver_compilation.md) removes the repeated
+Boolean search. Exact enumeration and an independently checked RUP trace
+cover 1,888 generic sign completions. Blocking verified symmetry orbits
+reduces the producer to 133 SAT checks and cuts measured enumeration time
+from 7.61 to 1.83 seconds, with the same complete model set. The 16 marked
+symmetries preserving the canonical phase give **132 metric chambers**.
+Cofactor and Grassmann–Plücker implications prove 64–69 brackets nonzero,
+leaving only **2–16** of the original 524 actual circuit tests per chamber.
+Unproved nonclique zero boundaries remain, and the nonedge inequalities
+reduce from 252 to eight.
+
+Four complete weak chambers are now excluded: **23 and 131** by exact
+final polynomials, and **129 and 130** by a uniform metric volume
+comparison plus one five-point affine identity. The latter proof holds
+for every `y>=8`. Thus **128 of 132 metric chambers remain**. The manifest
+records the proofs and exports no query for the four excluded cases.
+The independent verifier binds the coverage CNF to the manifest and
+replays all strictness witnesses, circuit omissions, and chamber
+certificates. Representative nonlinear queries still returned `UNKNOWN`
+at 3,000 ms. These four chamber exclusions do not close the full marking
+or change the fifteen-system ledger.
 
 The [nonparallel-corner theorem](relative_cap_bounds.md#5-a-certified-exclusion-of-the-tested-nonparallel-two-stick-corner)
 now excludes one complete asymptotic construction family: clusters
@@ -326,19 +332,41 @@ is unchanged.
 
 The [arbitrary-rate extension](exhaustive_nonparallel_corner.md) now
 removes that comparability assumption for the same labeled nonparallel
-two-stick limit. Its finite scale cover includes a separately normalized
-missing-edge displacement `26`; an exact relative axial estimate prevents
-cancellation of edges `23,36` from invalidating the leading-sign proof.
-Seven independently replayed Boolean certificates close all cases of
-that family, including the nested cancellation case. This still supplies
-no finite-height threshold and is not a whole ray-3 exclusion.
+two-stick limit. Its simplified proof needs only three Boolean certificates and one
+strict signed-volume estimate. The B-cap edge scales are independent
+in a necessary relaxation; in the sole remaining directional case,
+`[0145]/(t*alpha*beta)` has a strictly positive limit. This contradicts
+the embedding signs, uniformly at all relative collapse rates. The
+proof no longer needs the former missing-edge `26` argument. It still
+supplies no finite-height threshold and is not a whole ray-3 exclusion.
 
-The [global cap-limit theorem](cap_limit.md) also proves that every
-unbounded ray-3 sequence has a projected cap limit with a collinear
-triple. It covers arbitrary limits with two nondegenerate caps. Exact
-weak line orders force aligned trapezoids, and an exact stress identity
-contradicts a quadratic inequality checked on 32 rational cones.
-Degenerate limiting caps remain the next geometric gate.
+The [global cap-limit theorem](cap_limit.md), including its normalized
+zero-base extension, and the [exhaustive cap-shape classification](exhaustive_cap_shapes.md)
+prove that every unbounded ray-3 sequence has at least one cap lying
+entirely on a line. The classification covers all 121 pairs of
+noncollinear four-point shape classes, including coincident vertices.
+The surviving trapezoids contradict an exact stress inequality; the
+exceptional pair of out-and-back caps also contradicts that identity.
+
+If both limiting caps are collinear, their lines must coincide. The
+[exhaustive collinear-cap proof](exhaustive_collinear_caps.md) checks all
+5,476 weak vertex-order pairs: 4,140 fail necessary orientation signs,
+1,176 contradict the stress identity, and the remaining 160 reduce by
+verified marked symmetries to two families. The arbitrary-rate corner
+proof and twelve independently replayed Boolean certificates exclude
+those families when their lines are nonparallel.
+
+The [one-collinear-cap proof](remaining_one_collinear.md) excludes the
+remaining mixed case. It covers 4,786 refined weak-order cells, uses
+exact stress inequalities to reduce them to one cluster/out-and-back
+family, and closes that family with 25 independent Boolean certificates
+and a strict same-cap volume sign. All edge collapse rates are included.
+The full 1,888-model coverage also has an independent replay.
+
+Together these results prove: **every unbounded ray-3 sequence has both
+limiting caps on one common line.** Common-line limits are now the
+remaining asymptotic geometric gate. These results still give no finite
+height threshold and do not exclude `ray3_phase0` at `tau*`.
 
 The next requirement is a contradiction across the remaining angular
 region using the exact metric and required long-ring linking. An

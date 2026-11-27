@@ -172,6 +172,61 @@ def trapezoid_signs(models):
     assert counts == [4, 4]
 
 
+def trapezoid_boundary_signs(models):
+    """Retain the directions of a vanishing base in either cap.
+
+    A bracket containing that actual short edge can be divided by its
+    positive length before taking the limit.  The relative axial bound
+    makes this the indicated planar directional derivative.  No relation
+    between the two caps' collapsing base lengths is assumed.
+    """
+    A, L, C, M, d = s.symbols('A L C M d')
+    bases = (A, L, C, M)
+    collapsed_edges = {A: {0, 5}, L: {1, 4}, C: {2, 7}, M: {3, 6}}
+    models = models + [tuple(-v for v in model) for model in models]
+    count = 0
+    for sign in (1, -1):
+        points = {0: (0, 0, 0), 1: (0, -1, 0), 4: (L, -1, 0), 5: (A, 0, 0),
+                  2: (0, 0, 1), 3: (sign*d, -sign, 1),
+                  6: (sign*(d+M), -sign, 1), 7: (sign*C, 0, 1)}
+        determinants = []
+        for q in QUADS:
+            origin, *rest = q
+            determinants.append(s.expand(s.Matrix([
+                [points[v][k]-points[origin][k] for k in range(3)] for v in rest]).det()))
+        for zero_a, zero_b in product((None, A, L), (None, C, M)):
+            zero = {v: 0 for v in (zero_a, zero_b) if v is not None}
+            limits = []
+            for q, determinant in zip(QUADS, determinants):
+                value = determinant
+                if value != 0:
+                    for base in zero:
+                        if collapsed_edges[base] <= set(q):
+                            value = s.cancel(value/base)
+                            assert value.is_polynomial(*bases, d)
+                    value = s.expand(value.subs(zero))
+                    # Every nonzero planar bracket lost at this boundary
+                    # contains a collapsed base; normalization restores it.
+                    assert value != 0
+                limits.append(value)
+            slack = s.expand((-A-M-d if sign == 1 else d-C-L).subs(zero))
+            positive = {v for v in bases if v not in zero} | {s.Integer(1)}
+            survivors = 0
+            for model in models:
+                inequalities = {s.expand(value*orientation) for value, orientation in zip(limits, model)} - {s.Integer(0)}
+                if inequalities & {-v for v in positive}:
+                    continue
+                survivors += 1
+                assert slack in inequalities
+                for value in inequalities-positive:
+                    remainder = s.Poly(s.expand(value-slack), *bases, d)
+                    assert not remainder.as_expr().has(d)
+                    assert all(coefficient >= 0 for _, coefficient in remainder.terms())
+            assert survivors == 4
+            count += 1
+    assert count == 18
+
+
 def quadratic_cones():
     A, L, C, M, X, gap = s.symbols('A L C M X gap')
     variables = (A, L, C, M, X, gap)
@@ -220,9 +275,11 @@ def main():
     models = cap_models(Path(sys.argv[1]) if len(sys.argv) == 2 else None)
     weak_orders(models)
     trapezoid_signs(models)
+    trapezoid_boundary_signs(models)
     rays, pairs = quadratic_cones()
     print('PASS exact stress mask, marked symmetry, 16 models and 112 weak angular orders')
     print('PASS both trapezoid separation inequalities, with both global orientations retained')
+    print('PASS all18 one-zero-base-per-cap boundary sign checks, with virtual directions retained')
     print(f'PASS 32 rational sign cones: {rays} rays and {pairs} nonnegative bilinear pairs')
     print('Scope: excludes limits with both caps having no collinear triple; full ray 3 remains open')
 
