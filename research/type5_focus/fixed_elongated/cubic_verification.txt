@@ -1,0 +1,11 @@
+Local exact checks on transcribed current face/cocycle data:
+PASS symbolic five-ray determinant and sparse pivot inverse.
+PASS exact rational quadratic relaxation: hex, 00120221, 00220231, 00230232, 01200202.
+Quadratic 2-second trial: SAT 00020220 00020221 00023220 00120220 00120221 00200232 00220230 00220231 00230232 01200202 hex; other nine UNKNOWN.
+Rank determinant 3-second trial: hex and all four maximal branches UNKNOWN.
+Cubic 5-second individual trial: hex and 00120221 UNKNOWN; external timeout interrupted remaining queries.
+Parallel cubic 5-second trial: 00020220 00020221 00020222 00022220 00120220 00120221 00200202 00200232 00220200 00220201 00220202 00220230 00220231 00220232 00230202 UNKNOWN; external timeout interrupted remaining queries.
+Final full cubic --extra generator: PASS generation of 19 fixed-elongated and one hex system.
+Full cubic --extra hex and 00120221: UNKNOWN at 1 second.
+The final repository import version still needs a checkout replay.
+No full feasibility or infeasibility certificate.

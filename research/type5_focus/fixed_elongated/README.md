@@ -92,3 +92,13 @@ From this directory run:
 The local generation used transcribed current repository face and marking data, rather than a fresh Git checkout. The branch enumeration and symmetry checks passed. All nineteen necessary systems and all nineteen full systems returned UNKNOWN (500 ms solver limit). Five full branches including the four maximal representatives also returned UNKNOWN at 1500 ms. No solver result is an infeasibility certificate; no branch was closed. The exact orientation archive was separately filtered by necessary disjoint cap-hull separation and short-direction unlinking: every one of the nineteen cap partitions still has Boolean models, so that filter alone is not a contradiction. A stronger metric obstruction or independently checked infeasibility of all nineteen full systems at the *same* metric is needed. There is no change to Type 5 universality or the earlier hexagonal B1.1 branch status.
 
 The principal advance is the unconditional-in-the-localization-geometry replacement of the unbounded elongated limit and its boundary degenerations by a finite explicit metric target with 19 exact continuous branches and no additional cap-center variables. This is not a completion of the classification.
+
+
+## Phase checkpoint
+
+See [exact phase bounds and rational witnesses](phase_bounds.md). The rectangle relaxation is feasible in all 19 cases; the stronger signed Gram queries timed out. All nineteen branches remain open.
+
+
+## Signed-deficit checkpoint
+
+See [cyclic quadratic inequalities and cubic rank-one metric completion](cubic_metric.md). The basic quadratic relaxation is certifiably feasible for all four maximal families. The full cubic formulation is exact under inherited premises; no branch is closed.

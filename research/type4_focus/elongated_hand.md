@@ -162,3 +162,53 @@ This is a global compactness result for both markings, including all intermediat
 To settle Type 4 negatively it suffices to exclude all eight cap-pair classes in the bounded-tube regime. The new theorem removes the possibility of escaping every bounded cap reconstruction by widening a turn at some intermediate scale. The surviving difficulty is to derive a contradiction from the exact edge metric and the way the two annuli between the cap cycles embed in the common tube, including degenerate transverse polygons. We have not yet done that; none of the eight classes is proved impossible, and H13 at the hexagonal endpoint is still unresolved. Do not confuse the eight necessary limit families with eight solved cases.
 
 The Type 4 tables were obtained by inspecting the face graph and adding the listed integer shifts by hand. The two-turn argument is related to the earlier Type 5 elongated-limit note, but the repeated-scale bounded-cap theorem and its application to both Type 4 markings are the new deductions here. No computer-assisted search or verification is a premise of the new geometric compactness arguments. The earlier geometric proof-audit qualifications and the winding classification premise for the tables still apply.
+
+
+## 7. Computer-assisted exclusion of nondegenerate transverse limits in ray 2, cap pair 145 / 0273
+
+This section uses exact finite Boolean certificates, not nonlinear optimization. It is conditional on the earlier geometric necessary orientation formula and the bounded-cap theorem, which still require independent audit. The following obstruction applies to arbitrary sequences in this cap family, not just relative interiors. It does not exclude all degenerating sequences.
+
+Let A=(1,4,5), B=(0,2,7,3) be the selected bounded cap cycles, and let the remaining vertex 6 be in the final bounded cap containing A, in the final bounded cap containing B, or in neither (labels A, B, I). By the construction of the final caps, after passage to a subsequence, a vertex outside a final cap is at intrinsic physical vertical distance tending to infinity from that cap. For a vertex in the other cap this is of order y. If the remaining vertex is at an intermediate scale this divergence can be slower than y, but still holds. Use the axis along the actual reference long edge in section 5, oriented from A to B, and its orthogonal transverse plane. The whole surface has bounded transverse coordinates, and vertices within either bounded cap have bounded relative axial coordinates.
+
+In fact, the axial distance of a vertex outside the final A cap from its bounded cluster tends to positive infinity, and the corresponding signed distance from the final B cap tends to negative infinity. To see this, use the straight cross-edge through whichever strip contains the vertex's level. Its endpoints differ by bounded vectors from the corresponding endpoints of the reference edge. Linear interpolation on the cross-edge gives axial progress comparable to physical vertical progress, with bounded additive error, since each cross-edge has length y/2+O(1) and its vertical span is y/2+O(1). The vertex is at distance at most 1/2 from that edge at the same level. The uncovered intervals are at bounded physical vertical distance from a cap and hence cannot contain a vertex outside both final caps. This argument works uniformly along the chosen sequence, without a lower bound on the rate of divergence of the intermediate vertex.
+
+Pass to convergent transverse coordinates (bounded by the tube theorem). If a triple of vertices in one bounded cap has nonzero signed transverse area in the limit, its affine determinant with any vertex outside that cap has the same strict sign, using a fixed ordering of the triple. Indeed the determinant equals the transverse two-by-two area times the axial displacement of the outside vertex, plus an error bounded independently of y (the triple has bounded differences in all coordinates and the outside vertex has bounded transverse coordinates). The leading term has strictly nonzero area and a diverging axial factor of fixed sign. This is a necessary sign condition even if the cap triple has bounded nonvanishing physical vertical width. No assumption that the entire cap lies exactly in a transverse plane is needed.
+
+Normalize by generic perturbation and reflection as in the orientation checkpoint. Each of these finitely many strict sidedness signs persists under a sufficiently small generic perturbation of a fixed realization, which preserves the earlier strict support, embedding and mixed-side properties. Let Side(T;S) denote the Boolean condition that det(T,v) has the same sign for all vertices v outside S, with T an ordered triple of vertices in S. We have just shown Side(T;S) is necessary whenever T has nonzero limiting transverse area and S is its final bounded cap.
+
+### Four finite exclusions
+
+Let A0={1,4,5}, B0={0,2,3,7}. In the following table every row also imposes Side(145;A_final). A1 and A2 correspond to A_final=A0 union {6}, B_final=B0. B1 and B2 correspond to A_final=A0, B_final=B0 union {6}. The I case has A_final=A0 and B_final=B0 and imposes at least as many sidedness equalities as the B case, so the B certificates apply to it as well.
+
+| Certificate | Additional B triples required to have nonzero transverse area | Clauses in UNSAT subset | Independent DPLL nodes |
+|---|---|---:|---:|
+| A1 | 023 and 237 | 257 | 10005 |
+| A2 | 027 and 037 | 470 | 53809 |
+| B1 | 237 | 279 | 10155 |
+| B2 | 027 and 037 | 307 | 48899 |
+
+In each row add the indicated Side conditions to the 118-variable, 7497-clause necessary generic orientation formula of orientation_checkpoint/satgeom.py (reflection is normalized by its first determinant). The resulting Boolean formula is UNSAT. The subsets were extracted using Z3 and then checked by a separate, ordinary exhaustive DPLL search with unit propagation, using only Boolean/integer operations. The geometric conclusion does not depend on trusting Z3's answer. Run
+
+    python3 research/type4_focus/verify_cap_degeneracy.py
+
+from the repository root, with assertions enabled. The verifier stores the exact clause-index subsets, checks that they are valid indices of the reconstructed formula, and independently exhausts them. No nonlinear solver or libz3 call is needed for replay. The --dump option prints the raw JSON index lists. The four subsets were locally replayed successfully using the same formula generator transcribed from the archive. The committed verifier imports the archived generator directly; its stored certificate payload matches the local payload. Neither linking-number constraints nor cap-convex-hull cuts are needed in these four contradictions.
+
+### Consequence: unavoidable transverse degeneration, with no generic-limit hypothesis
+
+Suppose the limiting transverse triangle 145 is noncollinear. If 6 is in the A cap, A1 forces at least one of 023 and 237 to be collinear, and A2 forces at least one of 027 and 037 to be collinear. In every selection of one triple from each of these two pairs, the two triples share a ring edge of the quadrilateral 0273. If all four limiting ring edges are nonzero, the shared endpoints are distinct, and the collinearity of both triples puts all four ring vertices on the same line.
+
+If 6 is not in the A cap, B1 forces 237 to be collinear and B2 forces at least one of 027 and 037 to be collinear. These triples also share a ring edge, so the same conclusion holds when that edge is nonzero. More specifically, in this case if the quadrilateral spans the plane, at least one of 27 and 37 has zero limiting transverse length.
+
+Thus every sequence in the ray-2 cap pair 145 / 0273 has, after the bounded normalization and a convergent subsequence, at least one of these degeneracies:
+
+* triangle 145 is collinear in the transverse plane;
+* quadrilateral 0273 is collinear in the transverse plane;
+* at least one ring edge of quadrilateral 0273 has zero limiting transverse length (in the B or I case that edge is 27 or 37).
+
+Equivalently, it is impossible to have a noncollinear transverse triangle, a spanning transverse quadrilateral, and a positive lower bound on all four transverse ring-edge lengths along an elongated sequence in this family. This rules out the entire nondegenerate transverse regime of one of the eight cap-pair families. It does not prove that any of the eight full families is empty, because zero limiting lengths and collinear limits remain possible. Further work must treat these degenerations with metric equations, rather than treating the weak limiting sign system as a strict generic one.
+
+### Scope of the other computational checks
+
+The initial necessary orientation relaxation was strengthened by imposing zero linking of all vertex-disjoint horizontal simple cycle pairs of length at most five, and convex-hull separation of each final cap from its complement. The prior linking bound applies for sufficiently elongated sharp moduli; the separation follows from the axial argument above. In the two markings there are respectively 89 and 12 such disjoint pairs (counting all lengths 3 through 5, not only shortest pairs). All 60 assignments of leftover vertices to A/B/I in the eight cap-pair classes are SAT in this Boolean relaxation. This only means the relaxation does not exclude them, not that the signs are realizable or that an embedding exists. Imposing all cap-triple sidedness conditions (assuming their transverse areas stay nonzero) yields UNSAT for all three assignments in the cap pair 145 / 0273, and leaves the other seven cap-pair classes Boolean-feasible. The four independently replayed certificates above extract the stronger degeneration statement and are the reproducible theorem of this checkpoint. The exploratory broader SAT sweep and the subsequent attempted full-sign enumeration (interrupted before completion) are not used as premises of the theorem.
+
+No H13 hexagonal or Type 4 universality status changes. The earlier winding, compactness, and generic orientation proof-audit qualifications remain.
