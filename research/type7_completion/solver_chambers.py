@@ -30,6 +30,7 @@ import solver_metric_certificates
 import solver_metric_differences
 import solver_metric_products
 import solver_metric_quadratics
+import solver_metric_quotient
 import verify_nonparallel_corner as corner
 from verify_linking import CNF, SAT, data, formula, lit, short_pairs
 
@@ -431,6 +432,7 @@ def main():
         metric_difference = solver_metric_differences.verify(model, symmetries, edges)
         metric_product = solver_metric_products.verify(model, strict, symmetries)
         metric_quadratic = solver_metric_quadratics.verify(model, symmetries, edges)
+        metric_quotient = solver_metric_quotient.verify(model, symmetries, edges)
         if final_polynomial:
             row['final_polynomial'] = final_polynomial
         if metric_certificate:
@@ -441,7 +443,10 @@ def main():
             row['metric_product_certificate'] = metric_product
         if metric_quadratic:
             row['metric_quadratic_certificate'] = metric_quadratic
-        exclusion = final_polynomial or metric_certificate or metric_difference or metric_product or metric_quadratic
+        if metric_quotient:
+            row['metric_quotient_certificate'] = metric_quotient
+        exclusion = (final_polynomial or metric_certificate or metric_difference
+                     or metric_product or metric_quadratic or metric_quotient)
         if exclusion:
             # Do not leave a stale undecided query after regenerating an
             # output directory produced by the earlier compiler.
@@ -461,7 +466,8 @@ def main():
         write_proof(n, blocked, args.output.resolve())
     excluded_count = sum(any(key in row for key in (
         'final_polynomial', 'metric_certificate', 'metric_difference_certificate',
-        'metric_product_certificate', 'metric_quadratic_certificate')) for row in rows)
+        'metric_product_certificate', 'metric_quadratic_certificate',
+        'metric_quotient_certificate')) for row in rows)
     print(json.dumps({'models': len(models), 'phase_symmetries': 16,
                       'chambers': len(reps), 'enumeration_seconds': enumeration_time,
                       'final_polynomial_exclusions': sum('final_polynomial' in row for row in rows),
@@ -469,6 +475,7 @@ def main():
                       'metric_difference_exclusions': sum('metric_difference_certificate' in row for row in rows),
                       'metric_product_exclusions': sum('metric_product_certificate' in row for row in rows),
                       'metric_quadratic_exclusions': sum('metric_quadratic_certificate' in row for row in rows),
+                      'metric_quotient_exclusions': sum('metric_quotient_certificate' in row for row in rows),
                       'algebraically_excluded_chambers': excluded_count,
                       'remaining_metric_chambers': len(reps) - excluded_count,
                       'strict_counts': dict(Counter(len(row['strict']) for row in rows)),

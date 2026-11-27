@@ -307,7 +307,7 @@ leaving only **2–16** of the original 524 actual circuit tests per chamber.
 Unproved nonclique zero boundaries remain, and the nonedge inequalities
 reduce from 252 to eight.
 
-Thirty complete weak chambers are now excluded. Exact final
+Seventy-eight complete weak chambers are now excluded. Exact final
 polynomials close **23 and 131**; a uniform metric volume comparison and
 one affine identity close **129 and 130**. General raw-volume difference
 certificates close **88, 91, 93, 95, 96, 97, 98, 99, and 100** by exact
@@ -318,8 +318,15 @@ by nonnegative raw brackets with affine cocycle products and GP identities.
 Nine reference certificates are reused by exact coefficient checks under
 marked symmetries. Independent finite product trees also cover two of
 these cases for `y>=32`, with every branch and zero boundary checked.
-Thus **102 of 132 metric chambers remain**. The manifest records every
-proof and exports no query for an excluded case.
+The [smaller polynomial quotient](solver_metric_quotient.md) adds
+forty-eight more exclusions. It reduces 2,485 raw quadratic products to
+490 exact coordinates, cutting a matched discovery run from 22.01 to
+1.34 seconds. Twenty-five stored universal identities cover 72 chambers
+including overlaps. The independent replay expands them directly in
+twenty-one point coordinates, checks integer cancellation, and proves
+a positive K4 product; it trusts neither the discovery quotient nor LP
+tolerances. Thus **54 of 132 metric chambers remain**. The manifest
+records every proof and exports no query for an excluded case.
 The independent verifier binds the coverage CNF to the manifest and
 replays all strictness witnesses, circuit omissions, and chamber
 certificates. Representative nonlinear queries still returned `UNKNOWN`
@@ -400,6 +407,22 @@ zero in every unbounded ray-3 sequence**. The remaining asymptotic
 boundary necessarily contains a vanishing edge. No finite height
 threshold follows yet, and all actual positive edge lengths must remain
 allowed in the fixed-modulus system.
+
+The [one-collapsed-edge mixed proof](remaining_adjacent_blowup.md)
+excludes a further 48 common-line blow-up cells. The collinear cap has
+exactly one collapsed edge and its noncollinear partner has four positive
+physical weights. Necessary signs first compare the collapsed edge's
+physical and stretched scales; a moving-frame height then forces the
+wrong sign for its same-cap volume. Both steps allow arbitrary edge,
+width, and height rates. The other 16 adjacent-collision cells have two
+additional zero partner weights and remain outside this theorem.
+
+The [two-line one-edge proof](remaining_two_line_blowup.md) excludes
+all sixteen zero-stress order pairs with two collinear stretched caps
+and exactly one zero physical edge. Its virtual-edge signs force a
+direction and scale comparison; the uniquely determined metric heights
+then contradict the same-cap bracket sign. The other 608 zero-stress
+two-line orders have at least two zero short weights and remain open.
 
 The next requirement is a contradiction across the remaining angular
 region using the exact metric and required long-ring linking. An

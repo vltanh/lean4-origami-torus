@@ -1,14 +1,15 @@
 # Finite chamber compilation for the full ray-3 search
 
-The full ray-3 search now has **102 remaining metric chambers**. Exact
+The full ray-3 search now has **54 remaining metric chambers**. Exact
 Boolean enumeration covers 1,888 generic sign completions, and verified
 phase symmetries reduce them to 132 representatives. Two complete weak
 chambers are excluded by Grassmann–Plücker final polynomials; two more
 are excluded by a metric volume comparison and an affine identity. Nine
 further chambers are excluded by exact weighted sums of raw-volume
 difference bounds and affine identities. Seventeen further chambers have
-exact quadratic certificates. The exclusions retain actual zero nonclique
-minors.
+exact quadratic certificates. A smaller discovery quotient and independent
+coordinate replay add forty-eight more. The **78 verified exclusions**
+retain actual zero nonclique minors.
 
 The compiler removes all Boolean variables and almost all actual circuit
 tests. Its optional face chart uses **29 real variables and 21 quadratic
@@ -20,7 +21,7 @@ metric equations**, instead of the direct chart's 27 variables and
 
 Enumeration is approximately four times faster and its complete model
 set is unchanged. Representative nonlinear trials still returned
-`UNKNOWN (timeout)` at 3,000 ms. The thirty exclusions below have exact
+`UNKNOWN (timeout)` at 3,000 ms. The seventy-eight exclusions below have exact
 certificates independent of those trials. **The full ray-3 marking
 remains open.**
 
@@ -219,7 +220,22 @@ also close 28 and 36 for `y>=32`. They cover every branch of necessary
 maximum-term comparisons and replay 121 and 30 exact integer
 cancellations. The proof explicitly handles zero right-hand brackets
 without taking their logarithms. Both proofs are retained for these
-cases; the combined union is **30 excluded and 102 remaining**.
+cases. These earlier modules together cover thirty chambers.
+
+The [quotient-discovered certificates](solver_metric_quotient.md) add
+forty-eight further exclusions. Discovery eliminates affine cocycles and
+groups the quadratic Pluecker identities by multidegree, reducing 2,485
+raw products to **490 coordinates**. A matched certificate search fell
+from 22.01 to 1.34 seconds. Exact rational reconstruction turns the LP
+support into integer weights; no numerical residual is accepted as zero.
+
+Replay does not use that quotient. It checks all seventy raw affine
+substitutions and expands every stored identity directly in twenty-one
+formal spatial coordinates. Twenty-five identities cover 72 chambers,
+including overlaps; this complete coordinate replay took 0.49 seconds
+after imports. Every residual has nonnegative coefficients and a positive
+K4-by-K4 product. The compiler's union is **78 excluded and 54 remaining**,
+with unchanged independently certified Boolean coverage.
 
 ## 6. Lower the metric degree and cancel positive factors
 
@@ -256,8 +272,8 @@ g++ -O3 -std=c++17 research/type7_completion/solver_check_rup.cpp -o /tmp/type7-
 
 The generated manifest records every model, exact symmetry and gauge,
 strictness witness, remaining circuit partition, exclusion certificate,
-and query size. It retains all 132 rows and emits 102 queries, omitting
-the thirty cases carrying verified exclusion certificates. Regeneration removes stale query files for
+and query size. It retains all 132 rows and emits 54 queries, omitting
+the seventy-eight cases carrying verified exclusion certificates. Regeneration removes stale query files for
 these excluded chambers.
 Generated files and large proof traces stay outside the source tree.
 

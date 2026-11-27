@@ -6,8 +6,9 @@ verified phase symmetries, exclude seventeen complete weak chambers:
 `9,10,28,30,31,32,34,36,37,38,40,41,50,62,70,116,117`.
 
 They are disjoint from the thirteen earlier final-polynomial and linear
-metric exclusions. The combined union therefore excludes **30 of 132
-phase chambers**, leaving 102. The separate product certificates also
+metric exclusions. Those modules together exclude **30 of 132 phase
+chambers**. The later [quotient certificates](solver_metric_quotient.md)
+increase the compiler's verified union to 78, leaving 54. The separate product certificates also
 prove chambers 28 and 36; the compiler retains both proofs without
 counting those chambers twice. No full marking is excluded.
 

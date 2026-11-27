@@ -25,6 +25,7 @@ import solver_metric_certificates
 import solver_metric_differences
 import solver_metric_products
 import solver_metric_quadratics
+import solver_metric_quotient
 from verify_linking import lk, short_pairs
 
 
@@ -104,6 +105,7 @@ def main(directory):
     metric_difference_excluded = []
     metric_product_excluded = []
     metric_quadratic_excluded = []
+    metric_quotient_excluded = []
     solver_metric_quadratics.symbolic_checks()
     partitions = producer.circuit_partitions(faces, edges)
     for row in source['chambers']:
@@ -178,6 +180,11 @@ def main(directory):
             assert certificate is not None
             assert json.loads(json.dumps(certificate)) == row['metric_quadratic_certificate']
             metric_quadratic_excluded.append(row['id'])
+        if 'metric_quotient_certificate' in row:
+            certificate = solver_metric_quotient.verify(model, source['symmetries'], edges)
+            assert certificate is not None
+            assert json.loads(json.dumps(certificate)) == row['metric_quotient_certificate']
+            metric_quotient_excluded.append(row['id'])
         retained = {(tuple(a), tuple(b)) for a, b in row['remaining_circuits']}
         expected_retained = set()
         for support, positive in partitions:
@@ -201,9 +208,11 @@ def main(directory):
         assert metric_product_excluded == list(solver_metric_products.CASES)
     if metric_quadratic_excluded:
         assert metric_quadratic_excluded == list(solver_metric_quadratics.CASES)
+    if metric_quotient_excluded:
+        assert metric_quotient_excluded == list(solver_metric_quotient.CASES)
     excluded = sorted(set(final_polynomial_excluded) | set(metric_excluded)
                       | set(metric_difference_excluded) | set(metric_product_excluded)
-                      | set(metric_quadratic_excluded))
+                      | set(metric_quadratic_excluded) | set(metric_quotient_excluded))
     if final_polynomial_excluded and metric_excluded:
         assert {23, 129, 130, 131} <= set(excluded)
 
@@ -245,6 +254,8 @@ def main(directory):
         print('PASS exact finite product certificates for weak chambers 28 and 36, y>=32')
     if metric_quadratic_excluded:
         print(f'PASS {len(metric_quadratic_excluded)} exact quadratic raw-bracket exclusions for y>=8')
+    if metric_quotient_excluded:
+        print(f'PASS {len(metric_quotient_excluded)} metric exclusions with independent coordinate identities')
     if excluded:
         print(f'PASS {len(excluded)} complete weak chambers excluded; {132 - len(excluded)} remain')
     print('Completeness additionally requires the independent RUP replay; no full marking exclusion is claimed.')
