@@ -45,3 +45,52 @@ For the continuous global problem one still has the 14 intrinsic coordinates and
 ## Next exact gate
 
 Use the joint marking/triangulation symmetry to reduce the 16 elongated ray_4 generic sign models, and combine their strict K4 signs with the two-candidate reconstruction. Attempt exclusion or construction of an entire symmetry family; never infer exclusion from a solver timeout. The earlier full sign archive is necessary only up to generic perturbation, not a claim of genericity of actual metric realizations.
+
+## Stronger theorem: the prescribed edge lengths determine the embedded Type 7 torus
+
+Under the same strict-support and orientation-projection premises, any two admissible Type 7 realizations with the same **24 labeled edge lengths** are congruent. This strengthens the two-candidate result to at most one for every marking and modulus. No assumption of genericity of the actual metric realization is needed.
+
+Suppose two noncongruent admissible embeddings have the same edge lengths. Fix any anchor tetrahedron by a rigid motion. By the propagation theorem, if even one leaf agrees, all agree. Hence all four leaves must be opposite mirror candidates, for **every** choice of anchor tetrahedron.
+
+### Unanimous anchor lemma
+
+Choose inward unit normals n_i to the anchor face opposite a_i, and let H_i>0 be the perpendicular altitude of a_i above that face. Let m_i be the orthogonal projection of leaf b_i to that face, and s_i>0 the unsigned altitude of b_i; both are determined by its three known anchor distances. Thus the two leaf candidates are b_i^+ = m_i+s_i*n_i and b_i^- = m_i-s_i*n_i.
+
+Call an anchor unanimous if the four actual leaves have all positive or all negative relative barycentric signs lambda_i(b_i). In this case the noncongruent candidate would switch all + signs to - signs, or conversely. Put c_i=s_i*H_i>0. For i!=j, direct expansion of the two squared leaf distances gives
+    D^+_ij - D^-_ij
+      = 4 (m_i-m_j) dot (s_i*n_i-s_j*n_j)
+      = -4 [c_i*lambda_i(m_j) + c_j*lambda_j(m_i)].
+Since lambda_j(m_j)=0 and sum_i lambda_i(m_j)=1, summing after division by c_i*c_j gives the strict identity
+    sum_{i<j} (D^+_ij-D^-_ij)/(c_i*c_j) = -4 sum_j 1/c_j < 0.
+Consequently the all-plus and all-minus choices cannot have equal leaf-edge lengths. One unanimous anchor suffices for uniqueness. The weights are positive regardless of where the face projections lie; no convexity assumption about the projections is used.
+
+### Checkerboard obstruction for the remaining clique signs
+
+The 16 anchor cliques are the vertices of a four-dimensional cube (select one member of each opposite pair). Adjacent cliques differ in one vertex. Order the vertices by their pair index. The relative side of b_i is the ratio of the determinant signs of adjacent cliques, since replacing the vertex a_i in its slot changes the determinant by the factor lambda_i(b_i).
+
+If two noncongruent realizations exist, the preceding propagation argument forces every relative side to reverse for every anchor. Thus the ratio of their clique chirotopes must alternate on the four-cube. After normalization by global reflection at anchor 0123, the only possible second clique pattern is the checkerboard twist: negate the sign of a clique if it contains an odd number of vertices from {4,5,6,7}. The same twist formula works for sorted clique orders because the sorting parities cancel in the ratio.
+
+The exact necessary orientation archive in orientation_checkpoint has 316 projected Type 7 clique patterns modulo reflection. The new finite checker (verify.cjs) verifies:
+- 308 patterns have a unanimous anchor;
+- the other eight have no checkerboard-twisted partner in the archive;
+- equivalently, the only four patterns whose checkerboard twist also occurs all have a unanimous anchor.
+
+The eight exceptional patterns therefore cannot have a second admissible realization either. This proves the rigidity claim, conditional on the earlier strict-support lemma and completeness of the necessary SAT projection. It is stronger than generic global rigidity: it asserts uniqueness for all admissible embedded flat realizations, including coplanar nonclique quadruples. It does not assert rigidity of arbitrary placements of the graph without the local support/orientation conditions. No literature-priority claim is made.
+
+### Exact finite symmetry reduction on the elongated ray_4
+
+The 32 Type 7 simplicial automorphisms are enumerated by testing the face set. Their stabilizers of the four sharp-ray markings, allowing lattice isometries and integral vertex gauge, have sizes 16,16,32,32. We use only the four lattice isometries that work for every aspect ratio on the ray: identity, central inversion, and the two reflections. In basis coordinates these are (m,n),(-m,-n),(m+n,-n),(-m-n,n).
+
+For y^2>=35/4, the earlier linking checkpoint gives 16 necessary generic full orientation models for ray_4. Under its 32-element marking stabilizer they form exactly two orbits of size 8. One-based indices in ring4_full_signs.json:
+    R1 = [1,2,5,8,10,11,14,15]
+    R2 = [3,4,6,7,9,12,13,16]
+Use representative 1 for R1 and 3 for R2. With anchor A=(0,1,2,7), leaves B=(4,5,6,3), their relative height signs are respectively ---- and ++++. Thus each canonical branch has a **single** prescribed mirror choice for all four leaves, even before propagation. Any actual degenerate realization can be generically perturbed for the necessary sign classification, then relabeled by a marking stabilizer; K4 signs are strict and persist. Enforce nonclique signs only weakly when solving the actual metric equations. Do not restrict actual embeddings to general position.
+
+The next exact target is to decide these two continuous intrinsic feasibility problems on the compactified range, or at one selected elongated metric. The 16 generic sign models are not sixteen independent nonlinear searches any longer. However, neither R1 nor R2 has been shown feasible or infeasible by this checkpoint, and the other three sharp-ray markings are still open.
+
+### Reproduction
+
+Run from this directory:
+    node verify.cjs
+
+The same finite integer/combinatorial computation was executed on the current branch's JSON inputs before upload. It checks graph structure, clique sign unanimity, checkerboard partners, the marking stabilizers and the two ray_4 orbits. For completeness of the input archives, independently replay the earlier orientation_checkpoint/verify_projection.py and linking_checkpoint/verify_full_ring4.py; these were not rerun in this checkpoint. No nonlinear solver result is asserted.
