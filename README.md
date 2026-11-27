@@ -1,4 +1,4 @@
-# Origami tori — research checkpoint
+# Eight-vertex origami tori in Lean 4
 
 The research goal is to classify which of the seven Lutz eight-vertex triangulations admit embedded, intrinsically flat realizations in R³ and which realize every flat two-torus. The minimum vertex count is known to be eight. Lean proves nonexistence for Types 1 and 2, open-strip coverage for Types 4 and 7, the Type 5 square and nonrectangular box realizations, and universality for Types 3 and 6.
 

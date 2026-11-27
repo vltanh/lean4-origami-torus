@@ -68,8 +68,8 @@ status:
     Type 6 embedding for every lattice torus, with its rank-nine regularity.
     It includes the Type 4 open-strip embedding, the exact Type 5 square
     construction, and the piecewise-isometric
-    Type 7 embedding for every rectangular lattice torus. The checkpoint is private and
-    the release license remains to be selected.
+    Type 7 embedding for every rectangular lattice torus. The release license
+    remains to be selected.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []

@@ -51,4 +51,4 @@ lake build
 lake env lake comparator --config=palomar/OrigamiTorus/comparator.json
 ```
 
-All thirteen Challenge theorems passed local Comparator replay with both NanoDa and Lean’s default kernel. Hosted preflight requires a public pinned revision and a root license chosen by the maintainer. The working repository is private and the metadata records the license as `NOASSERTION`. [Palomar's submission requirements](https://palomar-registry.org/how-to-submit)
+All thirteen Challenge theorems passed local Comparator replay with both NanoDa and Lean’s default kernel. Hosted preflight uses a pinned public commit and requires a root license. The metadata records the pending license as `NOASSERTION`. [Palomar's submission requirements](https://palomar-registry.org/how-to-submit)
