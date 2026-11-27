@@ -145,5 +145,26 @@ for a,b in edges:
   pos={i for i,d in zip(W,sigs) if d>0};neg=set(W)-pos
   if ({a,b}==pos and set(tri)==neg) or ({a,b}==neg and set(tri)==pos):crossings.append([(a,b),tri])
 assert len(crossings)==20
+# The same exact sign model satisfies the strict local support and mixed-side
+# tests. Thus adding only those local geometric tests does not remove it.
+for v in V:
+ N={j for j in V if tuple(sorted((v,j))) in edges}
+ for q in combinations(sorted(N),4):
+  W=tuple(sorted((v,)+q))
+  pos={j for k,j in enumerate(W) if (-1)**k*sign_lit(W[:k]+W[k+1:],sg)>0}
+  assert pos!={v} and set(W)-pos!={v}
+ assert any(v in f and len({sign_lit(f+(j,),sg) for j in N-set(f)})==2 for f in T)
+print('PASS strict local support and mixed-side tests')
+# Check unlinking of the two long alternating cycles for this witness.
+a=(0,2,4,6); b=(1,3,5,7);link=0
+for i in range(1,len(a)-1):
+ tri=(a[0],a[i],a[i+1])
+ for u,v in zip(b,b[1:]+b[:1]):
+  W=tuple(sorted(tri+(u,v)))
+  pos={j for k,j in enumerate(W) if (-1)**k*sign_lit(W[:k]+W[k+1:],sg)>0}
+  if pos==set(tri) or set(W)-pos==set(tri):
+   link+=sign_lit(tri+(v,),sg)
+assert link==0
+print('PASS alternating long rings unlinked in this NONEMBEDDED witness')
 print('PASS all 70 affine minors nonzero; 20 certified edge-face crossings',crossings)
 print('PASS uniform NONEMBEDDED exact metric witnesses for every y>=10^6')
