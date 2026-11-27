@@ -438,6 +438,14 @@ in [direct_metric.md](direct_metric.md). All eight choices of `--case`
 were regenerated with the same complete cuts; the six ray-1 rows have
 2,820 assertions each, and the two ray-2 rows have 2,845 each.
 
+For sustained attempts, the [solver runner](solver_runner.md) prepares all
+eight complete inputs and runs a resource-monitored queue with **no overall
+solver timeout** (`--timeout-ms 0`, `rlimit=0`). Its default is two workers,
+each capped at 3 GiB of virtual memory, starting with `ray2_2` and `ray2_1`.
+Exact input hashes, frozen worker code, attempt histories, model exports and
+termination reasons are retained. A running or interrupted job does not
+change the **0/8** completion count; neither does an unverified solver claim.
+
 Record generator revision, command, input hash, solver version, actual
 termination reason and independent certificate-checking output with each
 new exact attempt. For SAT, reconstruct all eight spatial vertices and

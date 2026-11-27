@@ -1,0 +1,114 @@
+{
+  "cases": [
+    {
+      "assertions": 2845,
+      "elapsed_seconds": 105.15259962700111,
+      "input_bytes": 276005,
+      "input_sha256": "464b0993c5e882a076d87895cb9a95aaf5045e96a1245d6a6b92e822b7e5ea31",
+      "name": "ray2_2",
+      "resources": {
+        "cpu_seconds": 104.84,
+        "rss_kib": 83448,
+        "virtual_kib": 208368
+      },
+      "solver_status": null,
+      "solver_version": "4.13.3.0",
+      "state": "running",
+      "variables": 26
+    },
+    {
+      "assertions": 2845,
+      "elapsed_seconds": 105.15216067899928,
+      "input_bytes": 276069,
+      "input_sha256": "d250a63a514528a84249d27e15841e0508bb3732152960b1a2b4ad136c94d14e",
+      "name": "ray2_1",
+      "resources": {
+        "cpu_seconds": 105.11,
+        "rss_kib": 62908,
+        "virtual_kib": 186624
+      },
+      "solver_status": null,
+      "solver_version": "4.13.3.0",
+      "state": "running",
+      "variables": 26
+    },
+    {
+      "assertions": 2820,
+      "input_bytes": 274834,
+      "input_sha256": "99d040038f35f4cdd058c8b99e4ee1a087548be706ad4fc90a77da89eddb7cce",
+      "name": "ray1_1",
+      "solver_status": null,
+      "state": "queued",
+      "variables": 26
+    },
+    {
+      "assertions": 2820,
+      "input_bytes": 274828,
+      "input_sha256": "b76d88220a194a6071b46c9df2758c8dbd3b1fe152a72176533f30716b29afaf",
+      "name": "ray1_2",
+      "solver_status": null,
+      "state": "queued",
+      "variables": 26
+    },
+    {
+      "assertions": 2820,
+      "input_bytes": 274882,
+      "input_sha256": "16d1da2be0d5a9f19268635eac30ea2e032734e1da55df07863d3515c6528cfb",
+      "name": "ray1_3",
+      "solver_status": null,
+      "state": "queued",
+      "variables": 26
+    },
+    {
+      "assertions": 2820,
+      "input_bytes": 274764,
+      "input_sha256": "eda3a552866a082bd8ac1be77cd2c0e1735ed44a22ce494fd2b39ea329c865d0",
+      "name": "ray1_4",
+      "solver_status": null,
+      "state": "queued",
+      "variables": 26
+    },
+    {
+      "assertions": 2820,
+      "input_bytes": 274818,
+      "input_sha256": "91bbe3b5f76f4ad3a2b2b7ae9b50a8c74870298a461249c4faea7502df5d1101",
+      "name": "ray1_5",
+      "solver_status": null,
+      "state": "queued",
+      "variables": 26
+    },
+    {
+      "assertions": 2820,
+      "input_bytes": 274700,
+      "input_sha256": "51767d485dac39ab12fb96bd2d616ba2cc19871ef25166ccfc608a19e9f24628",
+      "name": "ray1_6",
+      "solver_status": null,
+      "state": "queued",
+      "variables": 26
+    }
+  ],
+  "full_case_exclusions": 0,
+  "full_cases": 8,
+  "generator_revision": "9702d4659040fdfccdc59ecf058955d98d6e17ad",
+  "generator_sources": {
+    "research/type4_completion/direct_metric.py": "5543a3a80d42929f60fd45a374a3fb1f8fe0f08c431b42eadc3306826b1fdbad",
+    "research/type4_focus/type4_fixed_cubic.py": "d3e2743ffabd812373c8b7c1741ace19a697b7d1a4d0f52d0ccd66b6db346666",
+    "research/type4_focus/type4_gap_enum.py": "bcbe9c2111bb25dee56514691594b3f8228eb6583a3602230944537a35830722"
+  },
+  "kind": "historical observation; no solver decision or independently checked certificate",
+  "observed_at": "2026-11-27T20:03:25.041332+00:00",
+  "run_started_at": "2026-11-27T20:01:39.887832+00:00",
+  "runner_sha256": "9c003aeebcfec5754429b34f24f3b1faee7b85cc4a8842c5271f3466e7fc1245",
+  "schema": 1,
+  "settings": {
+    "engine": "QF_NRA portfolio",
+    "jobs": 2,
+    "memory_limit_mib": 3072,
+    "rlimit": 0,
+    "timeout_ms": 0
+  },
+  "validation": {
+    "all_eight_input_hashes_match_prior_generation": true,
+    "runner_integration_checks": "passed"
+  }
+}
