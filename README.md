@@ -122,7 +122,7 @@ For the elongated range y^2>=35/4, ray_4's 16 generic orientation models reduce 
 | ray_1 | Seven fixed-metric large-step branches at y=10^6, all open |
 | ray_2 | Seven fixed-metric large-step branches at y=10^6, all open |
 | ray_3 | One localized canonical phase at y=10^6, open |
-| ray_4 | **Conditionally excluded for y^2>=35/4**; shorter range unresolved |
+| ray_4 | **Conditionally excluded for y^2>=63/16** by the [winding-cycle bound](research/linking_checkpoint/cycle_thresholds.md); shorter range unresolved |
 
 **New global asymptotic reduction:** [positive slack transport and common-line limit theorem](research/type7_focus/limit_obstruction.md). On every ray_4 embedding, a 4x4 matrix of strict nearest-lift slacks equals the difference between intrinsic and extrinsic ring-edge dot products, with positive horizontal ring steps as row and column marginals and total mass one. This is valid for every sharp modulus. On the elongated range, the exact cross correction identities and both weak orientation representatives exclude rank two (both parallelogram and one-zero-edge triangle limits) and rank one (adjacent/opposite half-stick limits). Consequently every convergent bounded limit as y tends to infinity has both rings on the same transverse line. The companion SymPy checker was executed successfully on transcribed current cocycle and representative signs. The theorem is conditional on the earlier geometric, compactification and necessary SAT reduction premises.
 
@@ -171,3 +171,11 @@ Type 4 fixed-metric checkpoint: [finite eight-family cover and ray-2 product ine
 
 
 Type 5 final-polynomial checkpoint: [six exact signed Grassmann–Plücker identities](research/type5_focus/final_polynomial.md) close one **entire weak-sign chamber** (B1.5 chamber 15, one-based), not merely a generic sign model. Exact circuit propagation forces 60 brackets nonzero and the identities force the remaining two cancellation factors strict. Multiplication gives P<P. The six automorphism relabelings are excluded at every modulus under inherited strict-support/K4 premises. Thus 750/751 orientation orbits, 4500/4506 labeled full models, 3000/3004 short-unlinked models, and 235/236 B1 chambers remain. B1.5 is 1/42 excluded; B1.1 remains 0/14. The exact checker passed on actual branch inputs; longer single-dominant-term Plücker log constraints are feasible for the other 750 representatives. **No full marking or localized elongated branch is closed; Type 5 universality remains open.**
+
+
+
+## Closure attempt: 27 November 2026
+
+Types 4, 5 and 7 remain open as universality questions. The [new exact winding-cycle bounds](research/linking_checkpoint/cycle_thresholds.md) strengthen horizontal unlinking thresholds in all seven sharp markings and extend the inherited Type 7 ray_4 exclusion to **y^2>=63/16**, including equality. The certificate is the Hamiltonian cycle of period (-3,4), together with the existing mandatory-linking theorem and diameter bound. Exact enumeration on the actual cocycles verifies that each listed threshold is best for this particular cycle/diameter test; no claim of an optimal geometric threshold is made.
+
+At the common finite target y=10^6, the outstanding full systems are still eight Type 4 families, nineteen Type 5 families, and fifteen Type 7 branches across ray_1, ray_2 and ray_3. The strengthened ray_4 result does not exclude any of those outstanding systems. The new cycle checker and both existing Type 5/7 final-polynomial checkers passed on this checkout. Earlier conditional geometric premises are unchanged.
