@@ -272,3 +272,27 @@ The period cocycle and consistent nondegenerate intrinsic face orientations cert
 Consequently the 198-assertion relaxation is genuinely SAT, even though the nonlinear solver did not discover that fact. Adding the nonedge chord bounds and requiring generic configurations still cannot make this relaxation infeasible. Do not try to prove its UNSAT. The remaining H13 signs and embeddedness constraints are essential. An exploratory six-start full angular reconstruction search found no strict feasible configuration; a three-start refinement with clique signs alone (one initialized at the exact relaxation's numerical precursor) likewise found none. Neither is an exclusion certificate. The searches were floating point and are not premises of the exact witness.
 
 **Status:** no H13 closure, no additional orientation branch closed. The six triangle equations offer a denominator-free local formulation, and the exact radical witness identifies which relaxation is inadequate. Future work must retain the remaining sign constraints (in particular the two mismatching cliques for this witness), or obtain a global metric obstruction at another modulus; further solving the proven-feasible relaxation is not productive.
+
+
+## 13. Complete H13 polynomial system with five positive radicals
+
+The 63 strict and seven weak signs actually suffice for simplicial embeddedness in this particular chamber. To see this, an intersection of disjoint simplices would give a support-minimal sign-compatible affine dependence on at most five distinct vertices. Every triple of vertices has a strict quadruple extension, as checked by enumeration, so there are no coincident or collinear vertices and the support has size four or five.
+
+For five-point support, all five four-point cofactors are nonzero and their signs determine the unique Radon partition. The 56 five-subsets are checked against the prescribed H13 signs: none splits into two disjoint simplices. For four-point support, the dependent quadruple is one of the seven allowed zeros. Because a clique tetrahedron is nondegenerate, some fifth vertex is off its plane. Appending that vertex, the cofactor associated with the extra vertex is zero and the other four cofactors are nonzero. Their prescribed signs give the four-point circuit partition. Checking all seven quadruples and all four possible extra vertices (28 tests) rules out every partition into disjoint simplices. This also covers simultaneous zero determinants; no genericity assumption is needed. Thus the exact strengthened H13 sign conditions exclude all unwanted simplex intersections.
+
+To reconstruct the transverse coordinates algebraically from section 12, use five positive variables t_ij satisfying t_ij^2=Delta_ij on the chosen tree edges. With the transverse plane identified with C, multiply all transverse positions by sqrt(C_00) (a positive factor). Start with z_0=C_00. Along each oriented tree edge i->j set
+
+    z_j = z_i (C_ij + i epsilon_ij t_ij) / C_ii,
+
+where epsilon_ij=+1 for increasing angular order and -1 for decreasing angular order. Since every denominator is positive, write z_i=(X_i+iY_i)/D_i with polynomial numerators and positive denominators. The complete three-dimensional coordinates are given by (X_i/D_i,Y_i/D_i,a_i), after the positive transverse rescaling. A tetrahedral determinant is computed from the three difference vectors relative to its first vertex, each multiplied by the corresponding product D_i D_j. The signs are unchanged. The physical nonedge squared chord comparisons also become polynomial after clearing positive denominators and undoing the transverse scaling.
+
+[h13_angular_full.py](h13_angular_full.py) implements this full system: 14 intrinsic variables and five positive square-root auxiliaries, with 310 assertions including all 70 strict/weak determinant signs and the four nonedge chord bounds for seven translates each. Subject to the earlier winding, strict-support and sign-reduction audit, it is necessary and sufficient for an embedded hexagonal realization in H13; a SAT solution would itself settle the hexagonal metric positively, and a proved UNSAT result would close H13. Unlike the earlier 22-variable relaxation, no additional degenerate simplex intersection check is required mathematically. It is still a high-degree polynomial system, and fewer variables do not guarantee easier solving.
+
+Reproduced locally:
+
+    variables 14 assertions 198
+    PASS all 56 five-point and 28 four-point circuit sign tests
+    full variables 19 assertions 310
+    UNKNOWN timeout
+
+The final line is the libz3 result at 5000 ms; the circuit enumeration passed, but the metric system remains unresolved. The earlier exact angular-relaxation witness does not satisfy this complete system. No branch closure is claimed.
