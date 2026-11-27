@@ -9,7 +9,7 @@ project:
   - The-Anh Vu-Le
   responsible_maintainers:
   - The-Anh Vu-Le
-  license: NOASSERTION
+  license: Apache-2.0
 classification:
   arxiv:
   - math.MG

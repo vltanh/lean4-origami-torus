@@ -1,0 +1,61 @@
+name: Lean Action CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: leanprover/lean-action@ba3fdfe5c4476c925da13bf11a005ddb47e47aee # v1
+        with:
+          auto-config: false
+          build: false
+          use-mathlib-cache: true
+
+      # Several certificates use multiple gigabytes during elaboration.
+      - name: Build proof-heavy modules sequentially
+        shell: bash
+        run: |
+          for module in \
+            OrigamiTorus.SevenVertex.Classification \
+            OrigamiTorus.EightVertex.Type2.Certificate \
+            OrigamiTorus.EightVertex.Type1.Certificate \
+            OrigamiTorus.EightVertex.Type6.Signs \
+            OrigamiTorus.EightVertex.Type6.Rank \
+            OrigamiTorus.EightVertex.Type5.Square \
+            OrigamiTorus.EightVertex.Type5.ContinuationCertificate \
+            OrigamiTorus.EightVertex.Type7.Rectangular \
+            OrigamiTorus.EightVertex.Type4.LiftData \
+            OrigamiTorus.EightVertex.Type4.LiftWideCell{0..4} \
+            OrigamiTorus.EightVertex.Type7.WideCell{0..4} \
+            OrigamiTorus.EightVertex.Type7.WideEndpoint \
+            OrigamiTorus.Winding.WindingAutomorphisms; do
+            echo "::group::$module"
+            lake build "$module"
+            echo "::endgroup::"
+          done
+
+      - name: Build the library and Palomar entries
+        run: lake build OrigamiTorus PalomarSolution PalomarChallenge
+
+      - name: Audit axioms in the library and Solutions
+        shell: bash
+        run: |
+          mapfile -t modules < <(
+            {
+              printf '%s\n' OrigamiTorus.lean
+              find OrigamiTorus -type f -name '*.lean'
+              find palomar -type f -name Solution.lean
+            } | sed -e 's#^palomar/##' -e 's/\.lean$//' -e 's#/#.#g' | sort
+          )
+          lake env lean --run scripts/Audit.lean "${modules[@]}"

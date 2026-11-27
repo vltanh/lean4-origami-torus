@@ -7,7 +7,7 @@ project:
     determinant-sign refutation to the Möbius triangulation.
   authors: [The-Anh Vu-Le]
   responsible_maintainers: [The-Anh Vu-Le]
-  license: NOASSERTION
+  license: Apache-2.0
 classification:
   arxiv: [math.MG, math.CO]
   msc2020: [52C25, 57Q05]
@@ -41,6 +41,9 @@ fidelity:
     Lean uses a checked combinatorial classification and the Type 1
     strict-support and determinant-sign argument. Schwartz's proof uses
     a hull case enumeration and spherical Crofton's formula.
+review:
+  status: agent-reviewed
+  notes: The proof passed Lean and both standalone Comparator kernels. Independent human review is pending.
 alignment:
   namespace: OrigamiTorusSevenVertexChallenge
   statements:

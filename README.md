@@ -1,5 +1,7 @@
 # Origami tori in Lean 4
 
+[![Lean Action CI](https://github.com/vltanh/lean4-origami-torus/actions/workflows/lean_action_ci.yml/badge.svg)](https://github.com/vltanh/lean4-origami-torus/actions/workflows/lean_action_ci.yml)
+
 An origami torus is a flat torus embedded in $\mathbb R^3$ by a map that is affine and isometric on each triangle. A triangulation is universal if it realizes every flat torus. Earlier work established universality with larger triangulations. This repository studies existence and universality at the minimum vertex count. [Related work](docs/RELATED_WORK.md)
 
 ## Seven vertices
@@ -37,7 +39,7 @@ lake build
 
 Import `OrigamiTorus.SevenVertex` for the seven-vertex result, `OrigamiTorus.EightVertex` for Types 1–7, or `OrigamiTorus` for the full library.
 
-The seven-vertex result and each eight-vertex type have a standalone Palomar entry. Run Comparator with the configuration for the entry you want to check. [Palomar entries](palomar/OrigamiTorus/README.md) · [Verification scope](docs/VERIFICATION.md)
+The seven-vertex result and each eight-vertex type have a standalone Palomar entry and an on-demand preflight workflow. Run Comparator with the configuration for the entry you want to check. [Palomar entries](palomar/OrigamiTorus/README.md) · [Verification scope](docs/VERIFICATION.md)
 
 ```sh
 lake env lake comparator --config=palomar/OrigamiTorus/SevenVertex/comparator.json
@@ -48,3 +50,7 @@ lake env lake comparator --config=palomar/OrigamiTorus/SevenVertex/comparator.js
 The-Anh Vu-Le leads and maintains the project. OpenAI Codex (GPT-6) contributed mathematical proof development, Lean formalization, separate proof reviews, and the manuscript draft. [Detailed credits](docs/CREDITS.md)
 
 Exploratory calculations and earlier proof attempts are available on the [research branch](https://github.com/vltanh/lean4-origami-torus/tree/research/origami-torus-checkpoint).
+
+## License
+
+The project uses Apache-2.0. [License text](LICENSE)
