@@ -47,6 +47,20 @@ certificates. The constructive route is sufficient but not necessary for
 Type 4 universality; **0/8 original fixed-target cases remain excluded**.
 No new Lean theorem is claimed.
 
+**Latest constructive direction:** [all regular hexagonal planar inflation
+seeds](planar_seed_screen.md) have a finite necessary cover of 109
+face-sign orbits (405 masks modulo reflection before relabeling). Exact
+integer propagation, chart overlap and Jacobian rank obstructions give
+this cover for regular seeds with strict embedded lifts, via the existing
+strict marking classification. The surviving real metric and lift
+conditions remain open. The arbitrary spatial problem does not reduce
+to these planar seeds. A [direct numerical search](direct_hexagon_search.md)
+without the convex-flip requirement produced 797,324 metric assignments
+but no embedding; the best had two crossings, and exact conditional
+contact-sign traps explain failures of local refinement. No original
+fixed-target case is excluded, no Lean theorem is added, and no new
+Type 4 modulus is certified.
+
 ## 1. What would finish Type 4?
 
 Existence is already settled. The remaining question is universality.
