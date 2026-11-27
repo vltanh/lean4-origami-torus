@@ -228,3 +228,47 @@ The seven index vectors obtained from the first column, dropping coordinate 0, h
 A separate 12-start floating-point least-squares search varied the full extrinsic configuration, imposing zero cone deficits and penalizing violation of the H13 generic signs, without prescribing the hexagonal modulus. No strict flat witness was obtained; some residuals approached zero with sign violations. This does not rule out even generic flat H13 realizations, much less weak-sign ones. Do not treat it as an exclusion.
 
 **Next gate:** a verified positive or negative metric result for H13. All 31 hexagonal classes remain unresolved; do not count 40 excluded determinant degeneracies as 40 excluded orientation models. The new strictness and chord lemmas are rigorous conditional consequences of the earlier embedding/marking reduction, which still needs audit.
+
+
+## 12. Intrinsic-only angular-cycle reduction and exact relaxed witness
+
+This iteration keeps H13 active. The angular order around the universal edge 45 is strict on all fifteen pairs by section 11, including pairs whose corresponding quadruples are not cliques. In the positively oriented transverse plane the six rays occur in the order
+
+    0,7,2,3,6,1
+
+inside an angular interval of width strictly less than pi. Retain the definitions L=d_45, a_i=L+d_4i-d_5i, and C_ij=2L(d_4i+d_4j-d_ij)-a_i a_j. For every transverse vertex require C_ii>0; for every one of the 11 edges among these six vertices require Delta_ij=C_ii C_jj-C_ij^2>0. Write the unique gap alpha_ij=arccos(C_ij/sqrt(C_ii C_jj)) in (0,pi), oriented by the given order.
+
+The six complete transverse triangles, with vertices in angular order, are
+
+    (0,2,1), (0,3,1), (7,2,6), (7,3,6), (2,6,1), (3,6,1).
+
+For each i,j,k in this order, alpha_ij+alpha_jk=alpha_ik is equivalent to the following purely algebraic conditions:
+
+* The 3x3 principal determinant of C on i,j,k is zero.
+* C_ij C_jk-C_jj C_ik>0.
+* C_ij/sqrt(C_ii)>-C_jk/sqrt(C_kk).
+
+Indeed the determinant equality gives (C_ij C_jk-C_jj C_ik)^2=Delta_ij Delta_jk; the positive sign selects the cosine addition identity, and the final inequality ensures that the sum of the two angles is strictly less than pi. The last test can be written as a three-case polynomial disjunction using signs and squared comparisons, since both denominators are positive.
+
+The tree with edges 02,26,61,72,36 fixes all angle differences. In sequence the six triangle equations recover the remaining edges 21,01,31,03,76,73. Thus no additional angular cycle equation is required. The two missing adjacent comparisons are alpha_72<alpha_02 and alpha_36<alpha_26. With these, the tree angles are strictly increasing in the stated order, and the equation on edge 01 ensures width < pi. Conversely these equations reconstruct the unique transverse configuration up to rotation, with s_i=sqrt(C_ii)(cos theta_i,sin theta_i), theta_0=0. Together with axial coordinates a_i, this satisfies all 24 squared edge lengths (after undoing scale 2 sqrt(L)). This is an exact equivalence for the metric and edge-45 angular order, not for the other H13 signs or embeddedness.
+
+The standalone generator [h13_angular_cycles.py](h13_angular_cycles.py) implements these conditions in 14 intrinsic real variables, with 198 assertions including nearest-lift and face orientation constraints. No extrinsic-coordinate unknowns, high-degree rational reconstruction denominators, or transcendental functions occur in this relaxation. A local run of the same script with libz3 and a 5000 ms limit returned UNKNOWN (timeout).
+
+### The relaxation is actually feasible
+
+A numerical search in the six-cycle formulation found a strict metric/angular candidate. The new [verify_h13_angular_relaxation.py](verify_h13_angular_relaxation.py) replaces that approximation by an exact radical construction, using the eight-parameter core/leaf method of sections 1--5. Six anchor coordinates and the first coordinates of roots 2 and 3 are exact rationals. The remaining four quadratic roots are selected with signs (+,-,-,+) in vertex order (2,3,0,7). Integer-endpoint outward-rounded intervals on the 2^-200 grid check the reconstruction pivots, positive discriminants, positive-definite anchor Gram matrix and all strict geometric inequalities. The branch selection uses numerical midpoints only to choose one of two exact radicals, not to justify any asserted sign. All 24 edge equalities hold algebraically, by solving the linear equations and the four quadratics.
+
+The local verifier returned:
+
+    radical branch indices (0=positive sqrt) [(2, 0), (3, 1), (0, 1), (7, 0)]
+    minimum intrinsic face double-area bound 0.07851660003335041
+    minimum nearest-lift slack bound 0.0011524672433112825
+    minimum nonedge squared chord slack bound 0.0006744159399265299
+    H13 mismatched signs 17 crossing circuits 10
+    PASS exact angular/metric relaxation witness; NOT embedded and NOT in H13
+
+The period cocycle and consistent nondegenerate intrinsic face orientations certify the hexagonal domain metric. All 15 transverse angular signs, all seven nearest-lift nonedge chord comparisons per nonedge, and all 70 generic determinant nonzero tests pass. However, 17 other H13 signs disagree (including clique signs 2567 and 3567), and ten disjoint edge/face intersections are certified by the five-point circuits.
+
+Consequently the 198-assertion relaxation is genuinely SAT, even though the nonlinear solver did not discover that fact. Adding the nonedge chord bounds and requiring generic configurations still cannot make this relaxation infeasible. Do not try to prove its UNSAT. The remaining H13 signs and embeddedness constraints are essential. An exploratory six-start full angular reconstruction search found no strict feasible configuration; a three-start refinement with clique signs alone (one initialized at the exact relaxation's numerical precursor) likewise found none. Neither is an exclusion certificate. The searches were floating point and are not premises of the exact witness.
+
+**Status:** no H13 closure, no additional orientation branch closed. The six triangle equations offer a denominator-free local formulation, and the exact radical witness identifies which relaxation is inadequate. Future work must retain the remaining sign constraints (in particular the two mismatching cliques for this witness), or obtain a global metric obstruction at another modulus; further solving the proven-feasible relaxation is not productive.
