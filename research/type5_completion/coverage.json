@@ -1,0 +1,1449 @@
+{
+  "schema": 1,
+  "scope": "Exact finite-cover/data audit; not a cell exclusion or Lean proof of localization.",
+  "input_sha256": {
+    "research/type5_focus/cases.json": "98bfd4425dbf0a510cde35e0353ff51bcbda27d8db8f50b0634d6d71f6e2b4ab",
+    "research/type5_focus/lutz_faces.json": "200cec31055b2673ee326a23fc2f2af0991cee80d7a381c608d2959cdd74dc99",
+    "research/type5_focus/fixed_elongated/generate.py": "948418bb566bf70f75547c071a7e1db81cc585d7c9c59e20cc375a9ff2af0e01",
+    "research/type5_focus/fixed_elongated/README.md": "7bd7b7afceae98797716127a5c9144522ee63f234b1a73e74f56086e8b15d73f",
+    "OrigamiTorus/Type5/Reconstruction.lean": "e3a8d3a589bcbaedaafd1103388446e06ff43c66c558d9ce166dac5108ab7c2b",
+    "OrigamiTorus/Winding/WindingCocycle.lean": "72d8669555f4c09b543511333f489846e7d32557a76b1bcb0d01217440433ed0",
+    "OrigamiTorus/Winding/WindingOrbits.lean": "ab156b7c3a9bf16d1443516249d97579aac1984717ffc2111db7b84b518034f6"
+  },
+  "target": {
+    "real_part": "1/2",
+    "imaginary_part": 1000000,
+    "epsilon": "1/1000"
+  },
+  "lean_data_agreement": {
+    "faces": true,
+    "sharp_marking": true,
+    "edge_cocycle": true
+  },
+  "counts": {
+    "raw_cells": 36,
+    "representatives": 19,
+    "fixed_by_reflection": 2,
+    "maximal_raw_cells": 7,
+    "clique_triples": 34,
+    "additional_noncollinear_triples": 21
+  },
+  "representatives": [
+    {
+      "id": "00020220",
+      "q": [
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        -1,
+        0
+      ],
+      "blocks": [
+        "F1",
+        "F2",
+        "F3"
+      ],
+      "cap_cycles": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          3,
+          5,
+          6
+        ]
+      ],
+      "orbit_size": 2
+    },
+    {
+      "id": "00020221",
+      "q": [
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        -1,
+        0
+      ],
+      "blocks": [
+        "F1",
+        "F2"
+      ],
+      "cap_cycles": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          3,
+          5,
+          6
+        ]
+      ],
+      "orbit_size": 2
+    },
+    {
+      "id": "00020222",
+      "q": [
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        -1,
+        0
+      ],
+      "blocks": [
+        "F1",
+        "F2"
+      ],
+      "cap_cycles": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          3,
+          5,
+          6
+        ]
+      ],
+      "orbit_size": 2
+    },
+    {
+      "id": "00022220",
+      "q": [
+        0,
+        0,
+        0,
+        -1,
+        -1,
+        0,
+        -1,
+        0
+      ],
+      "blocks": [
+        "F3"
+      ],
+      "cap_cycles": [
+        [
+          1,
+          2,
+          7
+        ],
+        [
+          3,
+          5,
+          6
+        ]
+      ],
+      "orbit_size": 2
+    },
+    {
+      "id": "00023220",
+      "q": [
+        0,
+        0,
+        0,
+        -1,
+        -1,
+        0,
+        -1,
+        0
+      ],
+      "blocks": [
+        "F3"
+      ],
+      "cap_cycles": [
+        [
+          1,
+          2,
+          7
+        ],
+        [
+          3,
+          5,
+          6
+        ]
+      ],
+      "orbit_size": 2
+    },
+    {
+      "id": "00120220",
+      "q": [
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        -1,
+        0
+      ],
+      "blocks": [
+        "F1"
+      ],
+      "cap_cycles": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          3,
+          5,
+          6
+        ]
+      ],
+      "orbit_size": 2
+    },
+    {
+      "id": "00120221",
+      "q": [
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        -1,
+        0
+      ],
+      "blocks": [
+        "F1"
+      ],
+      "cap_cycles": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          3,
+          5,
+          6
+        ]
+      ],
+      "orbit_size": 1
+    },
+    {
+      "id": "00200202",
+      "q": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "blocks": [
+        "F3",
+        "F4"
+      ],
+      "cap_cycles": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          2,
+          5,
+          7
+        ]
+      ],
+      "orbit_size": 2
+    },
+    {
+      "id": "00200232",
+      "q": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        -1,
+        0
+      ],
+      "blocks": [
+        "F3"
+      ],
+      "cap_cycles": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          2,
+          5,
+          7
+        ]
+      ],
+      "orbit_size": 2
+    },
+    {
+      "id": "00220200",
+      "q": [
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "blocks": [
+        "F2"
+      ],
+      "cap_cycles": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          2,
+          3,
+          5
+        ]
+      ],
+      "orbit_size": 2
+    },
+    {
+      "id": "00220201",
+      "q": [
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "blocks": [
+        "F2"
+      ],
+      "cap_cycles": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          2,
+          3,
+          5
+        ]
+      ],
+      "orbit_size": 2
+    },
+    {
+      "id": "00220202",
+      "q": [
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "blocks": [
+        "F2",
+        "F3"
+      ],
+      "cap_cycles": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          2,
+          3,
+          5
+        ]
+      ],
+      "orbit_size": 2
+    },
+    {
+      "id": "00220230",
+      "q": [
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        -1,
+        0
+      ],
+      "blocks": [
+        "F2"
+      ],
+      "cap_cycles": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          2,
+          3,
+          5
+        ]
+      ],
+      "orbit_size": 2
+    },
+    {
+      "id": "00220231",
+      "q": [
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        -1,
+        0
+      ],
+      "blocks": [
+        "F2"
+      ],
+      "cap_cycles": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          2,
+          3,
+          5
+        ]
+      ],
+      "orbit_size": 2
+    },
+    {
+      "id": "00220232",
+      "q": [
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        -1,
+        0
+      ],
+      "blocks": [
+        "F2",
+        "F3"
+      ],
+      "cap_cycles": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          2,
+          3,
+          5
+        ]
+      ],
+      "orbit_size": 2
+    },
+    {
+      "id": "00230202",
+      "q": [
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "blocks": [
+        "F3"
+      ],
+      "cap_cycles": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          2,
+          5,
+          7
+        ]
+      ],
+      "orbit_size": 2
+    },
+    {
+      "id": "00230232",
+      "q": [
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        -1,
+        0
+      ],
+      "blocks": [
+        "F3"
+      ],
+      "cap_cycles": [
+        [
+          0,
+          1,
+          4
+        ],
+        [
+          2,
+          5,
+          7
+        ]
+      ],
+      "orbit_size": 2
+    },
+    {
+      "id": "01200202",
+      "q": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "blocks": [
+        "F4"
+      ],
+      "cap_cycles": [
+        [
+          0,
+          3,
+          6,
+          4
+        ],
+        [
+          2,
+          5,
+          7
+        ]
+      ],
+      "orbit_size": 2
+    },
+    {
+      "id": "20022020",
+      "q": [
+        -1,
+        0,
+        0,
+        -1,
+        -1,
+        0,
+        -1,
+        0
+      ],
+      "blocks": [
+        "F4"
+      ],
+      "cap_cycles": [
+        [
+          1,
+          2,
+          7
+        ],
+        [
+          0,
+          3,
+          6,
+          4
+        ]
+      ],
+      "orbit_size": 1
+    }
+  ],
+  "star_k5_witnesses": {
+    "0": [
+      0,
+      1,
+      2,
+      3,
+      5
+    ],
+    "1": [
+      0,
+      1,
+      2,
+      3,
+      5
+    ],
+    "2": [
+      0,
+      1,
+      2,
+      3,
+      5
+    ],
+    "3": [
+      0,
+      1,
+      2,
+      3,
+      5
+    ],
+    "4": [
+      0,
+      1,
+      2,
+      4,
+      5
+    ],
+    "5": [
+      0,
+      1,
+      2,
+      3,
+      5
+    ],
+    "6": [
+      1,
+      2,
+      3,
+      5,
+      6
+    ],
+    "7": [
+      1,
+      2,
+      3,
+      5,
+      7
+    ]
+  },
+  "antipodal_link_cut_witnesses": [
+    {
+      "vertex": 0,
+      "link": [
+        1,
+        2,
+        4,
+        5,
+        3
+      ],
+      "missing_pair": [
+        3,
+        4
+      ],
+      "ordered_arc": [
+        3,
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "vertex": 1,
+      "link": [
+        0,
+        2,
+        5,
+        7,
+        4,
+        6,
+        3
+      ],
+      "missing_pair": [
+        0,
+        7
+      ],
+      "ordered_arc": [
+        0,
+        2,
+        5,
+        7
+      ]
+    },
+    {
+      "vertex": 1,
+      "link": [
+        0,
+        2,
+        5,
+        7,
+        4,
+        6,
+        3
+      ],
+      "missing_pair": [
+        0,
+        6
+      ],
+      "ordered_arc": [
+        0,
+        2,
+        5,
+        6
+      ]
+    },
+    {
+      "vertex": 1,
+      "link": [
+        0,
+        2,
+        5,
+        7,
+        4,
+        6,
+        3
+      ],
+      "missing_pair": [
+        6,
+        7
+      ],
+      "ordered_arc": [
+        6,
+        3,
+        2,
+        7
+      ]
+    },
+    {
+      "vertex": 1,
+      "link": [
+        0,
+        2,
+        5,
+        7,
+        4,
+        6,
+        3
+      ],
+      "missing_pair": [
+        3,
+        4
+      ],
+      "ordered_arc": [
+        3,
+        0,
+        2,
+        4
+      ]
+    },
+    {
+      "vertex": 2,
+      "link": [
+        0,
+        1,
+        5,
+        6,
+        3,
+        7,
+        4
+      ],
+      "missing_pair": [
+        0,
+        6
+      ],
+      "ordered_arc": [
+        0,
+        1,
+        5,
+        6
+      ]
+    },
+    {
+      "vertex": 2,
+      "link": [
+        0,
+        1,
+        5,
+        6,
+        3,
+        7,
+        4
+      ],
+      "missing_pair": [
+        0,
+        7
+      ],
+      "ordered_arc": [
+        0,
+        1,
+        5,
+        7
+      ]
+    },
+    {
+      "vertex": 2,
+      "link": [
+        0,
+        1,
+        5,
+        6,
+        3,
+        7,
+        4
+      ],
+      "missing_pair": [
+        6,
+        7
+      ],
+      "ordered_arc": [
+        7,
+        4,
+        1,
+        6
+      ]
+    },
+    {
+      "vertex": 2,
+      "link": [
+        0,
+        1,
+        5,
+        6,
+        3,
+        7,
+        4
+      ],
+      "missing_pair": [
+        3,
+        4
+      ],
+      "ordered_arc": [
+        4,
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "vertex": 3,
+      "link": [
+        0,
+        1,
+        6,
+        2,
+        7,
+        5
+      ],
+      "missing_pair": [
+        0,
+        6
+      ],
+      "ordered_arc": [
+        6,
+        2,
+        5,
+        0
+      ]
+    },
+    {
+      "vertex": 3,
+      "link": [
+        0,
+        1,
+        6,
+        2,
+        7,
+        5
+      ],
+      "missing_pair": [
+        0,
+        7
+      ],
+      "ordered_arc": [
+        0,
+        1,
+        2,
+        7
+      ]
+    },
+    {
+      "vertex": 3,
+      "link": [
+        0,
+        1,
+        6,
+        2,
+        7,
+        5
+      ],
+      "missing_pair": [
+        6,
+        7
+      ],
+      "ordered_arc": [
+        7,
+        5,
+        1,
+        6
+      ]
+    },
+    {
+      "vertex": 4,
+      "link": [
+        0,
+        2,
+        7,
+        1,
+        6,
+        5
+      ],
+      "missing_pair": [
+        0,
+        7
+      ],
+      "ordered_arc": [
+        7,
+        1,
+        5,
+        0
+      ]
+    },
+    {
+      "vertex": 4,
+      "link": [
+        0,
+        2,
+        7,
+        1,
+        6,
+        5
+      ],
+      "missing_pair": [
+        0,
+        6
+      ],
+      "ordered_arc": [
+        0,
+        2,
+        1,
+        6
+      ]
+    },
+    {
+      "vertex": 4,
+      "link": [
+        0,
+        2,
+        7,
+        1,
+        6,
+        5
+      ],
+      "missing_pair": [
+        6,
+        7
+      ],
+      "ordered_arc": [
+        6,
+        5,
+        2,
+        7
+      ]
+    },
+    {
+      "vertex": 5,
+      "link": [
+        0,
+        3,
+        7,
+        1,
+        2,
+        6,
+        4
+      ],
+      "missing_pair": [
+        0,
+        7
+      ],
+      "ordered_arc": [
+        7,
+        1,
+        2,
+        0
+      ]
+    },
+    {
+      "vertex": 5,
+      "link": [
+        0,
+        3,
+        7,
+        1,
+        2,
+        6,
+        4
+      ],
+      "missing_pair": [
+        0,
+        6
+      ],
+      "ordered_arc": [
+        0,
+        3,
+        1,
+        6
+      ]
+    },
+    {
+      "vertex": 5,
+      "link": [
+        0,
+        3,
+        7,
+        1,
+        2,
+        6,
+        4
+      ],
+      "missing_pair": [
+        3,
+        4
+      ],
+      "ordered_arc": [
+        3,
+        7,
+        1,
+        4
+      ]
+    },
+    {
+      "vertex": 5,
+      "link": [
+        0,
+        3,
+        7,
+        1,
+        2,
+        6,
+        4
+      ],
+      "missing_pair": [
+        6,
+        7
+      ],
+      "ordered_arc": [
+        7,
+        1,
+        2,
+        6
+      ]
+    },
+    {
+      "vertex": 6,
+      "link": [
+        1,
+        3,
+        2,
+        5,
+        4
+      ],
+      "missing_pair": [
+        3,
+        4
+      ],
+      "ordered_arc": [
+        3,
+        2,
+        5,
+        4
+      ]
+    },
+    {
+      "vertex": 7,
+      "link": [
+        1,
+        4,
+        2,
+        3,
+        5
+      ],
+      "missing_pair": [
+        3,
+        4
+      ],
+      "ordered_arc": [
+        3,
+        5,
+        1,
+        4
+      ]
+    }
+  ],
+  "nonclique_triples_with_antipodal_obstruction": [
+    [
+      0,
+      1,
+      6
+    ],
+    [
+      0,
+      1,
+      7
+    ],
+    [
+      0,
+      2,
+      6
+    ],
+    [
+      0,
+      2,
+      7
+    ],
+    [
+      0,
+      3,
+      4
+    ],
+    [
+      0,
+      3,
+      6
+    ],
+    [
+      0,
+      3,
+      7
+    ],
+    [
+      0,
+      4,
+      6
+    ],
+    [
+      0,
+      4,
+      7
+    ],
+    [
+      0,
+      5,
+      6
+    ],
+    [
+      0,
+      5,
+      7
+    ],
+    [
+      1,
+      3,
+      4
+    ],
+    [
+      1,
+      6,
+      7
+    ],
+    [
+      2,
+      3,
+      4
+    ],
+    [
+      2,
+      6,
+      7
+    ],
+    [
+      3,
+      4,
+      5
+    ],
+    [
+      3,
+      4,
+      6
+    ],
+    [
+      3,
+      4,
+      7
+    ],
+    [
+      3,
+      6,
+      7
+    ],
+    [
+      4,
+      6,
+      7
+    ],
+    [
+      5,
+      6,
+      7
+    ]
+  ],
+  "clique4": [
+    [
+      0,
+      1,
+      2,
+      3
+    ],
+    [
+      0,
+      1,
+      2,
+      4
+    ],
+    [
+      0,
+      1,
+      2,
+      5
+    ],
+    [
+      0,
+      1,
+      3,
+      5
+    ],
+    [
+      0,
+      1,
+      4,
+      5
+    ],
+    [
+      0,
+      2,
+      3,
+      5
+    ],
+    [
+      0,
+      2,
+      4,
+      5
+    ],
+    [
+      1,
+      2,
+      3,
+      5
+    ],
+    [
+      1,
+      2,
+      3,
+      6
+    ],
+    [
+      1,
+      2,
+      3,
+      7
+    ],
+    [
+      1,
+      2,
+      4,
+      5
+    ],
+    [
+      1,
+      2,
+      4,
+      6
+    ],
+    [
+      1,
+      2,
+      4,
+      7
+    ],
+    [
+      1,
+      2,
+      5,
+      6
+    ],
+    [
+      1,
+      2,
+      5,
+      7
+    ],
+    [
+      1,
+      3,
+      5,
+      6
+    ],
+    [
+      1,
+      3,
+      5,
+      7
+    ],
+    [
+      1,
+      4,
+      5,
+      6
+    ],
+    [
+      1,
+      4,
+      5,
+      7
+    ],
+    [
+      2,
+      3,
+      5,
+      6
+    ],
+    [
+      2,
+      3,
+      5,
+      7
+    ],
+    [
+      2,
+      4,
+      5,
+      6
+    ],
+    [
+      2,
+      4,
+      5,
+      7
+    ]
+  ],
+  "possibly_uncreased_edges": [
+    {
+      "edge": [
+        0,
+        5
+      ],
+      "opposite_pair": [
+        3,
+        4
+      ]
+    },
+    {
+      "edge": [
+        1,
+        3
+      ],
+      "opposite_pair": [
+        0,
+        6
+      ]
+    },
+    {
+      "edge": [
+        1,
+        4
+      ],
+      "opposite_pair": [
+        6,
+        7
+      ]
+    },
+    {
+      "edge": [
+        1,
+        6
+      ],
+      "opposite_pair": [
+        3,
+        4
+      ]
+    },
+    {
+      "edge": [
+        2,
+        3
+      ],
+      "opposite_pair": [
+        6,
+        7
+      ]
+    },
+    {
+      "edge": [
+        2,
+        4
+      ],
+      "opposite_pair": [
+        0,
+        7
+      ]
+    },
+    {
+      "edge": [
+        2,
+        7
+      ],
+      "opposite_pair": [
+        3,
+        4
+      ]
+    },
+    {
+      "edge": [
+        3,
+        5
+      ],
+      "opposite_pair": [
+        0,
+        7
+      ]
+    },
+    {
+      "edge": [
+        4,
+        5
+      ],
+      "opposite_pair": [
+        0,
+        6
+      ]
+    }
+  ],
+  "remaining_geometric_assembly": [
+    "Extract coherent lifted-face data from the chosen definition of a quotient realization.",
+    "Instantiate the existing shortest-edge and winding-orbit theorems on those data.",
+    "Prove the quantitative two-gap localization; only its rational margins are replayed here.",
+    "Instantiate the antipodal link-cut obstruction and flat-star strict support for Type 5 using the listed witnesses, then rule out planar K4s.",
+    "Prove metric reconstruction and full simplex-intersection soundness, and exclude the full cell systems."
+  ]
+}

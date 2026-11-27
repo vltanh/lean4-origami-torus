@@ -8,6 +8,38 @@ proof or a change to the formal release on `main`. Its first target is the
 The other three blocks and the exact assembly gate are specified below.
 The hexagonal investigation is an alternative target, with a separate ledger.
 
+## Current attack checkpoint — 2026-11-27
+
+The exclusion count remains **0/19**, including **0/5 in F1**. The following
+steps have been checked against the actual source revision rather than
+transcribed inputs:
+
+- [`verify_coverage.py`](verify_coverage.py) independently regenerates the
+  36-cell / 19-representative cover and its full F1--F4 memberships. The
+  source-pinned [`coverage.json`](coverage.json) agrees with the Lean faces,
+  sharp marking, and all 24 edge shifts.
+- [`coverage.md`](coverage.md) supplies the Type 5 finite incidences for the
+  generic flat-link arguments: 21 antipodal obstructions, eight K5 star
+  witnesses, and 23 nondegenerate K4s. Mathematically this discharges the
+  inherited strict-support/K4 premise; a Type 5 Lean instantiation remains.
+  It also proves that all triples except `067` are noncollinear and that at
+  most one lattice lift of a missing edge can saturate metric contraction.
+  [`coverage_constraints.py`](coverage_constraints.py) adds the resulting
+  165 strict inequalities without fixing a continuous parameter or imposing
+  a numerical lower margin. All pass the exact square construction.
+- [`f1_geometry.md`](f1_geometry.md) gives a division-free cap identity.
+  If the three horizontal short-edge margins are `u1,u2,u3`, the physical
+  cap Gram determinant satisfies `det(B) >= u1*u2*u3/4 > 0`. Its closed
+  boundary has exactly the three explicit kernel formulas in that note.
+  [`f1_geometry_verify.py`](f1_geometry_verify.py) checks the identities and
+  their substitutions for both caps in all five F1 cells. This controls
+  where collapse can occur; it does not exclude that collapse regime.
+
+The remaining geometric assembly includes extraction of lifted-face data
+and formalization of the quantitative two-gap localization. The next
+algebraic gate remains a contradiction or a full witness for the complete
+F1 union, with every cap-margin boundary retained.
+
 ## 1. What would finish Type 5?
 
 Existence is already established. The remaining question has two possible
@@ -369,7 +401,9 @@ promote a small hexagonal subchamber result to a whole-type milestone.
 
 ## PR boundary
 
-This draft adds only this roadmap. It changes no theorem, generator,
-certificate, archive index, or completion count. Subsequent Type 5 proof
-commits should remain separately reviewable on the research branch; a formal
-release change comes only after the relevant proof and verification gates.
+This draft now contains the roadmap, the source-pinned coverage audit, and
+checked necessary geometry and solver constraints described above. It
+changes no Lean theorem, historical archive index, or completion count.
+Type 5 proof commits remain separately reviewable on the research branch;
+a formal release change comes only after the relevant proof and verification
+gates.
