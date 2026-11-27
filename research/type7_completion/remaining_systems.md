@@ -1,0 +1,78 @@
+# Rays 1 and 2: complete necessary systems and a failed local shortcut
+
+`remaining_full_metric.py` now generates all fourteen listed masks at the
+common target `y=10^6`. Each has 18 real variables, 382 Boolean variables,
+8,305 Boolean clauses, and 524 actual affine-circuit partition tests.
+The inherited Gram equations retain all four unknown nonedge distances.
+The actual nonclique brackets may vanish; their auxiliary generic signs
+remain weak inequalities. All twelve disjoint shortest horizontal
+triangle pairs are unlinked. Thus these queries include the embedding
+and linking information omitted by `type7_focus/generate_remaining.py`.
+No mask is declared infeasible.
+
+## Correct long-ring linking target
+
+The alternating cycles `0246` and `1357` have period `(0,1)` in ray 1
+and `(1,1)` in ray 2. Their linking is nonzero by the audited Type 7
+alternating-ring theorem. Horizontal unlinking gives
+`q(m,n)=B*m*n+C*n^2`, where `B=+1` or `-1`. Disjoint triangles of period
+`(-1,1)` in ray 1, or `(0,1)` in ray 2, have linking `k` in `{-1,0,1}`.
+In both markings the alternating-ring linking is `k+B`. Consequently
+its magnitude is **one or two**. The generator retains both possibilities;
+restricting it to magnitude one would be unjustified.
+
+Every consecutive intrinsic triangle has period `(-1,0)`. Its three
+oriented horizontal edge displacements lie strictly between `-1/2` and
+`1/2` and sum to `-1`, so all three are negative. The full queries add
+the eight resulting step-one sign inequalities.
+
+The shared `linked_metric.generate(y, mark=3, mask='phase0')` entry point
+preserves the previous ray-3 output byte for byte with its default
+arguments. `remaining_full_metric.py` selects the other markings and
+adds only their justified step-one signs.
+
+## Local tetrahedron feasibility is insufficient
+
+A tempting faster test uses only the sixteen K4 metrics. Set
+`h_i=-X_(i,i+1)` and `b_i=V_(i,i+1)`, cyclically. Then
+`sum h_i=7/2` in ray 1 and `5/2` in ray 2, while `sum b_i=1`.
+Writing `t=1/y^2`, the intrinsic squared length of a step-one edge is
+`h_i^2+b_i^2/t`. For steps two and three it is
+`(1-sum h)^2+(sum b)^2/t` along the corresponding consecutive path.
+The sixteen local tetrahedra can therefore be tested without any global
+reconstruction variables; `remaining_local_metric.py` emits those
+quartic necessary inequalities.
+
+However, **both `ray1_04` and `ray2_04` pass every one of these strict
+local tests**. Here are exact rational inputs at `t=10^-12`:
+
+| Marking | Horizontal lengths `h`, repeated twice | Vertical steps `b`, repeated twice |
+|---|---|---|
+| Ray 1 | `(9/20+t/100, 2/5, 1/2-t/100, 2/5)` | `(1/2-3t/25, 11t/200, t/100, 11t/200)` |
+| Ray 2 | `(47/100+t/100, 7/50, 1/2-t/100, 7/50)` | `(1/2-t/5, t/20, t/10, t/20)` |
+
+`remaining_local_witness.py` reconstructs the vertex lifts using the
+archived cocycles, checks all 24 strict nearest-edge conditions, verifies
+all sixteen oriented face areas are positive and sum to two, and checks
+positive definiteness of all sixteen K4 Gram matrices with exact rational
+determinants. This verification does not use the quartic shortcut formulas.
+It certifies sixteen individually realizable tetrahedra for each row;
+it does **not** assert they fit together in one spatial realization.
+
+Therefore the local-tetrahedron-only systems cannot exclude all seven
+masks of either marking, even with exact arithmetic and unlimited solver
+time. Retain global rank-three completion and embeddedness in further
+searches. The short unconstrained local trials returned UNKNOWN for all
+fourteen masks; the explicit witnesses establish feasibility for the
+two `04` relaxations independently of those trials.
+
+## Reproduction
+
+```sh
+python3 research/type7_completion/remaining_local_witness.py
+python3 research/type7_completion/remaining_verify.py
+python3 research/type7_completion/remaining_full_metric.py /tmp/type7-full-remaining
+```
+
+Generated queries belong outside the source tree. Parser success and the
+local SAT certificates do not discharge any of the fourteen full systems.
