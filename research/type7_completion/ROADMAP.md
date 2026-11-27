@@ -9,7 +9,7 @@ Another necessary inequality, excluded construction family, or failed
 solver run does not close this target.
 
 Type 7 is a credible alternative to prioritizing Type 4. One of its four
-sharp-ray markings already has a conditional exclusion, and ray 3 has
+sharp-ray markings now has an audited hand-proof exclusion, and ray 3 has
 one localized phase with 18 real variables. Its reconstruction, symmetry,
 and mandatory linking constraints are particularly concrete. A successful
 ray-3 proof would close a second whole marking at the common modulus.
@@ -76,7 +76,7 @@ four sharp-ray representatives in
 | `t7_ray_1` | `(-1,0)`, `(-1,1)` | Seven open masks |
 | `t7_ray_2` | `(-1,0)`, `(0,1)` | Seven open masks |
 | `t7_ray_3` | `(-1,1)`, `(0,-1)` | One open canonical phase |
-| `t7_ray_4` | `(-1,1)`, `(0,1)` | Conditionally excluded for `y^2>=63/16` |
+| `t7_ray_4` | `(-1,1)`, `(0,1)` | Excluded for `y^2>=63/16` by the audited hand proof; Lean assembly open |
 
 For rays 1 and 2, let `b_i` be the normalized vertical displacement of
 the edge `i -> i+1`, cyclically modulo eight. A digit in a mask means
@@ -121,8 +121,13 @@ below; it is not one of the fifteen.
 ## 3. What is established for ray 4
 
 The two alternating cycles `0246` and `1357` must have nonzero linking
-in an embedded flat Type 7 realization, conditional on the strict-support,
-mixed-side, and orientation-reduction premises. Unlinking would leave
+in an embedded flat Type 7 realization. The
+[`geometric necessity audit`](geometric_audit.md) supplies the hand proofs
+of strict support, mixed-side faces, K4 nondegeneracy, coherent shortest
+markings, and valid generic perturbation, using Schwartz's established
+seven-vertex nonexistence and spherical hemisphere results. It also
+audits the necessary orientation encoding and independently replays the
+Boolean certificate. Unlinking would leave
 sixteen necessary generic orientation models. They form two symmetry
 orbits, and each representative contradicts a product of six exact
 Grassmann–Plücker inequalities. The finite sign coverage and polynomial
@@ -142,6 +147,10 @@ This excludes ray 4 at and above `63/16`, including equality. The earlier
 `35/4` threshold is superseded. The shorter interval is unnecessary for
 the fixed-target negative proof; it would matter to an affirmative
 construction claiming coverage of the entire boundary.
+
+This retires the inherited research-level geometric qualification for
+ray 4. The direct Lean bridge and kernel-checked certificate assembly
+remain open; this is not yet a Lean exclusion theorem.
 
 The required sources are
 [`final_polynomial.md`](../type7_focus/final_polynomial.md) and
@@ -341,8 +350,10 @@ there is no present basis for an unconditional ranking of completion time.
 
 ## 7. Geometric audit and Lean bridge
 
-The finite certificates do not yet give the requested Lean theorem.
-The following dependencies must be connected explicitly.
+The [geometric audit](geometric_audit.md) supplies the research-level
+necessity arguments and the full ray-4 hand proof. The finite certificates
+do not yet give the requested Lean theorem. The following dependencies
+must still be connected explicitly in Lean.
 
 1. **Arbitrary realization to marked data.** Start from `Type7.Realizes`,
    extract coherent shortest edge lifts and a generating cocycle, then
@@ -350,14 +361,15 @@ The following dependencies must be connected explicitly.
    four-entry `representative_count` and `orbit_partition` theorems are
    already in Lean; their hypotheses must be obtained from the actual
    realization, with the archived label/gauge convention verified.
-2. **Flat embedding to geometric premises.** Supply the Type 7 strict
+2. **Flat embedding to geometric premises.** Formalize the Type 7 strict
    neighbor-support, mixed-side, and K4-nondegeneracy implications. The
    research argument uses the spherical-link hemisphere lemma and the
    seven-vertex nonexistence/minimality argument. Existing Type 2 support
    proofs and general geometry utilities are useful components, but the
    Type 2 theorem cannot be relabeled without checking its graph-specific
-   hypotheses. These inherited premises remain explicitly conditional
-   until this bridge is proved or independently discharged.
+   hypotheses. The audit now gives the Type 7 hand arguments, including
+   deletion and retriangulation of a non-strictly-supported flat vertex;
+   the corresponding Lean bridge is still required.
 3. **Linking and generic perturbation.** Prove the torus linking-form
    facts, the linked-fiber diameter bound, and invariance under the small
    perturbations used for the necessary orientation formula. Perturbations
