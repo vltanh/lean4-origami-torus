@@ -69,3 +69,7 @@ Direct searches for embedded sharp-rhombic realizations did not find a certified
 ## Checkpoint verification
 
 During preparation of this PR, the Type 2 CNF generator and independent C++ DPLL checker were rerun (84 variables, 7,464 clauses, UNSAT, 38,849 nodes), as were the latest Type 5 radical interval checker and intrinsic hexagonal feasibility checker (PASS). This is a replay of computational checks, not an independent proof audit. Other historical verifiers and recorded outputs are preserved; they are not all rerun in this checkpoint.
+
+## Latest checkpoint: Types 4, 5, 7
+
+See [sharp-ray proof and exact systems](research/sharp_ray_checkpoint/README.md). The four hexagonal endpoint systems now have a rational formulation with quadratic metric equations and at most cubic affine minors. All four solver tests returned unknown/timeouts. A symbolic geometric proof excludes the equally spaced parallel two-ring family for the twisted Type 7 grid, including nonsymmetric rings. Neither this restricted obstruction nor any numerical search closes a type. The classification and outstanding audit qualifications above are unchanged.
