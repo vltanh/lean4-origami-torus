@@ -336,6 +336,16 @@ certificates. Representative nonlinear queries still returned `UNKNOWN`
 at 3,000 ms. These chamber exclusions do not close the full marking
 or change the fifteen-system ledger.
 
+The [Boolean certificate runner](solver_cnf_certificates.md) makes the
+directional proof workload substantially cheaper. It produces reusable
+traces, deduplicates identical CNFs, and requires the existing independent
+RUP checker to accept every step. A difficult 19,311-clause case fell from
+107.634 seconds of independent exhaustive search to 0.381 seconds for
+trace production plus independent replay in the measured workspace runs.
+All seven split-cap formulas and both vertical-V endpoint formulas passed.
+Proof-only replay needs no Z3 or numerical library; timeouts and rejected
+traces are failures, never exclusions.
+
 The [nonparallel-corner theorem](relative_cap_bounds.md#5-a-certified-exclusion-of-the-tested-nonparallel-two-stick-corner)
 now excludes one complete asymptotic construction family: clusters
 `014` and `236`, with tips `5` and `7` limiting to nonparallel transverse

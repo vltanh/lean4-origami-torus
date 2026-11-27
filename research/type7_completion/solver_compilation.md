@@ -52,6 +52,16 @@ formula or by reverse unit propagation. The solver is only a producer
 of the trace. A separate exact Python replay evaluates every primary
 orientation model, mixed-face witness, and linking number directly.
 
+The [batch certificate runner](solver_cnf_certificates.md) now reuses this
+independent checker for the directional geometry CNFs as well. It validates
+and hashes every input, shares one proof between identical clause multisets,
+and supports proof-only replay without loading Z3. One 19,311-clause formula
+that previously took 107.634 seconds of independent DPLL search took 0.274
+seconds to produce a trace and 0.107 seconds to check it. All seven formulas
+in that split-cap package passed; SAT, UNKNOWN, timeouts, and rejected proof
+steps remain failures. These workspace timings are not controlled hardware
+benchmarks.
+
 ## 2. Use the correct marked symmetry group
 
 The graph and marked metric have 32 symmetries. For each, the generator
