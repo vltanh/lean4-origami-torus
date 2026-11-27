@@ -95,3 +95,11 @@ From research/type7_focus run:
     node verify_remaining_markings.cjs
 
 The checker was executed on the current branch's archived edge shifts and face list, using integer arithmetic (BigInt for determinants), and passed the winding, phase, cyclic symmetry, seven-mask enumeration and exact witness checks. The hand derivations of the inequalities are given above. Previous geometric audit qualifications for the ray_4 closure remain unchanged.
+
+### Fixed-metric Gram relaxation trials
+
+The new generate_remaining.py produces all fifteen localized systems at y=10^6, each with 18 real unknowns (14 intrinsic coordinates and four missing squared distances). The systems impose the derived mask/phase constraints, strict shortest lifts, oriented intrinsic faces of absolute degree one, positive distances, nonedge contraction against a finite set of lattice shifts, positive-definite Gram anchor 0123, ten bordered Gram completion equations and nonzero clique minors. The rank-three Gram part is exact; the system omits the general embedding intersection conditions, so it is a necessary relaxation, not sufficient for existence.
+
+The locally generated versions (from the transcribed case data) were run with libz3. Seven ray_1 masks and ray_2 mask 03 returned UNKNOWN at a 2000 ms per-query solver limit. The remaining six ray_2 masks and ray_3 phase0 returned UNKNOWN at 500 ms. These short first attempts are not a practical exhaustion, and no branch is excluded. Generated systems are about 56–59 kB. Reproduce with:
+    python generate_remaining.py /tmp/type7-remaining 2000
+Use a longer timeout for subsequent experiments, but require a checkable infeasibility proof or a certified witness; do not interpret UNKNOWN as evidence of impossibility. The script is now committed with the actual archive loader.
