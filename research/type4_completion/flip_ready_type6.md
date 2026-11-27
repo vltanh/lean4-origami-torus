@@ -420,3 +420,157 @@ experiment, are the new reusable results. The remaining task is
 to solve the coupled reduced metric-and-embedding equations with
 strict geometric margins and validate a regular solution. No sharp-ray
 Type 4 spatial witness, new Lean result, or full case exclusion is claimed.
+
+
+## 9. The two flips are equivalent; a necessary supporting-plane theorem
+
+**New global restriction.** In the published Type 6 marking the two
+candidate flips are equivalent at every modulus. On the entire sharp
+ray with y>=2, any flip-ready embedded flat realization in this marking
+must have its convex flip quadrilateral on a supporting plane of the
+whole torus. The hexagonal flip locus remains open.
+
+### Symmetry
+
+In the published labels the permutation
+    p=(2,6,0,7,5,4,1,3)
+preserves the Type 6 face set and exchanges old/new diagonals 57/23
+with 34/07. If K is the published oriented cochain, set
+    g=((0,0),(1,0),(0,0),(1,0),(0,1),(0,1),(1,0),(1,0)).
+For every oriented old edge,
+    -K[p(i),p(j)]-K[i,j]=g[j]-g[i].
+Thus relabeling, central inversion of the lattice, and changing
+intrinsic vertex lifts preserves the marked metric problem exactly.
+Central inversion is an isometry for every lattice, not just the
+hexagonal point group. It suffices to solve the flip 57 -> 23 in this
+marking. The Type 4 relabeling after this flip is
+    (0,3,2,5,4,1,6,7).
+
+### Exhaustive geometric side dichotomy, including nongeneric embeddings
+
+Use Q=(5,7,2,3), listed in diagonal order, and O=(0,1,4,6).
+A strictly convex coplanar Q has a unique affine dependence with
+sign parts {5,7} and {2,3}. All four vertices in O lie off its plane
+by the strict-K4 argument in section 7.
+
+For the old and new triangulations, the checker verifies a K5 in
+every closed vertex neighborhood and a K4 through the vertex in
+one of the two closed link arcs for every nonadjacent neighbor pair
+(20 cases for each triangulation). These are precisely the finite
+hypotheses used in global_attack_support.md. Flatness plus embeddedness
+therefore gives strict neighbor support, strict K4s, and no antipodal
+pair of neighbor directions in both triangulations.
+
+Strict support puts the spherical link in an open hemisphere.
+Central projection to a transverse plane gives a simple polygon.
+If every edge of this polygon supports it (all other vertices on
+one weak side), the polygon is convex. Its spherical perimeter is
+then strictly less than 2*pi: the spherical Crofton formula gives
+at most two intersections with almost every great circle, and zero
+on an open set of great circles missing the compact hemisphere-contained
+polygon. This contradicts flatness. Thus at every vertex some incident
+face has other neighbors on both strict sides.
+
+Perturb the four outside vertices, holding Q fixed. Every four-point
+determinant other than Q can be made nonzero simultaneously, since
+each triple in Q is noncollinear and each such determinant is a
+nonzero polynomial in the free outside positions. Embeddedness of
+both triangulations persists: each pair of disjoint simplices is
+compact and positively separated, and the barycentric subtraction
+argument reduces all excess intersections to such pairs. Strict
+neighbor support and the strict mixed-side face witnesses persist
+too. The perturbation need not preserve the flat metric. In particular,
+generic orientation filtering is a necessary test even for actual
+solutions with extra coplanarities.
+
+The 69 nonzero brackets obey the three-term Grassmann--Pluecker signs
+(retaining the two-term specializations involving the zero bracket),
+the unique affine-dependence signs on each five-point set, forbidden
+disjoint-simplex intersections and forbidden singleton-in-neighbor-hull
+circuits for BOTH triangulations, and the mixed-face test at each vertex.
+The explicit convex-Q dependence also determines the relative signs
+of the four triples of Q with a common outside vertex. Modulo an
+ambient reflection normalizing vertex 0 to the positive side,
+the finite Boolean proof leaves precisely these two possible side
+patterns in the order O:
+    (+,+,+,+), or (+,-,+,-).
+All six other side assignments are ruled out by independent exact
+Boolean branching in flip_side_certificate.py. The SAT assignments
+to the necessary orientation clauses are not assertions of geometric
+or metric realizability.
+
+### The mixed-side branch is impossible for y>=2
+
+The disjoint directed triangles (1,7,5) and (3,6,4) in the old Type 6
+graph both wind around the horizontal period (1,0). On every generic
+mixed-side configuration satisfying the necessary clauses, edge 64
+pierces the triangular disk 175 and edges 36 and 43 do not. Each of
+the five-point sets in these three tests avoids the coplanar Q. The
+checker proves the three claims by forcing the opposite Boolean
+circuit conditions and replaying independent exhaustive branching;
+no numerical geometry or real SMT result is used.
+
+Thus the horizontal linking q(1,0) has magnitude one in this branch.
+The linking number persists under the small perturbation described
+above. For an embedded torus it is the linking number of two parallel
+horizontal intrinsic geodesics. Every horizontal geodesic has
+length one. If their linking is nonzero, their convex hulls intersect;
+their diameters are strictly less than 1/2 by the equality case of
+the arc-length bound. For arbitrary points on different horizontal
+fibers, use a common point of their convex hulls to bound the distance
+strictly below one; on a common fiber use its diameter. Compactness
+gives extrinsic surface diameter strictly less than one.
+
+After the flip, the four-edge cycle (1,3,2,4) has period (1,-2)
+in the checked cochain. Its physical winding vector at tau=1/2+i*y
+is (0,-2y). Its intrinsic length equals its sum of spatial edge
+lengths. Consequently
+    2y <= length(1324) < 4.
+Hence the mixed branch necessarily has y<2. For y>=2 the only
+remaining side pattern places all four other vertices strictly on
+one side of the plane of Q, so Q is a convex supporting face of
+the spatial convex hull. The proof includes y=2 and has no
+nondegeneration lower bound on the quad's area or outside heights.
+
+### Scope and numerical diagnostics
+
+The exact orientation enumeration (optional libz3 replay) returns
+325 necessary bracket sign assignments, 305 same-side and 20
+mixed-side. Filtering by horizontal unlinking leaves 149 same-side
+assignments for the long tail y>=2. These counts concern generic
+orientation relaxations, not 325 metric cases or 176 geometric
+exclusions. The side and mixed-link restrictions have a separate
+pure-Python DPLL proof. Checking the broader homological linking
+forms on 1,210 disjoint-cycle pairs of the two triangulations did
+not prune the 325 hexagonal sign assignments.
+
+A new numerical diagnostic used the plane-anchor parameterization,
+19 remaining old-edge squared-distance residuals, intrinsic face
+areas, nearest-lift gaps for both diagonals and all old edges,
+nonedge chord bounds, and 69 signed-bracket penalties. Its analytic
+Jacobian was checked against finite differences. The hexagonal
+search prioritized all 20 mixed-side sign assignments, then
+same-side ones in a seeded order. At least 241 local optimizations
+completed before the external time limit. The best logged weighted
+residual was about 0.00221 with a wrong bracket sign; no embedded
+solution was found. These attempts had numerical margin and
+parameter bounds and are not an exhaustive real search or a
+nonexistence result.
+
+Reproduce the finite theorem from the repository root:
+
+    python3 research/type4_completion/flip_side_certificate.py
+
+Optional projected counts:
+
+    python3 research/type4_completion/flip_side_certificate.py --enumerate
+
+The constituent side, symmetry, link, and cycle tests were executed
+on the equivalent scratch implementation; the repository replay
+and Lean formalization remain to be audited. No regular Type 4
+spatial witness, full marking exclusion, or new Lean theorem is
+claimed. The supporting-plane result reduces the constructive
+long-tail target, while the hexagonal target still has two
+geometric branches. This result is specific to a flip-ready
+solution in the published marking; a Type 4 torus without this
+flip is not excluded by it.
