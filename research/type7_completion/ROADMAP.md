@@ -286,6 +286,16 @@ Exact reconstruction and all 322 emitted incidence minors are checked
 against independent rational physical coordinates. Its 9,140-assertion
 query at `tau*` returned `UNKNOWN (timeout)` in one 30,000 ms trial.
 
+The alternative [face-023 chart](remaining_null_chart.md) reduces the
+metric degree to **21 quadratic equations in 29 real variables**. Three
+are exact differences of anchor distances. It also removes 24 implied
+phase tests, cancels eight strictly positive incidence factors, and turns
+six relative-area alternatives into linear inequalities. All actual zero
+boundaries remain represented. An independent checker verifies the
+physical metric, all 322 incidence minors, the factor identities, and the
+two-arc nonedge reduction. This is a more tractable exact formulation;
+it does not by itself exclude a chamber.
+
 The new [finite chamber compiler](solver_compilation.md) removes the
 repeated Boolean search. Exact enumeration and an independently checked
 RUP trace cover 1,888 generic sign completions. The 16 marked symmetries
