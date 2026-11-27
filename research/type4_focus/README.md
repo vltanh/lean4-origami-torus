@@ -183,3 +183,48 @@ Every quantity here is a polynomial in the intrinsic coordinates via the clique 
 ### Experimental status
 
 A separate orthogonal-transverse-coordinate formulation (25 variables, 17 residual edge equations) was tried numerically using JAX Jacobians and SLSQP. Twenty generic-margin starts and 100 starts with nonclique/nonedge inequalities weak yielded no strict feasible witness. An additional 30 starts in tetrahedral affine coordinates, seeded with the sign-only witness, also yielded none. These searches are not exhaustive, and weak margins/near-degenerate configurations are not certificates. The scripts for these exploratory searches are not relied upon for any theorem. The exact sign witness and exact polynomial relaxation are the reproducible results of this iteration. H13 remains open; all 31 classes and the Type 4 universality classification remain unresolved.
+
+
+## 11. H13: exact exclusion of 40 determinant degeneracies
+
+**Status:** H13 remains open. The following is a necessary strengthening of its metric feasibility system, not a nonexistence certificate.
+
+Let (D_Q) be the affine determinant of a sorted quadruple. In the weak closure of the H13 sign model, its assigned sign is weakly satisfied. Initially the 23 clique determinants are strict by the strict-support/K4 lemma. The following finite rule propagates strictness, without assuming general position of noncliques.
+
+Suppose (D_Q=0). Choose a fifth vertex (w) and put (C=Q\cup\{w\}), in sorted order. If one replacement determinant (D_{C\setminus\{v\}}), (v\in Q), is already known strict, the five augmented point columns have rank four. Their signed cofactor dependence is nonzero; the coefficient at (w) is zero and each of the other coefficients is either zero or has its H13 cofactor sign. The nonzero coefficients must sum to zero. If their prescribed positive and negative sets are disjoint simplices, normalizing the coefficients gives a forbidden intersection of their subfaces. If either set is a singleton and the other consists of neighbors of that singleton, the dependence contradicts strict neighbor support. A single-sign set is impossible as well. Thus (D_Q) must be strict whenever this rule applies.
+
+[verify_h13_strict.py](verify_h13_strict.py) checks this rule with only integer sign arithmetic. Two rounds force 35 and then 5 additional strict determinants, for 63 in total. The only determinants not proved strict are
+
+    0147 0237 0256 0257 0467 1247 1357
+
+The rule checks that all 24 quadruples obtained by uniting the two incident triangles at an edge are strict. In particular **all 24 edges are genuine creases**, even for a nongeneric H13 flat embedding. The original 23 strict signs are a premise, not a new proof of the earlier geometric reduction.
+
+### Strict nonedge chord contraction
+
+Let (i,j) be distinct nonadjacent vertices. If their extrinsic chord length equaled their intrinsic distance, an intrinsically shortest path would map to the straight chord (equality in Euclidean path length). It cannot pass through a third vertex: the two local chord rays would be antipodal, whereas the entire incident star has strictly supported directions. A straight intrinsic geodesic entering a face and crossing an edge transversely cannot stay straight extrinsically when the adjacent face planes differ. A geodesic locally along an edge continues along that edge until a vertex, which is already excluded. Thus a path mapping to a straight chord would have to lie in a single triangle or a single edge, impossible for nonadjacent vertices. Hence all four nonedge chords are strictly shorter than their intrinsic distances, and positive by injectivity.
+
+At the hexagonal modulus in gauge (p_4=0, K_{4j}=0), each (p_i) lies in the open nearest-lift Voronoi cell. If a translate of (p_j-p_i) by the lattice vector (k=(a,b)) is nearest, it lies in the closed cell. The three integral strip coordinates of (k), (2a+b,a+2b,a-b), have absolute values strictly less than 3 and therefore at most 2. Exhaustive integer arithmetic leaves just the zero vector and the six unit lattice vectors. This proves that seven comparisons per nonedge suffice, rather than the previous 25-shift sample. No nearest lift is missed, including ties.
+
+The updated [h13_edge45.py](h13_edge45.py) uses the 63 strict signs, all seven strict nonedge distance bounds, positive nonedge squared distances and the four strict volume comparisons. It has 22 real variables and 298 assertions (previously 362). A local equivalent generator produced the stated counts and was passed to libz3; the run was terminated by the external 15-second time limit, with no SAT/UNSAT answer. This is not a solver-certified infeasibility result.
+
+### A checked limitation of a curvature relaxation
+
+For a generic height direction, let (I_v=1-c_v/2), where (c_v) counts sign changes between consecutive neighbors in the cyclic link of (v), relative to the height of (v). Crofton's formula gives average (I_v=1-\theta_v/(2\pi)) for cone angle \(\theta_v\). Any total height order has every prefix strictly separable from its complement. Reject an order if a full-sign affine circuit of five points has its positive and negative supports in opposite sides of a cut. This is necessary even in the weak-sign closure: an actual strict height order persists under a sufficiently small generic perturbation that realizes a permissible sign model. The cut filter leaves 128 forbidden masks, 3298 orders, and 210 distinct index vectors, counting both height directions.
+
+This coarse relaxation cannot give a nonzero weighted curvature inequality: it contains the following seven pairs of opposite index vectors. Each row gives the two height orders realizing opposite *relaxed* index vectors, not necessarily realizable orders in a particular geometry.
+
+| order | opposite order |
+|---|---|
+| 02516374 | 51027436 |
+| 02517436 | 42367015 |
+| 02563741 | 54103726 |
+| 02741356 | 15026374 |
+| 04572136 | 15076342 |
+| 06231574 | 15047632 |
+| 07234165 | 23705164 |
+
+The seven index vectors obtained from the first column, dropping coordinate 0, have determinant 2. Thus their span is the full sum-zero subspace. Any weight nonnegative on all relaxed index vectors is orthogonal to each pair and is constant, yielding only the Euler-characteristic identity. This excludes the proposed *linear weighted-index certificate using only the cut filter*, not all curvature-based methods. Enumeration and rank were checked locally with Python and exact integer/rational arithmetic.
+
+A separate 12-start floating-point least-squares search varied the full extrinsic configuration, imposing zero cone deficits and penalizing violation of the H13 generic signs, without prescribing the hexagonal modulus. No strict flat witness was obtained; some residuals approached zero with sign violations. This does not rule out even generic flat H13 realizations, much less weak-sign ones. Do not treat it as an exclusion.
+
+**Next gate:** a verified positive or negative metric result for H13. All 31 hexagonal classes remain unresolved; do not count 40 excluded determinant degeneracies as 40 excluded orientation models. The new strictness and chord lemmas are rigorous conditional consequences of the earlier embedding/marking reduction, which still needs audit.
