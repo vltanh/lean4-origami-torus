@@ -148,6 +148,15 @@ In alignment II it is
 Both contradict (1). These identities are checked symbolically. Thus
 the last two class pairs are impossible, completing the classification.
 
+### Stronger point-sign alternative
+
+The [V/V point-sign proof](exhaustive_vv_geometry.md) now excludes both
+alignments directly. Only 32 fixed mixed brackets are needed, and the
+two formulas are contradictory by unit propagation. This alternative
+uses no metric stress, so it also applies to anisotropically stretched
+limits whose physical length cost becomes a seminorm. The stress
+identities above remain valid independent checks.
+
 ## Verification
 
 ```sh

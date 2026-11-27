@@ -307,14 +307,19 @@ leaving only **2–16** of the original 524 actual circuit tests per chamber.
 Unproved nonclique zero boundaries remain, and the nonedge inequalities
 reduce from 252 to eight.
 
-Thirteen complete weak chambers are now excluded. Exact final
+Thirty complete weak chambers are now excluded. Exact final
 polynomials close **23 and 131**; a uniform metric volume comparison and
 one affine identity close **129 and 130**. General raw-volume difference
 certificates close **88, 91, 93, 95, 96, 97, 98, 99, and 100** by exact
 weighted sums of metric inequalities and affine identities. All metric
-certificates hold for every `y>=8`. Thus **119 of 132 metric chambers
-remain**. The manifest records every proof and exports no query for an
-excluded case.
+certificates hold for every `y>=8`. Seventeen further chambers have
+exact quadratic certificates, combining metric inequalities multiplied
+by nonnegative raw brackets with affine cocycle products and GP identities.
+Nine reference certificates are reused by exact coefficient checks under
+marked symmetries. Independent finite product trees also cover two of
+these cases for `y>=32`, with every branch and zero boundary checked.
+Thus **102 of 132 metric chambers remain**. The manifest records every
+proof and exports no query for an excluded case.
 The independent verifier binds the coverage CNF to the manifest and
 replays all strictness witnesses, circuit omissions, and chamber
 certificates. Representative nonlinear queries still returned `UNKNOWN`
@@ -370,6 +375,16 @@ Together these results prove: **every unbounded ray-3 sequence has both
 limiting caps on one common line.** Common-line limits are now the
 remaining asymptotic geometric gate. These results still give no finite
 height threshold and do not exclude `ray3_phase0` at `tau*`.
+
+The first common-line blow-up reductions are also exact. The
+[full point-sign V/V proof](exhaustive_vv_geometry.md) excludes both
+out-and-back alignments by unit propagation, even after an arbitrary
+anisotropic stretch. A stress identity excludes trapezoids whose bases
+have zero physical horizontal component. For the other base direction,
+the [complete zero-cone check](common_line_trapezoids.md) proves that two
+noncollinear stretched caps require a triple cluster and one tip in each
+original physical cap. Stretched limits with only one noncollinear cap,
+and the resulting common-line two-tip limits, remain to be excluded.
 
 The next requirement is a contradiction across the remaining angular
 region using the exact metric and required long-ring linking. An

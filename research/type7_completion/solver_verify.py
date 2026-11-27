@@ -23,6 +23,8 @@ import solver_chambers as producer
 import solver_final_polynomials
 import solver_metric_certificates
 import solver_metric_differences
+import solver_metric_products
+import solver_metric_quadratics
 from verify_linking import lk, short_pairs
 
 
@@ -100,7 +102,9 @@ def main(directory):
     final_polynomial_excluded = []
     metric_excluded = []
     metric_difference_excluded = []
-    solver_metric_certificates.symbolic_checks()
+    metric_product_excluded = []
+    metric_quadratic_excluded = []
+    solver_metric_quadratics.symbolic_checks()
     partitions = producer.circuit_partitions(faces, edges)
     for row in source['chambers']:
         model = tuple(1 if value == '+' else -1 for value in row['signs'])
@@ -164,6 +168,16 @@ def main(directory):
             assert certificate is not None
             assert json.loads(json.dumps(certificate)) == row['metric_difference_certificate']
             metric_difference_excluded.append(row['id'])
+        if 'metric_product_certificate' in row:
+            certificate = solver_metric_products.verify(model, strict, source['symmetries'])
+            assert certificate is not None
+            assert json.loads(json.dumps(certificate)) == row['metric_product_certificate']
+            metric_product_excluded.append(row['id'])
+        if 'metric_quadratic_certificate' in row:
+            certificate = solver_metric_quadratics.verify(model, source['symmetries'], edges)
+            assert certificate is not None
+            assert json.loads(json.dumps(certificate)) == row['metric_quadratic_certificate']
+            metric_quadratic_excluded.append(row['id'])
         retained = {(tuple(a), tuple(b)) for a, b in row['remaining_circuits']}
         expected_retained = set()
         for support, positive in partitions:
@@ -183,8 +197,13 @@ def main(directory):
         assert metric_excluded == [129, 130, 131]
     if metric_difference_excluded:
         assert metric_difference_excluded == list(solver_metric_differences.CASES)
+    if metric_product_excluded:
+        assert metric_product_excluded == list(solver_metric_products.CASES)
+    if metric_quadratic_excluded:
+        assert metric_quadratic_excluded == list(solver_metric_quadratics.CASES)
     excluded = sorted(set(final_polynomial_excluded) | set(metric_excluded)
-                      | set(metric_difference_excluded))
+                      | set(metric_difference_excluded) | set(metric_product_excluded)
+                      | set(metric_quadratic_excluded))
     if final_polynomial_excluded and metric_excluded:
         assert {23, 129, 130, 131} <= set(excluded)
 
@@ -222,6 +241,10 @@ def main(directory):
         print('PASS exact raw-bracket metric exclusions of weak chambers 129, 130, 131 for y>=8')
     if metric_difference_excluded:
         print('PASS nine exact raw-bracket difference exclusions for y>=8')
+    if metric_product_excluded:
+        print('PASS exact finite product certificates for weak chambers 28 and 36, y>=32')
+    if metric_quadratic_excluded:
+        print(f'PASS {len(metric_quadratic_excluded)} exact quadratic raw-bracket exclusions for y>=8')
     if excluded:
         print(f'PASS {len(excluded)} complete weak chambers excluded; {132 - len(excluded)} remain')
     print('Completeness additionally requires the independent RUP replay; no full marking exclusion is claimed.')

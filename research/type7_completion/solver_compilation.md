@@ -1,25 +1,26 @@
 # Finite chamber compilation for the full ray-3 search
 
-The full ray-3 search now has **119 remaining metric chambers**. Exact
+The full ray-3 search now has **102 remaining metric chambers**. Exact
 Boolean enumeration covers 1,888 generic sign completions, and verified
 phase symmetries reduce them to 132 representatives. Two complete weak
 chambers are excluded by Grassmann–Plücker final polynomials; two more
 are excluded by a metric volume comparison and an affine identity. Nine
 further chambers are excluded by exact weighted sums of raw-volume
-difference bounds and affine identities. The exclusions retain actual
-zero nonclique minors.
+difference bounds and affine identities. Seventeen further chambers have
+exact quadratic certificates. The exclusions retain actual zero nonclique
+minors.
 
 The compiler removes all Boolean variables and almost all actual circuit
 tests. Its optional face chart uses **29 real variables and 21 quadratic
 metric equations**, instead of the direct chart's 27 variables and
 19 equations of degree at most four. The direct compiled queries have
 297–311 assertions and 92–108 kB, compared with 9,140 assertions and about
-820 kB in the uncompiled direct query. The face-chart queries have **310–324 assertions and 80,808–95,178
-bytes**, after positive factor cancellation and linear area alternatives.
+820 kB in the uncompiled direct query. The face-chart queries have
+**310–324 assertions and 80,808–95,178 bytes**, after positive factor cancellation and linear area alternatives.
 
 Enumeration is approximately four times faster and its complete model
 set is unchanged. Representative nonlinear trials still returned
-`UNKNOWN (timeout)` at 3,000 ms. The thirteen exclusions below have exact
+`UNKNOWN (timeout)` at 3,000 ms. The thirty exclusions below have exact
 certificates independent of those trials. **The full ray-3 marking
 remains open.**
 
@@ -157,7 +158,7 @@ replaces the two orientation branches and redundant sum equations by
 the sixteen individual negative-area inequalities. Duplicate K4
 nonzero tests are absorbed into the corresponding strict chamber signs.
 
-## 5. Thirteen complete weak chambers are excluded
+## 5. Thirty complete weak chambers are excluded
 
 [`solver_final_polynomials.py`](solver_final_polynomials.py) excludes
 chambers **23 and 131**. Each proof uses six signed Grassmann–Plücker
@@ -202,7 +203,23 @@ result has nonnegative coefficients on all bracket magnitudes and a
 strictly positive coefficient on a nonzero K4. The standalone checker
 reconstructs every source inequality and adds its coefficients with
 rational arithmetic; no LP tolerance is used. These nine cases hold at
-every `y>=8` and leave 119 chambers.
+every `y>=8`.
+
+The [quadratic certificates](solver_metric_quadratics.md) add seventeen
+more chambers by multiplying the same inequalities by nonnegative raw
+bracket magnitudes and adding affine cocycle products and GP identities.
+Nine reference certificates cover **9, 10, 28, 30, 31, 32, 34, 36, 37,
+38, 40, 41, 50, 62, 70, 116, and 117** after exact symmetry/sign reuse.
+Each residual has nonnegative coefficients and a positive coefficient
+on a product of two nonzero K4 brackets. The replay uses exact rational
+arithmetic and accepts every zero nonclique bracket. All hold for `y>=8`.
+
+Independent [finite product certificates](solver_metric_products.md)
+also close 28 and 36 for `y>=32`. They cover every branch of necessary
+maximum-term comparisons and replay 121 and 30 exact integer
+cancellations. The proof explicitly handles zero right-hand brackets
+without taking their logarithms. Both proofs are retained for these
+cases; the combined union is **30 excluded and 102 remaining**.
 
 ## 6. Lower the metric degree and cancel positive factors
 
@@ -239,8 +256,8 @@ g++ -O3 -std=c++17 research/type7_completion/solver_check_rup.cpp -o /tmp/type7-
 
 The generated manifest records every model, exact symmetry and gauge,
 strictness witness, remaining circuit partition, exclusion certificate,
-and query size. It retains all 132 rows and emits 119 queries, omitting
-the thirteen cases carrying verified exclusion certificates. Regeneration removes stale query files for
+and query size. It retains all 132 rows and emits 102 queries, omitting
+the thirty cases carrying verified exclusion certificates. Regeneration removes stale query files for
 these excluded chambers.
 Generated files and large proof traces stay outside the source tree.
 
