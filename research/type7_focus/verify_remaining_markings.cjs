@@ -80,3 +80,24 @@ function check(cases,faces){
 }
 console.log(JSON.stringify(check(read('cases.json'),read('lutz_faces.json')),null,2));
 console.log('PASS exact winding, gauge, generic embedding, support, and linking checks');
+
+// Cyclic rotation preserves each marking up to an integral vertex gauge.
+const V=[0,1,2,3,4,5,6,7], mod=i=>(i%8+8)%8;
+for(const t of [1,2,3]){
+ const c=read('cases.json').find(c=>c.file===`t7_ray_${t}.smt2`),K={};
+ for(const {edge:[i,j],shift:a} of c.edge_shifts){K[`${i}${j}`]=a;K[`${j}${i}`]=a.map(x=>-x)}
+ const g=[[0,0]],diff=(i,j)=>K[`${mod(i+1)}${mod(j+1)}`].map((x,k)=>x-K[`${i}${j}`][k]);
+ for(let i=0;i<7;i++)g.push(g[i].map((x,k)=>x+diff(i,i+1)[k]));
+ for(const e of Object.keys(K)){const [i,j]=[...e].map(Number);if(!diff(i,j).every((x,k)=>x===g[j][k]-g[i][k]))throw Error('rotation gauge')}
+}
+const masks=new Set();
+for(let m=1;m<256;m++){
+ const s=V.filter(i=>(m>>i)&1), left=new Set(s);let cc=0;
+ while(left.size){let stack=[[...left][0]];left.delete(stack[0]);cc++;
+  while(stack.length){const i=stack.pop();for(const j of [...left])if(Math.min(mod(i-j),mod(j-i))<=2){left.delete(j);stack.push(j)}}
+ }
+ if(cc===2)masks.add(V.map(k=>s.map(v=>mod(v+k)).sort((a,b)=>a-b).join('')).sort()[0]);
+}
+const expected=['03','04','014','015','025','0125','0145'];
+if(masks.size!==7||!expected.every(s=>masks.has(s)))throw Error('mask orbits');
+console.log('PASS seven cyclic large-step mask orbits:',expected.join(' '));
