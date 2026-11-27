@@ -122,6 +122,10 @@ not supply the final contradiction or a compiled Lean theorem.
 
 The new [proof and ledger](planar_patterns.md) enumerates the entire regular planar inflation route at the hexagonal marking, not just the two-flip family. An exact necessary-condition screen reduces 32,768 masks (global sign reversal identified) to 448 masks / 82 symmetry classes. Six complete three-parameter classes (33 masks) are excluded by uniform negative height-sign cycles, including a forced coincident projected pair. **415 masks / 76 classes remain.** See [screen verifier](verify_planar_patterns.py) and [family verifier](verify_planar_families.py); the latter prints the remaining ledger. The corrected intrinsic orientation is -2 for the recorded marking. No regular embedded lift has been constructed. This does not exclude nonregular or nonplanar embeddings; the elongated 0/19 count and full hexagonal status are unchanged.
 
+## Saturated-route obstruction — 2026-11-27
+
+The [geometric saturated-route theorem](saturated_routes.md) characterizes distance-preserving intrinsic lifts of a regular mixed-star planar folding: they must come from an unfolded face component or a straight degree-two crease chain. At the hexagon, fourteen complete remaining classes (72 masks) have an unlisted lift forced to tie a known route by a sum of only two to four shortest inequalities, all with coefficient one. The [standard-library integer verifier](verify_saturated_routes.py) checks every certificate and symmetry orbit. **62 classes / 343 masks remain** in the regular planar ledger. The earlier six geometric exclusions are not double-counted. This does not settle arbitrary spatial embeddings or the elongated cells; no Lean theorem is added.
+
 ## 1. What would finish Type 5?
 
 Existence is already established. The remaining question has two possible
