@@ -27,17 +27,19 @@ Types 4 and 6 share a degree sequence and have different graphs. Lean verifies t
 
 ## Completion roadmap
 
-The remaining classification question is **universality**. Existence or nonexistence is already settled for all seven types. The working order is to finish **Type 4**, starting with one complete case, before resuming Types 5 and 7. Historical research packages remain available, but their earlier active targets do not override this order.
+The remaining classification question is **universality**. Existence or nonexistence is already settled for all seven types. Three independent research workstreams now have detailed completion roadmaps: [Type 4, PR #2](https://github.com/vltanh/lean4-origami-torus/pull/2), [Type 5, PR #3](https://github.com/vltanh/lean4-origami-torus/pull/3), and [Type 7, PR #4](https://github.com/vltanh/lean4-origami-torus/pull/4). All three drafts target this research branch.
+
+**Recommended next attempt: finish the whole Type 7 `ray3_phase0` marking.** It has one localized phase, quantitative cap separation, and required long-ring linking; ray 4 already has a conditional exclusion. This is a reason to try a complete marking, not evidence that Type 7 is the fastest whole type. Type 4's ray-2 transport estimates remain useful, but no full Type 4 case is closed. The counts of eight Type 4 families, nineteen Type 5 cells, and fifteen Type 7 systems describe different continuous domains and do not rank their difficulty. The previous instruction to defer Types 5 and 7 until Type 4 is finished is superseded.
 
 | Type | Completed result | Work needed to finish the type | Current action |
 |---|---|---|---|
 | 1 | Nonexistence, proved in Lean | None for this classification | Retain the proof |
 | 2 | Nonexistence, proved in Lean | None for this classification | Retain the proof |
 | 3 | Universality, proved in Lean | None for this classification | Retain the proof |
-| 4 | Existence and the full reduced open strip, proved in Lean | Decide the sharp-rhombic boundary: either one impossible modulus in both markings, or coverage of the entire missing boundary | **Active: finish `ray2_2`, then the other seven cases** |
-| 5 | Exact square and nonrectangular box, proved in Lean | A single-modulus obstruction covering every marking, or a construction covering every missing modulus | Deferred; the current elongated target has 19 open localized families |
+| 4 | Existence and the full reduced open strip, proved in Lean | Decide the sharp-rhombic boundary: either one impossible modulus in both markings, or coverage of the entire missing boundary | First Type 4 case: `ray2_2`, then the other seven; [detailed roadmap in PR #2](https://github.com/vltanh/lean4-origami-torus/pull/2) |
+| 5 | Exact square and nonrectangular box, proved in Lean | A single-modulus obstruction covering every marking, or a construction covering every missing modulus | Finish the five-cell F1 block, then cover all 19 localized cells; [detailed roadmap in PR #3](https://github.com/vltanh/lean4-origami-torus/pull/3) |
 | 6 | Universality, proved in Lean | None for this classification | Retain the proof |
-| 7 | Existence and the full reduced open strip, proved in Lean | A single-modulus obstruction covering every marking, or coverage of the entire missing boundary | Deferred; the current target has 15 open branches, with ray 4 excluded under the recorded geometric premises |
+| 7 | Existence and the full reduced open strip, proved in Lean | A single-modulus obstruction covering every marking, or coverage of the entire missing boundary | **Recommended next: all of `ray3_phase0`**, then the two seven-mask unions; audit the conditional ray-4 exclusion; [detailed roadmap in PR #4](https://github.com/vltanh/lean4-origami-torus/pull/4) |
 
 ### Type 4: one fixed target, eight complete cases
 
@@ -51,8 +53,8 @@ The [finite cover](research/type4_focus/fixed_metric.md) gives the following eig
 
 | Case | Labels in vertex order 0,...,7 | Cap cycles in this representative | Full-case status |
 |---|---|---|---|
-| `ray2_2` | `20220012` | 145 / 0273; vertex 6 in the broadened strip | **Active; open** |
-| `ray2_1` | `12220002` | 456 / 1273; equivalent to 145 / 0263 | Next; open |
+| `ray2_2` | `20220012` | 145 / 0273; vertex 6 in the broadened strip | First Type 4 case; open |
+| `ray2_1` | `12220002` | 456 / 1273; equivalent to 145 / 0263 | Next within Type 4; open |
 | `ray1_1` | `00120212` | 014 / 357 | Open |
 | `ray1_2` | `00130222` | 014 / 567 | Open |
 | `ray1_3` | `00230223` | 014 / 256 | Open |
@@ -67,25 +69,29 @@ The [finite cover](research/type4_focus/fixed_metric.md) gives the following eig
 
 The present count is **0/8 full cases excluded**. A certified embedded solution in any row would refute this proposed counterexample modulus and trigger a deliberate change of target or a constructive boundary proof. It would settle that modulus, not universality.
 
-Generate just the active complete case, retaining every intersection test:
+Generate the first Type 4 case, retaining every intersection test:
 
 ```sh
 python3 research/type4_focus/type4_fixed_cubic.py /tmp/type4-ray2_2 --case ray2_2 --full
 ```
 
-### Active case: checked proof work
+### Type 4: checked proof work
 
 The [cap calculation](research/type4_completion/ray2_2_geometry.md) now gives exact Gram and vertex-to-edge identities for all three small-margin regimes of triangle 145, together with positive nearest-lift deficit inequalities. These retain the cap area and vertical tilt at their actual scales. The [local affine-sign lemma](research/type4_completion/core_signs.md) gives six allowed Radon patterns for each of the two five-vertex cliques, including the implications `lambda6(2)<0 => lambda4(2)>0` and `lambda6(3)<0 => lambda5(3)>0`. The strict K4 premise excludes zero coefficients, without requiring any uniform lower bound on them.
 
 An [exact algebraic core](research/type4_completion/algebra.md) satisfies all its metric equations, shortest lifts, intrinsic face orientations and the tested nonedge contractions while having opposite cap signs. Its certified edge 15 / face 264 crossing shows why those metric conditions alone cannot prove the desired sidedness. The [linking audit](research/type4_completion/linking_audit.md) likewise supplies actual nonflat configurations for both allowed linking forms and qualitative cap separation. These are diagnostics of insufficient arguments, not realizations of the target torus.
 
-All four new exact checkers passed on this checkout, and the active full system regenerated with 23 variables and 890 assertions. The next proof must combine the metric identities with the actual nonintersection conditions across the A, B and C collapse regimes. The proposed metric sign implication is explicitly **unproved**; no full-case count or Lean theorem has changed.
+All four new exact checkers passed on this checkout, and the full `ray2_2` system regenerated with 23 variables and 890 assertions. The next Type 4 proof must combine the metric identities with the actual nonintersection conditions across the A, B and C collapse regimes. The proposed metric sign implication is explicitly **unproved**; no full-case count or Lean theorem has changed.
 
-### Completion criteria and deferred work
+### Completion criteria and parallel work
 
 A case closes only with a mathematical contradiction valid on its entire domain, an independently replayable exact infeasibility certificate, or an exact embedded witness that changes the proposed obstruction strategy. Numerical nonconvergence, timeout, an uncheckable solver verdict, and an exclusion requiring a positive limiting area do not meet this criterion. Each new proof must state which geometric premises it uses; algebra checks alone do not discharge those premises.
 
-For Type 5, retain the [19-family fixed target](research/type5_focus/fixed_elongated/README.md) and the [complete weak-chamber tests](research/type5_closure/weak_chamber_reduction.md). For Type 7, retain the current fifteen ray-1/2/3 systems and the [ray-4 exclusion](research/linking_checkpoint/cycle_thresholds.md); the [ray-3 metric system](research/type7_closure/README.md) must retain its required linking and all degenerate intersection tests. Resume these types after the focused Type 4 work, without repeating the recorded undecided queries unchanged.
+For Type 5, the first milestone is the entire five-cell F1 block in the [19-cell fixed target](research/type5_focus/fixed_elongated/README.md), using the full metric and embedding conditions. A limiting cap-collapse argument or one closed cell does not close F1. The [complete weak-chamber tests](research/type5_closure/weak_chamber_reduction.md) support a separate hexagonal fallback; its chamber counts are not the elongated cell counts.
+
+For Type 7, the next milestone is the entire canonical ray-3 phase at the same modulus. Its [full metric system](research/type7_closure/README.md) must retain the required linking and every degenerate intersection test; its metric relaxation is already known feasible. A ray-3 exclusion would leave fourteen ray-1/2 masks and the geometric audit of the [ray-4 exclusion](research/linking_checkpoint/cycle_thresholds.md). New solver work must add a justified estimate or certified reduction rather than repeat an undecided query unchanged.
+
+The draft roadmaps specify full case ledgers, proof gates, boundary obligations, exact reproduction commands, constructive alternatives and the final Lean bridges. They change the work plan, not the theorem ledger: **0/8 Type 4 cases, 0/19 Type 5 cells, and 0/15 currently open Type 7 systems are excluded.** A whole-type obstruction must cover every marking at one common modulus; exclusions at unrelated moduli cannot be assembled into it.
 
 ## Repository layout
 
