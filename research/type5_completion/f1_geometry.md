@@ -1,10 +1,12 @@
-# Exact cap identities for the whole F1 block
+# Type 5 F1: cap bounds and a geometric reduction
 
 **Scope.** These are necessary identities and inequalities for every realization
 in any of the five F1 cells. They do not exclude a cell. They identify the
 possible cap degenerations explicitly, without a lower bound on cap area.
-The proof uses the exact edge metric and the strict horizontal nearest-lift
-inequality, not a nonzero tetrahedron or an orientation archive.
+The cap identities use the exact edge metric and the strict horizontal
+nearest-lift inequality, not a nonzero tetrahedron or an orientation archive.
+The later geometric reduction also uses embeddedness, the separated cap
+hulls, and the strict support/K4 facts proved in `coverage.md`.
 
 ## 1. A primitive horizontal triangle has three positive short increments
 
@@ -192,3 +194,225 @@ displayed SOS identities apply after replacing `B` by `B/w` and `b` by
 `c`; all denominators are known positive and may be cleared. The bound is
 an additional useful consequence of the exact edge metric and the
 shortest-lift inequalities, not an independent assumption.
+
+## 7. Cutting along the caps
+
+Write `A=conv(r0,r1,r4)` and `B=conv(r3,r5,r6)`. In every one of the five
+finite F1 cells, the two triangles are nondegenerate by the cap determinant
+bound, and their convex hulls are disjoint by the quantitative localization.
+Neither statement requires a positive lower bound on the cap area.
+
+Cutting the abstract torus along their boundary cycles gives two annuli:
+
+| Annulus | Actual faces | Interior vertices |
+|---|---|---|
+| Short annulus | `031 053 045 136 164 465` | None |
+| Other annulus | `012 024 152 147 175 263 237 274 256 357` | `2,7` |
+
+Adding the two cap disks to the short annulus gives the abstract octahedral
+sphere with opposite vertex pairs `06,15,34`. Adding the caps to the other
+annulus gives the boundary of the abstract tetrahedron chain
+
+```
+0124 --124-- 1247 --127-- 1257 --257-- 2357 --235-- 2356.
+```
+
+All five tetrahedra are strict K4s. This last statement is a combinatorial
+decomposition: it does not assert that the spatial tetrahedra have disjoint
+interiors or that the capped second annulus is embedded.
+
+### Empty-annulus capping lemma
+
+**Claim.** The short annulus together with `A` and `B` is an embedded
+polyhedral sphere.
+
+Here is a general proof, including coplanar configurations. Let `F` be one
+of the short-annulus triangles. Its vertices split into a nonempty proper
+face `I` of the triangular cap `A` and a nonempty set `J` of vertices of
+`B`. Suppose `p` belongs to `F intersect A` but not to `conv(I)`. Write
+
+```
+p=(1-t)*a+t*b,   a in conv(I), b in conv(J), 0<t<=1.
+```
+
+Since `A` and `B` are disjoint, `b` is outside `A`. Continue the segment
+from `a` through `p` toward `b`. Both `a` and `p` lie in the plane of `A`,
+so this segment does also. It exits `A` at a point `q` of its boundary,
+still in `F`. The point `q` cannot belong to `conv(I)`: a segment starting
+in a proper face of a triangle and passing outside that face cannot return
+to it along the same ray. Thus an actual boundary edge of `A` meets the
+actual face `F` beyond their common simplex, contradicting embeddedness.
+
+It follows that `F intersect A=conv(I)`. The same proof applies to `B`.
+The caps do not meet each other, and all remaining face intersections are
+already those of the embedded torus. The augmented abstract octahedron is
+therefore embedded. Denote its sphere by `S` and its bounded complementary
+region by `K`.
+
+This argument is independent of cap-plane exposure. In particular, it
+does not infer convexity from positive capped angle deficits.
+
+## 8. Three exhaustive positions of the anchor face
+
+The actual face `125` now gives a geometric alternative covering all of
+F1. The following argument uses no orientation-sign enumeration.
+
+First, `r2` is outside `conv(A union B)` and hence outside the closure of
+`K`. Indeed vertex 2 is adjacent to every other vertex, so its strict
+supporting functional separates it from the six cap vertices. Also, any
+point outside their convex hull is outside the bounded region: a separating
+linear functional gives a ray to infinity avoiding the entire sphere.
+
+Next, the actual edge `15` meets `S` only at its endpoints. Embeddedness
+already gives this for the six side faces. The cap intersections follow by
+the same exit argument as above, now with one vertex in each cap. Its open
+segment is consequently either entirely inside `K` or entirely outside.
+
+Define two possible piercings:
+
+```
+P_A: the open edge 25 meets the relative interior of cap 014;
+P_B: the open edge 12 meets the relative interior of cap 356.
+```
+
+The relevant K4 conditions make both piercings transverse: vertices 2 and
+5 are off the plane of `014`, and vertices 1 and 2 are off the plane of
+`356`. Every extra intersection of face `125` with cap `A` must be the
+segment from `r1` to a piercing point on edge `25`. Otherwise continuing
+a ray from `r1` through the intersection reaches an actual cap boundary
+edge while still in face `125`, violating embeddedness. The corresponding
+statement for `B` uses the segment from `r5` to edge `12`.
+
+**The two piercings cannot occur together.** Translate `r2` to zero and
+write `U=r1`, `V=r5`. If both occur, there are `0<t,s<1` with `t*V in A`
+and `s*U in B`. The segments `[U,t*V]` and `[V,s*U]` then meet at
+
+```
+z = (s*(1-t)*U+t*(1-s)*V)/(1-s*t).
+```
+
+Both segment parameters lie strictly between zero and one, so `z` belongs
+to both cap hulls, a contradiction.
+
+Finally, take a point `m` in the open edge `15` and follow the segment
+from `r2` to `m` inside face `125`. It cannot cross a short-annulus face
+or a cap boundary edge. If neither piercing occurs, it never meets `S`.
+If one piercing occurs, it crosses the corresponding cap interior exactly
+once. Its endpoints are on opposite sides of the cap plane: `r2` is on
+one side, and `m` is on the side of `r5` (or `r1` for the second cap).
+Thus the crossing is transverse.
+Since its starting point is outside, these observations prove the following
+**disjoint, exhaustive three-case reduction**:
+
+| Case | Position of the open edge `15` | Anchor-face intersection with cap interiors |
+|---|---|---|
+| Exterior | Outside `K` | Neither cap is pierced |
+| First-cap entry | Inside `K` | `25` pierces `014`; `12` does not pierce `356` |
+| Second-cap entry | Inside `K` | `12` pierces `356`; `25` does not pierce `014` |
+
+### Entry forces nesting of the whole opposite cap
+
+The entry cases are stronger than a single edge piercing. Suppose `25`
+pierces `A`. Intersect actual face `256` with the plane of `A`. Its plane
+is distinct from the cap plane because vertices 2 and 5 are off that plane.
+Starting at the piercing, the intersection segment cannot exit through
+edge `56`, which is contained in the disjoint cap `B`. It also cannot
+leave `A` through its boundary, since that would intersect an actual cap
+edge with actual face `256`. Thus its other endpoint lies strictly inside
+edge `26` and strictly inside `A`. This also proves that vertex 6 is off
+the cap plane and on the same side as vertex 5. Apply the identical argument
+to face `236` to force an interior piercing by edge `23`.
+
+Consequently **all three segments from 2 to cap `B` pass through the
+interior of cap `A`**. Central projection from `r2` maps the whole triangle
+`B` into the relative interior of `A`. The projection is a nondegenerate
+triangle: `r2` is off the plane of `B` by K4 `2356`. Its projective
+denominators have one strict sign, so its image is precisely the convex
+hull of the three projected vertices, all in `relint(A)`.
+
+Symmetrically, a piercing of `B` by `12` propagates through actual faces
+`012` and `024`: edges `20` and `24` also pierce `B`, and central projection
+from 2 maps the whole of `A` strictly inside `B`. Propagation works in
+reverse along each two-face fan as well. Thus the exterior case has no
+opposite-cap piercing by any of the six radial edges from 2.
+
+### A cap-entry bound from the isometric anchor face
+
+Use the physical intrinsic vertical coordinates `vi`, with `v1=0`, and set
+
+```
+R_A=max(|r0-r1|,|r4-r1|),
+R_B=max(|r3-r5|,|r6-r5|).
+```
+
+The actual face `125` is isometric to its coherent intrinsic triangle.
+Its intrinsic vertical coordinate therefore extends to a unit linear
+functional on its spatial plane, taking the values `0,v2,v5` at its
+vertices. In the first-cap entry case its piercing point `p` is in
+`relint(A)`, so `|p-r1|<R_A`. Its vertical coordinate is strictly between
+`v2` and `v5`. Since `v5>R_A`, this forces
+
+```
+P_A implies v2<R_A.
+```
+
+For the second-cap entry, the piercing point on `12` satisfies
+`|p-r5|<R_B`. Its vertical coordinate exceeds `v5-R_B>0`, and is strictly
+between zero and `v2`. Hence
+
+```
+P_B implies v2>v5-R_B.
+```
+
+These estimates divide by no cap area. In all five finite F1 cells,
+localization and the short horizontal increments give
+
+```
+R_A,R_B <= sqrt(2000^2+1/4) < 2001,
+v5 > (237/500)*10^6 = 474000.
+```
+
+Thus throughout the closed phase interval `2001<=v2<=v5-2001`, only the
+exterior case is possible. In the three F1 cells with vertex 2 in the
+first cap, `v2<=2000`, so the second-cap entry case is impossible altogether.
+The remaining entry regimes have not been excluded.
+
+These are positions of complete continuous configurations, not isolated
+samples or a replacement of the five-cell localization. All three cases
+remain open. In particular, an embedded octahedron need not be convex, so
+its opposite-vertex segment `15` cannot simply be declared internal.
+
+If both cap planes strictly support the entire vertex set, neither piercing
+is possible, and the exterior case is forced. The hand visibility theorem
+in [`exposed_caps.md`](exposed_caps.md) now rules out that configuration:
+it uses only the six side faces, the four corner-fan faces, and strict
+support at vertex 2. A perturbation argument also rules out simultaneous
+weak support. Thus at least one cap plane strictly cuts the seven-vertex
+set `0,1,2,3,4,5,6`. The argument uses no orientation archive, linking
+assumption, or positive cap-area margin.
+
+This is an additional necessary condition in all three positions above.
+It does not show that every finite F1 realization has exposed caps. The
+cutting-cap configurations, including nearly collapsed ones, remain to
+be excluded or realized.
+
+The exact checker verifies the face decomposition, the octahedron's
+opposite pairs, the tetrahedron chain, and the displayed simultaneous-piercing
+identity. The capping and three-case implications are the geometric hand
+proofs above; they are not claimed as compiled Lean theorems.
+
+## 9. A second geometric tool: leaf reflection
+
+The separate hand proof in [`leaf_geometry.md`](leaf_geometry.md) treats
+all three leaves at every modulus, including singular root-lift boundaries.
+Positive weighted five-cycle deficits give two real local completions of
+an arbitrary five-point core in the signed space `R^(3,2)`. At a saturated
+root lift, strict support instead gives one tangent completion. At most
+one of the three distinguished hinges `05,16,27` can be unfolded.
+
+The candidate completions vary both the spatial and intrinsic leaf
+coordinates; they are not automatically embedded torus vertices. The
+missing geometric step is a joint restriction on the three selected
+completions in the exterior and cap-entry cases above. Their signed-space
+reflection hyperplanes use different coherent intrinsic lifts and cannot
+be identified as one common spatial reflection plane.

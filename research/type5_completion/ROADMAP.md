@@ -59,9 +59,60 @@ transcribed inputs:
   an infeasibility certificate.
 
 The remaining geometric assembly includes extraction of lifted-face data
-and formalization of the quantitative two-gap localization. The next
-algebraic gate remains a contradiction or a full witness for the complete
-F1 union, with every cap-margin boundary retained.
+and formalization of the quantitative two-gap localization. The next proof
+gate remains a contradiction or a full witness for the complete F1 union,
+with every cap-margin boundary retained.
+
+## Geometric continuation — 2026-11-27
+
+The active direction is now a geometric proof. The algebraic systems remain
+reproducible baselines; this checkpoint adds no new solver experiment.
+**The counts remain 0/5 F1 and 0/19 elongated cells excluded.**
+
+- **An actual embedded octahedron.** The disjoint cap hulls `014` and `356`
+  cap the six-face annulus to an embedded sphere. The hand proof in
+  [`f1_geometry.md`, §§7–8](f1_geometry.md#7-cutting-along-the-caps) is valid
+  for arbitrarily thin caps and coplanar side-face configurations. The
+  other annulus has a combinatorial five-K4 tetrahedron chain; a spatial
+  nonoverlapping tetrahedral filling is not assumed.
+- **A hand visibility obstruction.**
+  [`exposed_caps.md`](exposed_caps.md) proves that the two cap planes cannot
+  both support the seven-vertex set `0,1,2,3,4,5,6`, even weakly. The proof
+  sends the strictly supported vertex 2 to infinity, derives a convex
+  hexagon from the four visible corner fans, and forces the actual faces
+  `035` and `146` to intersect by reversal of height order. It needs no
+  orientation archive, linking constraint, metric, or vertex 7. This
+  replaces the earlier finite sign obstruction in the exposed-cap regime
+  with a self-contained geometric proof.
+- **Three complete geometric positions.** The open edge `15` is exterior
+  to that sphere, or it is interior with `25` piercing cap `014`, or with
+  `12` piercing cap `356`. The last two alternatives are mutually exclusive.
+  An entry propagates across the entire opposite-cap fan and gives strict
+  nesting under central projection from vertex 2.
+- **A metric restriction without an area denominator.** The first entry
+  requires `v2<2001`; the second requires `v2>v5-2001`, where `v5>474000`.
+  Thus the entire middle phase interval is exterior. The second entry is
+  impossible in the three F1 cells where vertex 2 is in the first cap.
+  These are restrictions on the three geometric positions, not exclusions
+  of the underlying cells.
+- **A global positive leaf-completion theorem.**
+  [`leaf_geometry.md`](leaf_geometry.md) proves that any five-point core
+  in `R^(3,2)` with positive weighted-five-cycle deficits has exactly two
+  real local leaf completions, related by reflection. A saturated root lift
+  in an embedded realization gives a single tangent completion, and at most
+  one of the three hinges `05,16,27` can be unfolded. Both the intrinsic
+  and spatial leaf coordinates vary in this statement; the candidates are
+  not automatically embedded torus vertices.
+
+The next whole-F1 argument must exclude the exterior position and the two
+remaining cap-entry boundary regimes, using the selected leaves jointly.
+In every such realization at least one cap plane must cut the other
+vertices. The visibility theorem does not itself exclude these cutting-cap
+configurations or prove that an arbitrary cap is exposed.
+It must retain small positive margins: nondegeneracy and a spacelike
+reflection direction do not give a uniform separation from collapse or
+tangency. The new hand proofs and their exact finite/algebraic checks do
+not supply the final contradiction or a compiled Lean theorem.
 
 ## 1. What would finish Type 5?
 

@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "date": "2026-11-27",
-  "scope": "Research algebra, exact finite audit, and solver observations; no cell exclusion and no new Lean proof.",
-  "base_checkpoint": "635984d671988e32e77fa9ad9ad761e4ff2bbf9e",
+  "scope": "Geometric hand proofs, exact algebra and finite incidence checks, and historical solver observations; no full F1 cell exclusion and no new Lean theorem.",
+  "base_checkpoint": "f62c4f413d6374f064c29bf98f758cdacba7cdb6",
   "target": {
     "real_part": "1/2",
     "imaginary_part": 1000000,
@@ -37,7 +37,7 @@
     "research/type5_completion/coverage_constraints.py": "367be6b3be7f8665d8d7e200ec4b6e8493a0235b5ef929a749bef65ffea60edb",
     "research/type5_completion/f1_algebra_projective.py": "8bb07bdd459cef74f6f74997846ac9a8000a7c270526cec561ef5ebc3acab804",
     "research/type5_completion/f1_algebra_verify.py": "2c80116ab3216d42774e3e3bd87e46fcecf7c0498850a3c621cad0dba286bc80",
-    "research/type5_completion/f1_geometry_verify.py": "71be153e79ccc0569e642fc8f5d9a327b12da47c6e067ca7bb9c870cc0722685",
+    "research/type5_completion/f1_geometry_verify.py": "d884fd178f6ea32a1f2f231948a9180a6e640f3dde52ed867aa1351fc8fa4239",
     "research/type5_completion/verify_coverage.py": "c8d52a5e1a80c52ccbab03773cb70ed23a3b1878645bfcdab90e783468c352bc",
     "research/type5_focus/cases.json": "98bfd4425dbf0a510cde35e0353ff51bcbda27d8db8f50b0634d6d71f6e2b4ab",
     "research/type5_focus/fixed_elongated/README.md": "7bd7b7afceae98797716127a5c9144522ee63f234b1a73e74f56086e8b15d73f",
@@ -46,7 +46,8 @@
     "research/type5_focus/fixed_elongated/phase.py": "323cb0335e60a850d12a7af369a0b3e9db7ffe2eaebe72504706bf2a043e5dd5",
     "research/type5_focus/fixed_elongated/phase_witnesses.json": "03ad12d44aeff08c8d8241bb2c29f660c90719f3bca80558c80f194e6aca6ec4",
     "research/type5_focus/lutz_faces.json": "200cec31055b2673ee326a23fc2f2af0991cee80d7a381c608d2959cdd74dc99",
-    "research/type5_focus/solve.py": "03bb32d9898272cd2f894c8a9a89ffcc0a8140fcd499c6ca913f809a881ea8e5"
+    "research/type5_focus/solve.py": "03bb32d9898272cd2f894c8a9a89ffcc0a8140fcd499c6ca913f809a881ea8e5",
+    "OrigamiTorus/Winding/WindingGeneration.lean": "c1c0dbc496b6b9a5f6c403f93a85a685da7e2937706c805ffa7870d260c97ba7"
   },
   "verification": {
     "result": "PASS",
@@ -56,12 +57,34 @@
       "python3 research/type5_completion/verify_coverage.py",
       "python3 research/type5_completion/coverage_constraints.py --check-square"
     ],
-    "pass_lines": 27,
-    "stdout": "PASS signed rational elimination and polynomial comparisons\nPASS positive-atom denominator LCM, repeated aliases, and negative-factor counterexample\nPASS symbolic cofactor denominator coverage: det G = w*r*D^2/(A*C)\nPASS symbolic pivot inverse, linear elimination, and rank-one identities\nPASS additional five-ray cubic inequality identity and both zero-slack cases\nPASS five-cell localization in common normalized coordinates on all five exact phase witnesses\nPASS circuit pruning: all pairs distinct, all relevant triples noncollinear, 23 clique quadruples independent\nPASS strict-support cover: 83 four-point and 150 five-point additional partitions, including size-four positive parts\nPASS signed circuit correction: 50112 cases, both denominator signs and all zero-cofactor strata\nPASS exact rank-three sample: w=1, chart=9, four recovered slacks, all Gram entries and affine minors\nPASS exact rank-three sample: w=1, chart=8, four recovered slacks, all Gram entries and affine minors\nPASS exact rank-three sample: w=1000000000000, chart=8, four recovered slacks, all Gram entries and affine minors\nPASS exact square support: 83 four-point and 150 five-point tests with 200-bit integer intervals\nPASS full F1 maximal cell chart 8: 15 declarations, no undefined symbols or variable divisions\nPASS full F1 maximal cell chart 9: 15 declarations, no undefined symbols or variable divisions\nPASS full F1 union chart 8: 15 declarations, no undefined symbols or variable divisions\nPASS full F1 union chart 9: 15 declarations, no undefined symbols or variable divisions\nPASS projective formulation checks; no cell exclusion or new embedded torus asserted\nPASS: cap Gram decomposition, product determinant, two division-free SOS identities\nPASS: orthogonal horizontal normal form for the two cap vector combinations\nPASS: scaled determinant identity for an arbitrary nonzero lattice period\nPASS: all three cap-collapse boundary kernels, including their intersections\nPASS: exact cosine difference for cap exterior and intrinsic turns\nPASS: archived sharp cocycle substitutions for 014 and 356 in all five F1 cells\nAll checks passed. No localized cell is excluded by these identities alone.\nPASS: Lean inputs agree; 36 cells / 19 representatives; F1-F4 cover 5/9/9/3 cells.\nPASS: primitive cap cycles; 21 antipodal link cuts; 8 K5 star witnesses; 23 K4s; rational margins.\nScope: no full elongated cell has been excluded by this checker.\nPASS: exact square witness satisfies all 21 new minors and 144 strict lift-tie sums.\n",
+    "pass_lines": 38,
+    "stdout": "PASS signed rational elimination and polynomial comparisons\nPASS positive-atom denominator LCM, repeated aliases, and negative-factor counterexample\nPASS symbolic cofactor denominator coverage: det G = w*r*D^2/(A*C)\nPASS symbolic pivot inverse, linear elimination, and rank-one identities\nPASS additional five-ray cubic inequality identity and both zero-slack cases\nPASS five-cell localization in common normalized coordinates on all five exact phase witnesses\nPASS circuit pruning: all pairs distinct, all relevant triples noncollinear, 23 clique quadruples independent\nPASS strict-support cover: 83 four-point and 150 five-point additional partitions, including size-four positive parts\nPASS signed circuit correction: 50112 cases, both denominator signs and all zero-cofactor strata\nPASS exact rank-three sample: w=1, chart=9, four recovered slacks, all Gram entries and affine minors\nPASS exact rank-three sample: w=1, chart=8, four recovered slacks, all Gram entries and affine minors\nPASS exact rank-three sample: w=1000000000000, chart=8, four recovered slacks, all Gram entries and affine minors\nPASS exact square support: 83 four-point and 150 five-point tests with 200-bit integer intervals\nPASS full F1 maximal cell chart 8: 15 declarations, no undefined symbols or variable divisions\nPASS full F1 maximal cell chart 9: 15 declarations, no undefined symbols or variable divisions\nPASS full F1 union chart 8: 15 declarations, no undefined symbols or variable divisions\nPASS full F1 union chart 9: 15 declarations, no undefined symbols or variable divisions\nPASS projective formulation checks; no cell exclusion or new embedded torus asserted\nPASS: cap Gram decomposition, product determinant, two division-free SOS identities\nPASS: orthogonal horizontal normal form for the two cap vector combinations\nPASS: scaled determinant identity for an arbitrary nonzero lattice period\nPASS: all three cap-collapse boundary kernels, including their intersections\nPASS: exact cosine difference for cap exterior and intrinsic turns\nPASS: archived sharp cocycle substitutions for 014 and 356 in all five F1 cells\nPASS: two annuli, embedded-sphere combinatorics, five-K4 chain, and anchor-face incidences\nPASS: exact intersection identity excluding simultaneous cap piercings\nPASS: cap-entry phase margins and the three first-cap endpoint cells\nPASS: weighted C5 inverse sum, Horn identities, and inertia polynomial\nPASS: singular C5 kernel, rank-four minor, and path inertia polynomial\nPASS: arbitrary-core signed circumcenter and both reflection quadratics\nPASS: all three actual leaf links, strict K4 chords, and distinguished hinges\nPASS: actual dual cocycle, every archived/hexagonal marking, and arbitrary-marking determinant\nPASS: all exposed-cap triangle exclusions and pole-triangle fan transfers\nPASS: every angular-order implication in the four interior-vertex cases\nPASS: the two convex hexagon orders and both strict height-reversal endpoints\nAll checks passed. No localized cell is excluded by these identities or the geometric reduction.\nPASS: Lean inputs agree; 36 cells / 19 representatives; F1-F4 cover 5/9/9/3 cells.\nPASS: primitive cap cycles; 21 antipodal link cuts; 8 K5 star witnesses; 23 K4s; rational margins.\nScope: no full elongated cell has been excluded by this checker.\nPASS: exact square witness satisfies all 21 new minors and 144 strict lift-tie sums.\n",
     "limitations": [
-      "Symbolic identities and finite checks do not replace the remaining geometric assembly.",
-      "Constructed rational algebra samples are not asserted to be embedded tori.",
+      "The capping, visibility, copositivity, and geometric implications are hand proofs; the exact checks audit their identities, tables, and finite source inputs.",
+      "A local leaf completion varies both its spatial and intrinsic coordinates and need not extend to an embedded torus.",
       "No Lean build or Comparator run was performed in this checkpoint."
+    ],
+    "command_results": [
+      {
+        "command": "python3 research/type5_completion/f1_algebra_verify.py",
+        "exit_code": 0,
+        "pass_lines": 18
+      },
+      {
+        "command": "python3 research/type5_completion/f1_geometry_verify.py",
+        "exit_code": 0,
+        "pass_lines": 17
+      },
+      {
+        "command": "python3 research/type5_completion/verify_coverage.py",
+        "exit_code": 0,
+        "pass_lines": 2
+      },
+      {
+        "command": "python3 research/type5_completion/coverage_constraints.py --check-square",
+        "exit_code": 0,
+        "pass_lines": 1
+      }
     ]
   },
   "solver_configuration": {
@@ -118,7 +141,7 @@
       "stdout": "F1-chart9.smt2 unknown\n(:max-memory          303.45\n :memory              20.68\n :num-allocs          2460372608\n :rlimit-count        1437610\n :solve-eqs-elim-vars 1\n :solve-eqs-steps     68\n :time                60.02)\n(:reason-unknown \"canceled\")\n\n"
     }
   ],
-  "interpretation": "Both complete five-cell F1 queries remain undecided. Statistics contain solve-eqs preprocessing counters and no nlsat search counters; a preprocessing bottleneck is an inference, not an infeasibility result.",
+  "interpretation": "The solver runs below are unchanged from the preceding algebra checkpoint; none was rerun for the geometric continuation. Both whole-F1 queries remain undecided. The new hand proofs exclude simultaneous supporting caps, not all configurations in a finite F1 cell.",
   "reproduce": [
     "python3 research/type5_completion/f1_algebra_verify.py",
     "python3 research/type5_completion/f1_geometry_verify.py",
@@ -126,5 +149,36 @@
     "python3 research/type5_completion/coverage_constraints.py --check-square",
     "python3 research/type5_completion/f1_algebra_projective.py /tmp/type5-f1 --cell F1 --solver nlsat-no-factor --statistics",
     "python3 research/type5_focus/solve.py 60000 /tmp/type5-f1/F1-chart8.smt2 /tmp/type5-f1/F1-chart9.smt2"
-  ]
+  ],
+  "hand_proof_sha256": {
+    "research/type5_completion/coverage.md": "035b73eb473554bfd2ff1cb6b82014d227ce90004d4113b7fb5dad37b13939b3",
+    "research/type5_completion/f1_geometry.md": "21d9f8ac666965242ff073a7d81d4821d706e3520b901baf1764e2d0083b86a8",
+    "research/type5_completion/exposed_caps.md": "bc01937790cb8d3f6d45641de9af807eb6875238f57eb6a79a8e6619c99a3de6",
+    "research/type5_completion/leaf_geometry.md": "d05b7f7a7da3f1a239f303edbbc2dfb5eeeb69463f619cd3cead6132f56a3608"
+  },
+  "geometric_checkpoint": {
+    "date": "2026-11-27",
+    "exposed_cap_theorem": "For the ten-triangle seven-vertex core, embeddedness and strict support at vertex 2 exclude simultaneous strict cap exposure. If the six cap vertices are not all coplanar, simultaneous weak cap support is excluded as well.",
+    "F1_consequence": "At least one plane 014 or 356 has vertices of {0,1,2,3,4,5,6} strictly on both sides.",
+    "geometric_positions": [
+      "Exterior open edge 15 with no opposite-cap radial piercing",
+      "Interior open edge 15 with cap B centrally projected strictly inside cap A from vertex 2",
+      "Interior open edge 15 with cap A centrally projected strictly inside cap B from vertex 2"
+    ],
+    "entry_bounds": {
+      "first_cap": "v2 < 2001",
+      "second_cap": "v2 > v5 - 2001",
+      "cap_separation": "v5 > 474000"
+    },
+    "second_entry_impossible_cells": [
+      "00020220",
+      "00020221",
+      "00020222"
+    ],
+    "leaf_completion": "Every positive weighted-C5 deficit core in R^(3,2) has exactly two real local completions; a saturated root lift in an embedded Type 5 realization gives one tangent completion, and at most one root lift can saturate.",
+    "independent_review": "The hand proofs were reviewed separately from their author; the exact checker also replays the planar exclusion tables, angular-order implications, and two convex-hexagon orders.",
+    "new_solver_experiments": 0,
+    "remaining_gap": "Exclude the cutting-cap configurations in the exterior and two cap-entry positions while coupling all three selected leaves. No full F1 cell is excluded."
+  },
+  "solver_results_checkpoint": "f62c4f413d6374f064c29bf98f758cdacba7cdb6"
 }
