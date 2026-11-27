@@ -1,0 +1,15 @@
+{
+  "challenge_module": "OrigamiTorus.EightVertex.Type5.Challenge",
+  "solution_module": "OrigamiTorus.EightVertex.Type5.Solution",
+  "theorem_names": [
+    "OrigamiTorusType5Challenge.type5_square",
+    "OrigamiTorusType5Challenge.type5_nonrectangular_box"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

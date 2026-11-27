@@ -1,0 +1,15 @@
+{
+  "challenge_module": "OrigamiTorus.EightVertex.Type2.Challenge",
+  "solution_module": "OrigamiTorus.EightVertex.Type2.Solution",
+  "theorem_names": [
+    "OrigamiTorusType2Challenge.type2_nonexistence",
+    "OrigamiTorusType2Challenge.type2_sign_obstruction"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

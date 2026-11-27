@@ -2,7 +2,7 @@ module
 
 public import OrigamiTorus.Geometry.AngleDerivative
 public import OrigamiTorus.Geometry.Inflation
-public import OrigamiTorus.Type2.Links
+public import OrigamiTorus.EightVertex.Type2.Links
 import Mathlib.Tactic
 
 /-! Positive-height inflation preserving all Euclidean cone angles. -/

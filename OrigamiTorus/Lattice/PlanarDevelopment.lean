@@ -1,6 +1,6 @@
 module
 
-public import OrigamiTorus.Type5.Reconstruction
+public import OrigamiTorus.EightVertex.Type5.Reconstruction
 import Mathlib.Tactic
 
 /-! Rational development of a triangle across an edge in scaled planar coordinates. -/

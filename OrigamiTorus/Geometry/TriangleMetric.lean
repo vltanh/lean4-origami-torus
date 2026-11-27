@@ -1,6 +1,6 @@
 module
 
-public import OrigamiTorus.Type5.Reconstruction
+public import OrigamiTorus.EightVertex.Type5.Reconstruction
 import Mathlib.Tactic
 
 /-! A face with three matched side lengths has the same intrinsic affine metric. -/

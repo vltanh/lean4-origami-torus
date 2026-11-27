@@ -1,6 +1,6 @@
 module
 
-public import OrigamiTorus.Type5.Reconstruction
+public import OrigamiTorus.EightVertex.Type5.Reconstruction
 public import OrigamiTorus.Geometry.TriangleIntersections
 public import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
 import Mathlib.Tactic

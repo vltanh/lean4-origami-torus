@@ -13,9 +13,27 @@ name = "OrigamiTorus"
 [[lean_lib]]
 name = "PalomarSolution"
 srcDir = "palomar"
-roots = ["OrigamiTorus.Solution"]
+roots = [
+  "OrigamiTorus.SevenVertex.Solution",
+  "OrigamiTorus.EightVertex.Type1.Solution",
+  "OrigamiTorus.EightVertex.Type2.Solution",
+  "OrigamiTorus.EightVertex.Type3.Solution",
+  "OrigamiTorus.EightVertex.Type4.Solution",
+  "OrigamiTorus.EightVertex.Type5.Solution",
+  "OrigamiTorus.EightVertex.Type6.Solution",
+  "OrigamiTorus.EightVertex.Type7.Solution",
+]
 
 [[lean_lib]]
 name = "PalomarChallenge"
 srcDir = "palomar"
-roots = ["OrigamiTorus.Challenge"]
+roots = [
+  "OrigamiTorus.SevenVertex.Challenge",
+  "OrigamiTorus.EightVertex.Type1.Challenge",
+  "OrigamiTorus.EightVertex.Type2.Challenge",
+  "OrigamiTorus.EightVertex.Type3.Challenge",
+  "OrigamiTorus.EightVertex.Type4.Challenge",
+  "OrigamiTorus.EightVertex.Type5.Challenge",
+  "OrigamiTorus.EightVertex.Type6.Challenge",
+  "OrigamiTorus.EightVertex.Type7.Challenge",
+]

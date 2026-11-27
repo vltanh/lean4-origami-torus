@@ -1,26 +1,30 @@
-# Eight-vertex origami tori in Lean 4
+# Origami tori in Lean 4
 
-An origami torus is a flat torus embedded in $\mathbb R^3$ by a map that is affine and isometric on each triangle. This repository proves which of the seven eight-vertex torus triangulations admit such an embedding. **Types 1 and 2 are impossible. Types 3–7 are realizable, and Types 3 and 6 are universal.**
+An origami torus is a flat torus embedded in $\mathbb R^3$ by a map that is affine and isometric on each triangle. A triangulation is universal if it realizes every flat torus. Earlier work established universality with larger triangulations. This repository studies existence and universality at the minimum vertex count. [Related work](docs/RELATED_WORK.md)
 
-## Formalized results
+## Seven vertices
 
-The type numbers refer to the labeled face lists. Types 4 and 6 share a degree sequence and have different face complexes. A reduced modulus is $x+iy$ with $0\le x\le 1/2$, $y>0$, and $x^2+y^2\ge1$.
+Schwartz proved that seven vertices are impossible and that eight suffice. This repository formalizes the seven-vertex nonexistence theorem in Lean using a checked classification of the face sets and a determinant-sign refutation. [Schwartz, Theorems 1.1–1.2](https://arxiv.org/html/2507.14998v9#S1.SS1) · [Lean theorem](OrigamiTorus/SevenVertex/Nonexistence.lean) · [Proof notes](docs/SevenVertex/README.md)
 
-| Type | Lean theorem and scope | Mathematical proof |
+## Eight vertices
+
+**Types 1 and 2 admit no flat embedding. Each of Types 3–7 admits one, and Types 3 and 6 are universal.** The type numbers refer to the labeled face lists. In the table, a reduced modulus is $x+iy$ with $0\le x\le 1/2$, $y>0$, and $x^2+y^2\ge1$. Rank nine refers to the spatial map giving seven cone angles and the two real coordinates of the marked modulus.
+
+| Type | Prior work | Contribution verified in this repository |
 | --- | --- | --- |
-| 1 | [Nonexistence](OrigamiTorus/Type1/Nonexistence.lean) | [Star collapse and the seven-vertex obstruction](docs/Type1.md) |
-| 2 | [Nonexistence](OrigamiTorus/Type2/Nonexistence.lean) | [Spherical links and the checked sign refutation](docs/Type2.md) |
-| 3 | [Every rank-two lattice](OrigamiTorus/Type3/Universal.lean) | [Formalization of Doyle, Lander, Schwartz, and Trettel](docs/Type3.md) |
-| 4 | [Every reduced modulus with $x<1/2$, with rank nine](OrigamiTorus/Type4/WideLift.lean) | [Diagonal exchange and trapezoidal charts](docs/Type4.md) |
-| 5 | [Exact unit square](OrigamiTorus/Type5/Periodic.lean) and [closed nonrectangular box](OrigamiTorus/Type5/ContinuationTorus.lean) | [Radical constructions](docs/Type5.md) |
-| 6 | [Every rank-two lattice, with rank nine](OrigamiTorus/Type6/Universal.lean) | [The Type 3 diagonal exchange and fixed-period inflation](docs/Type6.md) |
-| 7 | [Every reduced modulus with $x<1/2$, with rank nine](OrigamiTorus/Type7/WideLift.lean), and [every rectangular lattice](OrigamiTorus/Type7/Tiling.lean) | [Rectangles and the full strip](docs/Type7.md) |
+| 1 | Lander deduced nonexistence from Schwartz’s lower bound by removing the degree-three star. [Lander, §6](https://arxiv.org/html/2609.10703v1#S6) | Lean verifies the star collapse and the determinant-sign obstruction on the collapsed face list. [Lean](OrigamiTorus/EightVertex/Type1/Nonexistence.lean) · [Proof notes](docs/EightVertex/Type1.md) |
+| 2 | Lander conjectured nonexistence after numerical searches found no flat embedding. [Lander, §6](https://arxiv.org/html/2609.10703v1#S6) | **Resolves the conjecture** with a geometric reduction to determinant signs and a checked refutation. [Lean](OrigamiTorus/EightVertex/Type2/Nonexistence.lean) · [Proof notes](docs/EightVertex/Type2.md) |
+| 3 | Lander proved the hexagonal case. Doyle, Lander, Schwartz, and Trettel proved universality. [Lander](https://arxiv.org/html/2609.10703v1) · [Doyle et al., Theorem 1.1](https://arxiv.org/html/2611.21909v1#S1.SS1) | Formalizes universality using the published planar families and height vectors, with fixed-period inflation and a proof of the quotient identification. [Lean](OrigamiTorus/EightVertex/Type3/Universal.lean) · [Proof notes](docs/EightVertex/Type3.md) |
+| 4 | Lander reported numerical square realizations. [Lander, §6](https://arxiv.org/html/2609.10703v1#S6) | Gives regular embeddings for every reduced modulus with $x<1/2$, including every rectangle, and verifies rank nine. [Lean](OrigamiTorus/EightVertex/Type4/WideLift.lean) · [Proof notes](docs/EightVertex/Type4.md) |
+| 5 | Lander reported numerical square realizations. [Lander, §6](https://arxiv.org/html/2609.10703v1#S6) | Gives exact radical coordinates for the unit square and a uniform construction over a closed box of nonrectangular moduli. [Square](OrigamiTorus/EightVertex/Type5/Periodic.lean) · [Box](OrigamiTorus/EightVertex/Type5/ContinuationTorus.lean) · [Proof notes](docs/EightVertex/Type5.md) |
+| 6 | Lander reported numerical square realizations. [Lander, §6](https://arxiv.org/html/2609.10703v1#S6) | Identifies Type 6 by its full face list, constructs a realization for every rank-two lattice by a diagonal exchange on Type 3, and verifies rank nine at the resulting spatial embeddings. [Lean](OrigamiTorus/EightVertex/Type6/Universal.lean) · [Proof notes](docs/EightVertex/Type6.md) |
+| 7 | Doyle and Schwartz proved near universality. Lander proved existence at the square and in a neighborhood of it. [Doyle and Schwartz](https://arxiv.org/abs/2510.12623v4) · [Lander](https://arxiv.org/html/2609.10703v1) | Extends coverage to the entire rectangular ray at arbitrary scale and verifies rank-nine embeddings throughout $x<1/2$. [Rectangles](OrigamiTorus/EightVertex/Type7/Tiling.lean) · [Strip](OrigamiTorus/EightVertex/Type7/WideLift.lean) · [Proof notes](docs/EightVertex/Type7.md) |
 
-Universality remains open for Types 4, 5, and 7. For Types 4 and 7 the remaining coverage lies on the sharp-rhombic ray $x=1/2$, including the hexagonal endpoint. The [verification guide](docs/VERIFICATION.md) records the formal reductions and the scope of each theorem.
+### Open coverage and attribution
 
-## Prior work
+The verified coverage for Types 4 and 7 leaves the sharp-rhombic ray $x=1/2$, including the hexagonal endpoint. Type 5 universality remains open. [Verification scope](docs/VERIFICATION.md)
 
-Schwartz established the eight-vertex minimum, and Lander deduced Type 1 nonexistence and posed Type 2 nonexistence as a conjecture. Doyle and Schwartz proved near universality for Type 7. Lander then proved the Type 7 square and Type 3 hexagonal cases. Doyle, Lander, Schwartz, and Trettel proved Type 3 universality and reported a second exactly checked family by a degree sequence shared by Types 4 and 6. This repository identifies its Type 6 construction by the full face list. [Literature and attribution](docs/RELATED_WORK.md)
+The universality preprint gives the degree sequence $55666677$ for its second family. That sequence occurs on two different face complexes, so the identification of the preprint’s family with Type 4 or Type 6 remains unresolved. [Doyle et al., §6](https://arxiv.org/html/2611.21909v1#S6) · [Literature and attribution](docs/RELATED_WORK.md) · [Eight-vertex manuscript](docs/eight-vertex-origami-tori.pdf)
 
 ## Build and verify
 
@@ -29,10 +33,15 @@ With [Elan](https://lean-lang.org/install/) installed, the pinned toolchain and 
 ```sh
 lake exe cache get
 lake build
-lake env lake comparator --config=palomar/OrigamiTorus/comparator.json
 ```
 
-The [Challenge](palomar/OrigamiTorus/Challenge.lean) states the comparison targets independently, and the [Solution](palomar/OrigamiTorus/Solution.lean) supplies the proofs. All 13 statements in the combined configuration passed local Comparator replay with Lean and NanoDa. The per-type entry drafts each have their own configuration and provenance. [Palomar entries](palomar/OrigamiTorus/README.md) · [Verification scope](docs/VERIFICATION.md)
+Import `OrigamiTorus.SevenVertex` for the seven-vertex result, `OrigamiTorus.EightVertex` for Types 1–7, or `OrigamiTorus` for the full library.
+
+The seven-vertex result and each eight-vertex type have a standalone Palomar entry. Run Comparator with the configuration for the entry you want to check. [Palomar entries](palomar/OrigamiTorus/README.md) · [Verification scope](docs/VERIFICATION.md)
+
+```sh
+lake env lake comparator --config=palomar/OrigamiTorus/SevenVertex/comparator.json
+```
 
 ## Credits
 

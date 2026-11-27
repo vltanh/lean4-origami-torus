@@ -1,6 +1,6 @@
 module
 
-public import OrigamiTorus.Type5.Reconstruction
+public import OrigamiTorus.EightVertex.Type5.Reconstruction
 public import Mathlib.Analysis.Normed.Module.Connected
 import Mathlib.Topology.Connected.Clopen
 import Mathlib.Tactic

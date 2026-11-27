@@ -1,7 +1,7 @@
 module
 
 public import OrigamiTorus.Defs
-import OrigamiTorus.Type6.Signs
+import OrigamiTorus.EightVertex.Type6.Signs
 public import Mathlib.Geometry.Euclidean.Angle.Unoriented.TriangleInequality
 import Mathlib.Tactic
 

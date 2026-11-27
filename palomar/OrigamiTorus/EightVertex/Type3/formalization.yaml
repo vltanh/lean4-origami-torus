@@ -1,0 +1,66 @@
+version: v0.4
+project:
+  name: Universality of the Type 3 origami torus triangulation
+  description: >-
+    Every rank-two plane lattice torus has a piecewise-isometric embedding in ℝ³ with the
+    labeled Type 3 triangulation. The proof checks the published planar families and height
+    vectors, solves the fixed-period edge-length equations, and verifies that the lifted faces
+    triangulate the lattice quotient.
+  authors:
+  - The-Anh Vu-Le
+  responsible_maintainers:
+  - The-Anh Vu-Le
+  license: NOASSERTION
+classification:
+  arxiv:
+  - math.MG
+  - math.CO
+  msc2020:
+  - 52C25
+  - 57Q05
+sources:
+- title: A Universal 8-Vertex Origami Torus Triangulation
+  authors:
+  - Peter Doyle
+  - Fabian Lander
+  - Richard Evan Schwartz
+  - Steve Trettel
+  id: arXiv:2611.21909v1
+  location: https://arxiv.org/abs/2611.21909v1
+  relationship: formalizes
+  note: Theorem 1.1 is the Type 3 universality theorem. The entry uses its planar families
+    and height data.
+status:
+  scope: >-
+    The proof uses fixed-period length matching for inflation and a multiplicity-one area
+    argument for the quotient.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+automation:
+  methods:
+  - method: agent
+    models:
+    - GPT-6
+    framework: OpenAI Codex
+    tool_setup: GPT-6 contributed to mathematical proof development, Lean implementation,
+      and separate review runs. See docs/CREDITS.md.
+    cost:
+      wall_time: not tracked
+      spend_usd: not tracked
+      hardware: local workstation
+  notes: The-Anh Vu-Le directed and maintains the project. See docs/CREDITS.md for the human
+    and AI contribution record.
+review:
+  status: agent-reviewed
+  notes: The review and AI contribution record is in docs/CREDITS.md. Independent human review
+    is pending.
+alignment:
+  namespace: OrigamiTorusType3Challenge
+  statements:
+  - source: arXiv:2611.21909v1, Theorem 1.1
+    lean: OrigamiTorusType3Challenge.type3_universal
+    module: OrigamiTorus.EightVertex.Type3.Challenge
+    status: proved
+acknowledgements: The-Anh Vu-Le directed and maintains the work. OpenAI Codex (GPT-6) contributed
+  proof development and Lean formalization.

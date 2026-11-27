@@ -1,0 +1,50 @@
+version: v0.4
+project:
+  name: Nonexistence of seven-vertex paper tori
+  description: >-
+    Every embedded simplicial torus triangulation on seven vertices has a nonzero
+    cone-angle defect. The proof classifies the face sets and applies a checked
+    determinant-sign refutation to the Möbius triangulation.
+  authors: [The-Anh Vu-Le]
+  responsible_maintainers: [The-Anh Vu-Le]
+  license: NOASSERTION
+classification:
+  arxiv: [math.MG, math.CO]
+  msc2020: [52C25, 57Q05]
+sources:
+  - title: Vertex-Minimal Paper Tori
+    authors: [Richard Evan Schwartz]
+    id: arXiv:2507.14998v9
+    location: https://arxiv.org/abs/2507.14998v9
+    relationship: formalizes
+    note: The Challenge states Theorem 1.1 in barycentric coordinates.
+status:
+  scope: >-
+    The theorem quantifies over face sets on Fin 7 with fourteen triangles
+    and two faces per edge. These incidence conditions follow from the Euler
+    characteristic and the closed-surface condition for a simplicial torus.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+automation:
+  methods:
+    - method: agent
+      models: [GPT-6]
+      framework: OpenAI Codex
+      tool_setup: Proof development, Lean implementation, and local verification.
+      cost:
+        wall_time: not tracked
+        spend_usd: not tracked
+        hardware: local workstation
+fidelity:
+  divergences: >-
+    Lean uses a checked combinatorial classification and the Type 1
+    strict-support and determinant-sign argument. Schwartz's proof uses
+    a hull case enumeration and spherical Crofton's formula.
+alignment:
+  namespace: OrigamiTorusSevenVertexChallenge
+  statements:
+    - source: arXiv:2507.14998v9, Theorem 1.1
+      lean: OrigamiTorusSevenVertexChallenge.seven_vertex_nonexistence
+      module: OrigamiTorus.SevenVertex.Challenge
+      status: proved

@@ -1,6 +1,6 @@
 module
 
-public import OrigamiTorus.Type5.Geometry
+public import OrigamiTorus.EightVertex.Type5.Geometry
 public import OrigamiTorus.Lattice.LatticeTorus
 public import Mathlib.Analysis.Convex.StrictConvexSpace
 import Mathlib.Analysis.Convex.StrictConvexBetween

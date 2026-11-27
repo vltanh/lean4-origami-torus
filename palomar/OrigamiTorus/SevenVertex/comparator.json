@@ -1,0 +1,14 @@
+{
+  "challenge_module": "OrigamiTorus.SevenVertex.Challenge",
+  "solution_module": "OrigamiTorus.SevenVertex.Solution",
+  "theorem_names": [
+    "OrigamiTorusSevenVertexChallenge.seven_vertex_nonexistence"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

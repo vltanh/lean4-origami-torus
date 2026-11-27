@@ -1,6 +1,6 @@
 module
 
-public import OrigamiTorus.Type5.Reconstruction
+public import OrigamiTorus.EightVertex.Type5.Reconstruction
 public import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
 public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 import Mathlib.MeasureTheory.Group.Prod

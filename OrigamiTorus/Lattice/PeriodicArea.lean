@@ -1,7 +1,7 @@
 module
 
 public import OrigamiTorus.Geometry.PlanarArea
-public import OrigamiTorus.Type6.IntrinsicMap
+public import OrigamiTorus.EightVertex.Type6.IntrinsicMap
 import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
 import Mathlib.Tactic
 

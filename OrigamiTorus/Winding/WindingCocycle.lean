@@ -1,7 +1,7 @@
 module
 
-public import OrigamiTorus.Type5.Reconstruction
-public import OrigamiTorus.Type7.Rectangular
+public import OrigamiTorus.EightVertex.Type5.Reconstruction
+public import OrigamiTorus.EightVertex.Type7.Rectangular
 import Mathlib.Tactic
 
 /-! Integral cocycles on the Lutz Type 4, 5, and 7 face lists. -/

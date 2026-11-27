@@ -1,7 +1,7 @@
 module
 
 public import OrigamiTorus.Geometry.PlanarCompleteGraph
-public import OrigamiTorus.Type7.Rectangular
+public import OrigamiTorus.EightVertex.Type7.Rectangular
 public import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
 import Mathlib.Tactic
 

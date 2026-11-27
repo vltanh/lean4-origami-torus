@@ -6,7 +6,7 @@
 
 ## AI contribution
 
-**OpenAI Codex (GPT-6)** contributed to mathematical proof development, wrote and repaired the Lean formalization and Comparator package, and drafted the manuscript and proof documentation under The-Anh Vu-Le's direction. Its proof work included the Type 2 geometric-to-Boolean reduction, the degree-one lattice-quotient argument and rank transfer for Type 6, the rank and gluing arguments for the Type 4 and 7 strip, the verification of the Type 5 exact constructions, and the formal proofs for Types 1 and 3.
+**OpenAI Codex (GPT-6)** contributed to mathematical proof development, wrote and repaired the Lean formalization and Comparator package, and drafted the manuscript and proof documentation under The-Anh Vu-Le's direction. Its proof work included the classification of seven-vertex face sets, the Type 2 geometric-to-Boolean reduction, the degree-one lattice-quotient argument and rank transfer for Type 6, the rank and gluing arguments for the Type 4 and 7 strip, the verification of the Type 5 exact constructions, and the formal proofs for Types 1 and 3.
 
 Separate Codex review runs checked theorem statements against the literature, the strict-support and mixed-side arguments, exact sign and interval data, face lifts and marked periods, rank at the final spatial placements, and the completeness assumptions in the finite reconstruction and winding reductions. Lean and NanoDa checked the configured proofs. Independent human review is pending.
 

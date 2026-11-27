@@ -1,10 +1,10 @@
 module
 
 public import OrigamiTorus.Geometry.TriangleIntersections
-public import OrigamiTorus.Type5.Square
-public import OrigamiTorus.Type6.FaceMetric
-public import OrigamiTorus.Type6.Regularity
-public import OrigamiTorus.Type7.Rectangular
+public import OrigamiTorus.EightVertex.Type5.Square
+public import OrigamiTorus.EightVertex.Type6.FaceMetric
+public import OrigamiTorus.EightVertex.Type6.Regularity
+public import OrigamiTorus.EightVertex.Type7.Rectangular
 import Mathlib.Tactic
 
 /-! Geometric simplicial complexes for the certified spatial configurations. -/

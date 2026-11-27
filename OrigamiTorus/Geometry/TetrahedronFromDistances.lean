@@ -1,7 +1,7 @@
 module
 
 public import OrigamiTorus.Geometry.ThreeSpheres
-public import OrigamiTorus.Type5.Normalize
+public import OrigamiTorus.EightVertex.Type5.Normalize
 import Mathlib.Tactic
 
 /-! The canonical radical coordinates for a tetrahedron with six given lengths. -/

@@ -1,6 +1,6 @@
 module
 
-public import OrigamiTorus.Type6.Lift
+public import OrigamiTorus.EightVertex.Type6.Lift
 import Mathlib.Algebra.Polynomial.Roots
 import Mathlib.Topology.Order.Basic
 import Mathlib.Tactic

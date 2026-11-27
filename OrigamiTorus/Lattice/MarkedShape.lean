@@ -1,7 +1,7 @@
 module
 
 public import OrigamiTorus.Geometry.AngleInflation
-public import OrigamiTorus.Type4.Periods
+public import OrigamiTorus.EightVertex.Type4.Periods
 import Mathlib.Tactic
 
 /-! Local development of the two marked loops using squared edge lengths. -/

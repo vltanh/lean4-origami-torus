@@ -1,0 +1,75 @@
+version: v0.4
+project:
+  name: Type 7 origami tori on the reduced strip and rectangular ray
+  description: >-
+    The Lutz Type 7 triangulation realizes every reduced modulus x+iy with 0 ≤ x < 1/2, y
+    > 0, and x²+y² ≥ 1. It also realizes every rectangular lattice torus at its given scale.
+    The construction uses trapezoidal planar bases, exact height separation, and inflation
+    at a fixed marked modulus.
+  authors:
+  - The-Anh Vu-Le
+  responsible_maintainers:
+  - The-Anh Vu-Le
+  license: NOASSERTION
+classification:
+  arxiv:
+  - math.MG
+  - math.CO
+  msc2020:
+  - 52C25
+  - 57Q05
+sources:
+- title: Collapsibility and Near Universality for Vertex Minimal Paper Tori
+  authors:
+  - Peter Doyle
+  - Richard Evan Schwartz
+  id: arXiv:2510.12623v4
+  location: https://arxiv.org/abs/2510.12623v4
+  relationship: adapts
+  note: Theorem 1.1 covers Type 7 away from the rectangular and sharp-rhombic rays.
+- title: The two most symmetric flat tori as eight-vertex paper tori
+  authors:
+  - Fabian Lander
+  id: arXiv:2609.10703v1
+  location: https://arxiv.org/abs/2609.10703v1
+  relationship: adapts
+  note: The square construction and its small rectangular continuation are the starting point
+    for the full rectangular extension.
+status:
+  scope: >-
+    The Challenge compares strip and rectangular existence. The library verifies a rank-nine
+    strip theorem and leaves the sharp-rhombic ray open.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+automation:
+  methods:
+  - method: agent
+    models:
+    - GPT-6
+    framework: OpenAI Codex
+    tool_setup: GPT-6 contributed to mathematical proof development, Lean implementation,
+      and separate review runs. See docs/CREDITS.md.
+    cost:
+      wall_time: not tracked
+      spend_usd: not tracked
+      hardware: local workstation
+  notes: The-Anh Vu-Le directed and maintains the project. See docs/CREDITS.md for the human
+    and AI contribution record.
+review:
+  status: agent-reviewed
+  notes: The review and AI contribution record is in docs/CREDITS.md. Independent human review
+    is pending.
+alignment:
+  namespace: OrigamiTorusType7Challenge
+  statements:
+  - source: docs/EightVertex/Type7.md, The full open strip
+    lean: OrigamiTorusType7Challenge.type7_open_strip
+    module: OrigamiTorus.EightVertex.Type7.Challenge
+    status: proved
+  - source: docs/EightVertex/Type7.md, Interpreting the marked displacements
+    lean: OrigamiTorusType7Challenge.type7_rectangular
+    module: OrigamiTorus.EightVertex.Type7.Challenge
+    status: proved
+acknowledgements: The-Anh Vu-Le directed and maintains the work. OpenAI Codex (GPT-6) contributed
+  proof development and Lean formalization.

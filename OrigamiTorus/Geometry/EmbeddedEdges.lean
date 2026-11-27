@@ -1,6 +1,6 @@
 module
 
-public import OrigamiTorus.Type2.Links
+public import OrigamiTorus.EightVertex.Type2.Links
 import Mathlib.Tactic
 
 /-! Edge and spherical-path obstructions in an embedded triangular surface. -/

@@ -1,0 +1,14 @@
+{
+  "challenge_module": "OrigamiTorus.EightVertex.Type6.Challenge",
+  "solution_module": "OrigamiTorus.EightVertex.Type6.Solution",
+  "theorem_names": [
+    "OrigamiTorusType6Challenge.type6_regular_universal"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

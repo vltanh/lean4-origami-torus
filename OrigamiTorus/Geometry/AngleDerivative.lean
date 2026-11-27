@@ -1,7 +1,7 @@
 module
 
-public import OrigamiTorus.Type7.Angles
-public import OrigamiTorus.Type4.Angles
+public import OrigamiTorus.EightVertex.Type7.Angles
+public import OrigamiTorus.EightVertex.Type4.Angles
 public import Mathlib.Analysis.InnerProductSpace.Calculus
 public import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.InverseDeriv
