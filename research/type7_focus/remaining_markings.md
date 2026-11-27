@@ -126,3 +126,27 @@ These are further necessary linear localization bounds at the fixed target. None
 - Rescaled ray_3 construction search at y=4: 16 local starts in separated-hull orientation chambers found no positive certified margin (best numerical margin about 1.7e-13). A proper half-turn-symmetric ansatz, matching 12 independent edge equations, also yielded no positive certified margin in 18 local starts at y=4. These are failed exploratory searches, not impossibility proofs.
 
 No new marking or mask has been closed. Retain the original single-metric target; do not create additional asymptotic branches on the basis of the above observations. The main unresolved requirement is a certificate of infeasibility (or a certified positive realization that changes the intended direction) for the full metric-and-embedding system. 
+
+## Uniform exact feasibility of the ray_3 metric-only relaxation
+
+**New result (not an embedded torus):** for every y>=10^6, the localized ray_3 metric-only system has a strictly nondegenerate Euclidean realization with distinct vertices, all 24 correct edge lengths, strict shortest lifts, consistent intrinsic face orientation of degree -1, all four nonedge distances strictly below intrinsic distances, and all 70 affine determinants nonzero. The same 20 disjoint edge-face pairs intersect throughout this family. Thus the Gram relaxation in generate_remaining.py cannot be proved UNSAT in phase0 at the common target or at any larger y. Do not spend more solver time trying to refute that relaxation.
+
+The exact certificate in verify_metric3_uniform.py uses the following stable reconstruction. Let t=1/y^2, take the baseline lifts and canonical short-ring partition A=0145, B=2367 from section 3, and write the horizontal and normalized vertical lift corrections as x_i and t*gamma_i, with x_0=gamma_0=0. Let X_ij be the corrected horizontal edge displacement, Y0_ij the baseline normalized vertical displacement (zero within a short ring and +/-1/2 across the rings), and dgamma=gamma_j-gamma_i. Define c0=X_02^2+2*Y0_02*gamma_2+t*gamma_2^2, L=sqrt(1/(4*t)+c0), and den=1+4*t*c0. Choose r_0=0, r_2=(0,0,L); set transverse coordinates P_0=P_2=0 and rho_0=rho_2=0. For each other vertex define
+    r_i=(P_i, L*I[i in B]+rho_i/(2*L)).
+For a directed edge let ell=I[j in B]-I[i in B] and drho=rho_j-rho_i. The edge equality after multiplying by den is the polynomial
+    den*(|P_j-P_i|^2+ell*drho+ell^2*c0-X_ij^2-2*Y0_ij*dgamma-t*dgamma^2)
+      +t*drho^2 = 0.
+The anchor edge 02 holds by definition. The other 23 equations in 32 real variables are checked by a uniform contraction certificate, with nine variables fixed to specified rational values and 23 pivot variables in a box of radius 10^-8 around a specified rational center. All polynomial coefficients are rational, including the parameter t.
+
+For each fixed t in [0,10^-12], let f be the vector of these 23 polynomial expressions in the pivot variables and C the rounded inverse of the midpoint Jacobian at t=10^-12. The code verifies by outward-rounded integer intervals on the whole product box that
+    ||C*f(center,t)||_infty < 6*10^-13,
+    ||I-C*D f||_infty < 2*10^-6.
+These bounds prove the map u -> u-C*f(u,t) is a contraction of the closed box into itself, uniformly in t. The second bound implies C is invertible, so its fixed point satisfies all 23 equations exactly. NumPy is used only to choose C; every assertion that certifies the fixed point is verified using integer interval arithmetic with outward rounding at 10^-45. The t=0 fixed point is only a polynomial limit; the Euclidean reconstruction is for t>0.
+
+The same interval box verifies all strict nearest-lift comparisons and canonical phase bounds, negative oriented face areas (the symbolic sum of double areas is -2), positive and strictly contracted squared nonedge distances against every lattice translate, and strict signs of all 70 affine determinants. For the latter, use scaled axial coordinates I[i in B]+2*(t/den)*rho_i; when all four vertices are in a single short ring, cancel the common positive factor 2*t/den. The verified signs give 20 prohibited edge-face intersections by the ordinary five-point affine circuit test, including edge 03 against face 245.
+
+Reproduce:
+    python3 verify_metric3_uniform.py
+Requires SymPy, NumPy, and assertions enabled. The uniform interval checks were run locally on the transcribed current cocycle and face list; the committed version loads these directly from the archive. The local contraction bounds were approximately 5.328e-13 and 1.313e-6; all 70 determinants and 20 crossings were certified. The explicit rational box and pivot indices are in the verifier.
+
+**Implication for the research direction:** the rank-three metric relaxation is rigorously feasible, even throughout the entire selected elongated range. The next attack on ray_3 must use embeddedness (strict local support, necessary orientations, or disjoint simplex constraints), not longer runs of the incomplete Gram system. A follow-up numerical search seeded from this metric solution in the twelve nearest separated-hull orientation models found no positive embedding margin; that is not an infeasibility certificate. This checkpoint closes no further marking. Ray_4 remains conditionally excluded; the other three are open.
