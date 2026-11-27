@@ -1,22 +1,25 @@
-# Every unbounded ray-3 sequence has a vanishing short edge
+# Every unbounded ray-3 sequence has at least two vanishing short edges
 
 **Theorem.** Along any sequence of actual canonical ray-3 realizations
-with `y -> infinity`, the minimum of the eight positive short-edge
+with `y -> infinity`, the second-smallest of the eight positive short-edge
 weights tends to zero:
 
 \[
-\min_{e\in A\cup B} h_e\longrightarrow0,
+ h_{(2)}\longrightarrow0,
 \qquad h_e=-X_e>0.
 \]
 
-Equivalently, no such unbounded sequence can keep all eight weights
+Here `h_(1)<=...<=h_(8)` are the weights in increasing order.
+Equivalently, no such unbounded sequence can keep seven weights
 bounded below by one positive number. The proof includes all possible
 rates of transverse flattening. It uses the geometric necessity audit
 and the preceding exact cap and blow-up certificates.
 
 This theorem still does not exclude an unbounded sequence whose edges
 shrink, provide a numerical height threshold, or close the full marking.
-Its purpose is to identify the remaining boundary precisely.
+Its purpose is to identify the remaining boundary precisely. Sections
+1–4 first prove `h_(1)->0`; section 5 rules out exactly one zero weight
+in a limiting configuration.
 
 ## 1. A bounded transverse blow-up must exist
 
@@ -117,15 +120,54 @@ least one cap coincident in X.** That gives a zero short-edge weight,
 contradicting the assumption in this case too.
 
 All three stretched-limit possibilities are impossible. This proves
-the theorem. If the minimum weight failed to tend to zero in the original
+the first reduction. If the minimum weight failed to tend to zero in the original
 sequence, it would have a subsequence with a common positive lower bound,
 which the proof has just excluded.
+
+## 5. Exactly one vanishing weight is also impossible
+
+Suppose that the second-smallest weight is bounded below by epsilon
+on an unbounded subsequence. Compactness and the first reduction give
+a limiting configuration with exactly one zero weight. Pass to a
+subsequence and use a verified phase symmetry to put a longest edge
+at 01. Its weight is at least `1/4`, so the same construction fixes the
+A line horizontally and gives a bounded nontrivial transverse blow-up.
+This geometric normalization is separate from choosing a finite sign
+representative; it imposes no additional restriction on that compiler.
+
+There are again three possibilities:
+
+- If both stretched caps are noncollinear, the zero-cone classification
+  forces three physically coincident vertices in each cap. That gives
+  at least four zero short weights, contradicting the hypothesis.
+- If exactly one stretched cap is noncollinear, the complete mixed
+  cover has exactly eighty cells with one zero physical weight. The
+  [adjacent-collapse proof](remaining_adjacent_blowup.md) excludes the
+  48 cells whose zero edge belongs to the collinear cap. The
+  [partner-collapse proof](remaining_partner_blowup.md) excludes the
+  other 32 cells using a signed length defect, a uniformly nonsingular
+  modified metric Jacobian, and strictly negative volume coefficients.
+- If both stretched caps are collinear, their lines are different and
+  neither is vertical, since at least three physical edge weights in
+  each cap are positive. Exactly sixteen of the 624 zero-stress order
+  pairs have one zero short weight. The
+  [two-line proof](remaining_two_line_blowup.md) excludes all sixteen by
+  virtual-edge signs and a strictly signed moving-frame height.
+
+These finite covers include every point coincidence allowed by their
+weight counts. Their proofs normalize a collapsing edge before taking
+limits or regularize its squared metric equation by a signed defect.
+They impose no relative rate on that edge, the transverse width, and t.
+Every possibility is excluded, proving `h_(2)->0`.
 
 ## Reproduction and exact remaining scope
 
 ```sh
 python3 research/type7_completion/common_line_edge_collapse.py /tmp/type7-edge-collapse
 python3 research/type7_completion/remaining_flat_blowup.py /tmp/type7-flat-blowup
+python3 research/type7_completion/remaining_adjacent_blowup.py /tmp/type7-adjacent-blowup
+python3 research/type7_completion/remaining_partner_blowup.py /tmp/type7-partner-blowup
+python3 research/type7_completion/remaining_two_line_blowup.py /tmp/type7-two-line-blowup
 python3 research/type7_completion/common_line_trapezoids.py
 python3 research/type7_completion/exhaustive_vv_geometry.py /tmp/type7-vv
 ```
@@ -138,6 +180,6 @@ mixed-family required-sign replay are the finite certificates underlying
 the argument. The implicit-function step is an analytic research proof,
 not a Lean kernel check.
 
-The remaining common-line analysis must allow at least one vanishing
-edge weight. Such a boundary cannot be removed by imposing a minimum
+The remaining common-line analysis must allow at least two vanishing
+edge weights. Such a boundary cannot be removed by imposing a minimum
 edge length or a numerical separation tolerance in the finite system.

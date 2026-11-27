@@ -327,6 +327,9 @@ twenty-one point coordinates, checks integer cancellation, and proves
 a positive K4 product; it trusts neither the discovery quotient nor LP
 tolerances. Thus **54 of 132 metric chambers remain**. The manifest
 records every proof and exports no query for an excluded case.
+The [discovery producer](solver_metric_cone.md) makes this search
+reproducible with bounded LP calls, exact active-basis reconstruction,
+and mandatory independent replay before exporting a certificate packet.
 The independent verifier binds the coverage CNF to the manifest and
 replays all strictness witnesses, circuit omissions, and chamber
 certificates. Representative nonlinear queries still returned `UNKNOWN`
@@ -399,7 +402,7 @@ Jacobian, and a positive bracket combination whose linear and cubic
 metric terms are both strictly negative. This covers every ratio of
 normal width to `1/y` or `1/y^2`.
 
-The [global edge-collapse theorem](common_line_edge_collapse.md) now
+The [global edge-collapse theorem](common_line_edge_collapse.md)
 assembles all stretched-limit cases. The missing two-collinear case has
 an exact 5,476-order cover; its 624 zero-stress survivors all have a zero
 physical edge. Consequently **the minimum short-edge weight tends to
@@ -423,6 +426,16 @@ and exactly one zero physical edge. Its virtual-edge signs force a
 direction and scale comparison; the uniquely determined metric heights
 then contradict the same-cap bracket sign. The other 608 zero-stress
 two-line orders have at least two zero short weights and remain open.
+
+The [partner-collapse proof](remaining_partner_blowup.md) closes the
+other 32 mixed cells with exactly one zero weight. Replacing the
+collapsed edge's squared metric equation by a signed length defect
+restores a nonsingular Jacobian. Exact defect bounds and negative
+linear/cubic coefficients exclude every relative collapse rate.
+Together, the complete one-zero covers strengthen the global theorem:
+**the second-smallest short-edge weight tends to zero in every unbounded
+ray-3 sequence**. The remaining boundary has at least two vanishing
+short edges; a finite-height exclusion is still required.
 
 The next requirement is a contradiction across the remaining angular
 region using the exact metric and required long-ring linking. An

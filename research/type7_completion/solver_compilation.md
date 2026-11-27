@@ -237,6 +237,12 @@ after imports. Every residual has nonnegative coefficients and a positive
 K4-by-K4 product. The compiler's union is **78 excluded and 54 remaining**,
 with unchanged independently certified Boolean coverage.
 
+The [reproducible discovery producer](solver_metric_cone.md) rebuilds
+the 490-coordinate quotient, runs bounded LP searches, reconstructs
+rational weights, and requires independent coordinate replay before
+export. It writes reviewable certificate packets without changing the
+accepted exclusion ledger. Its proof-only mode imports no LP library.
+
 ## 6. Lower the metric degree and cancel positive factors
 
 [`remaining_null_chart.md`](remaining_null_chart.md) gives the exact

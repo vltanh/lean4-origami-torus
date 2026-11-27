@@ -72,15 +72,17 @@ def main():
     n, clauses, *_ = chambers.base_formula()
     models = chambers.enumerate_models(n, clauses, symmetries)
     counts, zeros = check(models)
+    assert sum(len(row['zero_a_edges'])+len(row['zero_b_edges']) == 1 for row in zeros) == 16
     print('PASS all 5,476 weak-order pairs:', dict(counts))
     print('PASS every zero-stress survivor has a zero physical short-edge weight')
+    print('PASS exactly 16 orders have one zero weight; the separate two-line proof excludes them')
     if len(sys.argv) == 2:
         output = Path(sys.argv[1])
         output.mkdir(parents=True, exist_ok=True)
         (output/'two_line_zero_orders.json').write_text(json.dumps(zeros, separators=(',', ':'))+'\n')
         blocked = clauses + [[-(i+1)*value for i, value in enumerate(model)] for model in models]
         chambers.write_cnf(output/'two_line_model_coverage.cnf', n, blocked)
-    print('Global consequence additionally uses the mixed-cap and two-noncollinear blow-up proofs.')
+    print('The second-smallest-weight theorem additionally uses both one-zero mixed proofs and the two-line proof.')
 
 
 if __name__ == '__main__':
