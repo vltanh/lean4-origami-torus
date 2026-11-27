@@ -1,6 +1,0 @@
-PASS Schur determinant, two slack-square identities, signed Gram completion
-PASS signed double area polynomial = -1 (transcribed cocycle)
-14 declared real variables; current marking and B1.1 chambers transcribed locally.
---relax: unknown (:reason-unknown "timeout"), 10000 ms limit
---b11: unknown (:reason-unknown "timeout"), 10000 ms limit
-No chamber excluded. No full metric witness established.

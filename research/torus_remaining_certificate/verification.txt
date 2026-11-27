@@ -1,7 +1,0 @@
-PASS face orientations and convex diagonal flip
-PASS all cone angles identically 2pi by continuity
-PASS marked modulus x+i*sqrt(w)
-PASS horizontal rank seven; explicit two-parameter family supplies the remaining modulus directions
-PASS type 7 all 144 edge/face separation witnesses
-PASS type 4 all 140 edge/face separation witnesses
-PASS both types on 0<=x<=1/200, w>=1-x^2

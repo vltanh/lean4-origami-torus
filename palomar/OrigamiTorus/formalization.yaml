@@ -26,24 +26,26 @@ classification:
   msc2020: ["52C25", "57Q05"]
 
 sources:
-  - title: "Type 2 obstruction and Type 6 flip certificates"
-    type: original-proof
+  - title: "Type 2 flatness obstruction and explicit Type 6 construction"
+    type: other
     relationship: other
-    note: "The two arguments and their provenance are documented in docs/Type2.md and docs/Type6.md."
-  - title: "Type 4 open-strip realization and Type 5 exact square construction"
-    type: original-proof
+    note: "This project proves Lander's Type 2 conjecture and verifies a face-identified Type 6 construction. The identification of the second candidate in the Type 3 preprint is unresolved. See docs/RELATED_WORK.md."
+  - title: "Type 4 open-strip theorem and exact Type 5 coordinates"
+    type: other
     relationship: other
     note: "The two constructions are documented in docs/Type4.md and docs/Type5.md."
-  - title: "Type 7 rectangular construction and translational gluing"
-    type: original-proof
-    relationship: other
-    note: "The horizontal rank, marked inflation, and lattice quotient argument are documented in docs/Type7.md."
+  - title: "Collapsibility and Near Universality for Vertex Minimal Paper Tori"
+    authors: ["Peter Doyle", "Richard Evan Schwartz"]
+    id: "arXiv:2510.12623v4"
+    location: "https://arxiv.org/abs/2510.12623v4"
+    relationship: adapts
+    note: "Theorem 1.1 supplies Type 7 near universality. This project verifies the full rectangular ray and the reduced strip."
   - title: "The two most symmetric flat tori as eight-vertex paper tori"
     authors: ["Fabian Lander"]
     id: "arXiv:2609.10703v1"
     location: "https://arxiv.org/abs/2609.10703v1"
-    relationship: background
-    note: "Section 6 asks whether Lutz Type 2 admits a paper torus."
+    relationship: adapts
+    note: "The square-torus construction underlies the Type 7 rectangular extension. Section 6 gives the Type 1 star collapse and conjectures Type 2 nonexistence."
   - title: "Vertex-Minimal Paper Tori"
     authors: ["Richard Evan Schwartz"]
     id: "arXiv:2507.14998v9"
@@ -54,8 +56,8 @@ sources:
     authors: ["Peter Doyle", "Fabian Lander", "Richard Evan Schwartz", "Steve Trettel"]
     id: "arXiv:2611.21909v1"
     location: "https://arxiv.org/abs/2611.21909v1"
-    relationship: background
-    note: "The Challenge includes Theorem 1.1 for the Type 3 face list, using the families and lifts in Sections 3 and 4 and the inflation of Remark 5.4."
+    relationship: formalizes
+    note: "The Challenge includes Theorem 1.1 for the Type 3 face list. The Type 6 construction also uses the planar families after a diagonal exchange."
 
 status:
   scope: >-
@@ -80,15 +82,15 @@ automation:
       models: ["GPT-6"]
       framework: "OpenAI Codex"
       tool_setup: >-
-        Lean 4, Mathlib, human mathematical writeups, fraction arithmetic,
-        CaDiCaL proof search, and Lean kernel replay of reverse unit propagation.
-        The workflow follows formalize-math-paper 4.8.1.
+        GPT-6 contributed mathematical proof development, Lean implementation,
+        certificate integration, separate review runs, and manuscript drafting.
+        The development uses Lean 4, Mathlib, CaDiCaL, and SymPy.
       cost:
-        wall_time: "See docs/CREDITS.md"
+        wall_time: "not tracked"
         spend_usd: "not tracked"
         hardware: "local workstation"
   spend_usd: "not tracked"
-  notes: "See docs/CREDITS.md."
+  notes: "The-Anh Vu-Le directed and maintains the project. See docs/CREDITS.md for the human and AI contribution record."
 
 fidelity:
   divergences: >-

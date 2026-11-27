@@ -14,7 +14,7 @@ The periods are orthogonal in the metric \(dX^2+w\,dY^2\), and the oriented cros
 
 The height direction \((3/13,-3/8,-3/7,12/13,1,-1,1,0)\) satisfies the strict determinant tests for every disjoint edge and face throughout \(w\ge1\). Each quadruple has a noncollinear projected triple, so a small perturbation of the heights can achieve general position without losing separation. Lean checks both facts and constructs such generic heights. The same tests hold for the flipped Type 4 face list on rectangles.
 
-The [PR proof](../research/torus_remaining_certificate/README.md) keeps the modulus fixed by adjoining two marking equations to the seven independent angle equations. The planar family extends into the Type 4 strip near \(x=0\) with the same Type 7 faces before the flip. The two parameter velocities preserve the angle sums and give independent derivatives in \(x\) and \(y\) of the marking. At the strip boundary one can take these derivatives from within the strip using smoothness of the local maps. The hand calculation below replaces the PR's chosen minor with an elimination proof for all rectangular bases.
+The [inflation proof](../OrigamiTorus/Type7/Inflation.lean) keeps the modulus fixed by adjoining two marking equations to the seven independent angle equations. The planar family extends into the Type 4 strip near \(x=0\) with the same Type 7 faces before the flip. The two parameter velocities preserve the angle sums and give independent derivatives in \(x\) and \(y\) of the marking. At the strip boundary one can take these derivatives from within the strip using smoothness of the local maps. The hand calculation below proves the rank by elimination for all rectangular bases.
 
 ## A hand proof of horizontal rank seven
 
@@ -110,26 +110,6 @@ The Type 7 graph supports the same fourteen-parameter reduction as Type 4.
 Lean verifies an exact list of at most 80 spatial candidates per marking and
 the edge-length and intersection tests for the list.
 [Fixed-marking reconstruction for Types 4 and 7](Type4.md#fixed-marking-reconstruction-for-types-4-and-7)
-
-## The unbounded strip beside the rectangles
-
-The PR certifies \(0\le x\le 1/200\) and \(y^2\ge 1-x^2\). Lean proves
-regular piecewise-isometric realization on the larger closed strip
-\(0\le x\le 1/20\) and \(y^2\ge 1-x^2\). The proof uses the first
-trapezoidal chart from Type 4 before the diagonal exchange,
-\(H=33/(20+26x)\) and \(r=-(H-1+Hx)/3\), with the PR's Type 7
-height vector.
-
-Set \(t=20x\) and \(h=y^2+x^2-1\). The projected areas and spatial
-determinants have rational polynomial formulas after clearing a positive
-scale. Lean verifies that each four-point set has a noncollinear projected
-triple and that all 144 disjoint edge–face pairs have a strict separating
-sign throughout \(0\le t\le1\), \(h\ge0\). A small generic perturbation
-of the heights gives an embedded lift. The unflipped and flipped planar
-shape and angle maps agree near the chart, so the verified rank-nine
-horizontal derivative applies to the unflipped lift. Inflation and the
-periodic development then give the Type 7 quotient embedding, with rank
-nine at the rescaled spatial placement. [Height certificate](../OrigamiTorus/Type7/StripLift.lean) · [Regular strip theorem](../OrigamiTorus/Type7/Strip.lean)
 
 ## The full open strip
 

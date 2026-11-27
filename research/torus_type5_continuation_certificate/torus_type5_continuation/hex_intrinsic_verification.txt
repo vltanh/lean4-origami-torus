@@ -1,8 +1,0 @@
-type 4 marking [[-1, 0], [-1, 1]] minimum shortest-edge slack 3/16 minimum absolute face double area in lattice coordinates 7/68
-type 4 marking [[-1, 1], [0, 1]] minimum shortest-edge slack 3/16 minimum absolute face double area in lattice coordinates 7/68
-type 5 marking [[-1, 0], [-1, 1]] minimum shortest-edge slack 1/4 minimum absolute face double area in lattice coordinates 7/60
-type 7 marking [[-1, 0], [-1, 1]] minimum shortest-edge slack 1/8 minimum absolute face double area in lattice coordinates 1/8
-type 7 marking [[-1, 0], [0, 1]] minimum shortest-edge slack 1/4 minimum absolute face double area in lattice coordinates 1/8
-type 7 marking [[-1, 1], [0, -1]] minimum shortest-edge slack 1/4 minimum absolute face double area in lattice coordinates 1/8
-type 7 marking [[-1, 1], [0, 1]] minimum shortest-edge slack 1/8 minimum absolute face double area in lattice coordinates 1/8
-PASS: all seven sharp-ray marking representatives have exact intrinsic hexagonal triangulations with strict shortest edges.

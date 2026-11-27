@@ -1,6 +1,0 @@
-type 4 interior automorphisms 4 homology actions 4 markings 24 orbits [((-1, -1, -1, 0), 4), ((-1, -1, 0, -1), 4), ((-1, 0, -1, 1), 4), ((-1, 0, 0, -1), 4), ((-1, 0, 0, 1), 4), ((-1, 1, 0, 1), 4)]
-type 4 sharp automorphisms 4 homology actions 4 markings 12 orbits [((-1, 0, -1, 1), 8), ((-1, 1, 0, 1), 4)]
-type 5 interior automorphisms 6 homology actions 6 markings 24 orbits [((-1, -1, -1, 0), 12), ((-1, 0, -1, 1), 12)]
-type 5 sharp automorphisms 6 homology actions 6 markings 12 orbits [((-1, 0, -1, 1), 12)]
-type 7 sharp automorphisms 32 homology actions 4 markings 24 orbits [((-1, 0, -1, 1), 8), ((-1, 0, 0, 1), 8), ((-1, 1, 0, -1), 4), ((-1, 1, 0, 1), 4)]
-generated 15 systems

@@ -1,9 +1,0 @@
-# B1.1: exact one-leaf elimination
-
-Active branch unchanged; zero of fourteen chambers certified infeasible.
-
-Fix the eight intrinsic core coordinates and the two reconstructed root positions, as in the previous radical reconstruction. For each leaf i in {0,6,7}, its five intrinsic/extrinsic coordinates satisfy four linear equations and one quadratic. Conditional on the previously proved rank-four lemma, write the affine solution as X_i=a_i+t_i b_i. The norm equation is a polynomial q_i(t_i) of degree at most two.
-
-Every prescribed determinant involving that leaf and three core vertices is affine in t_i. All height signs are affine as well. The strict and weak inequalities therefore intersect to a single interval I_i, with individually open or closed endpoints (possibly infinite). Constant inequalities must be checked separately. A necessary condition for a chamber is that q_i has a real root in I_i for each leaf. This eliminates the leaf parameters from the single-leaf chamber constraints without introducing radicals or squaring inequalities of unknown sign.
-
-For q=A t^2+B t+C, A != 0, split I at -B/(2A). On each resulting interval q is monotone. A root exists precisely when the endpoint values have opposite strict signs, or an included finite endpoint has value zero. At infinite endpoints use the sign of A. A singleton interval is tested directly. For linear q use the exact rational root; for constant q test zero and nonempty interval. The companion rational checker implements this test for rational core inputs. It is a pointwise necessary filter, not a proof over the continuous core domain. Determinants involving multiple leaves and full embedding still need checking. To obtain a global certificate, the same comparisons must be lifted to polynomial signs over the core domain, with all pivot cases covered. No numerical search or solver run was performed in this checkpoint.
