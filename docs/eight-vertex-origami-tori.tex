@@ -1,0 +1,1121 @@
+\documentclass[11pt,letterpaper]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[hmargin=1.15in,vmargin=0.95in]{geometry}
+\usepackage{microtype}
+\usepackage{booktabs,tabularx}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={An existence classification for eight-vertex origami tori},
+  pdfauthor={The-Anh Vu-Le}
+}
+
+\newtheorem{theorem}{Theorem}
+\newcommand{\R}{\mathbb R}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\C}{\mathbb C}
+\newcommand{\covol}{\operatorname{covol}}
+\newcommand{\dd}{\mathrm d}
+\newcommand{\release}{b391bdb86a7287c6034a77b1b3792cabd00425bb}
+\newcommand{\src}[2]{\href{https://github.com/vltanh/lean4-origami-torus/blob/\release/#1}{\texttt{#2}}}
+
+\title[Eight-vertex origami tori]{An existence classification for eight-vertex origami tori}
+\author{The-Anh Vu-Le}
+\date{Draft, November 27, 2026}
+\subjclass[2020]{52C25, 57Q05}
+\keywords{Paper torus, flat torus, triangulation, determinant signs, formal proof}
+
+\begin{document}
+
+\begin{abstract}
+Of the seven simplicial triangulations of the torus on eight vertices,
+exactly Types \(3\)--\(7\) in Lutz numbering admit embedded realizations
+in \(\R^3\) with all cone angles equal to \(2\pi\). The remaining
+existence question concerned Type \(2\). We reduce a hypothetical flat
+embedding to a finite system of determinant signs and give a
+kernel-checked propositional refutation. A diagonal exchange in the
+planar families of Doyle, Lander, Schwartz, and Trettel, followed by
+inflation at fixed periods, gives a universal construction on Type \(6\).
+Types \(4\) and \(7\) realize every reduced modulus off the sharp-rhombic
+ray. For Type \(5\) we give exact radical coordinates for the square
+torus and a uniform radical construction on a closed box of
+nonrectangular moduli. The nonexistence and realization theorems are
+formalized in Lean~4.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+A flat torus is a quotient \(T_\Lambda=\C/\Lambda\) by a rank-two
+lattice, with the metric induced by the Euclidean plane. An origami
+realization of \(T_\Lambda\) is an embedding in \(\R^3\) that is
+affine and distance preserving on each triangle of a triangulation of
+\(T_\Lambda\). Intrinsic distances here are Euclidean distances in a
+planar lift of the triangle. Equivalently, the embedded surface
+inherits its metric by gluing the Euclidean triangles of the spatial
+realization. It is flat precisely when all vertex angle sums are
+\(2\pi\). We use the term \emph{universal} for a fixed triangulation
+that realizes \(T_\Lambda\) for every rank-two lattice \(\Lambda\).
+
+Burago and Zalgaller's isometric embedding theorem for
+polyhedral surfaces already implies that every flat torus has an
+origami realization after subdivision \cite{bz}. Tsuboi gave an
+explicit construction for every modulus using the geometry of
+diplotori \cite{tsuboi}. Lazarus and Tallerie constructed a single
+universal triangulation with 2,434 faces \cite{lt}. Quintanar gave
+exact coordinates for a square torus with 40 vertices
+\cite{quintanar}. These results predate the classification at the
+minimum vertex count.
+
+Schwartz established the minimum vertex count of eight
+\cite{schwartz}. The census of small triangulations by Lutz and
+Sulanke gives seven types at this count \cite{sl}. Hougardy, Lutz,
+and Zelke gave integer-coordinate spatial embeddings of all
+seven with unrestricted cone angles \cite{hlz}. Lander observed that the
+degree-three vertex in Type \(1\) can be erased in any flat embedding,
+which would leave a forbidden seven-vertex origami torus. He found
+numerical examples on the other types except Type \(2\), and asked
+whether Type \(2\) admits any origami realization \cite[\S6]{lander}.
+Doyle and Schwartz proved near universality for Type \(7\), with
+the rectangular and sharp-rhombic rays omitted by their construction
+\cite{ds}. Lander then established a Type \(7\) realization of the
+square torus and local coverage around it, as well as a hexagonal
+realization on Type \(3\) \cite{lander}. Doyle, Lander, Schwartz,
+and Trettel proved that Type \(3\) is universal \cite[Theorem~1.1]{dlst}.
+
+Write \(K_j\) for the type with index \(j\), with the face lists in
+Appendix~\ref{sec:facelists}. If \(p=(p_i)\) is a spatial placement,
+\(|K_j|\to\R^3\) denotes its affine extension in barycentric
+coordinates. An embedded placement means that this extension is
+injective. Compactness then makes it a closed embedding. To state the
+positive results, normalize the period basis to \(1,\tau=x+iy\) up to
+a lattice similarity and possibly reflection, with
+\[
+ D=\{x+iy: 0\le x\le \tfrac12,\ y>0,\ x^2+y^2\ge1\}.
+\]
+One can choose a shortest nonzero period as the first generator and
+reduce the real component of the second generator modulo the first.
+Set \(D_{<1/2}=\{\tau\in D:x<1/2\}\). This set contains the
+rectangular ray and the unit-circle arc with the hexagonal endpoint
+excluded.
+
+\begin{theorem}\label{thm:type1}
+Every embedded spatial placement of \(K_1\) has a vertex whose cone
+angle differs from \(2\pi\).
+\end{theorem}
+
+\begin{theorem}\label{thm:type2}
+Every embedded spatial placement of \(K_2\) has a vertex whose cone
+angle differs from \(2\pi\).
+\end{theorem}
+
+\begin{theorem}[Doyle, Lander, Schwartz, and Trettel]\label{thm:type3}
+The triangulation \(K_3\) realizes \(T_\Lambda\) for every rank-two
+lattice \(\Lambda\).
+\end{theorem}
+
+\begin{theorem}\label{thm:type6}
+The triangulation \(K_6\) realizes \(T_\Lambda\) for every rank-two
+lattice \(\Lambda\). The embedding can be chosen so that the spatial
+map to seven cone angles and the two real components of a locally
+developed marked modulus has rank nine at its vertex coordinates.
+\end{theorem}
+
+\begin{theorem}\label{thm:type4}
+For every \(\tau\in D_{<1/2}\), the triangulation \(K_4\) realizes
+\(T_{\Z+\Z\tau}\), with rank nine for the spatial angle and marked
+modulus map.
+\end{theorem}
+
+\begin{theorem}\label{thm:type7}
+For every \(\tau\in D_{<1/2}\), the triangulation \(K_7\) realizes
+\(T_{\Z+\Z\tau}\), with rank nine for the spatial angle and marked
+modulus map.
+\end{theorem}
+
+In particular, \(K_7\) realizes every rectangular lattice torus,
+with arbitrary scale.
+
+\begin{theorem}\label{thm:type5square}
+The triangulation \(K_5\) admits a realization of \(T_{\Z+\Z i}\) whose
+coordinates are given by rational arithmetic and square roots.
+\end{theorem}
+
+\begin{theorem}\label{thm:type5box}
+Let \(x_0=0.174241221618834\) and \(y_0=1.084897889755590\), interpreted
+as exact rationals. The triangulation \(K_5\) realizes \(T_{\Z+\Z(x+iy)}\)
+for every \((x,y)\) in the closed box
+\[
+ |x-x_0|\le 10^{-11},\qquad |y-y_0|\le 10^{-11}.
+\]
+\end{theorem}
+
+Together the theorems settle existence for all seven types. By
+Theorem~\ref{thm:type2}, the existence conjecture raised for \(K_2\)
+has a negative answer. Our proof of Theorem~\ref{thm:type6} identifies
+the type by its full face list. The preprint \cite[\S6]{dlst} reports
+a second exactly checked universal construction by degree sequence
+\(55666677\), shared by \(K_4\) and \(K_6\). That description leaves
+its relation to the construction here unresolved.
+
+\section{Nonexistence from determinant signs}\label{sec:obstruction}
+
+\subsection*{Hemisphere support for Type 2}
+
+Use the relabeled face list
+\[
+ 046,\ 047,\ 056,\ 057,\ 135,\ 136,\ 145,\ 147,
+ \ 167,\ 234,\ 237,\ 245,\ 256,\ 267,\ 346,\ 357.
+\]
+The map from the labels in Appendix~\ref{sec:facelists} is
+\((0,4,7,6,5,1,3,2)\). The graph is \(K_8\) with \(01,02,03,12\)
+removed. In particular \(4,5,6,7\) are universally adjacent.
+
+Suppose \(p\) is an embedded flat placement. Intersect the star at
+\(v\) with a small sphere about \(p_v\) and rescale to the unit sphere.
+The link is a simple polygon of shortest great-circle arcs. Its
+vertices are the unit edge directions from \(v\), and its length is
+\(2\pi\). We claim that the directions are contained in an open
+hemisphere. If their convex hull contains the origin, take a subset
+minimal for this property. It has at most four vectors by
+Carath\'eodory's theorem. The convex relation has positive coefficients,
+and every proper subset is linearly independent. Otherwise one could
+subtract a multiple of a proper dependence until a coefficient first
+vanished and then renormalize.
+
+For four vectors \(a,b,c,d\) in link order the positive relation gives
+antipodes \(r,-r\) in the interiors of arcs \(ab,cd\), respectively.
+The perimeter of the ordered quadrilateral is the sum of the lengths
+of the broken paths \(rbc(-r)\) and \((-r)dar\), each at least \(\pi\).
+Equality for the first forces \(r,b,c\) into one plane through the
+origin and hence forces \(a,b,c\) into that plane. The perimeter
+therefore exceeds \(2\pi\). Shortening the link subpaths between the
+four chosen directions gives the opposite inequality.
+
+For three vectors their short arcs partition a great circle. Each
+link subpath between successive chosen vectors must have minimal
+length, so the star is planar. Its vertex set contains a complete graph
+on five vertices. For \(v\in\{0,1,2,3\}\) take \(v,4,5,6,7\), and
+otherwise take \(3,4,5,6,7\). A planar straight-line embedding of
+\(K_5\) is impossible. Three collinear vertices already force an
+edge overlap. With no such triple, a hull of at least four vertices
+has crossing diagonals, while a triangular hull has two interior
+vertices. The three segments from the first interior vertex to the
+corners partition the hull into three triangles. The segment from
+the second interior vertex to the corner opposite its triangle
+crosses an edge of the partition.
+
+For two vectors the directions of neighbors \(a,b\) are antipodal.
+The two paths between them on the link have length at least \(\pi\)
+each, and hence both are minimizing semicircles. An edge \(ab\)
+would contain \(p_v\), so \(a,b\in\{0,1,2,3\}\). At least two of the
+universally adjacent neighbors have rays in the interior of one
+semicircle. Write their order as \(a,w,x,b\). The ray through \(w\)
+meets the relative interior of segment \(ax\), and \(vw\) must end
+before that intersection. Thus \(p_w\) has strictly smaller height
+above the line \(p_ap_b\) in this half-plane than \(p_x\). Applying
+the same argument to \(vx\) and \(wb\) reverses the inequality.
+All minimal sets have now been excluded. Strict separation of the
+origin from the convex hull yields a supporting normal with positive
+dot product against every neighbor direction.
+
+\subsection*{A face with neighbors on both sides}
+
+Radially project a supported link to the plane \(n\cdot q=1\), where
+\(n\) is the supporting normal. The arcs project to segments and the
+link stays simple. If every incident face plane has the other
+neighbors on one closed side, every projected link edge lies on the
+boundary of the convex hull. The link is a simple closed curve, so
+it must be the whole hull boundary. A proper subset would lie in a
+punctured convex polygon boundary, which is homeomorphic to an open
+interval.
+
+Enclose the planar hull in a triangle and pull it back to the
+sphere. If \(a,b,c\) are the spherical corners, the perimeter is
+\[
+ 2\pi + d(b,c)-d(-a,b)-d(-a,c)<2\pi.
+\]
+The strict inequality follows because \(-a\) lies outside the open
+hemisphere, whereas the unique shorter arc from \(b\) to \(c\) lies
+inside. Clip the enclosing triangle by the supporting half-planes
+of the hull. Each cut removes a boundary path and replaces it, on
+the sphere, by a shortest arc, which cannot increase angular
+perimeter. The final perimeter is therefore less than \(2\pi\),
+contrary to flatness. For the sign system we use one such mixed-side
+face at each of \(0,1,2\).
+
+\subsection*{From geometry to a finite contradiction}
+
+Support, the selected strict side inequalities, and embeddedness
+persist under sufficiently small perturbation. For embeddedness,
+take two barycentric weight vectors on faces with disjoint supports.
+The pairs of such vectors form a compact set defined by closed simplex
+constraints and coordinatewise zero products. The minimum separation
+of their images is positive, and there are finitely many face pairs.
+Subtracting common barycentric weights and renormalizing reduces any
+unintended coincidence to one with disjoint supports. Moving
+vertex \(i\) by \(t(i,i^2,i^3)\) makes each affine four-point
+determinant a polynomial in \(t\) with nonzero cubic coefficient by
+the Vandermonde formula. We can avoid the finitely many roots while
+retaining the strict conditions. We then reflect if necessary to
+make \([0123]>0\), where \([abcd]\) denotes the determinant with
+rows \((1,p_i)\) in the listed order.
+
+The Boolean variables are the signs of the 70 sorted determinants
+and 14 selectors for the mixed-side faces. Alternation supplies the
+sign of every reordering. Schewe's SAT formulation of ordinary
+polyhedral realizability is a precedent for the chirotope and
+edge--face clauses \cite[\S2.4]{schewe}. The flatness argument here
+supplies the strict support and mixed-side constraints. The clause
+generator uses the following conditions.
+
+\begin{enumerate}
+\item For \(S\) an increasing pair disjoint from \(a<b<c<d\), the
+three signed terms of
+\[
+ [Sab][Scd]-[Sac][Sbd]+[Sad][Sbc]=0
+\]
+cannot all have the same sign. This is the two-dimensional
+Grassmann--Pl\"ucker identity after quotienting by the rows of \(S\).
+\item For an increasing five-tuple \(C\), the numbers
+\((-1)^i[C\setminus C_i]\) are the coefficients of an affine
+dependence, with \(i\) starting at zero. They have both signs.
+After normalization the positive and negative parts are equal
+convex combinations. A sign partition into an edge and a disjoint
+face contradicts embeddedness. A singleton and four of its
+neighbors contradict strict support at the singleton.
+\item At each of \(0,1,2\) at least one selector is true. Its face
+\(abc\) has brackets of both signs among \([abcw]\) for neighboring
+\(w\) outside the face.
+\end{enumerate}
+
+Including normalization, this gives 7,464 clauses. The refutation
+uses 741 of them and 363 reverse-unit-propagation steps. For each new
+clause, temporarily falsify every literal of that clause. Scan its
+listed predecessor clauses in order. A single remaining literal
+forces that literal to be true, and a clause with no remaining
+literal produces a contradiction. Each such contradiction proves the
+new clause. The final new clause is empty. As an example, the first
+derived clause is \((-61,18,-39,-19,-38)\) in signed-literal
+notation. The input unit clause \((1)\) and the input clause formed
+by adjoining \(-1\) to the new clause give the replay in this case.
+
+The replay and the indexing of its inputs appear in the
+\src{OrigamiTorus/Type2/Certificate.lean}{Type 2 certificate}.
+Lean checks the connection to the geometric clauses and the replay
+itself. The perturbation is only a means of obtaining strict signs
+and imposes no genericity requirement on the original flat
+placement. This proves Theorem~\ref{thm:type2}.
+
+\subsection*{Type 1 and the collapsed seven-vertex complex}
+
+At the degree-three vertex, opposite directions would put the edge
+between their endpoints through the center of the star. At flatness
+the three link arcs therefore have length sum \(2\pi\) with each
+length strictly less than \(\pi\). The third direction lies on a
+shortest path between the antipodes of the first two, by equality
+in the angular triangle inequality. The three directions thus lie
+on a great circle and positively span its plane. The star center
+lies strictly inside the triangle of its neighbors. Replacing the
+three incident triangles by that triangle preserves the image and
+all the other cone angles.
+
+The graph on the seven remaining vertices is complete. The same
+minimal-set proof gives hemisphere support at every remaining
+vertex. The two-vector case is excluded directly by completeness.
+The other cases use the planar \(K_5\) obstruction and the
+four-direction perimeter inequality. Generic perturbation yields
+35 sorted determinant signs satisfying the circuit and
+Grassmann--Pl\"ucker restrictions. On the particular collapsed
+face list these give 2,100 clauses. Lean verifies the 733 input
+clauses used in a 418-step refutation in
+\src{OrigamiTorus/Type1/Certificate.lean}{Type1/Certificate.lean}.
+This gives a proof of Theorem~\ref{thm:type1} on the collapsed complex
+and formalizes the obstruction needed by Lander's star reduction.
+Schwartz's theorem concerns all seven-vertex paper tori
+\cite{schwartz}.
+
+\section{From planar data to a spatial realization}\label{sec:method}
+
+Two tests recur in the constructions. The first shows that a strict
+height lift embeds the spatial face complex, and the second
+identifies the developed intrinsic faces with the requested flat
+torus.
+
+\subsection*{Separating a disjoint edge and face}
+
+For an ordered edge \(ab\) and a disjoint face \(cde\), let \(V_i\)
+be the determinant of the ordered list \((a,b,c,d,e)\) with position
+\(i\) deleted. In general position the affine dependence on these
+five points has coefficients proportional to
+\((V_0,-V_1,V_2,-V_3,V_4)\). If the segment and triangle meet, the
+coefficients of the edge must have one sign and those of the triangle
+the other. Thus any of
+\[
+ V_0V_1>0,\qquad V_2V_3>0,\qquad V_3V_4>0,\qquad V_2V_4<0
+ \tag{1}\label{eq:separation}
+\]
+excludes intersection. For two arbitrary faces, subtract common
+barycentric mass from a hypothetical unwanted intersection, leaving
+two disjoint supports of size at most three. With six nonzero weights
+there is a nonzero variation of the weights preserving the two
+weight sums and the equality in \(\R^3\). Move until one weight first
+vanishes. General position then forces exactly five points in the
+dependence, with support sizes two and three. It suffices to check
+\eqref{eq:separation} on all disjoint edge--face pairs. If the
+strict tests hold at some height vector and every projected
+four-tuple contains a noncollinear triple, a small change of heights
+can avoid all zero affine four-point determinants. The strict tests
+survive this change.
+
+\subsection*{Positive periodic triangles and area}
+
+Let a collection of oriented planar lifts of the abstract faces
+have compatible edge pairings by lattice translates. Suppose all
+oriented face areas are positive and sum to \(\covol(\Lambda)\).
+The resulting map \(|K|\to T_\Lambda\) is open. In the interior of
+a face it is locally affine invertible. At an edge the two positive
+triangles fill opposite sides locally. At a vertex all incident
+triangles can be translated to a common central corner. Their
+consecutive oriented sectors sweep positive angles less than \(\pi\),
+and because the cycle closes these angles sum to a positive multiple
+of \(2\pi\). Every direction therefore occurs in a sector. The
+finite fan maps every neighborhood of the vertex onto a
+neighborhood of its image. The image is compact, nonempty and
+open in the connected torus, hence surjective.
+
+Cut the translates of the lifted triangles along a fundamental
+parallelogram. This gives finitely many pieces whose total area
+equals the area of the cell. If a point had two distinct preimages,
+openness would give an open set of overlap between the images of
+disjoint neighborhoods of the preimages. A point there off all
+projected edges and off the cell boundary would lie in the interiors
+of two translated triangles. Their positive-area overlap contradicts
+equality of the sum of the piece areas with the area of their
+union. Thus the map is a homeomorphism. Equality of the three edge
+lengths of each spatial face with its planar lift makes the affine
+map on that face an isometry. This argument gives a realization with
+the prescribed lattice, at the prescribed scale.
+
+\section{The universal constructions}\label{sec:universality}
+
+\subsection*{Planar exchange}
+
+For the two charts of \cite[\S3]{dlst}, set \(w=y^2\) and choose
+\[
+ (u,k,\lambda)=
+ \begin{cases}
+ (3/128,11/32,13/32),&0\le x\le1/6,\\
+ (x/2-1/2048,1/16,1/2),&1/6\le x\le1/2.
+ \end{cases}
+\]
+At \(x=1/6\) either chart applies. Put \(b=1-x-2k\).
+The folded planar points have coordinates \((X,Y/y)\) with the
+following scaled coordinates \((X,Y)\).
+\begin{center}
+\begin{tabular}{@{}cll@{}}
+\toprule
+\(i\)&\(X_i\)&\(Y_i\)\\
+\midrule
+0 & \(0\) & \(0\)\\
+1 & \(u\) & \(u(b+2k/\lambda)\)\\
+2 & \(u-1/2\) & \((1-2u)x/2\)\\
+3 & \(-k-b\lambda\) & \((\lambda(w-b^2)-2bk)/2\)\\
+4 & \(x+k-1/2\) & \((w+bx)/2\)\\
+5 & \(u-1/2\) & \((w+b(b+2u-1))/2\)\\
+6 & \(u-k\) & \(b(u-k)\)\\
+7 & \(u\) & \((w+b^2+2bu)/2-(2u-2x-2k+1)/(2(1-\lambda))\)\\
+\bottomrule
+\end{tabular}
+\end{center}
+The planar intrinsic representatives \(Q_i\) agree with the
+folded representatives except at \(3\) and \(6\), where their
+scaled coordinates are
+\[
+ Q_3=\bigl(k,-(2bk+\lambda(b^2+w))/2\bigr),\qquad
+ Q_6=\bigl(u+k,b(u-k)\bigr).
+\]
+The directed period shifts are listed in
+Appendix~\ref{sec:shifts}.
+
+In both charts \(0<u<1/2\) and \(b>0\). The points \(2,5\) have the
+same first coordinate, and \(Y_5>Y_2\), since
+\[
+ 2(Y_5-Y_2)=w+b(b-1)-x+2u(b+x)>0.
+\]
+Indeed, \(w+b(b-1)-x\ge 3/4-x^2-x\ge0\) and \(b+x=1-2k>0\).
+Also \(Y_1>0\) and \(Y_5>Y_2\ge0\). Taking determinants therefore
+gives the signs \(+,-,-,+\) for \(120,125,051,052\).
+The diagonals \(12\) and \(05\) cross in the interior of
+the convex quadrilateral \(0,1,5,2\). The original faces \(012\)
+and \(152\) lift with zero shifts. Replacing them with \(015\) and
+\(052\) retriangulates the same quadrilateral on the intrinsic
+sheet and on the folded sheet. The new edge \(05\) was absent in the
+original face list. Relabeling by \((3,7,0,6,1,5,2,4)\) gives \(K_6\).
+
+\subsection*{Height and length certificates}
+
+The Type \(6\) height vectors \(z\), in chart order, are
+\[
+ \begin{aligned}
+ &(0,0,-11,-1,-3,-15,0,977),\\
+ &(0,-361,2527,2525,5105,2527,1,19639).
+ \end{aligned}
+\]
+The complementary minor signs give at least one strict test in
+\eqref{eq:separation} for each of the 140 disjoint edge--face pairs
+in each chart. To check the arithmetic, write
+\(x=l(1-s)+rs\) on a chart interval \([l,r]\) and
+\(w=1-x^2+h\) with \(h\ge0\). If \(A_{abc}\) is the oriented
+double area of a projected triple, a volume is
+\[
+ -z_a A_{bcd}+z_b A_{acd}-z_c A_{abd}+z_d A_{abc}.
+\]
+Write the signed area or volume as a cubic in \(1-s,s\), plus
+\(h\) times a linear polynomial in \(1-s,s\). Positive coefficients
+of the cubic and nonnegative coefficients of the linear polynomial
+prove the claimed strict sign on the closed strip. The sign table,
+including permutation parity, is in
+\src{OrigamiTorus/Type6/Signs.lean}{Type6/Signs.lean}.
+The 70 volumes for the first chart's vector are nonzero.
+In the second chart, the auxiliary vector
+\((0,-2017,0,-2,-1,-3,0,1430)\) has all 70 volumes nonzero.
+Adding a sufficiently small multiple of that vector to the second
+chart's lift preserves strict separation and avoids coplanarity.
+
+Hold the periods fixed. Write \(P_i\) and \(Q_i\) for the movable
+folded and intrinsic horizontal coordinates in the scaled
+plane. For a directed edge \(ij\) with shift \((m,n)\), put
+\(d_{ij}=(m+nx,nw)\) in scaled coordinates and
+\(\|v\|_w^2=w v_X^2+v_Y^2\). The residual for that edge is
+\[
+ \|P_j-P_i\|_w^2+w t^2(z_j-z_i)^2
+       -\|Q_j+d_{ij}-Q_i\|_w^2.
+ \tag{2}\label{eq:residual}
+\]
+There are 24 residuals. They vanish at the planar base and \(t=0\).
+Choose both coordinates of folded vertices \(0,\ldots,5\) and the
+first at \(6\), and both coordinates of intrinsic vertices
+\(0,\ldots,3,5\) and the first at \(4\). Each derivative row at the
+base is twice the difference of the weighted dot products of the
+folded and intrinsic edge vectors with the endpoint motions.
+The coefficient elimination in
+\src{OrigamiTorus/Type6/Rank.lean}{Type6/Rank.lean}
+proves that the square derivative has trivial kernel on both
+charts. It uses \(h=w-1+x^2\ge0\) to justify every nonzero factor
+canceled in the row operations.
+
+The implicit function theorem gives horizontal positions near the
+base at every sufficiently small \(t>0\) with all residuals zero.
+After dividing the vertical coordinate by \(t\), these positions
+approach the strictly embedded lift. By openness of the embedding
+condition, the adjusted lift is embedded and stays embedded when
+the vertical scale is restored. The intrinsic triangles remain
+positively oriented. The period table gives opposite edge pairings
+and total area equal to one period cell, with twice the scaled
+area equal to \(2w\). The area argument of
+Section~\ref{sec:method} gives the required lattice realization.
+Lattice reduction and similarity transport it to any \(\Lambda\),
+rescaling the spatial vertices with the same metric scale.
+
+\subsection*{Regularity at the Type 6 embedding}
+
+The two marked periods can be recovered locally by successive
+Euclidean triangle developments along
+\[
+ \begin{aligned}
+ &167\to276\to257\to052\to015,\\
+ &167\to276\to257\to375\to356\to136.
+ \end{aligned}
+\]
+Normalize the common starting face by placing vertex \(1\) at \(0\)
+and vertex \(7\) at \(1\). The two paths end at the \((1,0)\) and
+\((0,1)\) lifts of vertex \(1\), respectively. Their displacement
+ratio equals the period ratio on any nearby positive periodic
+sheet. Thus the marked modulus is a smooth function of the squared
+edge lengths near the constructed metric.
+
+To see the angle directions, vary squared lengths \(L_{ij}\) by
+\(\dot L_{ij}=(u_i+u_j)L_{ij}\). In a nondegenerate triangle the
+cosine rule gives
+\[
+ \dot A_i=\tfrac12\bigl((u_j-u_i)\cot A_k+
+                         (u_k-u_i)\cot A_j\bigr).
+\]
+The cotangent quadratic form \(-\sum_i u_i\dot A_i\) is the
+Euclidean vertex-scaling Hessian up to normalization
+\cite[Propositions~4.1.6 and~4.2.3]{bps}. It is positive on the
+quotient by constant vertex weights. This follows by writing the
+form using the Gram matrix of two incident sides, whose determinant
+is positive.
+Summing over faces and using connectedness gives seven
+independent cone-angle variations. Varying the two coordinates of
+the second period of the intrinsic sheet gives two modulus
+directions with all angles fixed, since the positive periodic
+faces continue to tile their quotient. Thus the derivative \(D\)
+of the joint angle and modulus map on squared lengths is onto.
+At the adjusted positive-height solution the derivative of
+\eqref{eq:residual} in the chosen coordinates is still invertible.
+Write it in physical units as \(\dd E-\dd I\), where \(E,I\)
+are the folded and intrinsic squared lengths. Since the intrinsic
+variations keep the periods fixed, \(D\,\dd I=0\).
+Surjectivity of \(D(\dd E-\dd I)\) gives surjectivity of
+\(D\,\dd E\) at the final spatial vertices. Similarity preserves
+this rank. This proves Theorem~\ref{thm:type6}.
+
+\subsection*{The Type 3 check}
+
+For the original diagonal \(12\), the formalization uses the
+published Type \(3\) heights \cite[\S4]{dlst}. Here is how the two
+length derivatives are related. For the convex quadrilateral,
+take a nonzero affine dependence \((\alpha_i)\), with
+\(\sum\alpha_i=0\) and \(\sum\alpha_iP_i=0\). No coefficient is
+zero. The stress relation on its six chords is
+\[
+ \sum_{i<j}\alpha_i\alpha_j
+       \langle P_i-P_j,\dot P_i-\dot P_j\rangle_w=0.
+\]
+It follows by expansion and holds on the intrinsic sheet with
+the same coefficients, because these four representatives agree
+there and all six relevant shifts are zero. Subtract the two
+relations. The coefficient of each diagonal is nonzero, so
+replacing the derivative row for \(05\) by the row for \(12\)
+preserves invertibility. The same fixed-period inflation and area
+argument, now using the original positively oriented face lifts,
+verify Theorem~\ref{thm:type3}. The stress argument and quotient
+proof are given in
+\src{OrigamiTorus/Type3/Rank.lean}{Type3/Rank.lean} and
+\src{OrigamiTorus/Type3/Universal.lean}{Type3/Universal.lean}.
+
+\section{The trapezoidal constructions for Types 4 and 7}\label{sec:strip}
+
+Use the unflipped \(K_7\) face list in Appendix~\ref{sec:facelists}.
+For \(w=y^2\), the two charts use
+\[
+ (H,c)=
+ \begin{cases}
+ (33/(20+26x),1/3),&0\le x\le9/20,\\
+ (1+3(1-2x)^2/2,2/3),&9/20\le x<1/2.
+ \end{cases}
+\]
+In the planar coordinates \((X,Y)\) used below the physical point
+is \((X,yY)\). Put
+\[
+ \begin{gathered}
+ a=Hx,\quad D_0=H-1+a,\quad Q=D_0^2+H^2w,\quad
+ q=H/D_0,\quad r=-cD_0,\\
+ T=a^2-a+H^2w-D_0,\qquad
+ (1-c)S=a^2-a-(1-c)H^2w-D_0(2a-cD_0-1),\\
+ s=D_0T/Q,\qquad t=D_0S/Q.
+ \end{gathered}
+\]
+The eight points in label order are
+\[
+ \begin{array}{llll}
+ (0,0),&(1-a-r,H+qr),&(1/2,0),&(a+t,H+qt),\\
+ (1,0),&(1+s,qs),&(a,H),&(1-a,H).
+ \end{array}
+\]
+The bound \(a^2+H^2w\ge H^2\) gives
+\(T\ge(H-1)^2+H(1-2x)>0\) and
+\[
+ (1-c)S\le (H-1)+c(H-1)^2-(1-c)H^2-2(1-c)(H-1)a<0.
+\]
+The last inequality uses \(H^2-H+2>0\) in the first chart
+and \(1<H\le 6/5\) in the second. Also
+\[
+ (1-c)\bigl(Q+(2H-1)T+S\bigr)=(1-c)(2H-1)T+H(H-1)>0.
+\]
+The double areas of \(356,352,623,625\) after scale \(Q\) are
+\[
+ \begin{aligned}
+ &-SH^2Q,\qquad &&-HQ\bigl(Q+(2H-1)T+S\bigr)/2,\\
+ &SHQ(H-1/2), &&HQ\bigl(Q+(2H-1)T\bigr)/2.
+ \end{aligned}
+\]
+Their signs are \(+,-,-,+\). Thus \(35\) can be exchanged for \(26\)
+in a convex quadrilateral. Relabeling by \((2,1,4,0,3,7,5,6)\)
+gives \(K_4\).
+
+The angle and period calculations use two circles. Vertices
+\(0,4,5,6,7\) are on the circle whose equation in these coordinates
+is
+\[
+ X^2+wY^2-X-\frac{a^2-a+H^2w}{H}Y=0.
+\]
+Vertices \(0,4,1,3\) lie on a second circle, along with the
+reflection of \(1\) in the vertical line \(X=1/2\). For the
+oriented link at any vertex, start with the successive ratios of
+its complex edge directions. They telescope over the full link.
+In passing to positive interior angles, reverse the phase for
+each negatively oriented face. The ratios over a consecutive
+negative block telescope to its end chords. The two circle
+identities and the crease directions make the product of the
+negative-block ratios real at each vertex. The corrected phases
+therefore multiply to one. Every cone angle is a positive
+multiple of \(2\pi\), and the sixteen faces have total angle
+\(16\pi\), so every cone angle is \(2\pi\). The flip preserves
+these angle sums. The full chord calculation is in
+\src{docs/Type4.md}{docs/Type4.md}.
+
+For the periods, unfold the six faces adjacent to the marking
+paths \(4\to2\to3\to4\) and \(5\to2\to0\to5\). The loops meet at
+\(2\) with alternating branches, and the flip preserves both
+loops. Put \(\rho=(D_0,H)\) and \(\nu=(-wH,D_0)\).
+The creases encountered in the two continuations have directions
+\(\rho\) and \(x\rho+\nu\). Applying reflection across these
+directions in the metric \(X^2+wY^2\), the two developed vectors
+in the common scale \(Q\) are
+\[
+ U=2H^2\nu,\qquad V=2H^2(x\nu-w\rho).
+\]
+The vectors \(\nu,\rho\) are orthogonal in that metric and
+\(\|\nu\|^2=wQ\). The physical ratio \(V/U\) is \(x+iy\).
+The signed corner derivatives have seven independent angle
+directions. In their left kernel the weights at the eight
+vertices satisfy linear balance equations in the inverse complex
+chords at the negative-block boundaries. Projecting the balance
+equations at vertices \(3,5\) along the two circles, then
+eliminating using the equations at \(1,6\), gives only the
+constant weights. The two chart derivatives preserve cone angles
+and vary the modulus independently. The resulting horizontal rank
+is nine. The flip preserves the angle map in a planar
+neighborhood of the base, and both planar charts give the same
+marked ratio before and after the flip. Lean checks the rank
+calculation in \src{OrigamiTorus/Type4/StripRank.lean}{Type4/StripRank.lean}.
+
+There are six height cells, cut at \(0,1/10,1/5,3/10,2/5,9/20,1/2\).
+The first five are closed and the last excludes \(1/2\).
+Use \(w=1-x^2+h\) and a coordinate \(s\in[0,1]\) on each cell.
+The coordinate and height data give determinant polynomials
+after clearing positive denominators. On \(s<1\), substituting
+\(s=v/(1+v)\) and clearing powers of \(1+v\) reduces the required
+strict signs to nonnegative coefficients and a strictly positive
+constant coefficient for \(v,h\ge0\). On a closed cell the
+endpoint \(s=1\) is checked separately. The checks cover all
+disjoint edge--face pairs of each face list. For \(K_7\) the second
+cell uses the first height polynomial evaluated at \(1+s\),
+and the third adds \((1+h)/100\) to the cleared height of vertex
+\(3\). The other cells share the \(K_4\) height rows.
+The finite data are in
+\src{OrigamiTorus/Type4/LiftWideData.lean}{Type4/LiftWideData.lean}
+and \src{OrigamiTorus/Type7/WideData.lean}{Type7/WideData.lean}.
+
+With these embedded lift directions, the rank-nine angular and
+marked-modulus equations admit an implicit-function correction at
+small positive height. The seven angle equations force the
+eighth by the face-angle total. The specified marked ratio is
+fixed during the correction. The full spatial derivative already
+has rank nine at the planar base, so this rank persists at
+sufficiently small positive height and at the final rescaling.
+
+To identify the corrected metric, successive oriented unfoldings
+give face transitions in the orientation-preserving Euclidean
+group. The angle equations make the transitions around each
+vertex trivial. After gauging a spanning tree in the dual
+graph, the other transitions are words in two commuting
+generators. For example, on the unflipped list write \(a,b,c,d,e,f,g,u,v\)
+for the transitions across \(01,02,03,05,06,07,14,12,47\)
+in that gauge. The eight vertex words, in label order, are
+\[
+ \begin{gathered}
+ bcaedf,\quad gua^{-1},\quad b^{-1}u^{-1},\quad c^{-1},\\
+ vg^{-1},\quad d^{-1},\quad e^{-1},\quad f^{-1}v^{-1}.
+ \end{gathered}
+\]
+Setting them to the identity gives \(c=d=e=1\) and
+\((a,b,f,g)=(vu,u^{-1},v^{-1},v)\), with \(uv=vu\).
+If either generator is a nontrivial rotation, every commuting
+transition fixes its center. Summing the boundary determinant
+formula for the oriented areas about that center cancels every
+paired edge, contradicting positive total area. Thus all
+transitions are translations. In the unflipped gauge the marked
+periods read off the translations of \(v\) and \(uv\), a unimodular
+change of basis. The shifted face lifts have total area equal to
+one period cell. The checked developments and area identities for
+both lists are in
+\src{OrigamiTorus/Type7/IntrinsicLifts.lean}{Type7/IntrinsicLifts.lean}
+and \src{OrigamiTorus/Type7/Tiling.lean}{Type7/Tiling.lean}.
+The quotient argument finishes the realizations in
+Theorems~\ref{thm:type4} and~\ref{thm:type7}.
+
+\section{Exact radical realizations of Type 5}\label{sec:radicals}
+
+Work in the labeling of Appendix~\ref{sec:facelists}. The anchors
+are \(1,2,5\), the roots are \(3,4\), and the leaves are \(0,6,7\).
+There is no edge between the two roots, and no edge joins two
+leaves. Every leaf is adjacent to all five core vertices.
+Use the integral shifts \(K_{ij}\) given in
+Appendix~\ref{sec:shifts}, interpreted in the requested basis.
+Vertex \(1\) is the origin and all shifts incident to it vanish.
+The anchors lie in the horizontal plane at their respective
+intrinsic positions. The following integers, divided by
+\(10^{15}\), give the physical planar core coordinates.
+\begin{center}
+\small
+\begin{tabular}{@{}crrrr@{}}
+\toprule
+&\multicolumn{2}{c}{Square}&\multicolumn{2}{c}{Nonrectangular box}\\
+\(i\)&\(10^{15}X_i\)&\(10^{15}Y_i\)&\(10^{15}X_i\)&\(10^{15}Y_i\)\\
+\midrule
+2 & \(444720882667740\) & \(-499972918103549\) & \(305146237868087\) & \(-605447047939750\)\\
+3 & \(499999999999045\) & \(87262616850970\) & \(499997454165673\) & \(181480875778771\)\\
+4 & \(-81664706988789\) & \(418104802964447\) & \(-100309264271995\) & \(459493147984820\)\\
+5 & \(-39101278348661\) & \(-213154941393696\) & \(-154596026157111\) & \(-274376548947718\)\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+To reconstruct a vertex \(j\), write \(u\in\R^2\) for its
+intrinsic position, \(v\in\R^3\) for its spatial position, and
+\(r_i\) for the spatial position of a core neighbor \(i\).
+Set \(s_i=p_i-K_{ij}\), with the shift understood as a physical
+plane vector. Subtract the equation \(\|v\|^2=\|u\|^2\) from the
+squared-distance equation for each other neighbor to obtain
+\[
+ r_i\cdot v-s_i\cdot u=(\|r_i\|^2-\|s_i\|^2)/2.
+ \tag{3}\label{eq:radical}
+\]
+The equations for anchors \(2,5\) determine the horizontal part
+of \(v\) by a \(2\times2\) solve. At a root, \(u\) is given, and
+the height is a signed square root of the remaining squared norm.
+Take the positive sign at \(3\) and the negative sign at \(4\).
+
+At a leaf the horizontal part is \(B+Lu\) for a vector \(B\)
+and matrix \(L\). Substitution in the two root equations gives
+\(z_i v_z=a_i\cdot u+b_i\) for \(i=3,4\). Eliminate \(v_z\),
+giving \(n\cdot u+m=0\), where
+\[
+ n=z_4a_3-z_3a_4,\qquad m=z_4b_3-z_3b_4 .
+\]
+The checked data have \(n\ne0\) and \(z_3\ne0\). Put
+\[
+ u(t)=-\frac{m}{\|n\|^2}n+t(-n_y,n_x),\qquad
+ v(t)=\left(B+Lu(t),\,\frac{a_3\cdot u(t)+b_3}{z_3}\right).
+\]
+Solving the quadratic \(\|v(t)\|^2-\|u(t)\|^2=0\) supplies the
+leaf coordinates. Use the plus sign before the square root
+in the quadratic formula for \(0,7\), and the minus sign for
+\(6\). Each reconstructed leaf satisfies all five incident
+lengths. Together with the two roots and the anchor triangle,
+this accounts for all 24 edges.
+
+For the square and the entire nonrectangular box, Lean verifies
+the necessary nonzero denominators, positive radicands, 16
+positive face orientations, 70 nonzero four-point determinants,
+and strict tests on the 138 disjoint edge--face pairs.
+Dyadic and rational interval bounds enclose the radicals and
+prove these strict comparisons. Exact identities, including
+\eqref{eq:radical}, prove the edge equalities.
+The skew shifts have zero sum around each face and the lifts
+have compatible edge pairings. The sum of signed double areas
+is 2 in lattice coordinates, since all terms depending on the
+vertex representatives cancel in pairs. Physical coordinates
+multiply this area by \(y\). The argument in
+Section~\ref{sec:method} gives the desired square and nonrectangular
+quotients. The formulas and interval checks are in
+\src{OrigamiTorus/Type5/Square.lean}{Type5/Square.lean} and
+\src{OrigamiTorus/Type5/ContinuationCertificate.lean}{Type5/ContinuationCertificate.lean}.
+This proves Theorems~\ref{thm:type5square} and~\ref{thm:type5box}.
+
+The same length elimination bounds the number of reconstruction
+candidates for a fixed marking and four intrinsic core points.
+For a flat embedded placement supplied with coherent,
+nondegenerate marked face lifts, the anchor triangle can be
+put in this gauge by a rigid motion. The formal proof excludes
+a rank loss in the leaf equations and an identically zero
+remaining norm polynomial. There are then at most two choices
+at each root and at each leaf, giving at most \(2^5=32\)
+candidates. Some candidates can fail the embedding and face
+conditions. The completeness statement takes the marked lifts
+as input. See
+\src{OrigamiTorus/Type5/MarkedReduction.lean}{Type5/MarkedReduction.lean}.
+
+\section{Remaining universality questions}
+
+Within the reduced domain, the remaining moduli for \(K_4\) and
+\(K_7\) lie on the sharp-rhombic ray \(x=1/2\),
+\(y\ge\sqrt3/2\). The covered regions for \(K_5\) are smaller.
+One can restrict the possible markings of a realization before
+solving for its spatial coordinates.
+
+For a piecewise-isometric embedded realization, an edge is
+strictly shorter than every alternative period lift of the
+segment with the same endpoints in the quotient. In fact,
+subdivide the alternative planar segment along the translated
+face lifts. Its spatial image has length at most that of the
+segment and at least the Euclidean distance between the
+edge endpoints. Equality forces the whole image onto that
+spatial edge. Injectivity of the realization and uniqueness
+of a lift with fixed starting point then force the same
+lift. A finite-subdivision version also works when the
+segment lies partly on lifted face boundaries.
+
+The resulting strict nearest-period inequalities bound the
+period of an essential triangular cycle to a finite set.
+Using a pair of generating cycles, choose a unimodular
+period matrix from these possibilities. Gauge the shifts
+on a spanning tree to zero. The two cycle periods, followed
+by the face equations, then determine every edge shift for
+the three types. Enumerating under combinatorial automorphisms and
+specified lattice isometries gives the following numbers of orbits
+of necessary marking candidates.
+\begin{center}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Type & \(x<1/2\) & Sharp ray & Hexagonal endpoint\\
+\midrule
+\(4\)&6&2&1\\
+\(5\)&2&1&1\\
+\(7\)&10&4&2\\
+\bottomrule
+\end{tabular}
+\end{center}
+The column \(x<1/2\) uses central inversion uniformly.
+Additional symmetries at special moduli can identify further
+candidates there. The sharp-ray column uses the symmetries of the
+nonhexagonal part of the ray.
+At the hexagonal metric all the ray representatives admit
+positively oriented intrinsic triangulations with strictly
+shortest marked edges. The intrinsic construction uses
+rational coordinates in a lattice basis and the same area
+test as above. This leaves a spatial embedding problem for
+the four hexagonal orbits. The winding, orbit, and intrinsic
+statements are in
+\src{OrigamiTorus/Winding/ShortestWinding.lean}{Winding/ShortestWinding.lean},
+\src{OrigamiTorus/Winding/WindingOrbits.lean}{Winding/WindingOrbits.lean},
+and \src{OrigamiTorus/Winding/HexagonalTiling.lean}{Winding/HexagonalTiling.lean}.
+
+For each fixed marking of \(K_4\) or \(K_7\), the choice of
+fourteen real coordinates for the intrinsic vertex
+representatives after translation fixes the 24 marked edge
+lengths. The formalization lists five possible four-vertex
+anchors and proves that one is a nondegenerate tetrahedron in
+any embedded placement. After fixing the anchor up to rigid
+motion and reflection, each remaining vertex lies on three
+spheres centered at distinct anchor vertices. Subtracting the
+squared-distance equations fixes its two coordinates in the
+plane of the centers. The remaining coordinate is a signed
+square root, including the possibility of tangency. There are at
+most \(5\cdot 2^4=80\) candidates. Exact tests of all edge
+lengths and disjoint subface intersections apply even when
+some non-anchor vertices are coplanar. The completeness statement
+takes the marking and representatives as input.
+\src{OrigamiTorus/Geometry/TetrahedralReconstruction.lean}{TetrahedralReconstruction.lean}
+
+\section{Formal verification and availability}
+
+The Lean~4 development is available in the
+\href{https://github.com/vltanh/lean4-origami-torus}{origami-torus repository}.
+The results in this paper refer to the pinned
+\href{https://github.com/vltanh/lean4-origami-torus/commit/\release}{source revision}.
+It includes the individual proof notes, exact coordinate
+tables, and complete finite certificates. The toolchain
+is Lean~4.36.0 with pinned Mathlib dependencies.
+The build and comparison commands run from the repository root.
+{\small
+\begin{verbatim}
+lake build
+lake env lake comparator --config=palomar/OrigamiTorus/comparator.json
+\end{verbatim}
+}
+Lean and NanoDa accepted the 13 statements in the
+Comparator configuration in a local replay. This configuration
+includes the main obstructions, universality results with
+Type \(6\) regularity, Type \(4\) strip existence, Type \(5\)
+square, and Type \(7\) rectangular existence. The full
+Lean library also checks the Type \(5\) box and the rank-nine
+strip statements for Types \(4\) and \(7\). The main declarations
+are as follows.
+\begin{center}
+\small
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+\toprule
+Result & Declaration under \texttt{OrigamiTorus}\\
+\midrule
+Theorem~\ref{thm:type1}&\texttt{Type1.nonexistence}\\
+Theorem~\ref{thm:type2}&\texttt{Type2.type2\_nonexistence}\\
+Theorem~\ref{thm:type3}&\texttt{Type3.universal}\\
+Theorem~\ref{thm:type6}&\texttt{type6\_regular\_universal}\\
+Theorem~\ref{thm:type4}&\texttt{Type4.open\_strip\_regular\_realizes}\\
+Theorem~\ref{thm:type7}&\texttt{Type7.open\_strip\_regular\_realizes}\\
+Theorem~\ref{thm:type5square}&\texttt{Type5.square\_torus}\\
+Theorem~\ref{thm:type5box}&\texttt{Type5.Continuation.torus\_by\_faces}\\
+\bottomrule
+\end{tabularx}
+\end{center}
+For the square, \texttt{Type5.square\_torus} verifies the embedding
+built from the radical coordinates defined in \texttt{Type5/Square.lean}.
+The local comparison checks the independently stated Challenge claims
+against the Solution proofs. The finite proofs replay through Lean's
+kernel and require no SAT solver at proof-checking time. The project
+\src{docs/VERIFICATION.md}{verification notes} record the precise
+scope of the comparisons.
+
+\subsection*{Acknowledgments}
+The planar formulas underlying the Type \(3\) and Type \(6\)
+constructions are due to Doyle, Lander, Schwartz, and Trettel.
+The trapezoidal construction uses the geometry of the work on
+near universality and the square torus. CaDiCaL assisted in
+finding the Type \(2\) propositional refutation, and SymPy
+assisted in finding the Type \(6\) elimination order. OpenAI
+Codex (GPT-6) contributed to mathematical proof development and
+the Lean implementation, carried out separate proof review runs,
+and drafted the manuscript under the author's direction. The
+code and proof credit are documented in
+\src{docs/CREDITS.md}{docs/CREDITS.md}.
+
+\appendix
+
+\section{Face lists}\label{sec:facelists}
+
+The strings \(abc\) denote triangular faces with vertex labels
+\(a,b,c\). The lists below specify the triangulations regardless
+of the starting point on an oriented face. They use the labeling
+in the public numerical data of Lander and Trettel
+\cite{data}. The proof of Theorem~\ref{thm:type2} uses the
+relabeling given in Section~\ref{sec:obstruction}.
+
+\begin{center}
+\small
+\begin{tabular}{@{}cl@{}}
+\toprule
+Type & Faces\\
+\midrule
+1 & \texttt{012 031 023 142 135 164 157 176}\\
+  & \texttt{263 247 256 275 345 374 367 465}\\[2pt]
+2 & \texttt{012 031 024 043 152 136 145 174}\\
+  & \texttt{167 253 237 264 276 347 356 465}\\[2pt]
+3 & \texttt{012 031 024 043 152 136 145 174}\\
+  & \texttt{167 264 257 276 347 356 375 465}\\[2pt]
+4 & \texttt{012 031 024 053 045 152 134 146}\\
+  & \texttt{165 264 257 276 374 356 367 475}\\[2pt]
+5 & \texttt{012 031 024 053 045 152 136 164}\\
+  & \texttt{147 175 263 237 274 256 357 465}\\[2pt]
+6 & \texttt{012 031 024 053 045 152 136 164}\\
+  & \texttt{147 175 274 256 267 357 376 465}\\[2pt]
+7 & \texttt{356 325 364 302 341 310 506 524}\\
+  & \texttt{547 570 674 601 617 214 207 271}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Edge shifts for the fixed-period and radical constructions}\label{sec:shifts}
+
+For an increasing edge \(ij\), a shift \((m,n)\) means that the
+intrinsic difference is \(Q_j-Q_i+m+n\tau\) in physical complex
+coordinates. In the two lists below omitted shifts are zero,
+and reversing an edge negates its shift.
+
+For the Type \(3\) and Type \(6\) charts in
+Section~\ref{sec:universality} use these shifts in the original
+Type \(3\) labeling, with shift zero on the relevant diagonal.
+\[
+\begin{array}{c|l}
+(m,n)&\text{Edges}\\ \hline
+(0,-1)&04,\ 24,\ 34,\ 37\\
+(-1,0)&26,\ 27,\ 57\\
+(1,-1)&35\\
+(-1,1)&46,\ 56
+\end{array}
+\qquad
+\begin{array}{c|l}
+(m,n)&\text{Type \(5\) edges}\\ \hline
+(1,-1)&04,\ 24,\ 27\\
+(1,0)&05,\ 35,\ 37\\
+(0,-1)&23,\ 26,\ 56\\
+(0,1)&45
+\end{array}
+\]
+For Type \(5\), the right table gives the shifts in the Type \(5\)
+labeling and applies to both radical constructions. The
+shift data are defined in
+\src{OrigamiTorus/Defs.lean}{Defs.lean} and
+\src{OrigamiTorus/Type5/Square.lean}{Type5/Square.lean}.
+
+\begin{thebibliography}{99}
+
+\bibitem{bps}
+A. I. Bobenko, U. Pinkall, and B. A. Springborn,
+\emph{Discrete conformal maps and ideal hyperbolic polyhedra},
+Geometry \& Topology 19 (2015), 2155--2215.
+\href{https://arxiv.org/abs/1005.2698}{arXiv:1005.2698}.
+
+\bibitem{bz}
+Yu. D. Burago and V. A. Zalgaller,
+\emph{Isometric piecewise-linear embeddings of two-dimensional
+manifolds with a polyhedral metric into \(\R^3\)},
+Algebra i Analiz 7 (1995), 76--95.
+\href{https://www.mathnet.ru/eng/aa555}{English translation}, St. Petersburg Math. J. 7
+(1996), 369--385.
+
+\bibitem{dlst}
+P. Doyle, F. Lander, R. E. Schwartz, and S. Trettel,
+\emph{A universal \(8\)-vertex origami torus triangulation},
+preprint, 2026.
+\href{https://arxiv.org/abs/2611.21909v1}{arXiv:2611.21909v1}.
+
+\bibitem{ds}
+P. Doyle and R. E. Schwartz,
+\emph{Collapsibility and near universality for vertex minimal paper tori},
+preprint, 2025.
+\href{https://arxiv.org/abs/2510.12623v4}{arXiv:2510.12623v4}.
+
+\bibitem{hlz}
+S. Hougardy, F. H. Lutz, and M. Zelke,
+\emph{Polyhedral tori with minimal coordinates},
+preprint, 2007.
+\href{https://arxiv.org/abs/0709.2794}{arXiv:0709.2794}.
+
+\bibitem{lander}
+F. Lander,
+\emph{The two most symmetric flat tori as eight-vertex paper tori},
+preprint, 2026.
+\href{https://arxiv.org/abs/2609.10703v1}{arXiv:2609.10703v1}.
+
+\bibitem{data}
+F. Lander and S. Trettel,
+\emph{Low vertex flat tori}, numerical data.
+\href{https://github.com/FabianLander/low-vertex-flat-tori}{GitHub repository}.
+
+\bibitem{lt}
+F. Lazarus and F. Tallerie,
+\emph{A universal triangulation for flat tori},
+Discrete Comput. Geom. 71 (2024), 278--307.
+\href{https://doi.org/10.1007/s00454-023-00598-7}{Journal article}.
+
+\bibitem{quintanar}
+T. Quintanar,
+\emph{An explicit PL-embedding of the square flat torus into \(\R^3\)},
+J. Comput. Geom. 11 (2020), 615--628.
+\href{https://jocg.org/index.php/jocg/article/view/3114}{Journal article}.
+
+\bibitem{schewe}
+L. Schewe,
+\emph{Nonrealizable minimal vertex triangulations of surfaces},
+Discrete Comput. Geom. 43 (2010), 289--302.
+\href{https://arxiv.org/abs/0801.2582}{arXiv:0801.2582}.
+
+\bibitem{schwartz}
+R. E. Schwartz,
+\emph{Vertex-minimal paper tori},
+preprint, 2025, version 9, 2026.
+\href{https://arxiv.org/abs/2507.14998v9}{arXiv:2507.14998v9}.
+
+\bibitem{sl}
+T. Sulanke and F. H. Lutz,
+\emph{Isomorphism-free lexicographic enumeration of triangulated
+surfaces and 3-manifolds},
+European J. Combin. 30 (2009), 1965--1979.
+\href{https://arxiv.org/abs/math/0610022v3}{arXiv:math/0610022v3}.
+
+\bibitem{tsuboi}
+T. Tsuboi,
+\emph{On origami embeddings of flat tori},
+J. Math. Sci. Univ. Tokyo 31 (2024), 105--126.
+\href{https://www.ms.u-tokyo.ac.jp/journal/31-2-1.pdf}{Journal article}.
+
+\end{thebibliography}
+
+\end{document}
