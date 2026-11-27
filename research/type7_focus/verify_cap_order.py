@@ -57,3 +57,11 @@ while True:
   assert left,(models[-1],z)
 assert len(models)==len(set(models))==16
 print('PASS complete Boolean enumeration: 16 models, every one of 128 signed line orders cyclic')
+
+# Export the exact blocked formula for the independent exhaustive DPLL
+# checker already in orientation_checkpoint/check_unsat.cpp.
+if len(sys.argv)>1:
+ D=C+[[-(i+1)*(1 if x=='+' else -1) for i,x in enumerate(m)] for m in sorted(models)]
+ assert len(D)==7834
+ Path(sys.argv[1]).write_text(f'p cnf {extra.n} {len(D)}\n'+''.join(' '.join(map(str,row))+' 0\n' for row in D))
+ print('exported blocked CNF:',extra.n,len(D))
