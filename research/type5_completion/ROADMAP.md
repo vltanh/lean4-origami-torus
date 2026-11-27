@@ -114,6 +114,10 @@ reflection direction do not give a uniform separation from collapse or
 tangency. The new hand proofs and their exact finite/algebraic checks do
 not supply the final contradiction or a compiled Lean theorem.
 
+## Planar construction alternative — 2026-11-27
+
+**Complete exclusion of one construction family, not of the hexagonal modulus.** At the hexagon the full three-parameter source family with positively oriented intrinsic triangles has no embedded Type 5 vertical lift after the two convex flips. All seven generic projected order patterns are closed: six by negative height-sign cycles and one by an exact positive five-inequality dependence. Rational Bernstein checks prove the fixed signs and cofactor weights uniformly. Nongeneric points follow by openness. The entire convex-flip graph has only three states in every pattern, so changing the flip order cannot rescue this family. See [proof](planar_flip.md) and [exact verifier](verify_planar_flip.py). The original elongated cell count is unchanged (0/19). Other folding patterns and nonplanar realizations remain open. No Lean source changes or new Lean theorem.
+
 ## 1. What would finish Type 5?
 
 Existence is already established. The remaining question has two possible
