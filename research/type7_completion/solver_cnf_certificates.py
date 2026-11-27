@@ -106,6 +106,7 @@ def check_packet(job):
     directory = Path(directory)/identity
     cnf, proof = directory/'input.cnf', directory/'proof.drat'
     started = time.monotonic()
+    attempts = []
     try:
         data = cnf.read_bytes()
         n, clauses, normalized = normalize(data)
@@ -118,23 +119,41 @@ def check_packet(job):
                 raise ValueError('CNF hash does not match verified manifest')
             if digest(proof.read_bytes()) != expected['proof_sha256']:
                 raise ValueError('proof hash does not match verified manifest')
-            produced = started
-        else:
-            produce_trace(n, clauses, proof, int(1000*seconds))
+        orders = [('replay' if replay else 'source', clauses)]
+        canonical_order = sorted(tuple(sorted(clause)) for clause in clauses)
+        if not replay and canonical_order != clauses:
+            orders.append(('canonical', canonical_order))
+        for order, candidate in orders:
+            attempt_started = time.monotonic()
+            if not replay:
+                proof.unlink(missing_ok=True)
+                produce_trace(n, candidate, proof, int(1000*seconds))
             produced = time.monotonic()
-        result = subprocess.run([checker, str(cnf), str(proof)], capture_output=True,
-                                text=True, timeout=seconds, check=False)
-        if result.returncode != 0 or not result.stdout.startswith('PASS UNSAT: '):
-            raise RuntimeError(f'independent replay failed: {result.stdout} {result.stderr}')
-        finished = time.monotonic()
+            result = subprocess.run([checker, str(cnf), str(proof)], capture_output=True,
+                                    text=True, timeout=seconds, check=False)
+            verified = result.returncode == 0 and result.stdout.startswith('PASS UNSAT: ')
+            attempts.append({'order': order, 'verified': verified,
+                             'producer_seconds': 0 if replay else produced-attempt_started,
+                             'checker_seconds': time.monotonic()-produced,
+                             'checker_result': (result.stdout+' '+result.stderr).strip()})
+            if verified:
+                break
+            # A different deterministic clause order can yield a RUP-only
+            # trace. It proves the identical formula and is independently
+            # checked from the beginning; the rejected trace is never used.
+            if not result.stderr.startswith('non-RUP proof step '):
+                break
+        if not attempts[-1]['verified']:
+            raise RuntimeError('independent replay failed: '+attempts[-1]['checker_result'])
         return {'id': identity, 'verified': True, 'variables': n, 'clauses': len(clauses),
                 'input_sha256': digest(data),
                 'proof_sha256': digest(proof.read_bytes()), 'proof_bytes': proof.stat().st_size,
-                'producer_seconds': produced-started, 'checker_seconds': finished-produced,
-                'checker_result': result.stdout.strip()}
+                'producer_seconds': sum(row['producer_seconds'] for row in attempts),
+                'checker_seconds': sum(row['checker_seconds'] for row in attempts),
+                'attempts': attempts, 'checker_result': result.stdout.strip()}
     except Exception as error:
         return {'id': identity, 'verified': False, 'error': str(error),
-                'elapsed_seconds': time.monotonic()-started}
+                'elapsed_seconds': time.monotonic()-started, 'attempts': attempts}
 
 
 def main():

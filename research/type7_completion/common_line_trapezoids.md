@@ -6,9 +6,11 @@ limit in which both caps are noncollinear. Then each original physical
 cap limit consists of three coincident vertices and one tip. This includes
 all ratios between the width, edge lengths, and `t=1/y²`.
 
-This is a further reduction inside the common-line case. It does not
-exclude the two-tip limits or a stretched limit with only one noncollinear
-cap, and gives no finite-height exclusion.
+This is a reduction inside the common-line case. The
+[triangle-pair proof](remaining_two_triangles_blowup.md) now excludes
+the resulting two-tip limits. The complete mixed and two-line covers
+then give the [eventual ray-3 exclusion](ray3_boundedness.md), with no
+explicit numerical height threshold.
 
 ## 1. The necessary shape cover survives stretching
 
@@ -110,5 +112,5 @@ python3 research/type7_completion/common_line_trapezoids.py
 
 The checker uses exact integer and rational arithmetic, enumerates all
 extreme rays and every zero support, and imports no nonlinear solver.
-The remaining geometric cases are the resulting common-line two-tip
-limits and stretched configurations with only one noncollinear cap.
+This checker establishes the conditional shape reduction. Its resulting
+two-tip families are excluded in `remaining_two_triangles_blowup.md`.

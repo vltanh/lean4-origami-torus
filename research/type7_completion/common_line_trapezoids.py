@@ -100,7 +100,7 @@ def main():
     print('PASS every zero support has at most two positive bases')
     print('PASS all 16 cross-cap zero supports force two triple-cluster/tip caps')
     print('Zero physical edge patterns:', sorted(patterns))
-    print('Scope: two noncollinear stretched caps only; common-line limits remain open')
+    print('Scope: conditional shape reduction; the triangle-pair module proves the exclusion')
 
 
 if __name__ == '__main__':

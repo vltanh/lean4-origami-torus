@@ -15,9 +15,10 @@ bounded below by one positive number. The proof includes all possible
 rates of transverse flattening. It uses the geometric necessity audit
 and the preceding exact cap and blow-up certificates.
 
-This theorem still does not exclude an unbounded sequence whose edges
-shrink, provide a numerical height threshold, or close the full marking.
-Its purpose is to identify the remaining boundary precisely. Sections
+This intermediate theorem identifies the final boundary precisely. The
+[subsequent complete proof](ray3_boundedness.md) now excludes that boundary
+as well and proves an eventual ray-3 height bound, without a numerical
+threshold or a Lean theorem. Sections
 1–4 first prove `h_(1)->0`; sections 5–7 rule out exactly one, two,
 or three zero weights in a limiting configuration.
 
@@ -289,9 +290,12 @@ It forces the nonedge 04 in a direction forbidden by three finite
 sign certificates. Thus both stretched caps being collinear is now
 excluded for every weight count in the 624-order cover.
 
-The remaining four-zero shapes are the 300 mixed cells and the
-two-noncollinear triangle configurations from the sixteen zero-cone
-supports. They require separate exclusions.
+The [complete mixed four-zero proof](exhaustive_four_cluster_blowup.md)
+excludes the other 300 mixed cells. The
+[triangle-pair proof](remaining_two_triangles_blowup.md) excludes the
+two-noncollinear configurations from all sixteen zero-cone supports.
+Together these exhaust the four-zero boundary and yield the
+[eventual ray-3 exclusion](ray3_boundedness.md).
 
 Quantitatively, the second-largest weight in each cap is at least
 `1/6`: otherwise its three smaller weights sum to less than one half,

@@ -171,6 +171,16 @@ See [exact planar-pattern obstruction at the hexagonal metric](research/planar_o
 
 ## Active branch ledger: Type 7
 
+**Current completion branch:** the [ray-3 boundedness proof](research/type7_completion/ray3_boundedness.md)
+excludes every unbounded ray-3 sequence, hence every sufficiently large
+height, with no explicit numerical threshold. It covers all common-line
+degenerations, including all 300 mixed four-zero cells and sixteen
+two-noncollinear zero-cone supports. The final 96-formula mixed package
+independently checks in 21.377 seconds using reusable RUP traces.
+Rays 1 and 2 and the Lean assembly remain open. The separate
+`y=10^6` ledger is unchanged; see the
+[current roadmap](research/type7_completion/ROADMAP.md).
+
 See [Type 7 reconstruction, rigidity and two elongated branches](research/type7_focus/README.md). The anchor-leaf reconstruction proves at most two embedded candidates per intrinsic placement on every marking. Using the earlier necessary clique-sign archive, the weighted mirror-distance identity and the checkerboard twist test strengthen this to **uniqueness up to congruence from the 24 labeled edge lengths**, conditional on the earlier strict-support and orientation-projection proof premises. The exact finite checker ran on the current input archives: 308/316 clique patterns have a unanimous anchor; the eight others have no admissible checkerboard partner. This is a rigidity result, not a universality result.
 
 For the elongated range y^2>=35/4, ray_4's 16 generic orientation models reduce under the joint 32-element marking stabilizer to two orbits of eight. Canonical anchor 0127 has opposite-side and same-side mirror patterns, respectively. Both have an exact Gram-completion formulation with 18 real unknowns for a fixed metric, or 19 over the entire elongated range. All nonclique determinant signs are weak, with full intersection circuit constraints retained. The new fixed y=4 R1 and R2 systems both returned unknown (5000 ms solver timeouts); no branch is excluded or realized.

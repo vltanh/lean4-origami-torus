@@ -1,27 +1,30 @@
 # Type 7: roadmap to a complete classification
 
-## Decision and first target
+## Current result and next target
 
-**The next Type 7 target is the entire `ray3_phase0` system at
-`tau* = 1/2 + 10^6 i`.** A proof must cover every placement in that phase,
-including arbitrarily small cap edges and coplanar nonclique quadruples.
-Another necessary inequality, excluded construction family, or failed
-solver run does not close this target.
+**Ray 3 is excluded at every sufficiently large height by a complete
+research proof.** The [consolidated boundedness theorem](ray3_boundedness.md)
+excludes every possible unbounded sequence, including all collapsing
+edges, zero nonclique brackets, and unrelated degeneration rates. Its
+last steps cover all 300 mixed four-zero cells and all sixteen
+two-noncollinear zero-cone supports. The finite certificates and exact
+metric identities independently replay.
 
-Type 7 is a credible alternative to prioritizing Type 4. One of its four
-sharp-ray markings now has an audited hand-proof exclusion, and ray 3 has
-one localized phase with several exact coordinate formulations. Its reconstruction, symmetry,
-and mandatory linking constraints are particularly concrete. A successful
-ray-3 proof would close a second whole marking at the common modulus.
-However, its metric relaxation is rigorously feasible, the full system has
-already resisted an extended solver attempt, and fourteen ray-1/2 systems
-would remain. **The evidence supports trying ray 3 next; it does not
-establish that Type 7 is the fastest whole type to finish.** Raw branch
-counts—15 for Type 7 versus 8 for Type 4—do not measure their difficulty.
+The proof gives a threshold `Y3` but no numerical value. It therefore
+does not establish the separate target `tau* = 1/2 + 10^6 i`. The finite
+ledger remains 78 of 132 ray-3 chambers excluded and zero of the fifteen
+ray-1/2/3 full systems closed at that particular modulus.
 
-This roadmap distinguishes three accomplishments: a research lemma, a
-complete marking exclusion, and the final Lean classification. The
-current checkpoint has not achieved the latter two for ray 3.
+**The next geometric targets are the complete ray-1 and ray-2 markings.**
+Eventual exclusions for both would combine with the ray-3 bound and
+ray-4's explicit bound at one common sufficiently large height. This
+would prove nonuniversality without requiring a numerical value of that
+height. The fourteen fixed-mask systems remain an alternative route if
+their common height is also proved to exceed the ray-3 threshold.
+
+This roadmap distinguishes research proofs, fixed-height exclusions,
+and the final Lean classification. The new ray-3 theorem is a complete
+eventual research exclusion; the Lean bridges remain open.
 
 ## 1. What completion means
 
@@ -50,6 +53,12 @@ This theorem would establish nonuniversality while preserving the known
 existence results. Exclusions at different moduli cannot be combined to
 prove it.
 
+An equally sufficient negative route is to prove an eventual bound for
+each of the four markings, then choose one common height above all four
+bounds. This establishes the existence of a nonrealizable sharp modulus
+without asserting that it equals `tau*`. Ray 3 now has such a research
+bound; rays 1 and 2 remain open.
+
 **Positive alternative.** Construct embedded, facewise isometric Type 7
 realizations for every `1/2+i*y`, `y>=sqrt(3)/2`, and combine them with the
 open strip and lattice reduction. A single sharp witness, even a regular
@@ -77,6 +86,11 @@ four sharp-ray representatives in
 | `t7_ray_2` | `(-1,0)`, `(0,1)` | Seven open masks |
 | `t7_ray_3` | `(-1,1)`, `(0,-1)` | One open canonical phase |
 | `t7_ray_4` | `(-1,1)`, `(0,1)` | Excluded for `y^2>=63/16` by the audited hand proof; Lean assembly open |
+
+For ray 3, the [eventual exclusion](ray3_boundedness.md) applies to both
+localized phases above an unspecified `Y3`; its comparison with `10^6`
+is not known. Thus the fixed-target table and the stronger asymptotic
+result are consistent.
 
 For rays 1 and 2, let `b_i` be the normalized vertical displacement of
 the edge `i -> i+1`, cyclically modulo eight. A digit in a mask means
@@ -523,17 +537,31 @@ The [triple/split proof](remaining_fourzero_split.md) covers 32 by a
 uniform comparison with an exact all-t metric family and a forced
 second-order displacement of the nonedge 04. Its six finite formulas
 independently replay. This completes every two-line order in the
-624-order cover, including all edge coincidences. The remaining
-four-zero blow-ups have at least one noncollinear cap: 300 mixed cells
-and the two-noncollinear triangle configurations. No complete finite-height
-ray-3 exclusion is claimed yet.
+624-order cover, including all edge coincidences.
 
-The next requirement is a contradiction across the remaining angular
-region using the exact metric and required long-ring linking. An
-acceptable exclusion is a hand inequality proof or an independently
-checked finite algebraic/interval certificate covering the full domain,
-including all boundaries. Auxiliary subcases are useful internally; the
-ledger stays open until their union has been discharged.
+The [complete mixed four-zero proof](exhaustive_four_cluster_blowup.md)
+now excludes all 300 remaining mixed cells. Its 35 canonical shapes and
+three edge-scale hierarchies give 73 direct contradictions, twelve more
+virtual-edge contradictions, and twenty metric endpoint cases. Both V
+endpoints and all four trapezoid corners have uniform analytic proofs,
+including the exceptional zero-horizontal-projection branch. All 96
+CNFs have independently checked RUP traces; the complete batch took
+21.377 seconds, with four independently checked producer-order retries.
+
+Finally, the [triangle-pair proof](remaining_two_triangles_blowup.md)
+excludes all sixteen two-noncollinear zero-cone supports. The four shape
+patterns map to one positive-height-ratio family. An exact all-t reference
+and seven vanishing first derivatives give a uniform small-weight
+identity. The required sign of one bracket then forces a positive sum
+of those weights to be negligible compared with their maximum, a
+contradiction. Both final CNFs and all exact identities replayed.
+
+These results exhaust every nontrivial first normal blow-up. Therefore
+**no unbounded ray-3 sequence exists**, and there is a common eventual
+height bound for the entire marking. The
+[consolidated proof](ray3_boundedness.md) records the complete partition
+and the compactness-to-boundedness argument. The bound is not numerical;
+the fixed target and Lean assembly remain separate gates.
 
 The graph also admits at most two reconstruction candidates for fixed
 intrinsic data, and the archived orientation argument strengthens this

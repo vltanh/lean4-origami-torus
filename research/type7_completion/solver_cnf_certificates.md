@@ -29,6 +29,11 @@ RUP additions and is shared by many geometry packages. A later proof-only
 replay of the entire batch also passed. The two vertical-V endpoint
 formulas took 0.479 seconds together, including production and checking.
 
+The subsequent complete mixed four-zero package has 96 formulas. All
+independently checked in 21.377 seconds, including the common coverage
+trace. Four formulas used the bounded clause-order retry described below.
+The final two triangle-pair formulas also passed, in 0.863 seconds.
+
 ## Reproduce
 
 Compile the checker with assertions enabled, then give the runner one or
@@ -43,7 +48,7 @@ python3 research/type7_completion/solver_cnf_certificates.py /tmp/type7-proofs \
 ```
 
 Use `--jobs` to select one to eight worker processes, and `--seconds` for
-the per-formula solver and checker timeout, at most sixty seconds each.
+each solver attempt and checker timeout, at most sixty seconds each.
 Production requires the Z3 shared library, loaded directly through its C
 API. Proof-only replay requires Python's standard library and the compiled
 checker; it does not load Z3, SymPy, or a numerical optimization library.
@@ -78,13 +83,20 @@ reverse unit propagation. Every other addition must pass the same check,
 and the trace must derive the empty clause. Deletions cannot introduce a
 contradiction.
 
-SAT, UNKNOWN, a timeout, a failed hash, a missing final contradiction, or
-a proof step outside the checker's RUP calculus fails the run. Some solver
-traces use stronger DRAT transformations; those are deliberately rejected
-by this smaller checker. During validation, a clause-reordered trace was
-rejected at a non-RUP step. Preserving the original formula order produced
-the independently accepted trace reported above. No checker rule was
-relaxed to accommodate it.
+SAT, UNKNOWN, a timeout, a failed hash, or a missing final contradiction
+fails the run. Some solver traces use stronger DRAT transformations; those
+are deliberately rejected by this smaller checker. If the source-order
+trace contains a non-RUP step, production makes one bounded retry with
+canonically ordered clauses and literals. The original CNF is unchanged;
+the replacement trace is independently checked from its beginning.
+The manifest records both attempts. If neither trace is accepted, the run
+fails. Proof-only mode never searches or retries.
+
+During validation, one clause-reordered trace was rejected while its
+source-order trace passed. Four other formulas needed the canonical-order
+retry. Thus neither ordering is universally better. Only the fully
+accepted replacement trace is retained as a proof, and no checker rule
+is relaxed to accommodate a producer.
 
 Validation also confirmed that reordered/multiline equivalent inputs
 share one proof, modified proofs are rejected, satisfiable inputs cannot
