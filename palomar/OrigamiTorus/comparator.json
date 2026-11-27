@@ -1,0 +1,24 @@
+{
+  "challenge_module": "OrigamiTorus.Challenge",
+  "solution_module": "OrigamiTorus.Solution",
+  "theorem_names": [
+    "OrigamiTorusChallenge.type2_sign_obstruction",
+    "OrigamiTorusChallenge.type2_nonexistence",
+    "OrigamiTorusChallenge.type6_diagonal_signs",
+    "OrigamiTorusChallenge.type6_length_matched_lift",
+    "OrigamiTorusChallenge.generic_embedded_perturbation",
+    "OrigamiTorusChallenge.type6_spatial_embedding_lift",
+    "OrigamiTorusChallenge.type6_universal",
+    "OrigamiTorusChallenge.type6_regular_universal",
+    "OrigamiTorusChallenge.type4_open_strip",
+    "OrigamiTorusChallenge.type5_square",
+    "OrigamiTorusChallenge.type7_rectangular"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

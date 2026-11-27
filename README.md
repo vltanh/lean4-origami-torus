@@ -1,20 +1,27 @@
 # Origami tori — research checkpoint
 
-**Scope:** classify which of the seven Lutz eight-vertex torus triangulations admit embedded, intrinsically flat realizations in R³, and which are universal (realize every flat two-torus). The minimum vertex count is known to be eight. This branch preserves the research in progress; it does not contain Lean-verified proofs.
+The research goal is to classify which of the seven Lutz eight-vertex triangulations admit embedded, intrinsically flat realizations in R³ and which realize every flat two-torus. The minimum vertex count is known to be eight. Lean proves Type 2 nonexistence, Type 4 near-universality, the Type 5 square and nonrectangular box realizations, Type 6 universality, and coverage of every rectangular lattice torus for Type 7.
 
-## Current status (2026-11-26)
+- [Type 2 nonexistence argument](docs/Type2.md), including the spherical-link reduction and a finite resolution certificate.
+- [Type 4 open-strip construction](docs/Type4.md), including the convex flip, rank, and height lifts.
+- [Type 5 radical constructions](docs/Type5.md), including the square, the nonrectangular box, and the branch count.
+- [Type 6 universality proof](docs/Type6.md), including the diagonal flip, the quotient triangulation, and rank nine at the spatial embedding.
+- [Type 7 rectangular construction](docs/Type7.md), including a hand proof of horizontal rank.
+- [Verification scope and Palomar status](docs/VERIFICATION.md).
+
+## Current status (2026-11-27)
 
 | Type | Degree sequence | Existence | Universality |
 |---|---|---|---|
 | 1 | 36666777 | Known impossible | No |
-| 2 | 45567777 | Candidate nonexistence proof (SAT UNSAT; geometric reduction needs audit) | Conditional no |
+| 2 | 45567777 | Nonexistence proved in Lean | No |
 | 3 | 46666677 | Known yes | Published universality |
-| 4 | 55666677 | Exact interval/algebraic certificates | Candidate full open strip 0 <= Re tau < 1/2 |
-| 5 | 55566777 | Exact interval and radical constructions | Open; square and other small open regions |
-| 6 | 55666677 | Exact interval certificates | Candidate global diagonal-flip proof |
-| 7 | 66666666 | Known yes | Candidate coverage off sharp-rhombic ray, combining literature and rectangular strip proof |
+| 4 | 55666677 | Proved in Lean | Every reduced modulus with \(0\le x<1/2\) has a Type 4 embedding, proved in Lean |
+| 5 | 55566777 | Exact radical square and nonrectangular box realizations proved in Lean | Open |
+| 6 | 55666677 | Proved in Lean | Every rank-two lattice torus has a Type 6 embedding, proved in Lean |
+| 7 | 66666666 | Proved in Lean | Every rectangular lattice and the reduced strip \(0\le x\le1/20\) have Type 7 embeddings, proved in Lean |
 
-Types 4 and 6 have identical degree sequences but different graphs. The five-realizable/two-impossible existence classification is conditional on the Type 2 geometric reduction. Four of seven universality statuses are addressed only if all relevant proofs survive audit; the other three remain open. No priority or novelty claim is made.
+Types 4 and 6 share a degree sequence and have different graphs. The existence classification combines the Type 2 proof with the existing constructions and nonexistence result for the other types. [Verification scope](docs/VERIFICATION.md) records which of these results Lean checks.
 
 ## Research packages
 
@@ -33,18 +40,18 @@ The directory names preserve the original certificate package structure. Each pa
 | torus_type5_reconstruction_certificate | Eight-variable radical reconstruction and exact square witness |
 | torus_type5_continuation_certificate | Exact nonrectangular Type 5 box; exact intrinsic hexagonal examples for all seven ray markings |
 
-Generated DIMACS and large SMT-LIB files are intentionally not versioned. Run `python3 research/regenerate_systems.py` to restore them. For verification, use Python 3 with assertions enabled, SymPy, networkx, and a C++17 compiler. The optional parse checker uses libz3; parsing is not a feasibility result. See each original proof note for the actual commands and dependencies.
+To replay the archived research packages, use Python 3 with assertions enabled, SymPy, networkx, and a C++17 compiler. Run `python3 research/regenerate_systems.py` to restore the generated DIMACS and SMT-LIB files. The optional libz3 checker checks syntax. For the Lean proofs and Palomar package, use the commands in the verification guide. [Verification scope](docs/VERIFICATION.md)
 
 ## Positive results and limitations
 
-- Type 2 Boolean formula: 84 variables, 7,464 clauses, exhaustive DPLL UNSAT in 38,849 search nodes. **This establishes only the encoded Boolean contradiction until the necessary geometric lemmas and degeneracy handling have been independently audited.**
+- Type 2 nonexistence follows from the Lean-verified geometric reduction and a checked resolution certificate for the 84-variable, 7,464-clause sign formula. The original search and checkers remain in the research package.
 - Positive fixed-metric certificates for Types 4, 5 and 6 use exact outward-rounded integer interval arithmetic and a contraction mapping; the square-modulus certificates use nine equations. Type 5 has separate exact radical constructions. No numerical seed alone is treated as a proof.
-- The Type 6 universality proof and Type 4 open-strip proof use rational planar families, determinant sign checks and an implicit-function argument. They rely on cited literature lemmas and require a full independent audit.
-- Type 7's rectangular strip certificate complements the published near-universality statement; sharp-rhombic coverage is unresolved.
-- Latest Type 5 nonrectangular box: center (0.174241221618834, 1.084897889755590), sup-norm radius 10^-11. Continuation to x approximately 0.20726 is numerical only.
-- Shortest-edge winding reduction leaves two Type 5 interior families and seven sharp-rhombic families (Type 4: 2, Type 5: 1, Type 7: 4). At the hexagonal endpoint these give four symmetry orbits. These are finite semialgebraic families, not solved finite Boolean obligations.
-- Type 5 reconstruction reduces to eight real geometric parameters and at most 32 branches per fixed marking, conditional on auditing the rank and quadric arguments. Types 4 and 7 have related 14-variable reconstructions.
-- Intrinsic feasibility of all seven ray marking representatives at the hexagonal modulus is checked exactly; it does not imply three-dimensional embeddedness.
+- Lean verifies the spatial embeddings and the multiplicity-one lattice triangulations for Types 4 and 6. The Type 4 proof checks all six height cells in Lean, including the cell approaching \(x=1/2\).
+- Lean verifies the Type 7 strip \(0\le x\le1/20\), \(y^2\ge1-x^2\), with rank nine. Sharp-rhombic coverage is unresolved.
+- Lean verifies the Type 5 radical embedding on the closed box of sup-norm radius 10^-11 centered at (0.174241221618834, 1.084897889755590). The numerical continuation reaches x approximately 0.20726.
+- Lean verifies the shortest-edge winding enumeration. The remaining coverage problems reduce to two Type 5 interior marking families and seven sharp-rhombic families. The seven give four orbits at the hexagonal endpoint. Each family has continuous geometric parameters.
+- Lean verifies that Type 5 reconstruction reduces to eight real parameters and at most 32 branches per fixed marking of the lifted faces. For Types 4 and 7, Lean verifies fourteen intrinsic parameters and at most 80 radical branches, with exact edge-length and spatial intersection tests.
+- Lean verifies that all seven ray representatives give affine triangulations of the hexagonal quotient with strictly shortest edges. Spatial embeddability at this modulus remains open.
 
 ## Negative results / avoid repeating
 
@@ -52,11 +59,11 @@ Direct searches for embedded sharp-rhombic realizations did not find a certified
 
 ## Gated next steps
 
-1. Audit Type 2 geometry (hemisphere equality, planar K5-minus-edge separation, perturbation and sign encoding), then audit positive interval and planar-inflation certificates. Check exact combinatorial labels and all degeneracies; do not publish a conditional theorem as established.
+1. Audit the remaining positive interval and planar-inflation certificates. Check exact combinatorial labels and all degeneracies before stating full coverage.
 2. Fixed hexagonal metric: resolve all applicable marking orbits for one type using exact infeasibility or a certified embedded witness. Infeasibility of all markings for one metric suffices for nonuniversality. A witness at one metric does not suffice for universality.
 3. If the hexagonal metric is realizable, attack whole sharp-rhombic ray for Types 4 and 7 using a parametrized regular lift or finite coverage certificate; do not assume continuity of embeddings across a degenerating boundary.
 4. Type 5: use the radical reconstruction to seek a parameter-global construction or a rigorous single-metric obstruction. A finite number of marking families by itself does not guarantee practical quantifier elimination.
-5. Once all statuses are settled, extract auditable mathematical statements/proofs and only then decide whether to formalize in Lean. Do not open another large formalization project merely to archive exploratory results.
+5. Complete the geometric bridges and remaining certificates listed in [Verification scope](docs/VERIFICATION.md).
 
 ## Sources
 

@@ -1,0 +1,21 @@
+name = "OrigamiTorus"
+version = "0.1.0"
+defaultTargets = ["OrigamiTorus", "PalomarSolution"]
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.36.0"
+
+[[lean_lib]]
+name = "OrigamiTorus"
+
+[[lean_lib]]
+name = "PalomarSolution"
+srcDir = "palomar"
+roots = ["OrigamiTorus.Solution"]
+
+[[lean_lib]]
+name = "PalomarChallenge"
+srcDir = "palomar"
+roots = ["OrigamiTorus.Challenge"]
