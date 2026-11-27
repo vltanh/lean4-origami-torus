@@ -1,0 +1,15 @@
+00120221 cap cycles [(0, 1, 4), (3, 5, 6)] strict intrinsic placements for y^2>=256
+00220231 cap cycles [(0, 1, 4), (2, 3, 5)] strict intrinsic placements for y^2>=256
+00230232 cap cycles [(0, 1, 4), (2, 5, 7)] strict intrinsic placements for y^2>=256
+01200202 cap cycles [(0, 3, 6, 4), (2, 5, 7)] strict intrinsic placements for y^2>=256
+20022120 cap cycles [(1, 2, 7), (0, 3, 6, 4)] strict intrinsic placements for y^2>=256
+30020221 cap cycles [(1, 2, 4), (3, 5, 6)] strict intrinsic placements for y^2>=256
+30023220 cap cycles [(1, 2, 7), (3, 5, 6)] strict intrinsic placements for y^2>=256
+PASS: 36 relative cells, 7 maximal closed families, 4 up to marking symmetry; cap checks and rational intrinsic placements
+00120221 rank 12 exact collinear t=0 witness PASS
+00220231 rank 12 exact collinear t=0 witness PASS
+00230232 rank 12 exact collinear t=0 witness PASS
+01200202 rank 13 exact collinear t=0 witness PASS
+Local standard-library checker used transcribed current cocycle and faces.
+Exact JS enumeration with actual repository archive: 751 orbits, 6 automorphisms, 4506 labeled models, 3004 short-unlinked, both-spanning-cap counts 0,60,130,40.
+No positive-t feasibility result.

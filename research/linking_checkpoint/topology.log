@@ -1,0 +1,6 @@
+Type 4 triangle pair counts {(1, 0): 10, (1, -1): 10} four slope representatives {(1, 0): (0, 1, 4), (1, -1): (0, 1, 5), (2, -1): (2, 4, 3, 5), (0, 1): (1, 4, 5)}
+Type 5 triangle pair counts {(1, 0): 5, (1, -1): 5} four slope representatives {(1, 0): (0, 1, 4), (1, -1): (0, 1, 5), (2, -1): (0, 1, 4, 2, 5), (0, 1): (0, 2, 3)}
+Type 5: exactly five pairs on each of three slopes
+Type 7 triangle pair counts {(1, 0): 12, (1, -1): 12} four slope representatives {(1, 0): (0, 1, 2), (1, -1): (0, 2, 5), (2, -1): (0, 1, 2, 5), (0, 1): (0, 2, 4, 6)}
+Allowed quadratic coefficients: [(-1, 0, -1), (-1, 0, 1), (0, -1, -1), (0, -1, 1), (0, 0, -1), (0, 0, 1), (0, 1, -1), (0, 1, 1), (1, 0, -1), (1, 0, 1)]
+PASS topology cycle and quadratic-form checks

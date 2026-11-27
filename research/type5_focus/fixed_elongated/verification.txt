@@ -1,0 +1,9 @@
+Local transcription of the archived Type 5 sharp cocycle and face list:
+PASS 36 raw cells and 19 symmetry representatives.
+PASS 19 generated 18-real-variable systems.
+500 ms per branch: all 19 necessary systems UNKNOWN (timeout).
+500 ms per branch: all 19 full systems UNKNOWN (timeout).
+1500 ms per branch: full 00020220, 00120221, 00220231, 00230232, 01200202 all UNKNOWN (timeout).
+The necessary systems in the initial run did not explicitly include the redundant signed-area-sum identity; full systems included it.
+The final repository loader and additional assertions have not been run via a fresh checkout.
+No solver certificates, no full metric witness, no branch excluded.
