@@ -1,12 +1,12 @@
 # Origami tori — research checkpoint
 
-The research goal is to classify which of the seven Lutz eight-vertex triangulations admit embedded, intrinsically flat realizations in R³ and which realize every flat two-torus. The minimum vertex count is known to be eight. Lean proves Type 2 nonexistence, Type 4 near-universality, the Type 5 square and nonrectangular box realizations, Type 6 universality, and coverage of every rectangular lattice torus for Type 7.
+The research goal is to classify which of the seven Lutz eight-vertex triangulations admit embedded, intrinsically flat realizations in R³ and which realize every flat two-torus. The minimum vertex count is known to be eight. Lean proves Type 2 nonexistence, open-strip coverage for Types 4 and 7, the Type 5 square and nonrectangular box realizations, and Type 6 universality.
 
 - [Type 2 nonexistence argument](docs/Type2.md), including the spherical-link reduction and a finite resolution certificate.
 - [Type 4 open-strip construction](docs/Type4.md), including the convex flip, rank, and height lifts.
 - [Type 5 radical constructions](docs/Type5.md), including the square, the nonrectangular box, and the branch count.
 - [Type 6 universality proof](docs/Type6.md), including the diagonal flip, the quotient triangulation, and rank nine at the spatial embedding.
-- [Type 7 rectangular construction](docs/Type7.md), including a hand proof of horizontal rank.
+- [Type 7 rectangular and open-strip constructions](docs/Type7.md), including a hand proof of horizontal rank.
 - [Verification scope and Palomar status](docs/VERIFICATION.md).
 
 ## Current status (2026-11-27)
@@ -19,9 +19,17 @@ The research goal is to classify which of the seven Lutz eight-vertex triangulat
 | 4 | 55666677 | Proved in Lean | Every reduced modulus with \(0\le x<1/2\) has a Type 4 embedding, proved in Lean |
 | 5 | 55566777 | Exact radical square and nonrectangular box realizations proved in Lean | Open |
 | 6 | 55666677 | Proved in Lean | Every rank-two lattice torus has a Type 6 embedding, proved in Lean |
-| 7 | 66666666 | Proved in Lean | Every rectangular lattice and the reduced strip \(0\le x\le1/20\) have Type 7 embeddings, proved in Lean |
+| 7 | 66666666 | Proved in Lean | Every reduced modulus with \(0\le x<1/2\) has a Type 7 embedding, proved in Lean |
 
 Types 4 and 6 share a degree sequence and have different graphs. The existence classification combines the Type 2 proof with the existing constructions and nonexistence result for the other types. [Verification scope](docs/VERIFICATION.md) records which of these results Lean checks.
+
+## Repository layout
+
+- `OrigamiTorus/Type*` contains the proofs for each triangulation.
+- `OrigamiTorus/Geometry`, `OrigamiTorus/Lattice`, `OrigamiTorus/Winding`, and `OrigamiTorus/Certificates` contain the shared Lean developments.
+- `docs/` contains the mathematical writeups, the verification scope, and credits.
+- `palomar/OrigamiTorus/` contains the independent Challenge, Solution, and Comparator configuration.
+- `research/` preserves the checkpoint packages and later research ledgers.
 
 ## Research packages
 
@@ -47,7 +55,7 @@ To replay the archived research packages, use Python 3 with assertions enabled, 
 - Type 2 nonexistence follows from the Lean-verified geometric reduction and a checked resolution certificate for the 84-variable, 7,464-clause sign formula. The original search and checkers remain in the research package.
 - Positive fixed-metric certificates for Types 4, 5 and 6 use exact outward-rounded integer interval arithmetic and a contraction mapping; the square-modulus certificates use nine equations. Type 5 has separate exact radical constructions. No numerical seed alone is treated as a proof.
 - Lean verifies the spatial embeddings and the multiplicity-one lattice triangulations for Types 4 and 6. The Type 4 proof checks all six height cells in Lean, including the cell approaching \(x=1/2\).
-- Lean verifies the Type 7 strip \(0\le x\le1/20\), \(y^2\ge1-x^2\), with rank nine. Sharp-rhombic coverage is unresolved.
+- Lean verifies the Type 7 open strip \(0\le x<1/2\), \(y^2\ge1-x^2\), with rank nine. Sharp-rhombic coverage is unresolved.
 - Lean verifies the Type 5 radical embedding on the closed box of sup-norm radius 10^-11 centered at (0.174241221618834, 1.084897889755590). The numerical continuation reaches x approximately 0.20726.
 - Lean verifies the shortest-edge winding enumeration. The remaining coverage problems reduce to two Type 5 interior marking families and seven sharp-rhombic families. The seven give four orbits at the hexagonal endpoint. Each family has continuous geometric parameters.
 - Lean verifies that Type 5 reconstruction reduces to eight real parameters and at most 32 branches per fixed marking of the lifted faces. For Types 4 and 7, Lean verifies fourteen intrinsic parameters and at most 80 radical branches, with exact edge-length and spatial intersection tests.

@@ -94,3 +94,8 @@ coordinates, integral shifts, and radical signs to the checkpoint. The
 review checked that the determinant tests exclude surface intersections,
 that the edge equalities give the full face metrics, and that the exact
 area identity transports from lattice coordinates to physical coordinates.
+
+An independent agent checked that the Type 7 wide lift covers every
+included reduced modulus, that the extrapolation uses the same height
+parameter in both cells, and that the unflipped regular inflation applies
+to the rescaled spatial embedding.

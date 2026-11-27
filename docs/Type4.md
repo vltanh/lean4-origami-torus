@@ -40,7 +40,7 @@ The oriented double areas of \(356,352,623,625\) in these scaled coordinates are
 \tfrac12HQ\bigl(Q+(2H-1)T\bigr).
 \]
 
-Their signs are \(+,-,-,+\), so the two diagonals cross in their relative interiors. The shared quadrilateral is strictly convex on the entire open strip. Flipping the diagonal \(35\) to \(26\) gives the Lutz Type 4 face list using the relabeling \((2,1,4,0,3,7,5,6)\). Lean verifies these formulas and strict inequalities. [Type4Strips.lean](../OrigamiTorus/Type4Strips.lean)
+Their signs are \(+,-,-,+\), so the two diagonals cross in their relative interiors. The shared quadrilateral is strictly convex on the entire open strip. Flipping the diagonal \(35\) to \(26\) gives the Lutz Type 4 face list using the relabeling \((2,1,4,0,3,7,5,6)\). Lean verifies these formulas and strict inequalities. [Type4/Strips.lean](../OrigamiTorus/Type4/Strips.lean)
 
 ## The two circles and the cone angles
 
@@ -98,7 +98,7 @@ Retain the common scale \(Q\). Put \(\rho=(D,H)\), \(\nu=(-wH,D)\). The crease a
 U=2H^2\nu,\qquad V=2H^2(x\nu-w\rho).
 \]
 
-Since \(\rho\) and \(\nu\) are orthogonal in this metric and \(\langle\nu,\nu\rangle_w=wQ\), the ratio \(\langle U,V\rangle_w/\langle U,U\rangle_w\) is \(x\). The scaled cross product ratio is one, so the physical cross product ratio is \(\sqrt w\). This is the marked modulus \(x+i\sqrt w\). Lean checks the periods and the cone angles on the trapezoidal charts and on the rectangular specialization. [Type4Periods.lean](../OrigamiTorus/Type4Periods.lean) · [Type4Angles.lean](../OrigamiTorus/Type4Angles.lean) · [Type7Angles.lean](../OrigamiTorus/Type7Angles.lean)
+Since \(\rho\) and \(\nu\) are orthogonal in this metric and \(\langle\nu,\nu\rangle_w=wQ\), the ratio \(\langle U,V\rangle_w/\langle U,U\rangle_w\) is \(x\). The scaled cross product ratio is one, so the physical cross product ratio is \(\sqrt w\). This is the marked modulus \(x+i\sqrt w\). Lean checks the periods and the cone angles on the trapezoidal charts and on the rectangular specialization. [Type4/Periods.lean](../OrigamiTorus/Type4/Periods.lean) · [Type4/Angles.lean](../OrigamiTorus/Type4/Angles.lean) · [Type7/Angles.lean](../OrigamiTorus/Type7/Angles.lean)
 
 ## Horizontal rank on the strip
 
@@ -129,19 +129,19 @@ The real part of \(R\tau B_6=0\) gives
 
 At vertex 5 the same inverse-chord normalization gives \(m_6=-Hs/e\) and \(m_7=-ds/(1+xq)\). For the second identity use \(Z_7-Z_5=(1+xq)Z_7R/d\), which follows from the formula for \(s\). Hence, with \(C=Hs/e>0\) and \(B=ds/(1+xq)>0\), the normalized equation is \((1+B+C)\lambda_5=A+B\lambda_7+Cu\).
 
-If \(u>0\), then \(X\le0\), so \(X/t\ge0\) and \(\lambda_5<0\). The right side is positive since \(A>2u\) and \(\lambda_7=A-u>0\). Reversing all signs excludes \(u<0\). Thus \(u=X=0\), giving \(A=\lambda_1=\lambda_3=\lambda_5=\lambda_7=0\). The horizontal chords at vertex 2 give \(2\lambda_2=A=0\). The only original dependence was constant, so the horizontal rank is seven. Convex diagonal exchange preserves the angle sums on an open planar neighborhood, and thus preserves this rank. Using \(x\) and \(w+x^2-1\) as parameters gives a product domain with a unique derivative even at its included endpoints. The two chart directions give independent modulus derivatives in the kernel, proving joint rank nine. [Type4Rank.lean](../OrigamiTorus/Type4Rank.lean) · [Type4StripRank.lean](../OrigamiTorus/Type4StripRank.lean)
+If \(u>0\), then \(X\le0\), so \(X/t\ge0\) and \(\lambda_5<0\). The right side is positive since \(A>2u\) and \(\lambda_7=A-u>0\). Reversing all signs excludes \(u<0\). Thus \(u=X=0\), giving \(A=\lambda_1=\lambda_3=\lambda_5=\lambda_7=0\). The horizontal chords at vertex 2 give \(2\lambda_2=A=0\). The only original dependence was constant, so the horizontal rank is seven. Convex diagonal exchange preserves the angle sums on an open planar neighborhood, and thus preserves this rank. Using \(x\) and \(w+x^2-1\) as parameters gives a product domain with a unique derivative even at its included endpoints. The two chart directions give independent modulus derivatives in the kernel, proving joint rank nine. [Type4/Rank.lean](../OrigamiTorus/Type4/Rank.lean) · [Type4/StripRank.lean](../OrigamiTorus/Type4/StripRank.lean)
 
 ## Marking after the flip
 
 The shape map uses the new diagonal \(26\) as its unit edge, with \(2=0\) and \(6=1\). It develops \(632\) and \(625\) on opposite sides of that edge. The branches through \(524\) and \(302\) continue alongside the original positive planar faces. The branches through \(364\) and \(506\) reflect across \(36\) and \(56\). The developed copies of vertices \(4\) and \(0\) give the same displacement formulas as before the flip, divided by the new complex unit edge \(Z_6-Z_2\). The quotient of those displacements stays equal to \(x+i\sqrt w\) throughout both trapezoidal charts.
 
-The strict signs hold on a planar neighborhood of every base. Lean uses the equality of the two angle and shape maps on that neighborhood to transfer rank nine at each base of the two charts. The implicit function theorem gives a closed spatial embedding with the new diagonal, preserving the local displacement ratio and all cone angles. Developing its triangles gives two marked translations and a degree-one map to their lattice quotient. Lean verifies that the metric on every developed face agrees with the spatial triangle and rescales to the requested lattice. The theorem uses the flipped chart labels, with the relabeling to the standard Type 4 face list checked separately. [Type4MarkedShape.lean](../OrigamiTorus/Type4MarkedShape.lean) · [Type4Periodic.lean](../OrigamiTorus/Type4Periodic.lean) · [Type7Tiling.lean](../OrigamiTorus/Type7Tiling.lean)
+The strict signs hold on a planar neighborhood of every base. Lean uses the equality of the two angle and shape maps on that neighborhood to transfer rank nine at each base of the two charts. The implicit function theorem gives a closed spatial embedding with the new diagonal, preserving the local displacement ratio and all cone angles. Developing its triangles gives two marked translations and a degree-one map to their lattice quotient. Lean verifies that the metric on every developed face agrees with the spatial triangle and rescales to the requested lattice. The theorem uses the flipped chart labels, with the relabeling to the standard Type 4 face list checked separately. [Type4/MarkedShape.lean](../OrigamiTorus/Type4/MarkedShape.lean) · [Type4/Periodic.lean](../OrigamiTorus/Type4/Periodic.lean) · [Type7/Tiling.lean](../OrigamiTorus/Type7/Tiling.lean)
 
-The spatial lift uses five closed height cells through \(x=9/20\) and one cell with \(9/20\le x<1/2\). In each cell let \(t\) parametrize the interval for \(x\) and write \(w=1-x^2+h\), \(h\ge0\). After clearing positive denominators, the determinants are rational polynomials in \(t,h\). For \(t<1\), substitute \(t=u/(1+u)\) and multiply by a power of \(1+u\) to clear the denominator. Nonnegative coefficients with a strictly positive constant term prove the desired strict sign for all \(u,h\ge0\). Each closed cell also checks the polynomial at \(t=1\). Lean checks the rational coefficients, the noncollinearity of a projected triple in each quadruple, and a strict separating minor-product witness for each disjoint edge and face. Generic perturbation of the heights preserves these strict inequalities. The proof replays within Lean. [StripPolynomial.lean](../OrigamiTorus/StripPolynomial.lean) · [Type4StripLift.lean](../OrigamiTorus/Type4StripLift.lean) · [PR lift certificates](../research/torus_near_universal_certificate/torus_near_universal_certificate/README.md)
+The spatial lift uses five closed height cells through \(x=9/20\) and one cell with \(9/20\le x<1/2\). In each cell let \(t\) parametrize the interval for \(x\) and write \(w=1-x^2+h\), \(h\ge0\). After clearing positive denominators, the determinants are rational polynomials in \(t,h\). For \(t<1\), substitute \(t=u/(1+u)\) and multiply by a power of \(1+u\) to clear the denominator. Nonnegative coefficients with a strictly positive constant term prove the desired strict sign for all \(u,h\ge0\). Each closed cell also checks the polynomial at \(t=1\). Lean checks the rational coefficients, the noncollinearity of a projected triple in each quadruple, and a strict separating minor-product witness for each disjoint edge and face. Generic perturbation of the heights preserves these strict inequalities. The proof replays within Lean. [Certificates/StripPolynomial.lean](../OrigamiTorus/Certificates/StripPolynomial.lean) · [Type4/StripLift.lean](../OrigamiTorus/Type4/StripLift.lean) · [PR lift certificates](../research/torus_near_universal_certificate/torus_near_universal_certificate/README.md)
 
-Applying fixed-modulus inflation to those lifts gives the Type 4 embedding for every reduced modulus in the open strip. The quotient proof identifies the developed faces with the marked flat torus and verifies their distances. [Type4StripInflation.lean](../OrigamiTorus/Type4StripInflation.lean) · [Type4WideLift.lean](../OrigamiTorus/Type4WideLift.lean)
+Applying fixed-modulus inflation to those lifts gives the Type 4 embedding for every reduced modulus in the open strip. The quotient proof identifies the developed faces with the marked flat torus and verifies their distances. [Type4/StripInflation.lean](../OrigamiTorus/Type4/StripInflation.lean) · [Type4/WideLift.lean](../OrigamiTorus/Type4/WideLift.lean)
 
-The full spatial differential is surjective at the planar base because its restriction to the horizontal directions is surjective. A right inverse and openness of invertibility show that surjectivity persists near the base. The implicit-function solutions approach the base as the height scale tends to zero, so a sufficiently small positive lift has rank nine. The same solution satisfies flatness, the prescribed modulus, and embeddedness. A common rescaling preserves the cone angles and marked ratio, so the chain rule preserves rank at the actual spatial coordinates of the piecewise-isometric realization. [Inflation.lean](../OrigamiTorus/Inflation.lean) · [Type4StripInflation.lean](../OrigamiTorus/Type4StripInflation.lean) · [Open-strip regularity theorem](../OrigamiTorus/Type4WideLift.lean)
+The full spatial differential is surjective at the planar base because its restriction to the horizontal directions is surjective. A right inverse and openness of invertibility show that surjectivity persists near the base. The implicit-function solutions approach the base as the height scale tends to zero, so a sufficiently small positive lift has rank nine. The same solution satisfies flatness, the prescribed modulus, and embeddedness. A common rescaling preserves the cone angles and marked ratio, so the chain rule preserves rank at the actual spatial coordinates of the piecewise-isometric realization. [Geometry/Inflation.lean](../OrigamiTorus/Geometry/Inflation.lean) · [Type4/StripInflation.lean](../OrigamiTorus/Type4/StripInflation.lean) · [Open-strip regularity theorem](../OrigamiTorus/Type4/WideLift.lean)
 
 ## Fixed-marking reconstruction for Types 4 and 7
 
@@ -159,7 +159,7 @@ noncollinear triangle would place them in the same plane. Their two
 remaining vertices would lie outside the filled triangle by injectivity.
 The planar complete-graph obstruction with one edge omitted excludes that
 configuration. Thus at least one listed anchor is a nondegenerate
-tetrahedron in every embedding. [TetrahedralAnchors.lean](../OrigamiTorus/TetrahedralAnchors.lean)
+tetrahedron in every embedding. [Geometry/TetrahedralAnchors.lean](../OrigamiTorus/Geometry/TetrahedralAnchors.lean)
 
 The six marked anchor lengths give a canonical tetrahedron by radicals.
 Place the first anchor at the origin and the second on the positive
@@ -182,8 +182,8 @@ A+P\pm\sqrt{\frac{d_A-\lVert P\rVert^2}{\lVert N\rVert^2}}\,N.
 $$
 
 Lean verifies that these formulas include every solution, including
-tangencies when the two candidates coincide. [ThreeSpheres.lean](../OrigamiTorus/ThreeSpheres.lean) ·
-[TetrahedronFromDistances.lean](../OrigamiTorus/TetrahedronFromDistances.lean)
+tangencies when the two candidates coincide. [Geometry/ThreeSpheres.lean](../OrigamiTorus/Geometry/ThreeSpheres.lean) ·
+[Geometry/TetrahedronFromDistances.lean](../OrigamiTorus/Geometry/TetrahedronFromDistances.lean)
 
 There are at most $5\cdot 2^4=80$ branches per choice of the fourteen
 parameters and the marked shifts. Lean proves that every embedded spatial
@@ -192,4 +192,4 @@ also proves the converse after exact validation of every edge length and
 every convex-hull intersection between disjoint labeled subfaces. This
 intersection test applies to coplanar and other nongeneric configurations.
 The reconstruction takes the intrinsic representatives and shifts as input.
-[Reconstruction and spatial tests](../OrigamiTorus/TetrahedralReconstruction.lean)
+[Reconstruction and spatial tests](../OrigamiTorus/Geometry/TetrahedralReconstruction.lean)

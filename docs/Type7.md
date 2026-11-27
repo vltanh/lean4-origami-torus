@@ -1,8 +1,8 @@
-# The Type 7 rectangular family and the strip beside it
+# The Type 7 rectangular and open-strip families
 
-For a rectangle of aspect ratio \(y\ge1\), set \(w=y^2\), \(H=33/20\), and \(q=33/13\). Scaling and exchanging the two sides put any rectangular torus in this form. At \(x=0\), the trapezoidal formula of [Type 4](Type4.md) with \(c=1/3\) gives the original Type 7 face list. The [Lean rectangular coordinates](../OrigamiTorus/Type7Rectangular.lean) multiply all these points by the same positive factor \(1+q^2w\). The physical plane has coordinates \((X,yY)\).
+For a rectangle of aspect ratio \(y\ge1\), set \(w=y^2\), \(H=33/20\), and \(q=33/13\). Scaling and exchanging the two sides put any rectangular torus in this form. At \(x=0\), the trapezoidal formula of [Type 4](Type4.md) with \(c=1/3\) gives the original Type 7 face list. The [Lean rectangular coordinates](../OrigamiTorus/Type7/Rectangular.lean) multiply all these points by the same positive factor \(1+q^2w\). The physical plane has coordinates \((X,yY)\).
 
-Lean verifies all sixteen planar orientation signs. At each vertex, the product of the six complex corner factors is real. It is positive at \(w=1\) and remains positive on \([1,\infty)\), since the factors stay nonzero. Taking arguments gives a positive multiple of \(2\pi\) at each vertex. The sixteen triangle angle sums add to \(16\pi\), so all eight vertex sums are \(2\pi\). The [Lean angle calculation](../OrigamiTorus/Type7Angles.lean) proves these equalities for Euclidean angles.
+Lean verifies all sixteen planar orientation signs. At each vertex, the product of the six complex corner factors is real. It is positive at \(w=1\) and remains positive on \([1,\infty)\), since the factors stay nonzero. Taking arguments gives a positive multiple of \(2\pi\) at each vertex. The sixteen triangle angle sums add to \(16\pi\), so all eight vertex sums are \(2\pi\). The [Lean angle calculation](../OrigamiTorus/Type7/Angles.lean) proves these equalities for Euclidean angles.
 
 Start with face 325. Read the adjacent same-sign faces 524, 302, and 356 in the same planar chart. Reflect across 36 for face 364 and across 56 for face 506. With the same common scale as in Lean, the marking loops \(4\to2\to3\to4\) and \(5\to2\to0\to5\) have vectors
 
@@ -10,7 +10,7 @@ Start with face 325. Read the adjacent same-sign faces 524, 302, and 356 in the 
 U=2Hq(-wq,1),\qquad V=-2Hqw(1,q).
 \]
 
-The periods are orthogonal in the metric \(dX^2+w\,dY^2\), and the oriented cross product in scaled coordinates is \(\langle U,U\rangle_w\). The physical period ratio is therefore \(iy\). The loops give the marking specified in [Lander, §3.1](https://arxiv.org/abs/2609.10703v1). The [Lean period calculation](../OrigamiTorus/Type7Periods.lean) verifies the reflection and metric identities. The interpretation as periods of the flat lattice quotient uses the usual development of the flat triangulated torus.
+The periods are orthogonal in the metric \(dX^2+w\,dY^2\), and the oriented cross product in scaled coordinates is \(\langle U,U\rangle_w\). The physical period ratio is therefore \(iy\). The loops give the marking specified in [Lander, §3.1](https://arxiv.org/abs/2609.10703v1). The [Lean period calculation](../OrigamiTorus/Type7/Periods.lean) verifies the reflection and metric identities. The interpretation as periods of the flat lattice quotient uses the usual development of the flat triangulated torus.
 
 The height direction \((3/13,-3/8,-3/7,12/13,1,-1,1,0)\) satisfies the strict determinant tests for every disjoint edge and face throughout \(w\ge1\). Each quadruple has a noncollinear projected triple, so a small perturbation of the heights can achieve general position without losing separation. Lean checks both facts and constructs such generic heights. The same tests hold for the flipped Type 4 face list on rectangles.
 
@@ -71,7 +71,7 @@ At vertex 5 use the same inverse-chord normalization with center vertex 5 in pla
 
 Because \(\lambda_5=-u/D\), \(A=(2+1/D)u\), and \(\lambda_7=(1+1/D)u\), this forces \(u=0\). The horizontal chords at vertex 2 give \(2\lambda_2=A=0\). All normalized \(\lambda_v\) vanish. Before subtracting the constant, the only dependence was the sum of the eight cone angles, so the horizontal derivative has rank seven.
 
-Lean verifies the inverse-chord elimination and the surjectivity of the seven-angle derivative. The two marking components come from developing six triangles by their squared edge lengths, using the cosine rule for the coordinate along each edge and the positive square root for the height. Lean verifies smoothness near the rectangular chart and the exact ratio \(V/U=x+iy\) on the unflipped trapezoidal family. Taking derivatives within \(x\ge0,\ y\ge\sqrt w\) gives two independent marking velocities with zero angle derivative, including at the square. The resulting rank-nine derivative gives a positive-height embedded realization preserving all eight cone angles and the marked displacement ratio \(i\sqrt w\). The eighth angle follows from the sixteen triangle angle sums. [Type7Rank.lean](../OrigamiTorus/Type7Rank.lean) · [MarkedShape.lean](../OrigamiTorus/MarkedShape.lean) · [Type7MarkingRank.lean](../OrigamiTorus/Type7MarkingRank.lean) · [Type7Inflation.lean](../OrigamiTorus/Type7Inflation.lean)
+Lean verifies the inverse-chord elimination and the surjectivity of the seven-angle derivative. The two marking components come from developing six triangles by their squared edge lengths, using the cosine rule for the coordinate along each edge and the positive square root for the height. Lean verifies smoothness near the rectangular chart and the exact ratio \(V/U=x+iy\) on the unflipped trapezoidal family. Taking derivatives within \(x\ge0,\ y\ge\sqrt w\) gives two independent marking velocities with zero angle derivative, including at the square. The resulting rank-nine derivative gives a positive-height embedded realization preserving all eight cone angles and the marked displacement ratio \(i\sqrt w\). The eighth angle follows from the sixteen triangle angle sums. [Type7/Rank.lean](../OrigamiTorus/Type7/Rank.lean) · [Lattice/MarkedShape.lean](../OrigamiTorus/Lattice/MarkedShape.lean) · [Type7/MarkingRank.lean](../OrigamiTorus/Type7/MarkingRank.lean) · [Type7/Inflation.lean](../OrigamiTorus/Type7/Inflation.lean)
 
 ## Interpreting the marked displacements
 
@@ -102,7 +102,7 @@ It follows that \(c=d=e=1,\ g=v,\ a=vu,\ b=u^{-1},\ f=v^{-1}\) and \(u,v\) commu
 
 The difference between the copies of vertex \(4\) in \(364\) and \(524\) is the translation of \(v\), read along \(524\to214\to341\to364\). The difference between the copies of vertex \(0\) in \(302\) and \(506\) is the translation of \(u\) plus that of \(v\), read along \(506\to570\to207\to302\). These are \(U,V\) from the six-triangle formula. They generate the full translation group since the change from \(u,v\) is unimodular. The ratio \(V/U=i\sqrt w\) makes them linearly independent.
 
-Taking the copies in \(302,341,325,356,524,356,356,207\) as representatives of vertices \(0\) through \(7\) gives the integer shifts in the Lean table. Their doubled face areas sum to twice the period-cell area. The compatible positive triangles therefore develop to the quotient with degree one, by the same periodic-area argument used for Type 6. In the unit-root-edge chart all lengths are scaled by the reciprocal of the spatial length of \(35\). After dividing complex coordinates by \(U\), the spatial placement is rescaled by that reciprocal and by \(1/|U|\) to match the torus with first period one. Lean checks the entire argument and the further scaling to an arbitrary rectangular lattice. The theorem gives a closed embedding of the actual lattice quotient, with a lift of each labeled face on which all distances agree. [Type7Periodic.lean](../OrigamiTorus/Type7Periodic.lean) · [Type7IntrinsicLifts.lean](../OrigamiTorus/Type7IntrinsicLifts.lean) · [Type7Tiling.lean](../OrigamiTorus/Type7Tiling.lean)
+Taking the copies in \(302,341,325,356,524,356,356,207\) as representatives of vertices \(0\) through \(7\) gives the integer shifts in the Lean table. Their doubled face areas sum to twice the period-cell area. The compatible positive triangles therefore develop to the quotient with degree one, by the same periodic-area argument used for Type 6. In the unit-root-edge chart all lengths are scaled by the reciprocal of the spatial length of \(35\). After dividing complex coordinates by \(U\), the spatial placement is rescaled by that reciprocal and by \(1/|U|\) to match the torus with first period one. Lean checks the entire argument and the further scaling to an arbitrary rectangular lattice. The theorem gives a closed embedding of the actual lattice quotient, with a lift of each labeled face on which all distances agree. [Type7/Periodic.lean](../OrigamiTorus/Type7/Periodic.lean) · [Type7/IntrinsicLifts.lean](../OrigamiTorus/Type7/IntrinsicLifts.lean) · [Type7/Tiling.lean](../OrigamiTorus/Type7/Tiling.lean)
 
 ## Fixed-marking reconstruction
 
@@ -129,4 +129,21 @@ of the heights gives an embedded lift. The unflipped and flipped planar
 shape and angle maps agree near the chart, so the verified rank-nine
 horizontal derivative applies to the unflipped lift. Inflation and the
 periodic development then give the Type 7 quotient embedding, with rank
-nine at the rescaled spatial placement. [Height certificate](../OrigamiTorus/Type7StripLift.lean) · [Regular strip theorem](../OrigamiTorus/Type7Strip.lean)
+nine at the rescaled spatial placement. [Height certificate](../OrigamiTorus/Type7/StripLift.lean) · [Regular strip theorem](../OrigamiTorus/Type7/Strip.lean)
+
+## The full open strip
+
+The same unflipped construction works for every reduced modulus with
+\(0\le x<1/2\) and \(y^2\ge1-x^2\). Use the six chart cells from the
+Type 4 proof. Put \(h=y^2+x^2-1\). In the second cell
+\([1/10,1/5]\), evaluate the first cell's height polynomial at the
+corresponding first-cell parameter \(10x=1+t\). In the third cell
+\([1/5,3/10]\), add \((1+h)/100\) to the cleared height at vertex 3.
+The other cells use their Type 4 heights. Lean checks every Type 7
+edge–face separation. In the endpoint cell it reuses the checks for
+pairs common to Types 4 and 7 and checks the 24 additional pairs.
+The generic perturbation, regular inflation, and intrinsic development
+apply on all six cells. The spatial rank is nine on the full included region,
+including the lower arc \(y^2=1-x^2\). The theorem also permits any
+similarity carrying the normalized lattice to the requested lattice.
+[Wide-lift theorem](../OrigamiTorus/Type7/WideLift.lean)

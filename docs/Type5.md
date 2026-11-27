@@ -28,7 +28,7 @@ u(t)=-\frac{m}{\lVert n\rVert^2}n+t(-n_y,n_x),\qquad
 v(t)=\left(B+Lu(t),\frac{a_3\cdot u(t)+b_3}{z_3}\right).
 \]
 
-The polynomial \(\lVert v(t)\rVert^2-\lVert u(t)\rVert^2\) is quadratic for each leaf in this witness. Use the positive square-root sign for leaves 0 and 7 and the negative sign for leaf 6. The formula satisfies each leaf’s four linear equations and the remaining norm equation, hence all five squared distances to its neighbors. The graph has no edges joining the leaves and no edge 34, so this accounts for all 24 distances. The [Lean witness](../OrigamiTorus/Type5Square.lean) verifies the equations, the necessary nonzero denominators and all five radicands. It checks the strict inequalities on the exact radicals by bounding them between rational endpoints using the order properties of squaring and division.
+The polynomial \(\lVert v(t)\rVert^2-\lVert u(t)\rVert^2\) is quadratic for each leaf in this witness. Use the positive square-root sign for leaves 0 and 7 and the negative sign for leaf 6. The formula satisfies each leaf’s four linear equations and the remaining norm equation, hence all five squared distances to its neighbors. The graph has no edges joining the leaves and no edge 34, so this accounts for all 24 distances. The [Lean witness](../OrigamiTorus/Type5/Square.lean) verifies the equations, the necessary nonzero denominators and all five radicands. It checks the strict inequalities on the exact radicals by bounding them between rational endpoints using the order properties of squaring and division.
 
 ## The geometric conclusion
 
@@ -38,9 +38,9 @@ The sum of signed double areas is exactly 2, so the oriented map to the square t
 
 The spatial coordinates are in general position. The determinant sign witnesses exclude common points of each disjoint edge and face. To see that this suffices, suppose two faces have a common point with barycentric coefficients that disagree on their shared labels. Subtract common mass on the shared labels, then divide the two remaining sums by their common total. This gives equal convex combinations with disjoint supports of size at most three each. If their union has size six, there is a nonzero linear change of the six coefficients preserving the two separate sums and the three coordinate equations. Starting with positive coefficients, move along that change until one reaches zero. Thus an intersection beyond the intended shared face gives equal convex combinations on at most five distinct points with positive weights. General position requires at least five points in an affine dependence. The only possible support sizes are then two and three, which is an excluded disjoint edge–face intersection. The same argument handles unintended intersections involving edges and vertices, since these are contained in faces. The resulting piecewise-affine map into \(\mathbb R^3\) is an embedding. Each corresponding pair of triangles is congruent by the three squared edge lengths, so their gluing gives the desired intrinsic metric.
 
-Lean proves the full square realization in `OrigamiTorus.Type5.square_torus`. It verifies the cocycle, directed side pairings, every face orientation, total area, and the spatial simplicial embedding. The intrinsic development is a homeomorphism to the square lattice quotient, and the spatial embedding preserves the distance between any two points of each lifted face. Lean proves multiplicity one by translating the lifted triangles into a fundamental cell. Their areas sum to the area of the cell, and local openness would force a positive-area overlap if two points mapped to the same value. [Type5Periodic.lean](../OrigamiTorus/Type5Periodic.lean) · [PeriodicArea.lean](../OrigamiTorus/PeriodicArea.lean) · [SpatialRealizations.lean](../OrigamiTorus/SpatialRealizations.lean)
+Lean proves the full square realization in `OrigamiTorus.Type5.square_torus`. It verifies the cocycle, directed side pairings, every face orientation, total area, and the spatial simplicial embedding. The intrinsic development is a homeomorphism to the square lattice quotient, and the spatial embedding preserves the distance between any two points of each lifted face. Lean proves multiplicity one by translating the lifted triangles into a fundamental cell. Their areas sum to the area of the cell, and local openness would force a positive-area overlap if two points mapped to the same value. [Type5/Periodic.lean](../OrigamiTorus/Type5/Periodic.lean) · [Lattice/PeriodicArea.lean](../OrigamiTorus/Lattice/PeriodicArea.lean) · [Geometry/SpatialRealizations.lean](../OrigamiTorus/Geometry/SpatialRealizations.lean)
 
-Every marked square edge is strictly shorter than all alternative lifts. The coordinate interval checks prove both unit-direction inequalities. The horizontal displacement of edge \(13\) lies within \(10^{-12}\) of the boundary, so Lean compares its exact rational coordinate directly. [Type5Square.lean](../OrigamiTorus/Type5Square.lean) · [Type5Shortest.lean](../OrigamiTorus/Type5Shortest.lean)
+Every marked square edge is strictly shorter than all alternative lifts. The coordinate interval checks prove both unit-direction inequalities. The horizontal displacement of edge \(13\) lies within \(10^{-12}\) of the boundary, so Lean compares its exact rational coordinate directly. [Type5/Square.lean](../OrigamiTorus/Type5/Square.lean) · [Type5/Shortest.lean](../OrigamiTorus/Type5/Shortest.lean)
 
 ## The nonrectangular box
 
@@ -64,8 +64,8 @@ radicands, the three leaf normals, the leading coefficients and
 discriminants, and all sixteen intrinsic face orientations. The affine
 determinants and disjoint edge–face tests then give the spatial embedding
 throughout the box, using the same general-position argument as for the
-square. [Type5Continuation.lean](../OrigamiTorus/Type5Continuation.lean) ·
-[Type5ContinuationCertificate.lean](../OrigamiTorus/Type5ContinuationCertificate.lean)
+square. [Type5/Continuation.lean](../OrigamiTorus/Type5/Continuation.lean) ·
+[Type5/ContinuationCertificate.lean](../OrigamiTorus/Type5/ContinuationCertificate.lean)
 
 The linear map \((a,b)\mapsto(a+xb,yb)\) converts lattice coordinates to
 physical coordinates and multiplies signed areas by \(y\). In lattice
@@ -75,7 +75,7 @@ position cancels when the shared sides are paired. The full physical double
 area is therefore exactly \(2y\), and the same multiplicity-one argument
 applies to the lattice of covolume \(y\). The resulting Type 5 embedding realizes
 the intrinsic torus of modulus \(x+iy\) for every point of the closed box.
-[Type5ContinuationTorus.lean](../OrigamiTorus/Type5ContinuationTorus.lean)
+[Type5/ContinuationTorus.lean](../OrigamiTorus/Type5/ContinuationTorus.lean)
 
 The three strict directional checks also imply shortestness against every
 nonzero period. For a reduced basis \(a,b\), every lattice vector is a
@@ -83,7 +83,7 @@ nonnegative integer combination of one of the adjacent pairs among
 \(\pm a,\pm b,\pm(b-a)\), whose mutual dot product is nonnegative. A
 nonnegative integer is bounded by its square, so the strict inequalities
 for the two directions give the strict inequality for the combination.
-[ReducedNearest.lean](../OrigamiTorus/ReducedNearest.lean) · [Type5Shortest.lean](../OrigamiTorus/Type5Shortest.lean)
+[Winding/ReducedNearest.lean](../OrigamiTorus/Winding/ReducedNearest.lean) · [Type5/Shortest.lean](../OrigamiTorus/Type5/Shortest.lean)
 
 ## The eight-parameter reduction
 
@@ -96,7 +96,7 @@ representatives gives $p_1=0$. The face $152$ has zero shifts on all three
 edges. Its three lengths let us move the spatial anchor triangle by a
 rigid motion to $0,(p_2,0),(p_5,0)$. Lean constructs the linear isometry on
 the anchor plane by the two congruent side vectors and extends it to
-space. [Type5Normalize.lean](../OrigamiTorus/Type5Normalize.lean)
+space. [Type5/Normalize.lean](../OrigamiTorus/Type5/Normalize.lean)
 
 The four intrinsic core points $p_2,p_3,p_4,p_5$ supply eight real
 parameters. The roots have at most two signed heights each. For each such
@@ -106,7 +106,7 @@ the nonzero norm polynomial on that line gives at most two candidates,
 including the degree-one case. Each embedded flat placement with the
 prescribed marked lifts appears on the resulting list of at most 32. The
 list may contain repeated candidates and candidates that fail the remaining
-realization tests. [Type5MarkedReduction.lean](../OrigamiTorus/Type5MarkedReduction.lean)
+realization tests. [Type5/MarkedReduction.lean](../OrigamiTorus/Type5/MarkedReduction.lean)
 
 ### Geometric exclusions
 
@@ -125,8 +125,8 @@ negative entries. Add a positive multiple of the second relation to the
 first. The root coefficients have opposite signs throughout, so three
 positive entries or three negative entries must occur at every positive
 multiple. These are disjoint open conditions, and both occur, contradicting
-connectedness of the positive real line. [PlanarCompleteGraph.lean](../OrigamiTorus/PlanarCompleteGraph.lean) ·
-[Type5Geometry.lean](../OrigamiTorus/Type5Geometry.lean)
+connectedness of the positive real line. [Geometry/PlanarCompleteGraph.lean](../OrigamiTorus/Geometry/PlanarCompleteGraph.lean) ·
+[Type5/Geometry.lean](../OrigamiTorus/Type5/Geometry.lean)
 
 Opposite root rays in a flat leaf or anchor star split its link into two
 paths. Their angle lengths are each at least $\pi$ and add to $2\pi$,
@@ -140,8 +140,8 @@ injectivity along the radial edges. Any collinear consecutive triple of
 leaf neighbors would have its middle point between the other two, because
 otherwise the two link edges would overlap. The outer vertices must be
 the nonadjacent roots. The middle anchor would have opposite root rays,
-which is excluded by the same argument. [EmbeddedEdges.lean](../OrigamiTorus/EmbeddedEdges.lean) ·
-[Type5Geometry.lean](../OrigamiTorus/Type5Geometry.lean)
+which is excluded by the same argument. [Geometry/EmbeddedEdges.lean](../OrigamiTorus/Geometry/EmbeddedEdges.lean) ·
+[Type5/Geometry.lean](../OrigamiTorus/Type5/Geometry.lean)
 
 A flat embedded leaf also has no common nonzero direction in all its face
 planes. If adjacent planes differ, their shared ray must be proportional
@@ -149,7 +149,7 @@ to any direction common to both. At a leaf the only possible opposite
 neighbor pair is the root pair, already excluded, and two distinct
 neighbors cannot have the same ray. Hence there is at most one change of
 plane around the cycle. One change cannot occur in a cycle, and no changes
-would put the entire core in a plane. [Type5LeafPlanes.lean](../OrigamiTorus/Type5LeafPlanes.lean)
+would put the entire core in a plane. [Type5/LeafPlanes.lean](../OrigamiTorus/Type5/LeafPlanes.lean)
 
 ### Removing the two algebraic degeneracies
 
@@ -188,6 +188,6 @@ The two nonzero parameter values give the matching inner product with
 the anchor ray. The homogeneous length equations give the matching inner
 products with all five rays. The same projection argument again puts the
 spatial direction in every face plane. This proves the norm polynomial
-is nonzero. [Type5LeafRank.lean](../OrigamiTorus/Type5LeafRank.lean) ·
-[Type5Nondegenerate.lean](../OrigamiTorus/Type5Nondegenerate.lean) ·
-[Type5Reduction.lean](../OrigamiTorus/Type5Reduction.lean)
+is nonzero. [Type5/LeafRank.lean](../OrigamiTorus/Type5/LeafRank.lean) ·
+[Type5/Nondegenerate.lean](../OrigamiTorus/Type5/Nondegenerate.lean) ·
+[Type5/Reduction.lean](../OrigamiTorus/Type5/Reduction.lean)

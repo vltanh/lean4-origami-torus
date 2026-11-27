@@ -43,7 +43,7 @@ V_0V_1>0,\qquad V_2V_3>0,\qquad V_3V_4>0,\qquad V_2V_4<0
 $$
 therefore excludes intersection. The arithmetic below supplies a test for every disjoint edge–face pair. All 70 sorted determinants for $z'$ are nonzero. At a fixed modulus each determinant at $z+\epsilon z'$ is affine in $\epsilon$ with nonzero slope. Choose a sufficiently small positive $\epsilon$ avoiding the finitely many roots. Strict separation survives this change. The resulting lift is in general position and has no disjoint edge–face intersection.
 
-Two triangles in distinct planes meet along subsets of the intersection line. If they share an edge, the portions of that line in the triangles are exactly the shared edge. If they share at most one vertex, any unwanted intersection has some endpoint on an edge of one of the triangles outside their common vertices. An edge incident to the common vertex cannot meet the other plane again, by general position. Thus there would be a disjoint edge–face intersection. Lean proves the embedding by subtracting common barycentric weights and reducing the size of the two disjoint supports with Carathéodory’s theorem. In Euclidean coordinates the resulting map is a closed embedding of the labeled triangle complex. [SpatialRealizations.lean](../OrigamiTorus/SpatialRealizations.lean)
+Two triangles in distinct planes meet along subsets of the intersection line. If they share an edge, the portions of that line in the triangles are exactly the shared edge. If they share at most one vertex, any unwanted intersection has some endpoint on an edge of one of the triangles outside their common vertices. An edge incident to the common vertex cannot meet the other plane again, by general position. Thus there would be a disjoint edge–face intersection. Lean proves the embedding by subtracting common barycentric weights and reducing the size of the two disjoint supports with Carathéodory’s theorem. In Euclidean coordinates the resulting map is a closed embedding of the labeled triangle complex. [Geometry/SpatialRealizations.lean](../OrigamiTorus/Geometry/SpatialRealizations.lean)
 
 ## Inflation and rank
 
@@ -65,8 +65,8 @@ square with the positive Gram determinant of the two sides at a corner.
 Sum over faces. The edge graph is connected, so the kernel consists of
 constant weights. Fixing the weight at vertex 0 gives an invertible
 seven-by-seven derivative for the other seven cone angles.
-[MetricAngleVariation.lean](../OrigamiTorus/MetricAngleVariation.lean) ·
-[MetricAngleRank.lean](../OrigamiTorus/MetricAngleRank.lean)
+[Geometry/MetricAngleVariation.lean](../OrigamiTorus/Geometry/MetricAngleVariation.lean) ·
+[Geometry/MetricAngleRank.lean](../OrigamiTorus/Geometry/MetricAngleRank.lean)
 
 To recover the marked modulus from the lengths, develop two fixed strips,
 one for each period. Their common starting face is $167$, with vertices 1
@@ -81,9 +81,9 @@ sixteen faces is $16\pi$, so every vertex sum is $2\pi$. With first period
 1, varying the second period therefore gives the two independent modulus
 directions while all cone angles stay constant. Together with the
 seven angle directions, the joint angle and modulus map on squared lengths
-has rank nine. [Type6MarkedShape.lean](../OrigamiTorus/Type6MarkedShape.lean) ·
-[Type6MetricAngles.lean](../OrigamiTorus/Type6MetricAngles.lean) ·
-[Type6LengthChart.lean](../OrigamiTorus/Type6LengthChart.lean)
+has rank nine. [Type6/MarkedShape.lean](../OrigamiTorus/Type6/MarkedShape.lean) ·
+[Type6/MetricAngles.lean](../OrigamiTorus/Type6/MetricAngles.lean) ·
+[Type6/LengthChart.lean](../OrigamiTorus/Type6/LengthChart.lean)
 
 Write $E$ and $I$ for the spatial and intrinsic squared lengths in Euclidean
 units, and let $D$ be the derivative of the joint map at their common value.
@@ -94,8 +94,8 @@ follows that $D\,dE$ is surjective, and hence so is the differential of the
 joint map on the full spatial vertex coordinates. Common rescaling
 preserves the map and its rank. The universal theorem gives this rank on
 the very vertices that realize the metric of the requested lattice.
-[Type6Regularity.lean](../OrigamiTorus/Type6Regularity.lean) ·
-[Type6Universal.lean](../OrigamiTorus/Type6Universal.lean)
+[Type6/Regularity.lean](../OrigamiTorus/Type6/Regularity.lean) ·
+[Type6/Universal.lean](../OrigamiTorus/Type6/Universal.lean)
 
 The implicit function theorem then gives local dimensions 17 for the flat
 locus and 15 for a fixed-modulus fiber. Quotienting by similarities
@@ -125,7 +125,7 @@ Here are the sorted-quadruple signs, in lexicographic order, split by smallest v
 
 For an independent check of the arithmetic, the minima of the signed Bernstein coefficients of the base polynomials are $76311/3407872$ and $1304567/33554432$ for the four planar areas in the two charts. For the displayed volume rows, ignoring question marks, the minima are $347/3407872$, $265/33554432$, and $470677/16777216$, respectively. The minimum coefficients of the corresponding $h$ polynomials are zero in every group. These numbers use the conventional Bernstein basis with the binomial coefficients included.
 
-To check the separation counts, list the edges from the flipped faces and pair each edge with the sorted faces avoiding its endpoints. Convert each needed determinant to sorted order by permutation parity and read its sign from the table. The numbers of pairs resolved by their first successful test, in the displayed test order, are $90,36,14,0$ and $96,33,10,1$. In each chart the total is 140. See [Type6Signs.lean](../OrigamiTorus/Type6Signs.lean) for the coefficient identities, sign checks, and separation tests in Lean.
+To check the separation counts, list the edges from the flipped faces and pair each edge with the sorted faces avoiding its endpoints. Convert each needed determinant to sorted order by permutation parity and read its sign from the table. The numbers of pairs resolved by their first successful test, in the displayed test order, are $90,36,14,0$ and $96,33,10,1$. In each chart the total is 140. See [Type6/Signs.lean](../OrigamiTorus/Type6/Signs.lean) for the coefficient identities, sign checks, and separation tests in Lean.
 
 ## Fixed-period edge equations
 
@@ -135,12 +135,12 @@ w(Q_b^x+d_{ab}^x-Q_a^x)^2+(Q_b^y+d_{ab}^y-Q_a^y)^2.
 $$
 The folded expression has $P$ in place of $Q$, no period translation, and the additional term $wt^2(z_b-z_a)^2$ for the vertical scale $t$. These twenty-four differences vanish at $t=0$ and the planar base coordinates.
 
-For the square Jacobian use both coordinates at folded vertices 0 through 5 and the first at folded vertex 6. On the intrinsic sheet use both coordinates at vertices 0 through 3 and 5, and the first at vertex 4. Half a row of the derivative is the difference of the two weighted dot products of the edge vectors with their respective endpoint motions. Set $h=w-1+x^2$. Fraction-free elimination of these rows in both charts is recorded in [Type6Rank.lean](../OrigamiTorus/Type6Rank.lean). Each row update is a polynomial identity and each common factor cancelled in an update is strictly signed by the strip bounds. The remaining equations successively force all twenty-four selected motions to vanish. This gives an invertible derivative and the implicit function theorem yields a small correction of both sheets for positive $t$.
+For the square Jacobian use both coordinates at folded vertices 0 through 5 and the first at folded vertex 6. On the intrinsic sheet use both coordinates at vertices 0 through 3 and 5, and the first at vertex 4. Half a row of the derivative is the difference of the two weighted dot products of the edge vectors with their respective endpoint motions. Set $h=w-1+x^2$. Fraction-free elimination of these rows in both charts is recorded in [Type6/Rank.lean](../OrigamiTorus/Type6/Rank.lean). Each row update is a polynomial identity and each common factor cancelled in an update is strictly signed by the strip bounds. The remaining equations successively force all twenty-four selected motions to vanish. This gives an invertible derivative and the implicit function theorem yields a small correction of both sheets for positive $t$.
 
-The oriented edge pairings are opposite in the periodic face list, each corrected triangle has positive area, and the sum of twice the scaled triangle areas is $2w$, twice the area of a period cell. The directed shifts on the lifted sides are exactly those in the squared-length equations. The affine maps into the lattice quotient agree along common faces because their planar lifts differ by a single lattice translate there. [Type6Periods.lean](../OrigamiTorus/Type6Periods.lean) · [Type6IntrinsicMap.lean](../OrigamiTorus/Type6IntrinsicMap.lean)
+The oriented edge pairings are opposite in the periodic face list, each corrected triangle has positive area, and the sum of twice the scaled triangle areas is $2w$, twice the area of a period cell. The directed shifts on the lifted sides are exactly those in the squared-length equations. The affine maps into the lattice quotient agree along common faces because their planar lifts differ by a single lattice translate there. [Type6/Periods.lean](../OrigamiTorus/Type6/Periods.lean) · [Type6/IntrinsicMap.lean](../OrigamiTorus/Type6/IntrinsicMap.lean)
 
-On the interior of a face the affine development is locally open. At an edge the incident triangles fill both sides locally. At a vertex lift all incident faces with the central corner at the same point. The closed sectors between consecutive rays form a closed union. Away from the center this union is also open, since the two sectors at any boundary ray fill both sides of that ray locally. The punctured plane is connected, so the sectors cover every direction. In each sector the two coefficients along its bounding rays are linear in the planar displacement. They can be made uniformly small across the finite fan, so any neighborhood of the center in the abstract triangulation maps onto a neighborhood in the plane. The quotient map is therefore open. Its image is also compact and nonempty, so it is the whole connected quotient. [PlanarFan.lean](../OrigamiTorus/PlanarFan.lean)
+On the interior of a face the affine development is locally open. At an edge the incident triangles fill both sides locally. At a vertex lift all incident faces with the central corner at the same point. The closed sectors between consecutive rays form a closed union. Away from the center this union is also open, since the two sectors at any boundary ray fill both sides of that ray locally. The punctured plane is connected, so the sectors cover every direction. In each sector the two coefficients along its bounding rays are linear in the planar displacement. They can be made uniformly small across the finite fan, so any neighborhood of the center in the abstract triangulation maps onto a neighborhood in the plane. The quotient map is therefore open. Its image is also compact and nonempty, so it is the whole connected quotient. [Geometry/PlanarFan.lean](../OrigamiTorus/Geometry/PlanarFan.lean)
 
 Use lattice coordinates, so the half-open unit square is a fundamental cell. Clip the translated lifted triangles to that square. There are finitely many pieces, and their measures sum to one because the translates of the square partition the plane and the triangle double areas sum to two. The pieces cover the square by surjectivity. If two distinct points had the same image, disjoint neighborhoods of those points would have images overlapping in an open set. Choose a point in the overlap off all projected edges and off the cell boundary. It has two preimages in triangle interiors, so two distinct translated triangles overlap on an open set inside the cell. This gives a positive-area overlap, contradicting the equality of the sum of the piece areas with the area of their union. Thus the continuous map from the compact triangulation onto the quotient is a homeomorphism. Matching all edge lengths makes the affine map on each corresponding pair of triangles an isometry. The spatial embedding then gives the prescribed origami torus.
 
-Lean carries out the openness and area argument and constructs the intrinsic homeomorphism. For an arbitrary complex period basis $a,b$, it applies the modular fundamental-domain theorem to $b/a$, with a change of generator sign when necessary. The resulting complex similarity carries the reduced period subgroup onto the original subgroup and descends to a homeomorphism of the quotients. Scaling the folded spatial coordinates by the absolute value of the similarity's multiplier preserves the face distance equalities. The statement quantifies over the actual quotient by $\mathbb Z a+\mathbb Z b$ and uses Euclidean distances on the affine face lifts. [Type6Tiling.lean](../OrigamiTorus/Type6Tiling.lean) · [Type6Universal.lean](../OrigamiTorus/Type6Universal.lean)
+Lean carries out the openness and area argument and constructs the intrinsic homeomorphism. For an arbitrary complex period basis $a,b$, it applies the modular fundamental-domain theorem to $b/a$, with a change of generator sign when necessary. The resulting complex similarity carries the reduced period subgroup onto the original subgroup and descends to a homeomorphism of the quotients. Scaling the folded spatial coordinates by the absolute value of the similarity's multiplier preserves the face distance equalities. The statement quantifies over the actual quotient by $\mathbb Z a+\mathbb Z b$ and uses Euclidean distances on the affine face lifts. [Type6/Tiling.lean](../OrigamiTorus/Type6/Tiling.lean) · [Type6/Universal.lean](../OrigamiTorus/Type6/Universal.lean)

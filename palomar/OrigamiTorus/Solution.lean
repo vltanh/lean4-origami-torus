@@ -1,16 +1,16 @@
 module
 
 public import OrigamiTorus.Defs
-public import OrigamiTorus.SpatialRealizations
-public import OrigamiTorus.Type2Nonexistence
-public import OrigamiTorus.Type4WideLift
-public import OrigamiTorus.Type5Periodic
-public import OrigamiTorus.Type6Inflation
-public import OrigamiTorus.Type6Universal
-public import OrigamiTorus.Type7Tiling
-import OrigamiTorus.Type2Certificate
-import OrigamiTorus.Type2Perturbation
-import OrigamiTorus.Type6Signs
+public import OrigamiTorus.Geometry.SpatialRealizations
+public import OrigamiTorus.Type2.Nonexistence
+public import OrigamiTorus.Type4.WideLift
+public import OrigamiTorus.Type5.Periodic
+public import OrigamiTorus.Type6.Inflation
+public import OrigamiTorus.Type6.Universal
+public import OrigamiTorus.Type7.Tiling
+import OrigamiTorus.Type2.Certificate
+import OrigamiTorus.Type2.Perturbation
+import OrigamiTorus.Type6.Signs
 import Mathlib.Topology.MetricSpace.Pseudo.Pi
 
 public section
