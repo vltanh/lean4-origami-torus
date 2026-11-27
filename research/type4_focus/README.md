@@ -131,3 +131,55 @@ Run `python3 research/type4_focus/enumerate_hex_models.py` (requires libz3). The
 | H31 | 21 | Unresolved |
 
 The smallest branch H13 has the sole full sign string `-++-++--++--+-+--+-++++--++-+-+++++-++--+--+--+--++--+-+-++--+--++----` in lexicographic four-subset order. In metric feasibility tests impose strict signs on the 23 cliques, weak signs on the other 47 determinants. This preserves possible coplanar nonclique configurations by the generic perturbation argument. An exploratory exact-coefficient QF_NRA relaxation of H13 (32 geometric coordinate variables, 356 polynomial assertions, edge equations, nearest-lift inequalities, oriented intrinsic faces, determinant signs and nonedge distance bounds) returned unknown/timeout at 10 seconds. It did not include the complete degeneracy-aware embedding tests, so even a SAT result would require further checks. No sign model or clique class was excluded. The next step is rigorous interval or algebraic elimination in the reduced eight-parameter affine-coordinate formulation, starting with H13, not further blind subdivision of the modulus ray.
+
+
+## 10. H13: metric-only obstruction remains; universal-edge elimination
+
+H13's singleton sign model is genuinely realizable by a generic embedded (not necessarily flat) polyhedral Type 4 torus. The new integer witness, in vertex order 0--7, is
+
+    (1000,0,0), (0,1000,0), (3176,2372,-5000), (608,3405,-2561),
+    (0,0,0), (0,0,1000), (452,5000,-3294), (1155,720,-1328).
+
+All 70 determinants have the required strict signs, with minimum absolute determinant 449984000 in these integer coordinates. Exact circuit checks establish all 140 disjoint edge/face exclusions and 140 neighbor-support tetrahedron exclusions, and the mixed-side conditions at all eight vertices. In general position these imply simplicial embeddedness and strict support relative to neighbors. Reproduce with `python3 research/type4_focus/verify_h13_sign_witness.py`. The witness is for signs alone, not an isometric hexagonal torus. In particular, adding more necessary orientation-only relations cannot exclude the H13 model: its signs already come from a real embedded vertex configuration.
+
+### Universal-edge Gram formulation
+
+Fix the hexagonal marking and gauge K_4j=0. Let d_ij denote **squared** intrinsic edge lengths (d_ii=0). Vertices 4,5 are universal; L=d_45>0. After rotating physical 3D coordinates so r_4=0 and r_5 lies on the positive z axis, scale all coordinates by 2 sqrt(L). The scaled axial coordinate of vertex i is
+
+    a_i=L+d_4i-d_5i.
+
+For W=(0,7,2,3,6,1), write s_i for the two transverse coordinates of vertex i in this scaled realization. Their prescribed Gram entries, including diagonal entries, are
+
+    C_ij=2 L (d_4i+d_4j-d_ij)-a_i a_j.
+
+These are known whenever i=j or ij is an edge. Because 0145 is a K4, s_0 and s_1 form an independent basis, with positive-definite Gram matrix G=[[C_00,C_01],[C_01,C_11]]. The H13 sign of det(4,5,0,1) is positive. Write s_i=b_i[0] s_0+b_i[1] s_1. Then b_0=(1,0), b_1=(0,1), b_4=b_5=0. The prescribed 14 remaining Gram equations are precisely b_i^T G b_j=C_ij. Edge equations from vertices 4 and 5 follow from the axial coordinate formula and the diagonal Gram equations. Thus only 14 intrinsic variables and eight transverse coefficients are needed.
+
+For every pair i,j in the indicated order W, the sign model gives det(4,5,i,j)>0 in generic position. For actual configurations we impose strict positivity for clique quadruples, weak positivity otherwise. Hence the transverse rays lie in the closed cone between s_0 and s_1, and their pairwise ordered determinants are nonnegative, strictly positive on the specified clique pairs. We do not require general position of noncliques. All other H13 determinant signs are read in the affine coordinates (b_i,a_i); the coordinate change has positive determinant. The 22-variable exact relaxation has 362 assertions (including redundant angular-order assertions), strictly shortest intrinsic lifts, consistently oriented nondegenerate intrinsic faces, the 70 required strict/weak signs and nonedge chord bounds for 25 lattice translates per nonedge. The exact-coefficient Z3 run at 15 seconds returned UNKNOWN (timeout); no branch exclusion follows. Reproduce with `python3 research/type4_focus/h13_edge45.py 15000`. Full degenerate simplex intersection tests are not included, so a relaxed SAT answer would still need verification.
+
+### Fraction-free intrinsic-only reduction (mathematical)
+
+The eight transverse coefficients can also be eliminated without radicals or selecting quadratic roots. In order, recover b_2,b_3 using their Gram entries with (0,1), recover b_6 with (2,1), then b_7 with (2,6). All those pairs, together with 4,5, form cliques and have the required strictly positive ordered determinants. All used distances exist. Each step has two linear equations
+
+    [b_j^T G; b_k^T G] b_i = (C_ji,C_ki)^T.
+
+The determinant of the coefficient matrix is det(G) det(b_j,b_k)>0. These eight equations therefore uniquely reconstruct all b's from the 14 intrinsic coordinates. Exactly six residual Gram equations remain. To evaluate them without division, maintain b_i=N_i/D_i with D_i>0. For a new i let the rows of A be N_j^T G,N_k^T G and set
+
+    D_i=det(A),
+    N_i=adj(A) (D_j C_ji,D_k C_ki)^T.
+
+All denominators are positive on the required chart, and the six residual equations are N_i^T G N_j=D_i D_j C_ij. For affine determinant tests use homogeneous rows (D_i,N_i[0],N_i[1],D_i a_i), whose row-scaling factors are positive. The same numerator/denominator convention clears denominators in nonedge squared-distance comparisons. This gives a single rational reconstruction chart for H13 with 14 intrinsic coordinates and six residual equations, an alternative to the eight-free-parameter radical chart. It is intended for exact sign/interval elimination; expanding the recursively generated polynomials may be expensive. No claim that the 14-variable form is uniformly faster is made.
+
+### Additional strict volume tests
+
+The unique generic sign model has singleton circuits including 7 inside tetrahedron 0245, and 3 inside each of tetrahedra 1246, 2456, 2467. For a possibly nongeneric actual H13 realization, the weak-sign closure places the singleton in the closed corresponding tetrahedron: the containing tetrahedra are K4s and nondegenerate. In each case the shared-base replacement is also a K4. Thus the absolute volume of the replacement tetrahedron is positive and at most the original volume. In fact it is strictly smaller: equality would give barycentric coefficient one for the opposite vertex, forcing coincidence of two distinct vertices. Hence the following four inequalities hold even in the weak-sign closure:
+
+    Vol^2(0245)>Vol^2(2457),
+    Vol^2(1246)>Vol^2(1346),
+    Vol^2(2456)>Vol^2(3456),
+    Vol^2(2467)>Vol^2(3467).
+
+Every quantity here is a polynomial in the intrinsic coordinates via the clique distance Gram determinant (common factor 1/36 if using Euclidean tetrahedron volumes). These are branch-specific metric inequalities available without extrinsic unknowns.
+
+### Experimental status
+
+A separate orthogonal-transverse-coordinate formulation (25 variables, 17 residual edge equations) was tried numerically using JAX Jacobians and SLSQP. Twenty generic-margin starts and 100 starts with nonclique/nonedge inequalities weak yielded no strict feasible witness. An additional 30 starts in tetrahedral affine coordinates, seeded with the sign-only witness, also yielded none. These searches are not exhaustive, and weak margins/near-degenerate configurations are not certificates. The scripts for these exploratory searches are not relied upon for any theorem. The exact sign witness and exact polynomial relaxation are the reproducible results of this iteration. H13 remains open; all 31 classes and the Type 4 universality classification remain unresolved.
