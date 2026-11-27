@@ -2,7 +2,9 @@ module
 
 public import OrigamiTorus.Defs
 public import OrigamiTorus.Geometry.SpatialRealizations
+public import OrigamiTorus.Type1.Nonexistence
 public import OrigamiTorus.Type2.Nonexistence
+public import OrigamiTorus.Type3.Universal
 public import OrigamiTorus.Type4.WideLift
 public import OrigamiTorus.Type5.Periodic
 public import OrigamiTorus.Type6.Inflation
@@ -19,6 +21,12 @@ namespace OrigamiTorusChallenge
 
 open OrigamiTorus
 
+/-- Every embedded Lutz Type 1 realization has a vertex with nonzero angle defect. -/
+theorem type1_nonexistence (q : Vertex → Point3)
+    (h : Function.Injective (evaluateTriangles Type1.faces q)) :
+    ¬ ∀ v, coneAngles Type1.faces (Type2.euclideanPoint ∘ q) v = 2 * Real.pi :=
+  Type1.nonexistence q h
+
 /-- No assignment satisfies the Type 2 determinant-sign formula. -/
 theorem type2_sign_obstruction (a : Nat → Bool) :
     ¬ ∀ c ∈ OrigamiTorus.Type2.signClauses, ∃ l ∈ c, a l.1 = l.2 :=
@@ -33,6 +41,21 @@ theorem type2_nonexistence (q : Vertex → Point3)
   intro v
   rw [Type2.linkPerimeter_eq_coneAngle]
   exact hflat v
+
+/-- Every flat lattice torus has a piecewise-isometric Type 3 embedding. -/
+theorem type3_universal (a b : ℂ) (ha : a ≠ 0) (hb : (b/a).im ≠ 0) :
+    ∃ (H : triangleWeightSpace type3Faces ≃ₜ ComplexTorus a b)
+      (F : ComplexTorus a b → Point3) (Q : Vertex → Point3) (P : Triangle → Vertex → ℂ),
+      Topology.IsClosedEmbedding F ∧
+      (∀ u, F (H u) = evaluateTriangles type3Faces Q u) ∧
+      (∀ f ∈ type3Faces, ∀ u, u.val ∈ faceWeights (triangleVertexSet f) →
+        H u = complexTorusProjection a b (∑ i, u.val i • P f i)) ∧
+      ∀ f ∈ type3Faces, ∀ u v,
+        u.val ∈ faceWeights (triangleVertexSet f) →
+        v.val ∈ faceWeights (triangleVertexSet f) →
+        Type5.squared3 (F (H u) - F (H v)) =
+          dist (∑ i, u.val i • P f i) (∑ i, v.val i • P f i)^2 :=
+  Type3.universal a b ha hb
 
 /-- Both diagonals separate the respective opposite vertices on the entire chart. -/
 theorem type6_diagonal_signs (second : Bool) (x w : ℝ) (hd : chartDomain second x w) :

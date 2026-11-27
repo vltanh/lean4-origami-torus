@@ -1,8 +1,10 @@
 # Origami tori — research checkpoint
 
-The research goal is to classify which of the seven Lutz eight-vertex triangulations admit embedded, intrinsically flat realizations in R³ and which realize every flat two-torus. The minimum vertex count is known to be eight. Lean proves Type 2 nonexistence, open-strip coverage for Types 4 and 7, the Type 5 square and nonrectangular box realizations, and Type 6 universality.
+The research goal is to classify which of the seven Lutz eight-vertex triangulations admit embedded, intrinsically flat realizations in R³ and which realize every flat two-torus. The minimum vertex count is known to be eight. Lean proves nonexistence for Types 1 and 2, open-strip coverage for Types 4 and 7, the Type 5 square and nonrectangular box realizations, and universality for Types 3 and 6.
 
+- [Type 1 nonexistence proof](docs/Type1.md), including the star collapse and seven-vertex hull obstruction.
 - [Type 2 nonexistence argument](docs/Type2.md), including the spherical-link reduction and a finite resolution certificate.
+- [Type 3 universality proof](docs/Type3.md), using the published planar families and height vectors.
 - [Type 4 open-strip construction](docs/Type4.md), including the convex flip, rank, and height lifts.
 - [Type 5 radical constructions](docs/Type5.md), including the square, the nonrectangular box, and the branch count.
 - [Type 6 universality proof](docs/Type6.md), including the diagonal flip, the quotient triangulation, and rank nine at the spatial embedding.
@@ -13,15 +15,15 @@ The research goal is to classify which of the seven Lutz eight-vertex triangulat
 
 | Type | Degree sequence | Existence | Universality |
 |---|---|---|---|
-| 1 | 36666777 | Known impossible | No |
+| 1 | 36666777 | Nonexistence proved in Lean | No |
 | 2 | 45567777 | Nonexistence proved in Lean | No |
-| 3 | 46666677 | Known yes | Published universality |
+| 3 | 46666677 | Proved in Lean | Every rank-two lattice torus has a Type 3 embedding, proved in Lean |
 | 4 | 55666677 | Proved in Lean | Every reduced modulus with \(0\le x<1/2\) has a Type 4 embedding, proved in Lean |
 | 5 | 55566777 | Exact radical square and nonrectangular box realizations proved in Lean | Open |
 | 6 | 55666677 | Proved in Lean | Every rank-two lattice torus has a Type 6 embedding, proved in Lean |
 | 7 | 66666666 | Proved in Lean | Every reduced modulus with \(0\le x<1/2\) has a Type 7 embedding, proved in Lean |
 
-Types 4 and 6 share a degree sequence and have different graphs. The existence classification combines the Type 2 proof with the existing constructions and nonexistence result for the other types. [Verification scope](docs/VERIFICATION.md) records which of these results Lean checks.
+Types 4 and 6 share a degree sequence and have different graphs. Lean verifies the existence classification for all seven types. [Verification scope](docs/VERIFICATION.md) records which of these results Lean checks.
 
 ## Repository layout
 

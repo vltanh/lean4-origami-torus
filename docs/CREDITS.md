@@ -99,3 +99,11 @@ An independent agent checked that the Type 7 wide lift covers every
 included reduced modulus, that the extrapolation uses the same height
 parameter in both cells, and that the unflipped regular inflation applies
 to the rescaled spatial embedding.
+
+
+On 27 November 2026, a Codex GPT-6 session using formalize-math-paper v4.8.1
+proved Type 1 nonexistence and Type 3 universality. CaDiCaL produced the
+seven-vertex sign refutation, which Lean replays with reverse unit
+propagation. The Type 3 proof uses the published charts and height vectors
+and reuses the project's fixed-period inflation. The theorem statements
+and chart data were compared against the papers in a separate pass.

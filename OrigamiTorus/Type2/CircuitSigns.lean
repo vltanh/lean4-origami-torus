@@ -1,7 +1,7 @@
 module
 
 public import OrigamiTorus.Type2.BracketSigns
-public import OrigamiTorus.Geometry.TriangleIntersections
+public import OrigamiTorus.Geometry.EmbeddedEdges
 import Mathlib.Tactic
 
 /-! The affine dependence and sign partitions of Type 2 circuits. -/
@@ -12,6 +12,100 @@ open Set
 open scoped BigOperators
 
 namespace OrigamiTorus.Type2
+
+@[expose] def natPlacement (r : Vertex → Point3) (i : ℕ) : Point3 := r (Fin.ofNat 8 i)
+
+theorem vertex_label_val {i : ℕ} (hi : i < 8) : (Fin.ofNat 8 i).val = i :=
+  Nat.mod_eq_of_lt hi
+
+theorem natPlacement_val (r : Vertex → Point3) (v : Vertex) : natPlacement r v.val = r v := by
+  simp only [natPlacement,Fin.ofNat_val_eq_self]
+
+theorem natPlacement_ordered_minors (r : Vertex → Point3)
+    (h : GenericLift (fun v => ((r v).1,(r v).2.1)) (fun v => (r v).2.2))
+    (a b c d : ℕ) (ha : a < b) (hb : b < c) (hc : c < d) (hd : d < 8) :
+    affineBracket (natPlacement r a) (natPlacement r b) (natPlacement r c) (natPlacement r d) ≠ 0 := by
+  have hab : Fin.ofNat 8 a < Fin.ofNat 8 b := by
+    change (Fin.ofNat 8 a).val < (Fin.ofNat 8 b).val
+    rwa [vertex_label_val (ha.trans (hb.trans (hc.trans hd))),vertex_label_val (hb.trans (hc.trans hd))]
+  have hbc : Fin.ofNat 8 b < Fin.ofNat 8 c := by
+    change (Fin.ofNat 8 b).val < (Fin.ofNat 8 c).val
+    rwa [vertex_label_val (hb.trans (hc.trans hd)),vertex_label_val (hc.trans hd)]
+  have hcd : Fin.ofNat 8 c < Fin.ofNat 8 d := by
+    change (Fin.ofNat 8 c).val < (Fin.ofNat 8 d).val
+    rwa [vertex_label_val (hc.trans hd),vertex_label_val hd]
+  simpa only [volume_eq_affineBracket,natPlacement] using
+    h (Fin.ofNat 8 a) (Fin.ofNat 8 b) (Fin.ofNat 8 c) (Fin.ofNat 8 d) hab hbc hcd
+
+theorem natPlacement_hull (r : Vertex → Point3) (s : Finset ℕ) :
+    vertexHull (natPlacement r) s = vertexHull r (s.image (Fin.ofNat 8)) := by
+  unfold vertexHull
+  rw [Finset.coe_image,Set.image_image]
+  rfl
+
+@[expose] def faceLabels (f : Triangle) : List ℕ := (triangleVertices f).map Fin.val
+
+theorem faceLabels_bounds {f : Triangle} {a : ℕ} (ha : a ∈ faceLabels f) : a < 8 := by
+  obtain ⟨v,_,rfl⟩ := List.mem_map.mp ha
+  exact v.isLt
+
+theorem faceLabels_toFinset (f : Triangle) :
+    (faceLabels f).toFinset.image (Fin.ofNat 8) = triangleVertexSet f := by
+  ext v
+  simp only [Finset.mem_image,triangleVertexSet,List.mem_toFinset]
+  constructor
+  · rintro ⟨i,hi,he⟩
+    obtain ⟨w,hw,rfl⟩ := List.mem_map.mp hi
+    rw [Fin.ofNat_val_eq_self] at he
+    exact he ▸ hw
+  · intro hv
+    exact ⟨v.val,List.mem_map.mpr ⟨v,hv,rfl⟩,Fin.ofNat_val_eq_self v⟩
+
+theorem disjoint_fin_labels {s t : Finset ℕ} (hs : ∀ a ∈ s, a < 8) (ht : ∀ a ∈ t, a < 8)
+    (hD : Disjoint s t) : Disjoint (s.image (Fin.ofNat 8)) (t.image (Fin.ofNat 8)) := by
+  apply Finset.disjoint_left.mpr
+  intro x hx hx'
+  obtain ⟨a,ha,he⟩ := Finset.mem_image.mp hx
+  obtain ⟨b,hb,he'⟩ := Finset.mem_image.mp hx'
+  have heq := congrArg Fin.val (he.trans he'.symm)
+  rw [vertex_label_val (hs a ha),vertex_label_val (ht b hb)] at heq
+  exact Finset.disjoint_left.mp hD ha (heq.symm ▸ hb)
+
+theorem natPlacement_edge_face_for {fs : List Triangle} (r : Vertex → Point3)
+    (he : Function.Injective (evaluateTriangles fs r))
+    (a b : ℕ) (f : List ℕ) (ha : a < 8) (hb : b < 8) (heAB : Adjacent fs (Fin.ofNat 8 a) (Fin.ofNat 8 b))
+    (hf : ∃ f' ∈ fs, f.toFinset = (faceLabels f').toFinset) (hdis : Disjoint ({a,b} : Finset ℕ) f.toFinset) :
+    Disjoint (vertexHull (natPlacement r) {a,b}) (vertexHull (natPlacement r) f.toFinset) := by
+  let A := Fin.ofNat 8 a
+  let B := Fin.ofNat 8 b
+  obtain ⟨f',hf',hEq⟩ := hf
+  have hImage : f.toFinset.image (Fin.ofNat 8) = triangleVertexSet f' := by
+    rw [hEq,faceLabels_toFinset]
+  have hAB : ({a,b} : Finset ℕ).image (Fin.ofNat 8) = {A,B} := by simp [A,B]
+  have hEdgeBounds (i : ℕ) (hi : i ∈ ({a,b} : Finset ℕ)) : i < 8 := by
+    simp only [Finset.mem_insert,Finset.mem_singleton] at hi
+    rcases hi with rfl | rfl <;> assumption
+  have hFaceBounds (i : ℕ) (hi : i ∈ f.toFinset) : i < 8 := by
+    rw [hEq] at hi
+    exact faceLabels_bounds (List.mem_toFinset.mp hi)
+  have htyped := disjoint_fin_labels hEdgeBounds hFaceBounds hdis
+  rw [hAB,hImage] at htyped
+  have hedge : ({A,B} : Finset Vertex) ∈ (triangleComplex fs).faces :=
+    adjacent_pair_face heAB
+  have hface : triangleVertexSet f' ∈ (triangleComplex fs).faces :=
+    ⟨⟨f'.1,by simp [triangleVertexSet,triangleVertices]⟩,f',hf',le_rfl⟩
+  rw [natPlacement_hull,natPlacement_hull,hAB,hImage]
+  exact disjoint_vertexHull_of_injective_evaluateTriangles fs r he _ _ hedge hface htyped
+
+theorem natPlacement_strict_support_for {fs : List Triangle} (r : Vertex → Point3)
+    (h : ∀ v, HasStrictSupport fs r v) (v : ℕ) (s : List ℕ)
+    (hs : ∀ w ∈ s, Adjacent fs (Fin.ofNat 8 v) (Fin.ofNat 8 w)) :
+    natPlacement r v ∉ vertexHull (natPlacement r) s.toFinset := by
+  rw [natPlacement_hull,natPlacement]
+  apply strictSupport_not_mem_neighborHull fs r _ _ ?_ (h _)
+  intro x hx
+  obtain ⟨w,hw,rfl⟩ := Finset.mem_image.mp hx
+  exact hs w (List.mem_toFinset.mp hw)
 
 private def label (Q : List ℕ) (hQ : Q.length = 5) (i : Fin 5) : ℕ :=
   Q[i.val]'(by simpa only [hQ] using i.isLt)
@@ -155,16 +249,29 @@ private theorem partitionLiterals_true (Q : List ℕ) (hL : Q.length = 5) :
       | cons a R => simp [List.zipWith,ih R (by simpa using he)]
   exact hzip _ _ hlen
 
-private theorem circuitAt_sound (p : ℕ → Point3) (mark : ℕ → Bool)
+@[expose] def circuitFor (fs : List (List Nat)) (edge : Nat → Nat → Bool) (q : List Nat) : List SignClause :=
+    let signs := circuit q
+    let forbidPartition (side : List Nat) :=
+      forbid (List.zipWith (fun l v => if side.contains v then l else negate l) signs q)
+    forbid signs ++
+      ((choose 2 q).filter fun e =>
+        match e with
+        | [a,b] => edge a b && fs.contains (q.filter fun v => !e.contains v)
+        | _ => false).flatMap forbidPartition ++
+      (q.filter fun v => (q.filter (· != v)).all (edge v)).flatMap
+        (fun v => forbidPartition [v])
+
+theorem circuitFor_sound (fs : List (List Nat)) (edge : ℕ → ℕ → Bool)
+    (p : ℕ → Point3) (mark : ℕ → Bool)
     (hp : ∀ a b c d : ℕ, a < b → b < c → c < d → d < 8 →
       affineBracket (p a) (p b) (p c) (p d) ≠ 0)
-    (hEF : ∀ a b f, a < 8 → b < 8 → isEdge a b = true → f ∈ faces → Disjoint ({a,b} : Finset ℕ) f.toFinset →
+    (hEF : ∀ a b f, a < 8 → b < 8 → edge a b = true → f ∈ fs → Disjoint ({a,b} : Finset ℕ) f.toFinset →
       Disjoint (vertexHull p {a,b}) (vertexHull p f.toFinset))
-    (hSup : ∀ v (s : List ℕ), v < 8 → (∀ w ∈ s, w < 8 ∧ isEdge v w = true) → p v ∉ vertexHull p s.toFinset)
+    (hSup : ∀ v (s : List ℕ), v < 8 → (∀ w ∈ s, w < 8 ∧ edge v w = true) → p v ∉ vertexHull p s.toFinset)
     (Q : List ℕ) (hL : Q.length = 5) (hn : Q.Nodup) (hV : ∀ x ∈ Q, x < 8) :
-    ∀ C ∈ circuitAt Q, ∃ l ∈ C, determinantAssignment p mark l.1 = l.2 := by
+    ∀ C ∈ circuitFor fs edge Q, ∃ l ∈ C, determinantAssignment p mark l.1 = l.2 := by
   intro C hC
-  simp only [circuitAt,List.append_assoc,List.mem_append,List.mem_flatMap,List.mem_filter] at hC
+  simp only [circuitFor,List.append_assoc,List.mem_append,List.mem_flatMap,List.mem_filter] at hC
   rcases hC with hC | ⟨E,⟨hE,hEF'⟩,hC⟩ | ⟨v,⟨hv,hs⟩,hC⟩
   · have hD : Disjoint (vertexHull p (Q.filter fun _ => true).toFinset)
         (vertexHull p (Q.filter fun _ => !true).toFinset) := by simp [vertexHull]
@@ -176,7 +283,7 @@ private theorem circuitAt_sound (p : ℕ → Point3) (mark : ℕ → Bool)
     rcases E with _ | ⟨a,_ | ⟨b,_ | ⟨c,E⟩⟩⟩ <;>
       simp only [List.length_nil,List.length_cons] at hElen <;> try omega
     let f := Q.filter (fun v => !([a,b] : List ℕ).contains v)
-    change (isEdge a b && faces.contains f) = true at hEF'
+    change (edge a b && fs.contains f) = true at hEF'
     simp only [Bool.and_eq_true,List.contains_iff_mem] at hEF'
     have hD : Disjoint ({a,b} : Finset ℕ) f.toFinset := by
       apply Finset.disjoint_left.mpr
@@ -229,7 +336,7 @@ theorem determinantAssignment_satisfies_circuitClauses (p : ℕ → Point3) (mar
   intro C hC
   obtain ⟨Q,hQ,hC⟩ := List.mem_flatMap.mp hC
   have hQ' := (mem_choose_iff _ _ _).mp hQ
-  exact circuitAt_sound p mark hp hEF hSup Q hQ'.2 (hQ'.1.nodup List.nodup_range)
+  exact circuitFor_sound faces isEdge p mark hp hEF hSup Q hQ'.2 (hQ'.1.nodup List.nodup_range)
     (fun x hx => List.mem_range.mp (hQ'.1.subset hx)) C hC
 
 end OrigamiTorus.Type2

@@ -23,7 +23,7 @@ public import OrigamiTorus.Lattice.FaceTransitions
 public import OrigamiTorus.Lattice.MarkedShape
 public import OrigamiTorus.Lattice.PlanarDevelopment
 
-public import OrigamiTorus.Type1.Collapse
+public import OrigamiTorus.Type1.Nonexistence
 
 public import OrigamiTorus.Type2.BracketSigns
 public import OrigamiTorus.Type2.Certificate
@@ -35,6 +35,8 @@ public import OrigamiTorus.Type2.Perturbation
 public import OrigamiTorus.Type2.PluckerSigns
 public import OrigamiTorus.Type2.Projection
 public import OrigamiTorus.Type2.StrictSupport
+
+public import OrigamiTorus.Type3.Universal
 
 public import OrigamiTorus.Type4.Angles
 public import OrigamiTorus.Type4.Circles

@@ -16,8 +16,8 @@ import Mathlib.Tactic
 /-!
 # Eight-vertex origami torus proofs
 
-For Lutz Type 2, no embedded realization has cone angle `2π` at every
-vertex. The sign formula records the finite obstruction used in the proof.
+For Lutz Types 1 and 2, no embedded realization has cone angle `2π` at every
+vertex. The sign formula records the finite obstruction used in the Type 2 proof.
 
 For the flip from Type 3 to Type 6, the two charts cover the half modular domain.
 The four signed areas certify the planar diagonal flip. The second Type 6 theorem
@@ -27,7 +27,7 @@ corrected intrinsic triangles with the two periods held fixed.
 
 Two further theorems verify generic perturbation of embedded triangles
 and the spatial embedding of the Type 6 lift. The existence theorems give
-piecewise-isometric embeddings for every rank-two plane lattice in Type 6
+piecewise-isometric embeddings for every rank-two plane lattice in Types 3 and 6
 and every rectangular lattice in Type 7. The strengthened Type 6 result
 also verifies rank nine for the seven cone angles and two real coordinates
 of the marked modulus at the same spatial placement. Two further statements
@@ -459,11 +459,29 @@ def Type6SpatiallyRegular (q : Vertex → Point3) : Prop :=
   ContDiffAt ℝ 1 type6SpatialAngleShape q ∧
     Function.Surjective (fderiv ℝ type6SpatialAngleShape q)
 
+namespace Type1
+
+theorem vertexCount_neZero : NeZero 8 := @Nat.instNeZeroSucc 7
+
+/-- The Lutz Type 1 face list, with the valence-three vertex labeled 0. -/
+def faces : List Triangle :=
+  letI : NeZero 8 := vertexCount_neZero
+  [(0,1,2),(0,3,1),(0,2,3),(1,4,2),(1,3,5),(1,6,4),(1,5,7),(1,7,6),
+   (2,6,3),(2,4,7),(2,5,6),(2,7,5),(3,4,5),(3,7,4),(3,6,7),(4,6,5)]
+
+end Type1
+
 end OrigamiTorus
 
 namespace OrigamiTorusChallenge
 
 open OrigamiTorus
+
+/-- Every embedded Lutz Type 1 realization has a vertex with nonzero angle defect. -/
+theorem type1_nonexistence (q : Vertex → Point3)
+    (h : Function.Injective (evaluateTriangles Type1.faces q)) :
+    ¬ ∀ v, coneAngles Type1.faces (Type2.euclideanPoint ∘ q) v = 2 * Real.pi := by
+  sorry
 
 /-- No assignment satisfies the Type 2 determinant-sign formula. -/
 theorem type2_sign_obstruction (a : Nat → Bool) :
@@ -474,6 +492,21 @@ theorem type2_sign_obstruction (a : Nat → Bool) :
 theorem type2_nonexistence (q : Vertex → Point3)
     (h : Function.Injective (evaluateTriangles Type2.geometricFaces q)) :
     ¬ ∀ v, ((Type2.incidentCorners v).map (Type2.cornerAngle q v)).sum = 2 * Real.pi := by
+  sorry
+
+/-- Every flat lattice torus has a piecewise-isometric Type 3 embedding. -/
+theorem type3_universal (a b : ℂ) (ha : a ≠ 0) (hb : (b/a).im ≠ 0) :
+    ∃ (H : triangleWeightSpace type3Faces ≃ₜ ComplexTorus a b)
+      (F : ComplexTorus a b → Point3) (Q : Vertex → Point3) (P : Triangle → Vertex → ℂ),
+      Topology.IsClosedEmbedding F ∧
+      (∀ u, F (H u) = evaluateTriangles type3Faces Q u) ∧
+      (∀ f ∈ type3Faces, ∀ u, u.val ∈ faceWeights (triangleVertexSet f) →
+        H u = complexTorusProjection a b (∑ i, u.val i • P f i)) ∧
+      ∀ f ∈ type3Faces, ∀ u v,
+        u.val ∈ faceWeights (triangleVertexSet f) →
+        v.val ∈ faceWeights (triangleVertexSet f) →
+        Type5.squared3 (F (H u) - F (H v)) =
+          dist (∑ i, u.val i • P f i) (∑ i, v.val i • P f i)^2 := by
   sorry
 
 /-- Both diagonals separate the respective opposite vertices on the entire chart. -/

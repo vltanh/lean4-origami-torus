@@ -94,40 +94,39 @@ private theorem triple_cut_checked (v a b c : Vertex) (h : [a,b,c].Sublist (link
   revert h
   fin_cases v <;> revert a b c <;> decide +kernel
 
-private theorem link_is_planar_of_positive_triple (q : Vertex → Point3)
-    (h : Function.Injective (evaluateTriangles geometricFaces q)) {v a b c : Vertex}
-    (hflat : linkPerimeter q v = 2 * Real.pi) (horder : [a,b,c].Sublist (linkCycle v))
+theorem link_is_planar_of_positive_triple {ns : List Vertex} (q : Vertex → Point3)
+    {v a b c : Vertex} {pre xs ys post : List Vertex}
+    (hcut : pre ++ (a :: (xs ++ b :: (ys ++ c :: post))) = ns)
+    (hflat : angularCycleLength (ns.map (linkDirection q v)) = 2 * Real.pi)
+    (hdir : ∀ w ∈ ns, linkDirection q v w ≠ 0)
+    (hant : ∀ u w, [u,w].Sublist ns → angle (linkDirection q v u) (linkDirection q v w) ≠ Real.pi)
+    (horder : [a,b,c].Sublist ns)
     (α β γ : ℝ) (hα : 0 < α) (hβ : 0 < β) (hγ : 0 < γ)
     (hrel : α • linkDirection q v a + β • linkDirection q v b + γ • linkDirection q v c = 0) :
     ∃ P : Submodule ℝ (EuclideanSpace ℝ (Fin 3)), Module.finrank ℝ P ≤ 2 ∧
-      ∀ w ∈ linkCycle v, linkDirection q v w ∈ P := by
+      ∀ w ∈ ns, linkDirection q v w ∈ P := by
   classical
   let d := linkDirection q v
-  let xs := between v a b
-  let ys := between v b c
-  let zs := after v c ++ before v a
-  have hcut : before v a ++ (a :: (xs ++ b :: (ys ++ c :: after v c))) = linkCycle v :=
-    (triple_cut_checked v a b c horder).symm
+  let zs := post ++ pre
   have hpath : angularPathLength (d a) (xs.map d) (d b) + angularPathLength (d b) (ys.map d) (d c) +
       angularPathLength (d c) (zs.map d) (d a) = 2 * Real.pi := by
-    rw [← hflat, linkPerimeter_eq_angularCycleLength, ← hcut]
+    rw [← hflat, ← hcut]
     simp only [List.map_append]
     rw [angularCycleLength_append_comm]
     simpa only [zs, List.map_cons, List.map_append, List.cons_append, List.append_assoc] using
       (angularCycleLength_split_triple (d a) (d b) (d c) (xs.map d) (ys.map d) (zs.map d)).symm
-  have hq := vertex_injective_of_embedding q h
   have hθ := triangle_perimeter_eq_of_positive_relation (d a) (d b) (d c)
-    (linkDirection_ne_zero q hq v c (horder.subset (by simp))) α β γ hα hβ hγ hrel
+    (hdir c (horder.subset (by simp))) α β γ hα hβ hγ hrel
   have h₁ := angle_le_angularPathLength (d a) (d b) (xs.map d)
   have h₂ := angle_le_angularPathLength (d b) (d c) (ys.map d)
   have h₃ := angle_le_angularPathLength (d c) (d a) (zs.map d)
-  have hab : angle (d a) (d b) ≠ Real.pi := no_ordered_antipodal_pair q h hflat
+  have hab : angle (d a) (d b) ≠ Real.pi := hant _ _
     ((List.sublist_append_left [a,b] [c]).trans horder)
-  have hbc : angle (d b) (d c) ≠ Real.pi := no_ordered_antipodal_pair q h hflat
+  have hbc : angle (d b) (d c) ≠ Real.pi := hant _ _
     ((List.sublist_append_right [a] [b,c]).trans horder)
   have hca : angle (d c) (d a) ≠ Real.pi := by
     rw [angle_comm]
-    exact no_ordered_antipodal_pair q h hflat (((List.Sublist.refl [c]).cons b |>.cons_cons a).trans horder)
+    exact hant _ _ (((List.Sublist.refl [c]).cons b |>.cons_cons a).trans horder)
   let P := Submodule.span ℝ ({d a,d b} : Set (EuclideanSpace ℝ (Fin 3)))
   have ha : d a ∈ P := Submodule.subset_span (by simp)
   have hb : d b ∈ P := Submodule.subset_span (by simp)
@@ -141,9 +140,9 @@ private theorem link_is_planar_of_positive_triple (q : Vertex → Point3)
   have hspan (u t : Vertex) (ls : List Vertex) (hu : d u ∈ P) (ht : d t ∈ P)
       (hne : angle (d u) (d t) ≠ Real.pi)
       (he : angularPathLength (d u) (ls.map d) (d t) = angle (d u) (d t))
-      (w : Vertex) (hw : w ∈ ls) (hv : w ∈ linkCycle v) : d w ∈ P := by
+      (w : Vertex) (hw : w ∈ ls) (hv : w ∈ ns) : d w ∈ P := by
     have hm := mem_span_of_angularPathLength_eq (d u) (d t) (ls.map d) he hne
-      (List.mem_map_of_mem hw) (linkDirection_ne_zero q hq v w hv)
+      (List.mem_map_of_mem hw) (hdir w hv)
     obtain ⟨s,t,hs⟩ := Submodule.mem_span_pair.mp hm
     rw [← hs]
     exact P.add_mem (P.smul_mem (s : ℝ) hu) (P.smul_mem (t : ℝ) ht)
@@ -174,7 +173,11 @@ theorem planar_of_flat_no_strictSupport (q : Vertex → Point3)
   rcases ordered_pair_or_triple_of_flat_no_support q v hflat (vertex_injective_of_embedding q h) hs with
     ⟨a,b,hab,hop⟩ | ⟨a,b,c,horder,w,hp,_,_,hrel⟩
   · exact False.elim (no_ordered_antipodal_pair q h hflat hab hop)
-  · exact link_is_planar_of_positive_triple q h hflat horder (w 0) (w 1) (w 2) (hp 0) (hp 1) (hp 2)
+  · exact link_is_planar_of_positive_triple q (triple_cut_checked v a b c horder).symm
+      ((linkPerimeter_eq_angularCycleLength q v).symm.trans hflat)
+      (linkDirection_ne_zero q (vertex_injective_of_embedding q h) v)
+      (fun _ _ hab => no_ordered_antipodal_pair q h hflat hab)
+      horder (w 0) (w 1) (w 2) (hp 0) (hp 1) (hp 2)
       (by simpa [Fin.sum_univ_succ, add_assoc] using hrel)
 
 private def cliqueAt (v : Vertex) : Fin 5 → Vertex :=
@@ -193,49 +196,64 @@ private theorem cliqueAt_edges (v : Vertex) {i j : Fin 5} (h : i ≠ j) :
   revert i j
   fin_cases v <;> decide +kernel
 
-private theorem cliqueAt_small_face (v : Vertex) (s : Finset (Fin 5)) (hs : s.Nonempty)
-    (hcard : s.card ≤ 2) : s.image (cliqueAt v) ∈ (triangleComplex geometricFaces).faces := by
+private theorem clique_small_face {fs : List Triangle} (k : Fin 5 → Vertex)
+    (hcover : ∀ i, ∃ f ∈ fs, k i ∈ triangleVertexSet f)
+    (hedge : ∀ i j, i ≠ j → Adjacent fs (k i) (k j)) (s : Finset (Fin 5)) (hs : s.Nonempty)
+    (hcard : s.card ≤ 2) : s.image k ∈ (triangleComplex fs).faces := by
   have hc : 1 ≤ s.card := Finset.one_le_card.mpr hs
   have he : s.card = 1 ∨ s.card = 2 := by omega
   rcases he with h | h
   · obtain ⟨i,rfl⟩ := Finset.card_eq_one.mp h
-    simpa only [Finset.image_singleton] using singleton_face (cliqueAt v i)
+    simpa only [Finset.image_singleton] using covered_singleton_face (hcover i)
   · obtain ⟨i,j,hne,rfl⟩ := Finset.card_eq_two.mp h
-    simpa only [Finset.image_insert, Finset.image_singleton] using adjacent_pair_face (cliqueAt_edges v hne)
+    simpa only [Finset.image_insert, Finset.image_singleton] using adjacent_pair_face (hedge i j hne)
 
-theorem not_planar_of_embedding (q : Vertex → Point3)
-    (h : Function.Injective (evaluateTriangles geometricFaces q)) (v : Vertex)
+/-- Five pairwise connected vertices in an embedded face complex cannot be coplanar. -/
+theorem clique_not_planar {fs : List Triangle} (q : Vertex → Point3)
+    (h : Function.Injective (evaluateTriangles fs q)) (k : Fin 5 → Vertex)
+    (hk : Function.Injective k) (hcover : ∀ i, ∃ f ∈ fs, k i ∈ triangleVertexSet f)
+    (hedge : ∀ i j, i ≠ j → Adjacent fs (k i) (k j)) (v : Vertex)
     (P : Submodule ℝ (EuclideanSpace ℝ (Fin 3))) (hP : Module.finrank ℝ P ≤ 2)
-    (hstar : ∀ w ∈ linkCycle v, linkDirection q v w ∈ P) : False := by
+    (hstar : ∀ i, linkDirection q v (k i) ∈ P) : False := by
   let Q := P.comap euclideanPoint
   let J : Q →ₗ[ℝ] P := (euclideanPoint.comp Q.subtype).codRestrict P (fun z => z.property)
   have hJ : Function.Injective J := by
     intro x y he
     exact Subtype.ext (euclideanPoint_injective (congrArg Subtype.val he))
   have hQ : Module.finrank ℝ Q ≤ 2 := (LinearMap.finrank_le_finrank_of_injective hJ).trans hP
-  let r (i : Fin 5) : Q := ⟨q (cliqueAt v i)-q v, by
-    change linkDirection q v (cliqueAt v i) ∈ P
-    rcases cliqueAt_in_star v i with he | he
-    · rw [he, linkDirection, sub_self, map_zero]
-      exact P.zero_mem
-    · exact hstar _ he⟩
+  let r (i : Fin 5) : Q := ⟨q (k i)-q v, hstar i⟩
   let A : Q →ᵃ[ℝ] Point3 :=
     (AffineEquiv.constVAdd ℝ Point3 (q v)).toAffineMap.comp Q.subtype.toAffineMap
-  have ha (i : Fin 5) : A (r i) = q (cliqueAt v i) := by
-    change q v + (q (cliqueAt v i)-q v) = q (cliqueAt v i)
+  have ha (i : Fin 5) : A (r i) = q (k i) := by
+    change q v + (q (k i)-q v) = q (k i)
     abel
-  have hmap (s : Finset (Fin 5)) : A '' vertexHull r s = vertexHull q (s.image (cliqueAt v)) := by
+  have hmap (s : Finset (Fin 5)) : A '' vertexHull r s = vertexHull q (s.image k) := by
     rw [vertexHull, A.image_convexHull, Set.image_image, vertexHull, Finset.coe_image, Set.image_image]
     exact congrArg (convexHull ℝ) (Set.image_congr (fun i _ => ha i))
   obtain ⟨s,t,hs,ht,hst,z,hz,hz'⟩ := exists_small_intersection_of_five_planar_points r hQ
   have hne (u : Finset (Fin 5)) (hz : z ∈ vertexHull r u) : u.Nonempty := by
     by_contra! hu
     simp [hu, vertexHull] at hz
-  have hdisj := disjoint_vertexHull_of_injective_evaluateTriangles geometricFaces q h
-    (s.image (cliqueAt v)) (t.image (cliqueAt v)) (cliqueAt_small_face v s (hne s hz) hs)
-    (cliqueAt_small_face v t (hne t hz') ht) ((Finset.disjoint_image (cliqueAt_injective v)).mpr hst)
+  have hdisj := disjoint_vertexHull_of_injective_evaluateTriangles fs q h
+    (s.image k) (t.image k) (clique_small_face k hcover hedge s (hne s hz) hs)
+    (clique_small_face k hcover hedge t (hne t hz') ht) ((Finset.disjoint_image hk).mpr hst)
   exact Set.disjoint_left.mp hdisj (hmap s ▸ Set.mem_image_of_mem A hz)
     (hmap t ▸ Set.mem_image_of_mem A hz')
+
+theorem not_planar_of_embedding (q : Vertex → Point3)
+    (h : Function.Injective (evaluateTriangles geometricFaces q)) (v : Vertex)
+    (P : Submodule ℝ (EuclideanSpace ℝ (Fin 3))) (hP : Module.finrank ℝ P ≤ 2)
+    (hstar : ∀ w ∈ linkCycle v, linkDirection q v w ∈ P) : False := by
+  refine clique_not_planar q h (cliqueAt v) (cliqueAt_injective v)
+    (fun i => by
+      obtain ⟨_,f,hf,hi⟩ := singleton_face (cliqueAt v i)
+      exact ⟨f,hf,hi (Finset.mem_singleton_self _)⟩)
+    (fun _ _ hi => cliqueAt_edges v hi) v P hP ?_
+  intro i
+  rcases cliqueAt_in_star v i with he | he
+  · rw [he, linkDirection, sub_self, map_zero]
+    exact P.zero_mem
+  · exact hstar _ he
 
 /-- The link at every vertex of an embedded flat Type 2 realization lies in a strict hemisphere. -/
 theorem strictSupport_of_flat_embedding (q : Vertex → Point3)

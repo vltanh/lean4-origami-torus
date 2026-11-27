@@ -74,11 +74,11 @@ public theorem type6_spatialLengthMatchedLift (second : Bool) (x w : ℝ) (hd : 
     type6_spatialLengthMatchedLift_regular second x w hd hU hbase
   exact ⟨z,t,m,K,ht,hm,hlen,hpos,hfaces,hemb⟩
 
-private theorem physical_embedding (second : Bool) (x y : ℝ) (z : Vertex → ℝ) (t : ℝ)
+public theorem fixedPeriod_physical_embedding (fs : List Triangle) (second : Bool) (x y : ℝ) (z : Vertex → ℝ) (t : ℝ)
     (m : SheetMotion) (hy : y ≠ 0)
-    (h : Topology.IsClosedEmbedding (evaluateTriangles type6FlippedFaces (fun i =>
+    (h : Topology.IsClosedEmbedding (evaluateTriangles fs (fun i =>
       ((movedFoldedPoint second x (y^2) m i).1,(movedFoldedPoint second x (y^2) m i).2,t*z i)))) :
-    Topology.IsClosedEmbedding (evaluateTriangles type6FlippedFaces (physicalFoldedVertex second x y m z t)) := by
+    Topology.IsClosedEmbedding (evaluateTriangles fs (physicalFoldedVertex second x y m z t)) := by
   let scale : Point3 →ₗ[ℝ] Point3 :=
     { toFun := fun v => (v.1,v.2.1/y,v.2.2)
       map_add' := by intro a b; ext <;> simp [add_div]
@@ -95,10 +95,10 @@ private theorem physical_embedding (second : Bool) (x y : ℝ) (z : Vertex → �
   have hcont : Continuous scale := by
     change Continuous (fun v : Point3 => (v.1,v.2.1/y,v.2.2))
     fun_prop
-  let _ : CompactSpace (triangleWeightSpace type6FlippedFaces) :=
+  let _ : CompactSpace (triangleWeightSpace fs) :=
     isCompact_iff_compactSpace.mp (isCompact_triangleWeightSpace _)
-  have he : evaluateTriangles type6FlippedFaces (physicalFoldedVertex second x y m z t) =
-      scale ∘ evaluateTriangles type6FlippedFaces (fun i =>
+  have he : evaluateTriangles fs (physicalFoldedVertex second x y m z t) =
+      scale ∘ evaluateTriangles fs (fun i =>
         ((movedFoldedPoint second x (y^2) m i).1,(movedFoldedPoint second x (y^2) m i).2,t*z i)) := by
     have hp : physicalFoldedVertex second x y m z t = scale ∘ (fun i =>
         ((movedFoldedPoint second x (y^2) m i).1,(movedFoldedPoint second x (y^2) m i).2,t*z i)) := by
@@ -127,7 +127,7 @@ public theorem type6_regular_embeddedFaces (x y : ℝ) (hx : 0 ≤ x) (hx' : x �
         Topology.IsClosedEmbedding (evaluateTriangles type6FlippedFaces (physicalFoldedVertex second x y m z t)) := by
     obtain ⟨z,t,m,_,ht,hm,hl,hi,hpos,_,hemb⟩ := type6_spatialLengthMatchedLift_regular second x (y^2) hd hU hbase
     obtain ⟨hreg,hshape⟩ := type6_spatiallyRegular_of_lengthMatch second x y hy z t m hl hi hpos
-    exact ⟨z,t,m,ht,hm,hl,hpos,hreg,hshape,physical_embedding second x y z t m hy.ne' hemb⟩
+    exact ⟨z,t,m,ht,hm,hl,hpos,hreg,hshape,fixedPeriod_physical_embedding type6FlippedFaces second x y z t m hy.ne' hemb⟩
   by_cases h : x ≤ 1/6
   · have hd : chartDomain false x (y^2) := ⟨hx,h,hw⟩
     obtain ⟨z,t,m,hrest⟩ := H false hd

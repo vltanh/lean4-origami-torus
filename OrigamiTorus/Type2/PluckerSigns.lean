@@ -104,26 +104,31 @@ private theorem pluckerAt_sound (p : ℕ → Point3) (mark : ℕ → Bool)
     decide_mul_pos _ _ had.2.2 hbc.2.2,h₁,h₂,h₃,h₄,h₅,h₆]
   exact ⟨eq_of_beq hsame.1,eq_of_beq hsame.2⟩
 
+@[expose] def pluckerClausesFor (labels : List ℕ) : List SignClause :=
+  (choose 2 labels).flatMap fun s =>
+    (choose 4 (labels.filter fun v => !s.contains v)).flatMap (pluckerAt s)
+
 /-- Every Plücker clause in the formula holds for the signs of an actual
 placement in general position. -/
-theorem determinantAssignment_satisfies_pluckerClauses (p : ℕ → Point3) (mark : ℕ → Bool)
+theorem pluckerClausesFor_sound (labels : List ℕ) (hnd : labels.Nodup)
+    (hbound : ∀ i ∈ labels, i < 8) (p : ℕ → Point3) (mark : ℕ → Bool)
     (hp : ∀ a b c d : ℕ, a < b → b < c → c < d → d < 8 →
       affineBracket (p a) (p b) (p c) (p d) ≠ 0) :
-    ∀ C ∈ pluckerClauses, ∃ l ∈ C, determinantAssignment p mark l.1 = l.2 := by
+    ∀ C ∈ pluckerClausesFor labels, ∃ l ∈ C, determinantAssignment p mark l.1 = l.2 := by
   intro C hC
-  simp only [pluckerClauses,List.mem_flatMap] at hC
+  simp only [pluckerClausesFor,List.mem_flatMap] at hC
   obtain ⟨S,hS,Q,hQ,hC⟩ := hC
   have hS' := (mem_choose_iff _ _ _).mp hS
   have hQ' := (mem_choose_iff _ _ _).mp hQ
   have hQv := hQ'.1.trans List.filter_sublist
   have hlabel (x : ℕ) (hx : x ∈ S ++ Q) : x < 8 := by
-    apply List.mem_range.mp
+    apply hbound
     rcases List.mem_append.mp hx with hs | hq
     · exact hS'.1.subset hs
     · exact hQv.subset hq
   have hn : (S ++ Q).Nodup := by
     apply List.nodup_append'.mpr
-    refine ⟨hS'.1.nodup List.nodup_range,hQv.nodup List.nodup_range,?_⟩
+    refine ⟨hS'.1.nodup hnd,hQv.nodup hnd,?_⟩
     intro x hx hy
     have hy' := (List.mem_filter.mp (hQ'.1.subset hy)).2
     simp [hx] at hy'
@@ -134,5 +139,12 @@ theorem determinantAssignment_satisfies_pluckerClauses (p : ℕ → Point3) (mar
   rcases Q with _ | ⟨a,_ | ⟨b,_ | ⟨c,_ | ⟨d,_ | ⟨e,Q⟩⟩⟩⟩⟩ <;>
     simp only [List.length_cons,List.length_nil] at hQlen <;> try omega
   exact pluckerAt_sound p mark hp s t a b c d hlabel hn C hC
+
+
+theorem determinantAssignment_satisfies_pluckerClauses (p : ℕ → Point3) (mark : ℕ → Bool)
+    (hp : ∀ a b c d : ℕ, a < b → b < c → c < d → d < 8 →
+      affineBracket (p a) (p b) (p c) (p d) ≠ 0) :
+    ∀ C ∈ pluckerClauses, ∃ l ∈ C, determinantAssignment p mark l.1 = l.2 :=
+  pluckerClausesFor_sound vertices List.nodup_range (fun _ h => List.mem_range.mp h) p mark hp
 
 end OrigamiTorus.Type2

@@ -1,6 +1,7 @@
 module
 
 public import OrigamiTorus.Type6.Data
+public import OrigamiTorus.Type3.Data
 import Mathlib.Tactic
 
 /-! Exact signs over the two unbounded modulus strips. -/
@@ -185,31 +186,49 @@ private theorem direction_cast (second : Bool) (v : Vertex) :
     ((generalPositionDirection second v : ℚ) : ℝ) = generalPositionDirection second v := by
   cases second <;> fin_cases v <;> norm_num [generalPositionDirection]
 
-private def sepCheck (second : Bool) (pair : Edge × Triangle) : Bool :=
+private def sepCheck (second : Bool) (z : Vertex → ℚ) (pair : Edge × Triangle) : Bool :=
   let ((a,b),(c,d,e)) := pair
-  let v := fun a b c d => (volumeCoeffs second (lift second) a b c d).sign
+  let v := fun a b c d => (volumeCoeffs second z a b c d).sign
   @decide (separates (v b c d e) (v a c d e) (v a b d e) (v a b c e) (v a b c d))
     (by unfold separates; infer_instance)
 
-set_option maxRecDepth 10000 in
-set_option maxHeartbeats 0 in
-private theorem sepListCheck (second : Bool) : type6DisjointPairs.all (sepCheck second) = true := by
-  cases second <;> decide +kernel
-
-theorem type6_strictSeparation (second : Bool) (x w : ℝ) (hd : chartDomain second x w) :
-    ∀ pair ∈ type6DisjointPairs, isSeparated (stripPoint second x w) (lift second) pair := by
+private theorem strictSeparation_of_check (second : Bool) (x w : ℝ) (hd : chartDomain second x w)
+    (pairs : List (Edge × Triangle)) (z : Vertex → ℚ) (hc : pairs.all (sepCheck second z) = true) :
+    ∀ pair ∈ pairs, isSeparated (stripPoint second x w) (fun v => (z v : ℝ)) pair := by
   obtain ⟨t, h, ht₀, ht₁, hh, rfl, rfl⟩ := domain_param hd
   rintro ⟨⟨a,b⟩,c,d,e⟩ hpair
-  have hcheck := (List.all_eq_true.mp (sepListCheck second)) _ hpair
+  have hcheck := (List.all_eq_true.mp hc) _ hpair
   simp only [sepCheck, decide_eq_true_eq, separates] at hcheck
-  have hv (a b c d : Vertex) := volume_eval second (lift second) a b c d t h
-  simp only [lift_cast] at hv
+  have hv (a b c d : Vertex) := volume_eval second z a b c d t h
   simp only [isSeparated, separates, hv]
   rcases hcheck with hcheck | hcheck | hcheck | hcheck
   · exact Or.inl (StripPoly.sign_mul_pos hcheck ht₀ ht₁ hh)
   · exact Or.inr (Or.inl (StripPoly.sign_mul_pos hcheck ht₀ ht₁ hh))
   · exact Or.inr (Or.inr (Or.inl (StripPoly.sign_mul_pos hcheck ht₀ ht₁ hh)))
   · exact Or.inr (Or.inr (Or.inr (StripPoly.sign_mul_neg hcheck ht₀ ht₁ hh)))
+
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 0 in
+private theorem sepListCheck (second : Bool) : type6DisjointPairs.all (sepCheck second (lift second)) = true := by
+  cases second <;> decide +kernel
+
+theorem type6_strictSeparation (second : Bool) (x w : ℝ) (hd : chartDomain second x w) :
+    ∀ pair ∈ type6DisjointPairs, isSeparated (stripPoint second x w) (lift second) pair := by
+  simpa only [lift_cast] using
+    strictSeparation_of_check second x w hd _ (lift second) (sepListCheck second)
+
+set_option maxRecDepth 10000 in
+set_option maxHeartbeats 0 in
+private theorem type3_sepListCheck (second : Bool) :
+    Type3.disjointPairs.all (sepCheck second (generalPositionDirection second)) = true := by
+  cases second <;> decide +kernel
+
+/-- The published heights separate the 138 disjoint edge–face pairs of Type 3. -/
+theorem type3_strictSeparation (second : Bool) (x w : ℝ) (hd : chartDomain second x w) :
+    ∀ pair ∈ Type3.disjointPairs,
+      isSeparated (stripPoint second x w) (generalPositionDirection second) pair := by
+  simpa only [direction_cast] using
+    strictSeparation_of_check second x w hd _ (generalPositionDirection second) (type3_sepListCheck second)
 
 private def tetrahedra : List Tetrahedron :=
   (List.finRange 8).flatMap fun a =>

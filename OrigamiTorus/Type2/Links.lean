@@ -115,11 +115,12 @@ private theorem strongDual_eq_normalDot (L : StrongDual ℝ Point3) (p : Point3)
 
 /-- The strict supporting plane exists exactly when the vertex is outside
 the convex hull of its neighboring vertices. -/
-theorem strictSupport_iff_not_mem_neighborHull (q : Vertex → Point3) (v : Vertex) :
-    HasStrictSupport geometricFaces q v ↔ q v ∉ vertexHull q (linkCycle v).toFinset := by
-  let s := (linkCycle v).toFinset
-  have hs (w : Vertex) : w ∈ s ↔ Adjacent geometricFaces v w := by
-    simpa only [s, List.mem_toFinset] using mem_linkCycle_iff v w
+theorem strictSupport_iff_not_mem_linkHull {fs : List Triangle} {ns : List Vertex}
+    (q : Vertex → Point3) (v : Vertex) (hl : ∀ w, w ∈ ns ↔ Adjacent fs v w) :
+    HasStrictSupport fs q v ↔ q v ∉ vertexHull q ns.toFinset := by
+  let s := ns.toFinset
+  have hs (w : Vertex) : w ∈ s ↔ Adjacent fs v w := by
+    simpa only [s, List.mem_toFinset] using hl w
   refine ⟨strictSupport_not_mem_neighborHull _ q v s (fun w => (hs w).mp), ?_⟩
   intro h
   change q v ∉ convexHull ℝ (q '' (s : Set Vertex)) at h
@@ -130,16 +131,17 @@ theorem strictSupport_iff_not_mem_neighborHull (q : Vertex → Point3) (v : Vert
   exact hv.trans (ht _ (subset_convexHull ℝ _ ⟨w,(hs w).mpr hw,rfl⟩))
 
 /-- Failure of strict support gives a positive dependence on at most four directions. -/
-theorem small_positive_dependence_of_no_support (q : Vertex → Point3) (v : Vertex)
-    (h : ¬ HasStrictSupport geometricFaces q v) :
+theorem small_positive_dependence_of_no_support {fs : List Triangle} {ns : List Vertex}
+    (q : Vertex → Point3) (v : Vertex) (hl : ∀ w, w ∈ ns ↔ Adjacent fs v w)
+    (h : ¬ HasStrictSupport fs q v) :
     ∃ (ι : Type) (_inst : Fintype ι),
       ∃ (z : ι → Point3) (w : ι → ℝ),
         Fintype.card ι ≤ 4 ∧ AffineIndependent ℝ z ∧
-        (∀ i, ∃ a ∈ linkCycle v, z i = q a - q v) ∧
+        (∀ i, ∃ a ∈ ns, z i = q a - q v) ∧
         (∀ i, 0 < w i) ∧ ∑ i, w i = 1 ∧ ∑ i, w i • z i = 0 := by
-  have hv : q v ∈ vertexHull q (linkCycle v).toFinset :=
-    Classical.not_not.mp ((strictSupport_iff_not_mem_neighborHull q v).not.mp h)
-  change q v ∈ convexHull ℝ (q '' (↑(linkCycle v).toFinset : Set Vertex)) at hv
+  have hv : q v ∈ vertexHull q ns.toFinset :=
+    Classical.not_not.mp ((strictSupport_iff_not_mem_linkHull q v hl).not.mp h)
+  change q v ∈ convexHull ℝ (q '' (↑ns.toFinset : Set Vertex)) at hv
   obtain ⟨ι,inst,p,w,hp,hi,hw,ht,hs⟩ := eq_pos_convex_span_of_mem_convexHull hv
   let z (i : ι) := p i - q v
   have hcard := hi.card_le_finrank_succ
@@ -161,23 +163,24 @@ theorem small_positive_dependence_of_no_support (q : Vertex → Point3) (v : Ver
 
 /-- The directions in the positive dependence can be listed in their actual
 order on the link, with the weights transported along the same reindexing. -/
-theorem ordered_positive_dependence_of_no_support (q : Vertex → Point3) (v : Vertex)
-    (h : ¬ HasStrictSupport geometricFaces q v) :
-    ∃ s : List Vertex, s.Sublist (linkCycle v) ∧ s.length ≤ 4 ∧
+theorem ordered_positive_dependence_of_no_support {fs : List Triangle} {ns : List Vertex}
+    (q : Vertex → Point3) (v : Vertex) (hl : ∀ w, w ∈ ns ↔ Adjacent fs v w) (hnd : ns.Nodup)
+    (h : ¬ HasStrictSupport fs q v) :
+    ∃ s : List Vertex, s.Sublist ns ∧ s.length ≤ 4 ∧
       ∃ w : Fin s.length → ℝ,
         (∀ i, 0 < w i) ∧ ∑ i, w i = 1 ∧
         AffineIndependent ℝ (linkDirection q v ∘ s.get) ∧
         ∑ i, w i • linkDirection q v (s.get i) = 0 := by
   classical
-  obtain ⟨ι,inst,z,w,hcard,hi,hn,hp,hs,hz⟩ := small_positive_dependence_of_no_support q v h
+  obtain ⟨ι,inst,z,w,hcard,hi,hn,hp,hs,hz⟩ := small_positive_dependence_of_no_support q v hl h
   choose label hl hzl using hn
   have hlInj : Function.Injective label := by
     intro i j e
     exact hi.injective (by rw [hzl, hzl, e])
-  let s := (linkCycle v).filter fun a => decide (a ∈ Set.range label)
-  have hsub : s.Sublist (linkCycle v) := List.filter_sublist
+  let s := ns.filter fun a => decide (a ∈ Set.range label)
+  have hsub : s.Sublist ns := List.filter_sublist
   have hm (a : Vertex) : a ∈ s ↔ a ∈ Set.range label := by
-    change a ∈ (linkCycle v).filter _ ↔ _
+    change a ∈ ns.filter _ ↔ _
     rw [List.mem_filter, decide_eq_true_eq]
     exact ⟨And.right, fun ⟨i,hi⟩ => ⟨hi ▸ hl i,⟨i,hi⟩⟩⟩
   let g (i : ι) : {a // a ∈ s} := ⟨label i,(hm _).mpr (Set.mem_range_self i)⟩
@@ -185,7 +188,7 @@ theorem ordered_positive_dependence_of_no_support (q : Vertex → Point3) (v : V
     ⟨fun _ _ he => hlInj (congrArg Subtype.val he), fun a => by
       obtain ⟨i,hi⟩ := (hm a).mp a.property
       exact ⟨i,Subtype.ext hi⟩⟩
-  let f := (List.Nodup.getEquiv s (hsub.nodup (linkCycle_checked v).1)).trans e.symm
+  let f := (List.Nodup.getEquiv s (hsub.nodup hnd)).trans e.symm
   have hf (i : Fin s.length) : label (f i) = s.get i :=
     congrArg Subtype.val (e.apply_symm_apply _)
   have hc : s.length = Fintype.card ι := by
@@ -231,12 +234,13 @@ theorem linear_relation_eq_zero_of_omitted {ι E : Type*} [Fintype ι] [AddCommG
 
 /-- Four positively dependent directions in their order on the link force
 cone angle strictly greater than `2π`. -/
-theorem linkPerimeter_gt_of_ordered_positive_four (q : Vertex → Point3) (v a b c d : Vertex)
-    (horder : [a,b,c,d].Sublist (linkCycle v)) (w : Fin 4 → ℝ)
+theorem angularCycleLength_gt_of_ordered_positive_four (q : Vertex → Point3) (v a b c d : Vertex)
+    {ns : List Vertex}
+    (horder : [a,b,c,d].Sublist ns) (w : Fin 4 → ℝ)
     (hp : ∀ i, 0 < w i) (hw : ∑ i, w i = 1) :
     let z : Fin 4 → EuclideanSpace ℝ (Fin 3) :=
       ![linkDirection q v a,linkDirection q v b,linkDirection q v c,linkDirection q v d]
-    AffineIndependent ℝ z → ∑ i, w i • z i = 0 → 2 * Real.pi < linkPerimeter q v := by
+    AffineIndependent ℝ z → ∑ i, w i • z i = 0 → 2 * Real.pi < angularCycleLength (ns.map (linkDirection q v)) := by
   intro z hA hz
   let x := linkDirection q v a
   let y := linkDirection q v b
@@ -261,22 +265,23 @@ theorem linkPerimeter_gt_of_ordered_positive_four (q : Vertex → Point3) (v a b
   have hquad := quadrilateral_perimeter_gt_of_positive_relation x y t u
     (w 0) (w 1) (w 2) (w 3) (hp 0) (hp 1) (hp 2) (hp 3) hr hLin
   have hcyc := angularCycleLength_mono (horder.map (linkDirection q v))
-  rw [linkPerimeter_eq_angularCycleLength]
   apply hquad.trans_le
   simpa [angularCycleLength_four, x, y, t, u] using hcyc
 
 /-- A flat link without strict support has either an antipodal pair or a
 positive affine-independent triple, in link order. -/
-theorem ordered_pair_or_triple_of_flat_no_support (q : Vertex → Point3) (v : Vertex)
-    (hflat : linkPerimeter q v = 2 * Real.pi) (hq : Function.Injective q)
-    (h : ¬ HasStrictSupport geometricFaces q v) :
-    (∃ a b : Vertex, [a,b].Sublist (linkCycle v) ∧
+theorem ordered_pair_or_triple_of_flat_link {fs : List Triangle} {ns : List Vertex}
+    (q : Vertex → Point3) (v : Vertex) (hl : ∀ w, w ∈ ns ↔ Adjacent fs v w) (hnd : ns.Nodup)
+    (hflat : angularCycleLength (ns.map (linkDirection q v)) = 2 * Real.pi)
+    (hq : ∀ w ∈ ns, linkDirection q v w ≠ 0)
+    (h : ¬ HasStrictSupport fs q v) :
+    (∃ a b : Vertex, [a,b].Sublist ns ∧
       InnerProductGeometry.angle (linkDirection q v a) (linkDirection q v b) = Real.pi) ∨
-    ∃ a b c : Vertex, [a,b,c].Sublist (linkCycle v) ∧
+    ∃ a b c : Vertex, [a,b,c].Sublist ns ∧
       ∃ w : Fin 3 → ℝ, (∀ i, 0 < w i) ∧ ∑ i, w i = 1 ∧
         let z := ![linkDirection q v a,linkDirection q v b,linkDirection q v c]
         AffineIndependent ℝ z ∧ ∑ i, w i • z i = 0 := by
-  obtain ⟨s,hsub,hcard,w,hpos,hmass,hi,hrel⟩ := ordered_positive_dependence_of_no_support q v h
+  obtain ⟨s,hsub,hcard,w,hpos,hmass,hi,hrel⟩ := ordered_positive_dependence_of_no_support q v hl hnd h
   have htwo : 2 ≤ s.length := by
     by_contra! hn
     cases s with
@@ -285,7 +290,7 @@ theorem ordered_pair_or_triple_of_flat_no_support (q : Vertex → Point3) (v : V
       cases s with
       | nil =>
         have hz : w 0 • linkDirection q v a = 0 := by simpa [Fin.sum_univ_succ] using hrel
-        exact linkDirection_ne_zero q hq v a (hsub.subset (by simp))
+        exact hq a (hsub.subset (by simp))
           ((smul_eq_zero.mp hz).resolve_left (hpos 0).ne')
       | cons b s => simp at hn
   have hcases : s.length = 2 ∨ s.length = 3 ∨ s.length = 4 := by omega
@@ -302,7 +307,7 @@ theorem ordered_pair_or_triple_of_flat_no_support (q : Vertex → Point3) (v : V
           rw [smul_smul, inv_mul_cancel₀ (hpos 1).ne', one_smul]
         _ = _ := by rw [he, smul_neg, smul_smul, neg_div, div_eq_inv_mul, neg_smul]
     exact Or.inl ⟨a,b,hsub,InnerProductGeometry.angle_eq_pi_iff.mpr
-      ⟨linkDirection_ne_zero q hq v a (hsub.subset (by simp)),
+      ⟨hq a (hsub.subset (by simp)),
         -w 0 / w 1,div_neg_of_neg_of_pos (neg_neg_of_pos (hpos 0)) (hpos 1),hc⟩⟩
   · obtain ⟨a,b,c,rfl⟩ := List.length_eq_three.mp hlen
     have he : linkDirection q v ∘ [a,b,c].get =
@@ -321,8 +326,20 @@ theorem ordered_pair_or_triple_of_flat_no_support (q : Vertex → Point3) (v : V
     change (∑ i : Fin 4, w i • (linkDirection q v ∘ [a,b,c,d].get) i) = 0 at hrel
     rw [he] at hi
     rw [he] at hrel
-    have hgt := linkPerimeter_gt_of_ordered_positive_four q v a b c d hsub w hpos hmass hi hrel
+    have hgt := angularCycleLength_gt_of_ordered_positive_four q v a b c d hsub w hpos hmass hi hrel
     exact False.elim (hgt.ne hflat.symm)
+
+theorem ordered_pair_or_triple_of_flat_no_support (q : Vertex → Point3) (v : Vertex)
+    (hflat : linkPerimeter q v = 2 * Real.pi) (hq : Function.Injective q)
+    (h : ¬ HasStrictSupport geometricFaces q v) :
+    (∃ a b : Vertex, [a,b].Sublist (linkCycle v) ∧
+      InnerProductGeometry.angle (linkDirection q v a) (linkDirection q v b) = Real.pi) ∨
+    ∃ a b c : Vertex, [a,b,c].Sublist (linkCycle v) ∧
+      ∃ w : Fin 3 → ℝ, (∀ i, 0 < w i) ∧ ∑ i, w i = 1 ∧
+        let z := ![linkDirection q v a,linkDirection q v b,linkDirection q v c]
+        AffineIndependent ℝ z ∧ ∑ i, w i • z i = 0 :=
+  ordered_pair_or_triple_of_flat_link q v (mem_linkCycle_iff v) (linkCycle_checked v).1
+    ((linkPerimeter_eq_angularCycleLength q v).symm.trans hflat) (linkDirection_ne_zero q hq v) h
 
 end
 

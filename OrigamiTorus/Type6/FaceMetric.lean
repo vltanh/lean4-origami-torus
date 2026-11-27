@@ -45,18 +45,20 @@ theorem oriented_side_index (f : Fin 16) (s : LiftedSide)
   · obtain ⟨e,_,he⟩ := List.mem_map.mp (List.contains_iff_mem.mp h)
     exact ⟨e, Or.inr he.symm⟩
 
-private theorem side_metric (second : Bool) (x y : ℝ) (m : SheetMotion) (z : Vertex → ℝ)
-    (t : ℝ) (hy : y ≠ 0) (hlen : lengthResidual second x (y^2) z (t,m) = 0)
-    (f : Fin 16) (a b : Corner) (hs : liftedSide a b ∈ liftedSides (liftedFaces f)) :
+private theorem fixedPeriod_side_metric (table : EdgeIndex → Edge × Period) (second : Bool) (x y : ℝ) (m : SheetMotion) (z : Vertex → ℝ)
+    (t : ℝ) (hy : y ≠ 0) (hlen : fixedPeriodResidual table second x (y^2) z (t,m) = 0)
+    (a b : Corner)
+    (hs : ∃ e : EdgeIndex, liftedSide a b = ((table e).1.1,(table e).1.2,(table e).2) ∨
+      reverseSide (liftedSide a b) = ((table e).1.1,(table e).1.2,(table e).2)) :
     squared3 (physicalFoldedVertex second x y m z t b.1 - physicalFoldedVertex second x y m z t a.1) =
       squared2 (physicalIntrinsicCorner second x y m b - physicalIntrinsicCorner second x y m a) := by
-  have metric (a b : Corner) (e : EdgeIndex) (he : liftedSide a b = indexedSide e) :
+  have metric (a b : Corner) (e : EdgeIndex) (he : liftedSide a b = ((table e).1.1,(table e).1.2,(table e).2)) :
       squared3 (physicalFoldedVertex second x y m z t b.1 -
         physicalFoldedVertex second x y m z t a.1) =
         squared2 (physicalIntrinsicCorner second x y m b - physicalIntrinsicCorner second x y m a) := by
-    have ha : a.1 = (edgePeriod e).1.1 := congrArg Prod.fst he
-    have hb : b.1 = (edgePeriod e).1.2 := congrArg (fun s : LiftedSide => s.2.1) he
-    have hd : (liftedSide a b).2.2 = (edgePeriod e).2 := congrArg (fun s : LiftedSide => s.2.2) he
+    have ha : a.1 = (table e).1.1 := congrArg Prod.fst he
+    have hb : b.1 = (table e).1.2 := congrArg (fun s : LiftedSide => s.2.1) he
+    have hd : (liftedSide a b).2.2 = (table e).2 := congrArg (fun s : LiftedSide => s.2.2) he
     have h :
         scaledSquaredDistance (y^2) (movedFoldedPoint second x (y^2) m a.1)
             (movedFoldedPoint second x (y^2) m b.1) + y^2 * t^2 * (z b.1 - z a.1)^2 =
@@ -70,7 +72,7 @@ private theorem side_metric (second : Bool) (x y : ℝ) (m : SheetMotion) (z : V
       Int.cast_sub] at h ⊢
     field_simp [hy]
     linear_combination h
-  obtain ⟨e,he | he⟩ := oriented_side_index f _ hs
+  obtain ⟨e,he | he⟩ := hs
   · exact metric a b e he
   · have hrev : reverseSide (liftedSide a b) = liftedSide b a := by
       simp [reverseSide, liftedSide, neg_sub]
@@ -80,6 +82,29 @@ private theorem side_metric (second : Bool) (x y : ℝ) (m : SheetMotion) (z : V
 
 /-- Squared distances between all affine points agree on the corresponding two triangles.
 The parameters are differences of the second and third barycentric coordinates. -/
+theorem fixedPeriod_face_metric (table : EdgeIndex → Edge × Period) (second : Bool) (x y : ℝ) (m : SheetMotion) (z : Vertex → ℝ)
+    (t : ℝ) (hy : y ≠ 0) (hlen : fixedPeriodResidual table second x (y^2) z (t,m) = 0)
+    (f : LiftedFace)
+    (hside : ∀ k ∈ liftedSides f, ∃ e : EdgeIndex,
+      k = ((table e).1.1,(table e).1.2,(table e).2) ∨
+      reverseSide k = ((table e).1.1,(table e).1.2,(table e).2))
+    (s r : ℝ) :
+    let P (v : Corner) := physicalFoldedVertex second x y m z t v.1
+    let Q := physicalIntrinsicCorner second x y m
+    squared3 (smul3 s (P f.2.1 - P f.1) + smul3 r (P f.2.2 - P f.1)) =
+      squared2 (smul2 s (Q f.2.1 - Q f.1) + smul2 r (Q f.2.2 - Q f.1)) := by
+  dsimp only
+  have h₁ := fixedPeriod_side_metric table second x y m z t hy hlen f.1 f.2.1 (hside _ (by simp [liftedSides]))
+  have h₂ := fixedPeriod_side_metric table second x y m z t hy hlen f.2.1 f.2.2 (hside _ (by simp [liftedSides]))
+  have h₃ := fixedPeriod_side_metric table second x y m z t hy hlen f.2.2 f.1 (hside _ (by simp [liftedSides]))
+  have h₄ :
+      squared3 (physicalFoldedVertex second x y m z t f.2.2.1 -
+        physicalFoldedVertex second x y m z t f.1.1) =
+        squared2 (physicalIntrinsicCorner second x y m f.2.2 - physicalIntrinsicCorner second x y m f.1) := by
+    simp only [squared3, squared2, Type5.dot, Type5.horizontal, Prod.fst_sub, Prod.snd_sub] at h₃ ⊢
+    linear_combination h₃
+  exact triangle_squared_metric _ _ _ _ _ _ h₁ h₄ h₂ s r
+
 theorem type6_face_metric (second : Bool) (x y : ℝ) (m : SheetMotion) (z : Vertex → ℝ)
     (t : ℝ) (hy : y ≠ 0) (hlen : lengthResidual second x (y^2) z (t,m) = 0)
     (j : Fin 16) (s r : ℝ) :
@@ -88,17 +113,8 @@ theorem type6_face_metric (second : Bool) (x y : ℝ) (m : SheetMotion) (z : Ver
     let Q := physicalIntrinsicCorner second x y m
     squared3 (smul3 s (P f.2.1 - P f.1) + smul3 r (P f.2.2 - P f.1)) =
       squared2 (smul2 s (Q f.2.1 - Q f.1) + smul2 r (Q f.2.2 - Q f.1)) := by
-  dsimp only
-  let f := liftedFaces j
-  have h₁ := side_metric second x y m z t hy hlen j f.1 f.2.1 (by simp [f, liftedSides])
-  have h₂ := side_metric second x y m z t hy hlen j f.2.1 f.2.2 (by simp [f, liftedSides])
-  have h₃ := side_metric second x y m z t hy hlen j f.2.2 f.1 (by simp [f, liftedSides])
-  have h₄ :
-      squared3 (physicalFoldedVertex second x y m z t f.2.2.1 -
-        physicalFoldedVertex second x y m z t f.1.1) =
-        squared2 (physicalIntrinsicCorner second x y m f.2.2 - physicalIntrinsicCorner second x y m f.1) := by
-    simp only [squared3, squared2, Type5.dot, Type5.horizontal, Prod.fst_sub, Prod.snd_sub] at h₃ ⊢
-    linear_combination h₃
-  exact triangle_squared_metric _ _ _ _ _ _ h₁ h₄ h₂ s r
+  apply fixedPeriod_face_metric edgePeriod second x y m z t hy hlen (liftedFaces j) _ s r
+  intro k hk
+  exact oriented_side_index j k hk
 
 end OrigamiTorus

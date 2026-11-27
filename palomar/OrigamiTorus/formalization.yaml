@@ -1,12 +1,12 @@
 version: "v0.4"
 
 project:
-  name: "Eight-vertex origami tori of Lutz Types 2, 4, 5, 6, and 7"
+  name: "Eight-vertex origami tori of Lutz Types 1–7"
   description: >-
-    No embedded Lutz Type 2 realization has angle sum 2π at every vertex.
-    The proof reduces flatness to a finite determinant-sign obstruction
-    and verifies an explicit resolution refutation. Every rank-two plane
-    lattice torus has a piecewise-isometric Type 6 embedding. The construction
+    No embedded Lutz Type 1 or Type 2 realization has angle sum 2π at every
+    vertex. Both proofs use kernel-checked determinant-sign refutations.
+    Every rank-two plane lattice torus has piecewise-isometric embeddings of
+    Types 3 and 6. The construction
     inflates exact planar families at fixed periods and proves that the
     intrinsic triangles cover the quotient once. The reduced open strip has
     Type 4 embeddings, and exact radicals give a Type 5 square embedding.
@@ -44,17 +44,24 @@ sources:
     location: "https://arxiv.org/abs/2609.10703v1"
     relationship: background
     note: "Section 6 asks whether Lutz Type 2 admits a paper torus."
+  - title: "Vertex-Minimal Paper Tori"
+    authors: ["Richard Evan Schwartz"]
+    id: "arXiv:2507.14998v9"
+    location: "https://arxiv.org/abs/2507.14998v9"
+    relationship: background
+    note: "Section 2 proves the seven-vertex obstruction. The Type 1 proof verifies the obstruction on the collapsed face list by strict support and determinant signs."
   - title: "A Universal 8-Vertex Origami Torus Triangulation"
     authors: ["Peter Doyle", "Fabian Lander", "Richard Evan Schwartz", "Steve Trettel"]
     id: "arXiv:2611.21909v1"
     location: "https://arxiv.org/abs/2611.21909v1"
     relationship: background
-    note: "Section 3 gives the Type 3 planar families. Sections 4 and 5 give the lift and inflation framework."
+    note: "The Challenge includes Theorem 1.1 for the Type 3 face list, using the families and lifts in Sections 3 and 4 and the inflation of Remark 5.4."
 
 status:
   scope: >-
-    The Challenge states Type 2 nonexistence, the unsatisfiability of the
-    Type 2 determinant-sign conditions, the planar Type 6 flip signs and the existence of a generic
+    The Challenge states Type 1 and Type 2 nonexistence, Type 3 universality,
+    the unsatisfiability of the Type 2 determinant-sign conditions, the
+    planar Type 6 flip signs and the existence of a generic
     lift with strict separating minors and twenty-four matched edge lengths.
     It also states generic perturbation of an embedded face list, the Type 6
     spatial embedding with matched lengths, and the piecewise-isometric
@@ -85,8 +92,12 @@ automation:
 
 fidelity:
   divergences: >-
-    The Type 6 and Type 7 existence statements allow changes of ordered lattice
-    generators that preserve the lattice.
+    The lattice existence statements allow changes of ordered generators that
+    preserve the lattice. The Type 1 proof verifies the seven-vertex hull
+    obstruction on the collapsed face list using strict support and a
+    determinant-sign refutation. The Type 3 proof uses the fixed-period
+    length system for the geometric inflation of Remark 5.4 and identifies
+    the quotient by face orientation and total area.
 
 review:
   status: "agent-reviewed"
@@ -100,6 +111,14 @@ review:
 alignment:
   namespace: "OrigamiTorusChallenge"
   statements:
+    - source: "docs/Type1.md"
+      lean: "OrigamiTorusChallenge.type1_nonexistence"
+      module: "OrigamiTorus.Challenge"
+      status: "proved"
+    - source: "arXiv:2611.21909v1, Theorem 1.1"
+      lean: "OrigamiTorusChallenge.type3_universal"
+      module: "OrigamiTorus.Challenge"
+      status: "proved"
     - source: "docs/Type2.md, Finite refutation"
       lean: "OrigamiTorusChallenge.type2_sign_obstruction"
       module: "OrigamiTorus.Challenge"

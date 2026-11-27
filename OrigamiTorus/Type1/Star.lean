@@ -81,8 +81,11 @@ theorem flat_three_neighbor_star {fs : List Triangle} (q : Vertex → Point3)
 
 namespace Type1
 
+theorem vertexCount_neZero : NeZero 8 := @Nat.instNeZeroSucc 7
+
 /-- The Lutz Type 1 face list, with the valence-three vertex labeled 0. -/
 def faces : List Triangle :=
+  letI : NeZero 8 := vertexCount_neZero
   [(0,1,2),(0,3,1),(0,2,3),(1,4,2),(1,3,5),(1,6,4),(1,5,7),(1,7,6),
    (2,6,3),(2,4,7),(2,5,6),(2,7,5),(3,4,5),(3,7,4),(3,6,7),(4,6,5)]
 
