@@ -17,7 +17,7 @@ The exact SAT enumeration in `enumerate_split.py` exhausts the necessary Boolean
 | B1.2 | +-------+-+-+----+-+--+ | 16 | Deferred |
 | B1.3 | +--+-+--+-+-+----+-+--+ | 33 | Deferred |
 | B1.4 | +-------+-+------+-+--- | 34 | Deferred |
-| B1.5 | +--+-+--+-+------+-+--- | 42 | Deferred |
+| B1.5 | +--+-+--+-+------+-+--- | 42 | **1 excluded, 41 open** (final polynomial) |
 | B1.6 | +++-++++-+-++++++-+-+++ | 97 | Deferred |
 
 For each generic Boolean sign model, use strict signs for the 23 clique determinants and weak signs for all other determinants. This is necessary for actual embedded flat realizations even with coplanar vertices: the earlier strict-support, K4 nondegeneracy and generic perturbation lemmas put any such realization in the closure of a generic necessary sign model with the same clique signs. Normalization by reflection is checked using the anchor orientation (the signed double-area sum is -1). The full generator retains degeneracy-complete simplex intersection tests; the relaxed generator omits them but retains projection cycle exclusions. The full systems are not simply strict generic chambers.
@@ -47,3 +47,8 @@ All fourteen relaxed queries and all fourteen full queries returned unknown (tim
 ## Signed Gram completion checkpoint
 
 [Radical-free Gram formulation and root-chord bounds](../gram_completion/README.md). Conditional on the strict K4 lemma, every Type 5 embedded flat torus is uniquely determined by its 24 labeled edge lengths. At the fixed hexagonal marking, four principal and two mixed Gram determinant equations in 14 intrinsic variables give the full metric equations with no radical or sign choice. Polynomial incidence coordinates retain all degeneracy-complete simplex tests. Across all three universal-vertex gauges, two completed squares bound the missing root chord and give low-degree intrinsic inequalities; a slope order holds in at least two gauges. Symbolic checks passed; the relaxed and full B1.1 nonlinear queries both timed out at 10 seconds. **B1.1 stays 0/14 excluded; Type 5 universality remains open.** See proof and limitations, including transcribed-input test environment.
+
+
+## Metric-independent final-polynomial exclusion
+
+[Six-comparison proof and exact checker](../final_polynomial.md) closes B1.5 chamber 15 (one-based), including all its weak nonclique degeneracies. Its six relabelings are excluded at every modulus under the inherited strict-support/K4 premises. This leaves 235 of the 236 B1 chambers; B1.1 remains 0/14 excluded. The original SAT archive is retained unchanged for reproduction. No clique-sign branch is fully closed, and Type 5 universality remains open.
