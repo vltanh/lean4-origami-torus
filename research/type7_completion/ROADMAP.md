@@ -204,8 +204,9 @@ through this entire small-determinant region. Merely excluding the region
 where all 24 determinants have positive lower bounds repeats an existing
 result. See [`cap_order_obstruction.md`](../type7_focus/cap_order_obstruction.md).
 
-A concrete next implementation step is to encode this necessary union
-in the full system using the correct metric coordinates. The numerical
+The necessary union is now encoded by
+[`projected_metric.py`](projected_metric.py) in the full system using
+the correct metric coordinates. The numerical
 threshold is for physical transverse coordinates about edge `02`, not
 for arbitrary inner-product coordinates. If `e=r2-r0`, and `a,b` are
 the relevant physical edge vectors, then
@@ -219,7 +220,24 @@ where `P` is orthogonal projection perpendicular to `e`. The denominator
 is positive. This converts the magnitude bound to a rational polynomial
 inequality without introducing an assumed sign or dividing by a cap
 area. The generator scales squared distances by `1/y^2`, so that scale
-must also be restored before applying the bound.
+must also be restored before applying the bound. If `Q` is the
+three-vector Gram determinant computed from those scaled inner products,
+the exact polynomial condition is
+
+\[
+y^8 Q\le160000\,D_{02}.
+\]
+
+The generator retains the union of all 24 such inequalities, including
+zero, and uses the already imposed `D02>0`. It adds no assumed lower
+bound for a cap area. The independent exact verifier checks the
+projection identity and physical scaling, evaluates every emitted term
+on rational configurations with a non-coordinate longitudinal axis, and
+parses the full query. There are still 18 real variables, 312 Booleans,
+8,075 Boolean clauses, and 524 circuit partitions; the augmented query
+has 9,101 assertions. A single 10,000 ms trial at `y=10^6` returned
+solver-reported `UNKNOWN (timeout)`. **No system is excluded by this
+implementation or trial.**
 
 Then seek a relative estimate that combines these small determinants,
 the exact metric equations, and the required long-ring linking. An
@@ -400,6 +418,8 @@ solver:
 ```sh
 python3 research/type7_focus/generate_remaining.py /tmp/type7-localized
 python3 research/type7_closure/linked_metric.py /tmp/type7-ray3-full.smt2 1000000
+python3 research/type7_completion/verify_projected_metric.py
+python3 research/type7_completion/projected_metric.py /tmp/type7-ray3-projected.smt2 1000000
 ```
 
 For ray-4 independent RUP replay, use a scratch working directory and
