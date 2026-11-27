@@ -206,12 +206,35 @@ the following necessary condition at `tau*`:
 > At least one of eight projected cap-triangle areas or sixteen projected
 > cross products of ring-edge pairs has magnitude at most `4*10^-10`.
 
-This 24-way union includes zero. It does not say that either cap is
-exactly planar, nor that a nonzero K4 determinant has a uniform lower
-bound. A viable proof must control the metric and intersection signs
-through this entire small-determinant region. Merely excluding the region
-where all 24 determinants have positive lower bounds repeats an existing
-result. See [`cap_order_obstruction.md`](../type7_focus/cap_order_obstruction.md).
+This 24-way union includes zero. The new
+[`relative cap bounds`](relative_cap_bounds.md) sharpen it uniformly,
+including arbitrarily short cap edges. For every oriented short-ring
+edge put `h_e=-X_e` and `gamma_e=y^2*V_e`. At every `y>=8` the proof gives
+
+\[
+0<h_e<\tfrac12,\qquad
+|\gamma_e|<(\tfrac12+y^{-2})h_e,\qquad
+\tfrac34h_e<|P E_e|<\tfrac{33}{32}h_e.
+\]
+
+The first estimate follows from eight exact cross-ring stress identities,
+Cauchy's inequality, face orientation, and a maximum-slope bootstrap
+using the stress row and column sums. An endpoint nearest-lift comparison
+then proves `|axial(E_e)|<5*h_e/y`. No minimum edge length is assumed.
+The earlier cap-order proof therefore strengthens to a relative union:
+for at least one of the same 24 consecutive/cross-ring edge comparisons,
+
+\[
+|\det(P E_e,P E_f)|\le36h_eh_f/y^2,\qquad
+|\sin\angle(P E_e,P E_f)|<64/y^2.
+\]
+
+At `tau*` the sine is less than `6.4*10^-11`. The remaining difficulty is
+thus almost parallel or antiparallel projected **directions**, including
+exactly parallel directions, rather than a small area explained only by
+a vanishing edge. The entire angular region remains open. These estimates
+do not assert that either cap is planar or that a K4 determinant has a
+uniform positive lower bound.
 
 The necessary union is now encoded by
 [`projected_metric.py`](projected_metric.py) in the full system using
@@ -237,19 +260,34 @@ the exact polynomial condition is
 y^8 Q\le160000\,D_{02}.
 \]
 
-The generator retains the union of all 24 such inequalities, including
-zero, and uses the already imposed `D02>0`. It adds no assumed lower
-bound for a cap area. The independent exact verifier checks the
+The generator also includes the stronger relative union
+`y^8*Q <= 1296*D02*h_e^2*h_f^2` and the proved linear relative-slope
+inequalities. Cap-triangle weights are taken from its two consecutive
+ring edges, including when the original determinant uses a diagonal.
+Both unions retain zero and use the already imposed `D02>0`. No assumed
+lower bound for a cap area is added. The independent exact verifier checks the
 projection identity and physical scaling, evaluates every emitted term
 on rational configurations with a non-coordinate longitudinal axis, and
 parses the full query. There are still 18 real variables, 312 Booleans,
 8,075 Boolean clauses, and 524 circuit partitions; the augmented query
-has 9,101 assertions. A single 10,000 ms trial at `y=10^6` returned
+has 9,126 assertions. Before the relative inequalities were added, a
+single 10,000 ms trial of the absolute-union system at `y=10^6` returned
 solver-reported `UNKNOWN (timeout)`. **No system is excluded by this
 implementation or trial.**
 
-Then seek a relative estimate that combines these small determinants,
-the exact metric equations, and the required long-ring linking. An
+An alternative [`direct_metric.py`](direct_metric.py) chart now uses
+physical transverse coordinates and rescaled cap heights: 27 real
+variables and 19 metric equations of degree at most four. Four heights
+are eliminated by exact anchor-distance subtraction. It preserves all
+312 Booleans, 8,075 Boolean clauses, and 524 degeneracy-complete circuit
+partitions, with the relative union and edge bounds above. The chart
+normalization divides by no cap determinant or unknown edge length.
+Exact reconstruction and all 322 emitted incidence minors are checked
+against independent rational physical coordinates. Its 9,140-assertion
+query at `tau*` returned `UNKNOWN (timeout)` in one 30,000 ms trial.
+
+The next requirement is a contradiction across the remaining angular
+region using the exact metric and required long-ring linking. An
 acceptable exclusion is a hand inequality proof or an independently
 checked finite algebraic/interval certificate covering the full domain,
 including all boundaries. Auxiliary subcases are useful internally; the
@@ -432,6 +470,9 @@ python3 research/type7_focus/generate_remaining.py /tmp/type7-localized
 python3 research/type7_closure/linked_metric.py /tmp/type7-ray3-full.smt2 1000000
 python3 research/type7_completion/verify_projected_metric.py
 python3 research/type7_completion/projected_metric.py /tmp/type7-ray3-projected.smt2 1000000
+python3 research/type7_completion/verify_relative_cap_bounds.py
+python3 research/type7_completion/verify_direct_metric.py
+python3 research/type7_completion/direct_metric.py /tmp/type7-ray3-direct.smt2 1000000
 ```
 
 For ray-4 independent RUP replay, use a scratch working directory and

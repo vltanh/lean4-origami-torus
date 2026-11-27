@@ -103,6 +103,11 @@ def check_cases_and_scale():
     assert {(a, b) for _, a, b in rows[8:]} == set(product(
         ((0, 1), (1, 4), (4, 5), (5, 0)),
         ((2, 3), (3, 6), (6, 7), (7, 2))))
+    relative = p.relative_comparisons()
+    assert relative[1] == ("cap_015", (5, 0), (0, 1))
+    assert relative[5] == ("cap_237", (7, 2), (2, 3))
+    short = set(p.ring_edges(p.CAP_A) + p.ring_edges(p.CAP_B))
+    assert all(a in short and b in short for _, a, b in relative)
     # A non-axis-aligned longitudinal vector prevents a coordinate-plane
     # area from accidentally passing as an orthogonal-projection area.
     configurations = [
@@ -122,6 +127,16 @@ def check_cases_and_scale():
         ee = dot(e, e)
         assert ee > 0
         env["D02"] = F(ee, y * y)
+        for n, edge in enumerate(p.ring_edges(p.CAP_A) + p.ring_edges(p.CAP_B)):
+            i, j = edge
+            h = F(1, n + 3)
+            sign = 1 if i < j else -1
+            env[f"X{min(i, j)}{max(i, j)}"] = -sign * h
+            env[f"V{min(i, j)}{max(i, j)}"] = sign * h / (4 * y * y)
+        for form in parse("\n".join(p.relative_edge_constraints(y))):
+            op, a, b = form[1]
+            lhs, rhs = evaluate(a, env), evaluate(b, env)
+            assert lhs < rhs if op == "<" else lhs > rhs
         parsed = parse("\n".join(lines))
         for form in parsed[:-1]:
             if form[0] == "define-fun":
@@ -139,6 +154,16 @@ def check_cases_and_scale():
             assert evaluate(test, env) == is_small
             actual_small.append(is_small)
         assert evaluate(union, env) == any(actual_small)
+        relative_tests = parse(p.relative_projected_union(y))[0][1]
+        for (name, a, b), test, (_, old_a, old_b) in zip(relative, relative_tests[1:], rows):
+            pa, pb = sub(r[a[1]], r[a[0]]), sub(r[b[1]], r[b[0]])
+            old_pa, old_pb = sub(r[old_a[1]], r[old_a[0]]), sub(r[old_b[1]], r[old_b[0]])
+            # Consecutive-edge triangle areas equal the old first-vertex
+            # areas, but their horizontal weight must use actual edges.
+            assert dot(e, cross(pa, pb)) == dot(e, cross(old_pa, old_pb))
+            h, k = (-evaluate(parse(p.directed_symbol("X", edge))[0], env) for edge in (a, b))
+            area_squared = F(dot(e, cross(pa, pb)) ** 2, ee)
+            assert evaluate(test, env) == (area_squared <= F(1296, y ** 4) * h * h * k * k)
     for invalid in (0, 4, 7, 8.0, True):
         try:
             p.projected_constraints(invalid)
@@ -146,7 +171,8 @@ def check_cases_and_scale():
             pass
         else:
             raise AssertionError(invalid)
-    print("PASS all 24 exact scaled terms, including zero projected areas")
+    print("PASS all 24 absolute/relative scaled terms, including zero projected areas")
+    print("PASS cap-triangle weights use consecutive ring edges; all eight relative slope cuts")
 
 
 def check_query():
