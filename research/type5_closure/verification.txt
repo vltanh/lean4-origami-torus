@@ -1,0 +1,49 @@
+Verification date: 2026-11-27
+Inputs: actual repository files at initial PR head
+0f00067eec78008ac33c22c00dd7c2b1c38fcd92.
+
+Command: python research/type5_closure/verify_weak_chambers.py
+PASS: 751 actual archive representatives; 23 initial strict clique brackets
+Forced strict-bracket histogram:
+{61: 10, 62: 27, 63: 45, 64: 76, 65: 171, 66: 213, 67: 149, 68: 55, 69: 5}
+Remaining circuit exclusions per archived orbit: {0: 701, 1: 10, 2: 40}
+After the previous final-polynomial exclusion: {0: 700, 1: 10, 2: 40}
+B1.1 strict-bracket counts:
+[67, 66, 66, 67, 65, 66, 66, 67, 65, 65, 66, 66, 67, 67]
+PASS: all 14 B1.1 weak chambers imply embeddedness after strictness propagation.
+
+Canonical generator:
+  --b11 1: 29 real variables, 21 quadratic metric equations,
+           67 strict and 3 weak cubic bracket inequalities;
+           zero residual intersection tests.
+  --b11 all: 29 real variables, the disjunction of all 14 complete chambers.
+
+Generated SMT-LIB SHA-256 (files are regenerated, not committed):
+  --b11 1, 48250 bytes:
+  b884370d44b8ba4f7c987fd5278c13a81dba818ab644d560a3d4ba32236545b8
+  --b11 all, 63854 bytes:
+  aff7e1e7dd777c96fcf194f5b7ebceb03b4d806d60b81441c8d5331d905c8096
+
+Solver experiments, no SAT/UNSAT certificates:
+1. Existing 14-variable reconstructed Gram system, all B1.1 chambers,
+   including full intersection tests: UNKNOWN, reason "timeout", with
+   Z3 timeout 300000 ms.
+2. Existing reconstructed Gram system for the entire hexagonal target:
+   interrupted after approximately ten minutes wall time, exit 130;
+   no result.
+3. Equivalent compact 29-variable B1.1-union prototype (also retaining
+   redundant clique-pattern and point/edge tests): UNKNOWN, reason
+   "timeout", with Z3 timeout 300000 ms. This was an exploratory prototype,
+   not the byte-identical canonical --b11 all file above.
+4. Canonical --b11 1 query (SHA-256 recorded above):
+   minimal_b11_01.smt2 unknown
+   (:reason-unknown "timeout")
+   Z3 timeout 300000 ms; it completed before the external 420-second
+   watchdog. No SAT/UNSAT certificate was obtained.
+
+The 23 K4s were also derived independently from the face-list graph and
+checked against the clique archive; every face lies in one of these K4s.
+
+Scope: strictness propagation and circuit coverage are exact finite checks.
+They close no new metric chamber. B1.1 is still 0/14 excluded;
+all 19 elongated branches and Type 5 universality remain open.
