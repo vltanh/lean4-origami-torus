@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compile full ray-3 topology into finite weak-sign metric chambers.
 
-Usage: python solver_chambers.py OUTPUT_DIRECTORY [--proof] [--queries]
+Usage: python solver_chambers.py OUTPUT_DIRECTORY [--proof] [--queries] [--chart face]
 
 The default enumerates and verifies 1,888 generic sign completions, then
 uses the 16 canonical-phase-preserving marked metric symmetries to obtain
@@ -25,6 +25,8 @@ import re
 import time
 
 import direct_metric as direct
+import solver_final_polynomials
+import solver_metric_certificates
 import verify_nonparallel_corner as corner
 from verify_linking import CNF, SAT, data, formula, lit, short_pairs
 
@@ -50,19 +52,34 @@ def base_formula():
     return extra.n, clauses + extra.C, faces, edges, neighbors
 
 
-def enumerate_models(n, clauses):
+def enumerate_models(n, clauses, symmetries=None):
+    """Block a whole verified phase-symmetry orbit per SAT check.
+
+    The independently checked coverage formula still blocks every one of
+    the 1,888 individual models.  This only avoids asking the producer to
+    rediscover their symmetric copies in separate solver calls.
+    """
     solver = SAT(n, clauses)
-    models = []
+    permutations = [entry['permutation'] for entry in symmetries
+                    if entry['phase_preserving']] if symmetries is not None else [V]
+    models = set()
+    checks = 0
     while True:
         status = solver.check()
+        checks += 1
         if status == -1:
             break
         if status != 1:
             raise RuntimeError(f'incomplete Boolean enumeration: status {status}')
         model = tuple(solver.model())
-        models.append(model)
-        solver.add([-(i + 1) * value for i, value in enumerate(model)])
-    assert len(models) == len(set(models)) == 1888
+        orbit = {transformed_model(model, permutation) for permutation in permutations}
+        assert not (orbit & models)
+        models.update(orbit)
+        for member in sorted(orbit):
+            solver.add([-(i + 1) * value for i, value in enumerate(member)])
+    assert len(models) == 1888
+    if len(permutations) == 16:
+        assert checks == 133
     return tuple(sorted(models))
 
 
@@ -236,10 +253,24 @@ def remaining_circuits(model, strict, partitions):
     return remaining
 
 
-def query_parts(y):
-    text, metadata = direct.generate(y)
+def query_parts(y, chart='direct'):
+    if chart == 'direct':
+        text, metadata = direct.generate(y)
+    elif chart == 'face':
+        import remaining_null_metric
+        text, metadata = remaining_null_metric.generate(y)
+    else:
+        raise ValueError(f'unknown metric chart {chart!r}')
     prefix, suffix = text.split('(declare-fun b1 () Bool)', 1)
-    prefix = reduce_metric_prefix(prefix, y)
+    if chart == 'direct':
+        prefix = reduce_metric_prefix(prefix, y)
+    else:
+        # The face chart already has the exact eight nearest-image cuts
+        # and the negative-area convention.  Its strict chamber signs
+        # absorb these identical K4 tests, as for the direct chart.
+        prefix = '\n'.join(line for line in prefix.splitlines()
+                           if not re.match(r'\(define-fun m[0-7]{4} ', line)
+                           and not re.match(r'\(assert \(distinct m[0-7]{4} 0\)\)', line)) + '\n'
     definitions = {}
     for line in suffix.splitlines():
         match = re.fullmatch(r'\(define-fun (a([0-7]+)c([012]+)) \(\) Real .*\)', line)
@@ -371,42 +402,65 @@ def main():
     parser.add_argument('output', type=Path)
     parser.add_argument('--proof', action='store_true')
     parser.add_argument('--queries', action='store_true')
+    parser.add_argument('--chart', choices=('direct', 'face'), default='direct')
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
     start = time.monotonic()
     n, clauses, faces, edges, neighbors = base_formula()
-    models = enumerate_models(n, clauses)
-    enumeration_time = time.monotonic() - start
     symmetries = marked_symmetries()
+    enumeration_start = time.monotonic()
+    models = enumerate_models(n, clauses, symmetries)
+    enumeration_time = time.monotonic() - enumeration_start
     reps = representatives(models, symmetries)
     partitions = circuit_partitions(faces, edges)
     blocked = clauses + [[-(i + 1) * value for i, value in enumerate(model)] for model in models]
     write_cnf(args.output / 'coverage.cnf', n, blocked)
     rows = []
-    parts = query_parts(10**6) if args.queries else None
+    parts = query_parts(10**6, args.chart) if args.queries else None
     for i, model in enumerate(reps):
         strict, trace = strict_closure(model, faces, edges, neighbors)
         remaining = remaining_circuits(model, strict, partitions)
         row = {'id': i, 'signs': ''.join('+' if v > 0 else '-' for v in model),
                'strict': [''.join(map(str, q)) for q in sorted(strict)],
                'trace': trace, 'remaining_circuits': remaining}
-        if parts:
+        final_polynomial = solver_final_polynomials.verify(model, strict)
+        metric_certificate = solver_metric_certificates.verify(model, symmetries)
+        if final_polynomial:
+            row['final_polynomial'] = final_polynomial
+        if metric_certificate:
+            row['metric_certificate'] = metric_certificate
+        exclusion = final_polynomial or metric_certificate
+        if exclusion:
+            # Do not leave a stale undecided query after regenerating an
+            # output directory produced by the earlier compiler.
+            if args.queries:
+                (args.output / f'phase0_chamber_{i:03d}.smt2').unlink(missing_ok=True)
+        if parts and not exclusion:
             query = generate_query(parts, model, strict, remaining)
             path = args.output / f'phase0_chamber_{i:03d}.smt2'
             path.write_text(query)
             row |= {'query_bytes': len(query), 'query_assertions': query.count('(assert ')}
         rows.append(row)
-    manifest = {'all_models': [''.join('+' if v > 0 else '-' for v in model) for model in models],
+    manifest = {'chart': args.chart,
+                'all_models': [''.join('+' if v > 0 else '-' for v in model) for model in models],
                 'symmetries': symmetries, 'chambers': rows}
     (args.output / 'chambers.json').write_text(json.dumps(manifest, separators=(',', ':')) + '\n')
     if args.proof:
         write_proof(n, blocked, args.output.resolve())
     print(json.dumps({'models': len(models), 'phase_symmetries': 16,
                       'chambers': len(reps), 'enumeration_seconds': enumeration_time,
+                      'final_polynomial_exclusions': sum('final_polynomial' in row for row in rows),
+                      'metric_certificate_exclusions': sum('metric_certificate' in row for row in rows),
+                      'algebraically_excluded_chambers': sum(
+                          'final_polynomial' in row or 'metric_certificate' in row for row in rows),
+                      'remaining_metric_chambers': sum(
+                          'final_polynomial' not in row and 'metric_certificate' not in row for row in rows),
                       'strict_counts': dict(Counter(len(row['strict']) for row in rows)),
                       'remaining_circuit_counts': dict(Counter(len(row['remaining_circuits']) for row in rows)),
                       'seconds': time.monotonic() - start}), flush=True)
-    print('No metric chamber excluded; replay coverage.cnf and coverage.drat independently when --proof was used.')
+    print('Four weak chambers excluded by exact final-polynomial or metric certificates; '
+          'no full marking excluded. '
+          'Replay coverage.cnf and coverage.drat independently when --proof was used.')
 
 
 if __name__ == '__main__':

@@ -20,6 +20,8 @@ import sys
 import sympy as sym
 
 import solver_chambers as producer
+import solver_final_polynomials
+import solver_metric_certificates
 from verify_linking import lk, short_pairs
 
 
@@ -94,6 +96,9 @@ def main(directory):
 
     covered = set()
     total_witnesses = total_omitted = 0
+    final_polynomial_excluded = []
+    metric_excluded = []
+    solver_metric_certificates.symbolic_checks()
     partitions = producer.circuit_partitions(faces, edges)
     for row in source['chambers']:
         model = tuple(1 if value == '+' else -1 for value in row['signs'])
@@ -139,6 +144,19 @@ def main(directory):
             strict.add(q)
             total_witnesses += 1
         assert strict == {tuple(map(int, q)) for q in row['strict']}
+        if 'final_polynomial' in row:
+            certificate = solver_final_polynomials.verify(model, strict)
+            assert certificate is not None
+            assert json.loads(json.dumps(certificate)) == row['final_polynomial']
+            final_polynomial_excluded.append(row['id'])
+        if 'metric_certificate' in row:
+            certificate = solver_metric_certificates.verify(model, source['symmetries'])
+            assert certificate is not None
+            assert json.loads(json.dumps(certificate)) == row['metric_certificate']
+            permutation = certificate['permutation']
+            clique = tuple(sorted(permutation[v] for v in certificate['strict_clique']))
+            assert clique in initial_strict
+            metric_excluded.append(row['id'])
         retained = {(tuple(a), tuple(b)) for a, b in row['remaining_circuits']}
         expected_retained = set()
         for support, positive in partitions:
@@ -152,6 +170,13 @@ def main(directory):
         assert all(len(s) == 4 for s, _ in retained)
         total_omitted += len(partitions) - len(retained)
     assert len(source['chambers']) == 132 and covered == models
+    if final_polynomial_excluded:
+        assert final_polynomial_excluded == [23, 131]
+    if metric_excluded:
+        assert metric_excluded == [129, 130, 131]
+    excluded = sorted(set(final_polynomial_excluded) | set(metric_excluded))
+    if final_polynomial_excluded and metric_excluded:
+        assert excluded == [23, 129, 130, 131]
 
     x = [0] + list(sym.symbols('x1:8'))
     gamma = [0] + list(sym.symbols('gamma1:8'))
@@ -181,7 +206,13 @@ def main(directory):
     print(f'PASS 1888 primary models, 32 marked symmetries, 132 phase chambers; '
           f'{total_witnesses} strictness witnesses and {total_omitted} omitted circuit tests replayed')
     print('PASS exact total-area identity and eight retained nearest-image inequalities')
-    print('Completeness additionally requires the independent RUP replay; no nonlinear exclusion is claimed.')
+    if final_polynomial_excluded:
+        print('PASS exact final-polynomial exclusions of weak chambers 23 and 131')
+    if metric_excluded:
+        print('PASS exact raw-bracket metric exclusions of weak chambers 129, 130, 131 for y>=8')
+    if excluded:
+        print(f'PASS {len(excluded)} complete weak chambers excluded; {132 - len(excluded)} remain')
+    print('Completeness additionally requires the independent RUP replay; no full marking exclusion is claimed.')
 
 
 if __name__ == '__main__':

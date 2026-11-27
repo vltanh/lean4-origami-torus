@@ -1,26 +1,37 @@
 # Finite chamber compilation for the full ray-3 search
 
-The nonlinear search can now run on **132 necessary metric chambers**
-with no Boolean variables, instead of repeatedly combining all metric
-constraints with 312 Boolean variables and 8,075 Boolean clauses.
-Each chamber has **297–311 assertions and 92,313–107,651 bytes**, compared
-with 9,140 assertions and about 820 kB in the direct-coordinate full
-query. All 27 real variables and 19 quartic metric equations remain.
+The full ray-3 search now has **128 remaining metric chambers**. Exact
+Boolean enumeration covers 1,888 generic sign completions, and verified
+phase symmetries reduce them to 132 representatives. Two complete weak
+chambers are excluded by Grassmann–Plücker final polynomials; two more
+are excluded by a metric volume comparison and an affine identity.
+The exclusions retain actual zero nonclique minors.
 
-This is a complete finite search reduction under the audited geometric
-premises. **No metric chamber or marking is excluded by this reduction.**
-Three representative chamber queries returned `UNKNOWN (timeout)` with
-a 3,000 ms solver limit. The improvement demonstrated here is the smaller
-exact problem and independently checked finite coverage; it is not a
-claimed speedup to a successful nonlinear decision.
+The compiler removes all Boolean variables and almost all actual circuit
+tests. Its optional face chart uses **29 real variables and 21 quadratic
+metric equations**, instead of the direct chart's 27 variables and
+19 equations of degree at most four. The direct compiled queries have
+297–311 assertions and 92–108 kB, compared with 9,140 assertions and about
+820 kB in the uncompiled direct query. The face-chart queries have **310–324 assertions and 80,808–95,178
+bytes**, after positive factor cancellation and linear area alternatives.
+
+Enumeration is approximately four times faster and its complete model
+set is unchanged. Representative nonlinear trials still returned
+`UNKNOWN (timeout)` at 3,000 ms. The four exclusions below have exact
+certificates independent of those trials. **The full ray-3 marking
+remains open.**
 
 ## 1. Compile the topology once
 
 [`solver_chambers.py`](solver_chambers.py) enumerates the necessary
 orientation formula with both horizontal unlinkings and
 `|lk(0246,1357)|=2`. There are exactly **1,888 normalized 70-sign models**.
-The enumeration took 7.61 seconds in the development run. It need not be
-repeated for each metric query or domain cell.
+The producer now blocks an entire verified 16-symmetry phase orbit per
+SAT result. This reduces the enumeration from 1,889 SAT checks to **133**;
+the measured enumeration time fell from **7.61 seconds to 1.83 seconds**.
+The sorted 1,888-model set and exported coverage CNF were checked to be
+byte-for-byte identical. Enumeration need not be repeated for each
+metric query or domain cell.
 
 The generator appends one blocking clause per model and exports a CNF
 and an RUP trace. The independent C++ checker
@@ -144,26 +155,86 @@ replaces the two orientation branches and redundant sum equations by
 the sixteen individual negative-area inequalities. Duplicate K4
 nonzero tests are absorbed into the corresponding strict chamber signs.
 
-## 5. Reproduce and use
+## 5. Four complete weak chambers are excluded
+
+[`solver_final_polynomials.py`](solver_final_polynomials.py) excludes
+chambers **23 and 131**. Each proof uses six signed Grassmann–Plücker
+relations. Already verified nonvanishing makes every compared factor
+positive; four of the six comparisons are strict. Multiplying them
+cancels the same twelve bracket magnitudes on both sides, yielding a
+strict contradiction. The two remaining comparisons allow equality,
+so a zero cap minor is not silently discarded.
+
+[`solver_metric_certificates.py`](solver_metric_certificates.py) excludes
+chambers **129 and 130** at every `y>=8`, and gives a second proof for 131.
+The needed signs are
+
+`0123:+, 0127:-, 0137:+, 0237:+, 1237:-`.
+
+Write `Bijkl` for the absolute value of the **raw** affine bracket in one
+common coordinate frame. The five-point affine identity gives
+
+`B0237+B1237 = B0123+B0137+B0127`.
+
+A phase-symmetry image of the uniform metric comparison gives
+
+`B0237+B1237 <= (8/y^2)*(B0123+B0137)`.
+
+The first sum on the right is positive because `0123` is a nonzero K4
+bracket, while `8/y^2<=1/8<1`. This is a contradiction. The checker
+verifies the determinant identities, constants, symmetry, and five
+signs exactly. A numerical linear program helped discover the proof;
+its output is not trusted by the replay.
+
+The magnitude inequality applies to raw brackets before the query's
+individual positive rescalings. Those rescalings preserve signs and
+zeros, but not affine identities between magnitudes. The certificate
+checker keeps these two uses separate.
+
+## 6. Lower the metric degree and cancel positive factors
+
+[`remaining_null_chart.md`](remaining_null_chart.md) gives the exact
+face-023 coordinate construction and its verification. Fixing the actual
+nondegenerate face to its intrinsic plane cancels the common long-edge
+term. This leaves 21 quadratic equations in 29 real variables, including
+three anchor-distance differences. All coordinates have uniform bounds.
+No cap area or edge length is assumed bounded away from zero.
+
+Eight incidence minors admit strictly positive anchor factors. Dividing
+those factors out preserves every sign and zero test. Six of the 24
+relative-area alternatives become linear inequalities after cancellation
+of the positive length of edge 23. The full face query also omits 24
+phase tests already implied by the stronger coordinate bounds.
+
+Use `--chart face` to select this formulation. It changes the continuous
+metric equations only; the same certified orientation cover, weak signs,
+nonvanishing witnesses, and retained actual circuits apply. A fresh full
+face-query generation, including the coverage trace, completed in 8.03
+seconds while other proof work ran concurrently.
+
+## 7. Reproduce and use
 
 Run from the repository root, with assertions enabled:
 
 ```sh
-python3 research/type7_completion/solver_chambers.py /tmp/type7-chambers --proof --queries
+python3 research/type7_completion/remaining_null_verify.py
+python3 research/type7_completion/solver_chambers.py /tmp/type7-chambers --proof --queries --chart face
 python3 research/type7_completion/solver_verify.py /tmp/type7-chambers
 g++ -O3 -std=c++17 research/type7_completion/solver_check_rup.cpp -o /tmp/type7-rup-check
 /tmp/type7-rup-check /tmp/type7-chambers/coverage.cnf /tmp/type7-chambers/coverage.drat
 ```
 
 The generated manifest records every model, exact symmetry and gauge,
-strictness witness, remaining circuit partition, and query size. Queries
-are `phase0_chamber_000.smt2` through `phase0_chamber_131.smt2`.
+strictness witness, remaining circuit partition, exclusion certificate,
+and query size. It retains all 132 rows and emits 128 queries, omitting
+IDs 23, 129, 130, and 131. Regeneration removes stale query files for
+these excluded chambers.
 Generated files and large proof traces stay outside the source tree.
 
 The first targeted trials used chambers 0, 41, and 15, representing
 different retained-circuit counts. All returned normal `UNKNOWN` with
 the 3,000 ms limit; wall times were 3.57–3.77 seconds. Three alternative
 NLSAT parameter configurations on chamber 41 also returned `UNKNOWN`
-with cancellation. There is no reason to run 132 unchanged timeouts.
+with cancellation. There is no reason to repeat unchanged timeouts across the remaining chambers.
 A further metric inequality, elimination, or exhaustive interval
 certificate must make the continuous part decidable.
