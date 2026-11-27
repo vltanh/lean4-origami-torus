@@ -1,16 +1,16 @@
-# Every unbounded ray-3 sequence has at least three vanishing short edges
+# Every unbounded ray-3 sequence has four vanishing short edges
 
 **Theorem.** Along any sequence of actual canonical ray-3 realizations
-with `y -> infinity`, the third-smallest of the eight positive short-edge
+with `y -> infinity`, the fourth-smallest of the eight positive short-edge
 weights tends to zero:
 
 \[
- h_{(3)}\longrightarrow0,
+ h_{(4)}\longrightarrow0,
 \qquad h_e=-X_e>0.
 \]
 
 Here `h_(1)<=...<=h_(8)` are the weights in increasing order.
-Equivalently, no such unbounded sequence can keep six weights
+Equivalently, no such unbounded sequence can keep five weights
 bounded below by one positive number. The proof includes all possible
 rates of transverse flattening. It uses the geometric necessity audit
 and the preceding exact cap and blow-up certificates.
@@ -18,8 +18,8 @@ and the preceding exact cap and blow-up certificates.
 This theorem still does not exclude an unbounded sequence whose edges
 shrink, provide a numerical height threshold, or close the full marking.
 Its purpose is to identify the remaining boundary precisely. Sections
-1–4 first prove `h_(1)->0`; sections 5 and 6 rule out exactly one or
-two zero weights in a limiting configuration.
+1–4 first prove `h_(1)->0`; sections 5–7 rule out exactly one, two,
+or three zero weights in a limiting configuration.
 
 ## 1. A bounded transverse blow-up must exist
 
@@ -204,6 +204,45 @@ All arguments allow unrelated rates of edge lengths, transverse width,
 and t. Hence all possible two-zero blow-ups are excluded, and
 `h_(3)->0` follows by the same subsequence argument.
 
+## 7. Exactly three vanishing weights are also impossible
+
+If `h_(4)>=epsilon` along an unbounded subsequence, the preceding
+result and compactness give exactly three zero limiting weights.
+Normalize a longest edge and form the same nontrivial transverse
+blow-up. Both noncollinear caps would require four zero weights.
+The other two possibilities now have complete exclusions:
+
+| Stretched caps | Three-zero family | Cells or orders | Exclusion |
+|---|---|---:|---|
+| One collinear | Triple cluster and one zero partner edge | 304 | [Six regular metric endpoints](remaining_three_cluster_blowup.md) |
+| One collinear | One adjacent collision and two zero partner edges | 16 | [Two cap signs](remaining_three_adjacent_blowup.md) |
+| Both collinear | Five triple-cluster families and one split-pair family | 176 | [Three relative-height obstructions](exhaustive_three_zero_blowup.md) |
+
+The mixed count is exactly `304+16=320`; the two-line count is exactly
+176. These are the complete three-zero portions of the independently
+checked covers. Each component proof verifies every canonical map
+and every necessary sign implication.
+
+The mixed triple-cluster proof uses three signed length defects when
+the additional short edge would make the earlier Jacobian singular.
+Its six endpoint arguments retain the zero limiting slope boundary.
+At the endpoint with a vanishing first-order defect coefficient, an
+exact reference family incorporating that entire defect removes all
+uncontrolled higher powers before estimating the remainder.
+
+In the sixteen adjacent-collision cells, two actual mixed determinant
+inequalities imply that the small A edge is negligible relative to
+the combined B cluster. The negative A-cap sign then removes both
+leading B defects. An exact factored determinant makes the B cap
+positive, contradicting its independently forced negative sign.
+This argument includes unrelated rates of all three weights, width,
+and t. The two-line families use the already verified relative-height
+identities, including their zero-weight endpoints and a reversed-edge
+height calculation.
+
+Every three-zero case is therefore impossible. The subsequence
+argument proves `h_(4)->0`.
+
 ## Reproduction and exact remaining scope
 
 ```sh
@@ -217,6 +256,9 @@ python3 research/type7_completion/remaining_two_line_triple.py /tmp/type7-two-li
 python3 research/type7_completion/remaining_cluster_blowup.py /tmp/type7-cluster-blowup
 python3 research/type7_completion/remaining_split_blowup.py /tmp/type7-split
 python3 research/type7_completion/exhaustive_two_single_blowup.py /tmp/type7-two-single
+python3 research/type7_completion/exhaustive_three_zero_blowup.py /tmp/type7-three-zero
+python3 research/type7_completion/remaining_three_cluster_blowup.py /tmp/type7-three-cluster
+python3 research/type7_completion/remaining_three_adjacent_blowup.py /tmp/type7-three-adjacent
 python3 research/type7_completion/common_line_trapezoids.py
 python3 research/type7_completion/exhaustive_vv_geometry.py /tmp/type7-vv
 ```
@@ -230,17 +272,31 @@ mixed-family required-sign replay are the finite certificates underlying
 the argument. The implicit-function step is an analytic research proof,
 not a Lean kernel check.
 
-The remaining common-line analysis must allow at least three vanishing
-edge weights. The mixed cover has 320 three-zero cells and 300 four-zero
-cells. The two-line cover has 176 three-zero orders and 80 four-zero
-orders; two noncollinear stretched caps also remain possible only at
-four zero weights. No cap can have three zero weights, since its
+The remaining common-line analysis has exactly four zero weights in
+every limiting configuration. No cap can have three zero weights, since its
 remaining edge would have weight one, exceeding one half.
+Consequently each cap has exactly two zero weights and two weights
+equal to one half in the limit.
+
+The complete two-line four-zero cover is also excluded: the
+[relative-height proof](remaining_fourzero_blowup.md) covers its 48
+orders with two triple clusters, and the
+[nonedge-displacement proof](remaining_fourzero_split.md) covers the
+remaining 32 triple-cluster/split-pair orders. The latter uses an exact
+all-t reference family with nonzero reference defects and a uniform
+Lipschitz comparison valid even for unrelated actual/reference weights.
+It forces the nonedge 04 in a direction forbidden by three finite
+sign certificates. Thus both stretched caps being collinear is now
+excluded for every weight count in the 624-order cover.
+
+The remaining four-zero shapes are the 300 mixed cells and the
+two-noncollinear triangle configurations from the sixteen zero-cone
+supports. They require separate exclusions.
 
 Quantitatively, the second-largest weight in each cap is at least
 `1/6`: otherwise its three smaller weights sum to less than one half,
 while its largest is at most one half. Thus `h_(5)>=1/6`. Further
 collapse reductions can therefore end after the four-zero boundary;
 they cannot continue indefinitely. Neither this observation nor the
-current third-smallest theorem supplies an explicit height bound.
+current fourth-smallest theorem supplies an explicit height bound.
 All positive edge lengths must remain allowed in the finite system.

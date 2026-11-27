@@ -126,6 +126,7 @@ def main():
     print('PASS exactly 16 orders have one zero weight; the separate two-line proof excludes them')
     print('PASS disjoint complete two-zero order cover:', dict(two_counts))
     print('PASS complete mixed two-zero cover: 24 double-partner and 544 triple-cluster cells')
+    print('PASS complete three-zero cover: 176 two-line orders and 304+16 mixed cells')
     if len(sys.argv) == 2:
         output = Path(sys.argv[1])
         output.mkdir(parents=True, exist_ok=True)
@@ -137,7 +138,7 @@ def main():
         }, indent=2)+'\n')
         blocked = clauses + [[-(i+1)*value for i, value in enumerate(model)] for model in models]
         chambers.write_cnf(output/'two_line_model_coverage.cnf', n, blocked)
-    print('The third-smallest-weight theorem additionally uses the analytic proofs for every one- and two-zero family.')
+    print('The fourth-smallest-weight theorem additionally uses the analytic proofs for every one-, two-, and three-zero family.')
 
 
 if __name__ == '__main__':

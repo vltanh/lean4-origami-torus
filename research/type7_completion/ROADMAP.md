@@ -478,6 +478,46 @@ and in fact the fifth-smallest of all eight weights is at least `1/6`.
 This strengthens the asymptotic reduction; it does not yet close a
 finite chamber or the full marking at the common target modulus.
 
+The next layer now has a complete
+[three-zero two-line exclusion](exhaustive_three_zero_blowup.md).
+All 176 orders map to five triple-cluster families of 32 and one
+split-pair family of sixteen. Sixteen direction certificates retain
+every relative scale of the three small edges. The surviving cases
+contradict exact cap-height limits `-4`, `+4`, or the positive B-cap
+coefficient `u*(1-2u)`. All seventeen exported CNFs, including model
+coverage, independently replay.
+
+The mixed three-zero cover is now complete as well. The
+[triple-cluster endpoint proof](remaining_three_cluster_blowup.md)
+excludes all 304 cells with two zero collinear-cap weights and one
+zero partner weight. A third independently normalized edge handles
+coincident endpoints; six uniformly regularized metric charts handle
+the remaining cases. Its 103 CNFs and symbolic identities independently
+replay. An exact expanded reference family removes a defect whose
+first-order coefficient vanishes, instead of discarding higher-order
+terms. The [adjacent-collision proof](remaining_three_adjacent_blowup.md)
+excludes the other sixteen mixed cells. Actual mixed-bracket inequalities
+bound the A collision relative to the B cluster; the negative A-cap
+sign then forces a positive B-cap determinant, contradicting its
+required sign. Its new cap-sign implication replays in three nodes.
+
+These complete covers strengthen the global result to **the fourth-smallest
+short-edge weight tends to zero in every unbounded ray-3 sequence**.
+Each limiting cap has exactly two zero weights and two weights equal
+to one half. The fifth-smallest remains uniformly at least `1/6`.
+
+All eighty two-line four-zero orders are also excluded. The
+[two-triple-cluster proof](remaining_fourzero_blowup.md) covers 48 by
+exact relative-height implications and 27 independent Boolean replays.
+The [triple/split proof](remaining_fourzero_split.md) covers 32 by a
+uniform comparison with an exact all-t metric family and a forced
+second-order displacement of the nonedge 04. Its six finite formulas
+independently replay. This completes every two-line order in the
+624-order cover, including all edge coincidences. The remaining
+four-zero blow-ups have at least one noncollinear cap: 300 mixed cells
+and the two-noncollinear triangle configurations. No complete finite-height
+ray-3 exclusion is claimed yet.
+
 The next requirement is a contradiction across the remaining angular
 region using the exact metric and required long-ring linking. An
 acceptable exclusion is a hand inequality proof or an independently
