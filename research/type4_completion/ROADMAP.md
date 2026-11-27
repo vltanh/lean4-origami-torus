@@ -5,7 +5,17 @@ This is an independent Type 4 workstream. It does not prescribe Type 4 as
 the sole priority over Types 5 and 7, and it does not turn any of the
 research reductions below into a new Lean theorem.
 
-**Current attack:** [Gate 0 is complete as a hand-proof reduction](ray2_attack_coverage.md):
+**Current attack: a geometric proof.** The main finite-case target is a
+joint obstruction from the complete flat stars at vertices 0 and 1,
+retaining the opposite cap and vertex 6. A new
+[annulus perimeter lemma](ray1_geometry.md) supplies a hand-proof
+restriction for the transverse models of `ray1_1`, `ray1_3`, and `ray1_5`:
+specified cap-pair points force the outer fiber to be a convex Minkowski
+boundary, or force contact between the fibers. Exposed missing chords,
+contacting limits, cap degenerations and the finite-metric passage remain
+unresolved. This is a geometric reduction, not a new case exclusion.
+
+**Established reduction:** [Gate 0 is complete as a hand-proof reduction](ray2_attack_coverage.md):
 an arbitrary embedding at the target enters one of the eight full domains.
 The [direct strict-geometry proof](global_attack_support.md)
 now establishes neighbor support and all 23 strict K4 determinants from
@@ -262,6 +272,17 @@ establish an extension obstruction uniformly over the full parameter
 domain, including exceptional leaf charts and cap endpoints. Neither
 this isolated core nor its two excluded completions changes the row count.
 
+For a geometric proof, adjoining vertex 0 to the core `123456` is a
+structural improvement: the resulting seven-vertex complex is the
+once-punctured torus with boundary `4-5-2-6-3-4`, and it contains the
+**complete flat stars at both 0 and 1**. The six-vertex core contains
+neither complete star. At vertex 1 the link divides into the arcs
+`5-6-4` and `4-3-0-2-5`; the latter supplies the missing closure in the
+fixed-core certificate. The proposed hand-proof step is to control both
+full links with the metric and embedding conditions. Strict support
+does not itself make a projected link convex, so a perimeter argument
+must prove that extra property or another strict length inequality.
+
 **Stop/pivot conditions:**
 
 - An exact core counterexample satisfying the full hypotheses of the
@@ -305,6 +326,25 @@ Work first through the shared cap `014` (`ray1_1`–`ray1_3`), then the
 shared cap `034` (`ray1_4`–`ray1_5`), then `ray1_6`, unless a new proved
 lemma gives a better order. The ray-2 four-cycle phase identities cannot
 be assumed for ray 1. Each transfer must check its winding periods.
+
+**New geometric restriction:** the [perimeter proof](ray1_geometry.md)
+applies to the six-face annuli in `ray1_1`, `ray1_3`, and `ray1_5`.
+Their slice polygons have perimeter one, as does the Minkowski sum of
+the two perimeter-one cap triangles. When actual cross-cap edges
+supply every exposed corner of that sum, a nested outer fiber of length
+one must be its convex boundary. An inner bare fiber must then contact
+it at at least two, one, and two exposed vertices, respectively.
+In a strictly disjoint model the bare fiber must instead be outer and
+convex, and none of the additional cross-cap points on the other fiber
+can be exposed. For `ray1_3` this gives the explicit angle inequality
+`angle_B(5) >= angle_A(1)`.
+
+The missing exposed chords are `07/17`, `06`, and `06/23`, respectively.
+Their exact criterion is overlap of the two cap-vertex open normal
+cones. This is independent of slice height. A whole-row proof must
+still establish its transverse hypotheses, handle these exposed-chord
+and outer-convex possibilities, and control contacts and cap collapse
+at finite `y`; strict disjointness cannot simply be passed to a limit.
 
 **Required output:** an exclusion theorem/certificate covering each
 canonical row, with the quantitative constants valid at the same `y`.
@@ -371,6 +411,31 @@ fixed-period statement on the whole parameter range, treating the
 hexagonal endpoint and the unbounded end explicitly.
 
 ### Recorded dead ends and feasible relaxations
+
+**The intrinsic constraints alone are feasible on the whole sharp ray.**
+For `W=y^2>=3/4`, the following ray-2 lifts `p_i=(x_i,H_i/y)` give a
+strictly shortest, coherently oriented intrinsic triangulation:
+
+| Vertex | `x_i` | `H_i` |
+|---|---:|---:|
+| 0 | `-1/8` | `W/2` |
+| 1 | `3/8` | `0` |
+| 2 | `1/8` | `W/2+1/32` |
+| 3 | `1/8` | `-W/2+1/32` |
+| 4 | `0` | `0` |
+| 5 | `-1/4` | `0` |
+| 6 | `3/8` | `W/4` |
+| 7 | `-1/8` | `-W/2` |
+
+Substitution into the fixed ray-2 cocycle gives horizontal nearest-lift
+margins at least `1/8`, scaled vertical margins at least `1/32`, and all
+sixteen oriented face-area numerators at most `-W/16`; their sum is
+`-2W`. These inequalities are affine in `W` after substitution, with
+nonnegative slack slopes and nonnegative slacks at `W=3/4`, so they hold
+on the entire stated interval. Coherent faces and total degree one give
+the intrinsic triangulation. These are **two-dimensional data**, not
+spatial vertex coordinates or an embedded realization. A geometric
+obstruction must use the spatial metric and embedding together.
 
 | Tempting shortcut | Established limitation | What would justify reopening it? |
 |---|---|---|
