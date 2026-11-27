@@ -378,3 +378,36 @@ For every elongated eight-vertex origami-torus sequence the normalized vertical 
 For Type 4 the graph after removing universal vertices 4,5 is the join of an independent pair and a four-vertex path. The chordless cycles and their lattice periods give six disjoint horizontal triangle-pair classes in ray 1, and two triangle/quadrilateral cap-pair classes in ray 2, with explicit vertical level intervals. Each row has a direct edge through each strip. The bounded cap diameters imply the two representative cap levels are y/2+O(1) apart, and the entire surface lies within a uniformly bounded distance of an actual edge of length y/2+O(1). This holds on both markings, including all endpoint and intermediate-scale degenerations. In ray 2 at least one final cap is isolated, so its physical vertical width tends to zero and its limiting transverse perimeter is one.
 
 No solver, numerical search or computer-assisted enumeration was used. The hand proof inherits the earlier winding-classification premise for the Type 4 tables. It does not exclude any of the eight surviving necessary cap-pair families. Type 4 universality and the H13 hexagonal gate remain open; the next goal is an exact obstruction to the two annuli embedding within the common tube, not more sign subdivisions.
+
+
+## 16. All-type-4 edge-length uniqueness (independent of H13 signs)
+
+The universal-edge Gram reconstruction previously developed for H13 is actually a global rigidity argument for Type 4. The following hand proof does not use the orientation enumeration or assume generic position of noncliques. It does use the earlier strict-support/K4 nondegeneracy lemma for embedded vertex-minimal flat tori.
+
+**Proposition.** Two embedded intrinsically flat Type 4 realizations with the same 24 labeled edge lengths are congruent, up to an ambient Euclidean isometry, including reflection.
+
+Fix the anchor tetrahedron 0145. Its six edge lengths determine it up to congruence, and it is nondegenerate by the K4 lemma. The remaining vertices have this four-neighbor reconstruction order:
+
+| vertex | already placed anchor clique | further metric check |
+|---|---|---|
+| 2 | 0145 | none |
+| 3 | 0145 | none |
+| 6 | 1245 | edge 36 |
+| 7 | 2456 | edge 37 |
+
+All anchor sets in the table are K4s, all four required vertex-to-anchor edges are present, and the six initial edges, sixteen lateration edges, and two further edges exhaust the 24 edges. These facts follow directly from the face list in section 1.
+
+A point x with prescribed distances to four affinely independent anchor points r_(a_0),...,r_(a_3) is unique, if it exists: subtract the equation to a_0 from the other three squared-distance equations to obtain
+
+    (r_(a_i)-r_(a_0)) dot (x-r_(a_0))
+        = (d_(a_i,a_0)+d_(a_0,x)-d_(a_i,x))/2, i=1,2,3,
+
+where d denotes squared edge lengths. The three difference vectors form a basis, so the linear system determines x; the equation to a_0 is then the remaining existence check. Induction along the table proves the proposition.
+
+In particular the 14-intrinsic-variable rational reconstruction from section 10 can be applied without fixing H13 or any other orientation chamber. Work in affine coordinates based at one anchor vertex, with the other three as the basis. The positive-definite anchor Gram matrix is known from the intrinsic edge lengths. For each row solve the three subtracted equations in that basis; the coefficient matrix is nonsingular exactly when the anchor tetrahedron has nonzero volume. Reject singular lateration charts, which cannot contain an embedded flat solution under the K4 premise. Require the four remaining norm equations and the two extra edge equations. These six rational equalities can be converted to polynomial equalities by clearing the nonzero denominators. For sign inequalities use positive squared denominators or keep track of the denominator signs. The four missing squared edge lengths and all affine determinant signs are determined. The intrinsic face orientation, degree, shortest-lift and complete simplex-intersection checks are still required; uniqueness of a reconstructed metric realization does not imply that it is embedded.
+
+This gives a single unbranched 14-intrinsic-variable rational reconstruction chart per marking, rather than separately choosing among the 31 hexagonal orientation classes. It is an exact global reduction of extrinsic degrees of freedom, not an assertion that real feasibility of the resulting system is easy or that the 31 orientation possibilities are eliminated for varying intrinsic coordinates. No full nonlinear feasibility test of this unified chart was run in this iteration.
+
+## 17. New elongated-cap degeneration theorem
+
+[Proof and independently replayed Boolean certificates](elongated_hand.md#7-computer-assisted-exclusion-of-nondegenerate-transverse-limits-in-ray-2-cap-pair-145--0273). In the second sharp-ray marking, for the cap pair 145 / 0273, every convergent bounded transverse limit must have a collinear triangular cap, a collinear quadrilateral, or a vanishing quadrilateral edge. If the remaining vertex 6 is outside the bounded triangular cap and the quadrilateral spans, its vanishing edge is 27 or 37. The conclusion follows from four exact sidedness contradictions verified by DPLL and does not assume nondegeneracy of nonclique quadruples. It covers every placement of the intermediate vertex, including intermediate scales. It excludes a whole nondegenerate limiting regime, but the full cap family remains open. Earlier geometric premises need independent audit. The other seven cap-pair classes are not excluded by this test.
