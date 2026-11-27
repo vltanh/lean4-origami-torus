@@ -91,3 +91,43 @@ where b'_j has entries (G_ii-|s_i|^2)/2. This is the same conic using only ratio
     c_i^T G c_j - s_i . u = (c_i^T G c_i-|s_i|^2)/2.
 
 The rank and nonzero-polynomial proofs above are unchanged by this invertible linear change of coordinates. For leaf 0 the three neighbors (1,2,5) span the anchor coordinates because (1,2,4,5) is a K4; for leaf 7 use (2,5,6). Solve these three equations for c_j as an affine function of u, then the fourth equation is a nontrivial linear constraint on u by rank four. Solve that line using a nonzero pivot and enforce its one remaining quadratic. Thus only four univariate quadratic equations remain in addition to the eight independent real parameters. Keeping the four dependent scalars as algebraic variables avoids expanding nested square roots; all extrinsic coordinates are rational functions of the resulting twelve scalars, and all edge equations hold exactly when the four quadratic equations hold. The parameter count refers to free scalars, not the number of variables in an auxiliary polynomial encoding. The complete degeneracy-aware embedding constraints can be tested in c-coordinates, with no Cholesky calculations. This is a natural representation for interval arithmetic or exact sign elimination.
+
+## 9. Full determinant-sign model enumeration
+
+Run `python3 research/type4_focus/enumerate_hex_models.py` (requires libz3). The script enumerates the necessary generic Boolean models over each canonical clique representative, explicitly removing the old first-determinant reflection normalization in favor of the first clique sign. Each enumeration terminates in UNSAT after blocking the primary assignments. The local equivalent enumeration returned the following counts, totaling **2,405** models across the 31 representatives (not necessarily distinct under stabilizers of each clique orbit):
+
+| Branch | Full generic models | Status |
+|---|---:|---|
+| H01 | 26 | Unresolved |
+| H02 | 25 | Unresolved |
+| H03 | 108 | Unresolved |
+| H04 | 76 | Unresolved |
+| H05 | 51 | Unresolved |
+| H06 | 202 | Unresolved |
+| H07 | 151 | Unresolved |
+| H08 | 27 | Unresolved |
+| H09 | 191 | Unresolved |
+| H10 | 86 | Unresolved |
+| H11 | 13 | Unresolved |
+| H12 | 15 | Unresolved |
+| H13 | 1 | Active; not excluded |
+| H14 | 103 | Unresolved |
+| H15 | 33 | Unresolved |
+| H16 | 72 | Unresolved |
+| H17 | 20 | Unresolved |
+| H18 | 242 | Unresolved |
+| H19 | 6 | Unresolved |
+| H20 | 166 | Unresolved |
+| H21 | 21 | Unresolved |
+| H22 | 10 | Unresolved |
+| H23 | 26 | Unresolved |
+| H24 | 34 | Unresolved |
+| H25 | 18 | Unresolved |
+| H26 | 157 | Unresolved |
+| H27 | 18 | Unresolved |
+| H28 | 420 | Unresolved |
+| H29 | 22 | Unresolved |
+| H30 | 44 | Unresolved |
+| H31 | 21 | Unresolved |
+
+The smallest branch H13 has the sole full sign string `-++-++--++--+-+--+-++++--++-+-+++++-++--+--+--+--++--+-+-++--+--++----` in lexicographic four-subset order. In metric feasibility tests impose strict signs on the 23 cliques, weak signs on the other 47 determinants. This preserves possible coplanar nonclique configurations by the generic perturbation argument. An exploratory exact-coefficient QF_NRA relaxation of H13 (32 geometric coordinate variables, 356 polynomial assertions, edge equations, nearest-lift inequalities, oriented intrinsic faces, determinant signs and nonedge distance bounds) returned unknown/timeout at 10 seconds. It did not include the complete degeneracy-aware embedding tests, so even a SAT result would require further checks. No sign model or clique class was excluded. The next step is rigorous interval or algebraic elimination in the reduced eight-parameter affine-coordinate formulation, starting with H13, not further blind subdivision of the modulus ray.
