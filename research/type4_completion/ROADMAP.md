@@ -5,7 +5,9 @@ This is an independent Type 4 workstream. It does not prescribe Type 4 as
 the sole priority over Types 5 and 7, and it does not turn any of the
 research reductions below into a new Lean theorem.
 
-**Current attack:** the [direct strict-geometry proof](global_attack_support.md)
+**Current attack:** [Gate 0 is complete as a hand-proof reduction](ray2_attack_coverage.md):
+an arbitrary embedding at the target enters one of the eight full domains.
+The [direct strict-geometry proof](global_attack_support.md)
 now establishes neighbor support and all 23 strict K4 determinants from
 Type 4 embeddedness and flatness, without the earlier seven-vertex
 remeshing dependency. The [uniform ray-2 core reconstruction](ray2_attack_conics.md)
@@ -16,6 +18,11 @@ Both of that core's metric completions by vertex 0 are nevertheless
 excluded by an exact edge `12` / face `045` crossing certificate.
 The active task is consequently a coupled core-and-leaf obstruction;
 this fixed-core certificate is not a full-row exclusion.
+The [new complete affine formulation](direct_metric.md) retains all eight
+vertices and every degenerate intersection stratum with 26 variables and
+polynomial degree at most four. Its strengthened `ray2_2` query returned
+`UNKNOWN (timeout)` at 10,000 ms. All eight strengthened inputs regenerate;
+no row is excluded and the new hand proofs are not yet assembled in Lean.
 
 ## 1. What would finish Type 4?
 
@@ -137,7 +144,8 @@ sets. The audit is in [linking_audit.md](linking_audit.md).
 |---|---:|---|
 | Global rational lateration | 14 intrinsic coordinates | Four reconstructed radial equalities and two further edge equalities, plus full validation; denominators require strict anchor checks |
 | Natural fixed-metric Gram description | 18 = 14 intrinsic + 4 missing chord quantities | An alternative determinant formulation; this is not the variable count of the active cubic generator |
-| Active Type 4 signed-Gram generator | 23 = 14 intrinsic + 4 missing slacks + 5 positive-complement variables | Fifteen cubic metric equations; the full incidence constraints have higher degree |
+| Original Type 4 signed-Gram generator | 23 = 14 intrinsic + 4 missing slacks + 5 positive-complement variables | Fifteen cubic metric equations; the full incidence constraints have higher degree |
+| Complete affine-anchor generator | 26 = 14 intrinsic + 12 affine coordinates | Ten cubic and eight quartic metric equations; complete cubic intersection/support cuts; all polynomial degrees at most four |
 | Historical hexagonal H13 angular system | 19 = 14 intrinsic + 5 radicals | One sign branch at a different modulus; not the complete elongated target |
 | Historical H13 universal-edge system | 22 = 14 intrinsic + 8 transverse coefficients | Another formulation of that sign branch; not an eight-case cover |
 
@@ -151,6 +159,11 @@ for the signed-Gram inertia argument and exact circuit interpretation.
 ## 5. Ordered gates for the obstruction route
 
 ### Gate 0 — make the final implication explicit
+
+**Status: complete at the mathematical research level.** The
+[assembled coverage proof](ray2_attack_coverage.md) supplies the implication
+below, including the geometric inputs to the existing Lean marking
+theorems. Its final Lean packaging remains outstanding.
 
 **Inputs:** the formal baseline, the general eight-vertex two-gap theorem
 in [the finite localization proof](../type5_focus/fixed_elongated/README.md),
@@ -172,10 +185,21 @@ The strictness part has a [direct Type 4 hand proof](global_attack_support.md):
 the finite checker verifies all eight neighborhood K5 witnesses and all
 twenty possible nonedge antipodal-link cases. It supplies strict support
 and strict K4s uniformly, including arbitrarily small positive volumes.
-This closes that research premise, not the entire gate or its Lean
-formalization.
+The extraction, shortestness, marking, localization, closed-cell transport
+and auxiliary-variable steps are supplied in the assembled coverage proof.
+Together these close the hand-proof gate; its Lean formalization remains
+outstanding.
 
 ### Gate 1 — use one authoritative full domain per row
+
+**Status: complete as an exact research encoding.** The
+[affine-anchor formulation](direct_metric.md) preserves the baseline
+constraints and replaces the metric and incidence expressions by an
+equivalent full domain. Its independent checker verifies both marking
+factorizations, the emitted metric equations, all polynomial degree
+bounds, and minimal circuits of support two through five. All eight
+strengthened full inputs regenerate. This is an encoding result;
+real feasibility of every row remains undecided.
 
 **Inputs:** the checked marking and `(labels,q)` row, fixed `W=10^12`,
 strict shortest lifts, coherent nondegenerate intrinsic faces and degree
@@ -183,7 +207,7 @@ one, positive-definite strict clique metrics, nonedge contraction bounds,
 and all minimal affine-circuit exclusions.
 
 **Required output:** a reproducible exact domain, either the existing
-23-variable signed-Gram formula or a proved equivalent smaller chart.
+23-variable signed-Gram formula or a proved equivalent chart.
 Any elimination must retain its denominator sign conditions and show
 that every original solution has an image in the reduced domain.
 
@@ -389,6 +413,7 @@ python3 research/type4_completion/global_attack_support.py
 python3 research/type4_completion/ray2_attack_verify_conics.py
 python3 research/type4_completion/core_attack_witness.py
 python3 research/type4_completion/core_attack_leaf.py
+python3 research/type4_completion/direct_metric_check.py
 ```
 
 Regenerate the active complete input, then all eight if a change affects
@@ -400,6 +425,19 @@ python3 research/type4_focus/type4_fixed_cubic.py /tmp/type4-all-full --full
 ```
 
 The first command should report 23 real variables and 890 assertions.
+The complete quartic formulation is the current input for coupled
+core-and-leaf work:
+
+```sh
+python3 research/type4_completion/direct_metric.py /tmp/type4-ray2-quartic.smt2 --case ray2_2 --mixed-faces
+```
+
+This reports 26 real variables and 2,845 assertions. The exact input hash,
+solver version and the recorded 10,000 ms `UNKNOWN (timeout)` result are
+in [direct_metric.md](direct_metric.md). All eight choices of `--case`
+were regenerated with the same complete cuts; the six ray-1 rows have
+2,820 assertions each, and the two ray-2 rows have 2,845 each.
+
 Record generator revision, command, input hash, solver version, actual
 termination reason and independent certificate-checking output with each
 new exact attempt. For SAT, reconstruct all eight spatial vertices and
@@ -416,6 +454,6 @@ lake env lake comparator --config=palomar/OrigamiTorus/comparator.json
 ```
 
 These research proofs and exact checks add no full-row exclusion or Lean
-theorem. The next change to the completion count must be a full-row proof or a certified
-embedded witness, with the resulting target or priority decision recorded
-explicitly.
+theorem. The next change to the completion count must be a full-row proof
+or a certified embedded witness, with the resulting target or priority
+decision recorded explicitly.
