@@ -574,3 +574,385 @@ long-tail target, while the hexagonal target still has two
 geometric branches. This result is specific to a flip-ready
 solution in the published marking; a Type 4 torus without this
 flip is not excluded by it.
+
+
+## 10. Complete marking coverage for the constructive flip locus
+
+The earlier restriction to the published Type 6 marking is unnecessary.
+Start instead with an arbitrary embedded Type 4 torus on the sharp ray
+which has a convex coplanar quadrilateral allowing an inverse flip to
+Type 6. The Type 4 shortest-lift and marking classification gives the
+two representatives SH[0], SH[1] from type4_gap_enum.py. The inverse flip
+changes the cocycle of its new diagonal to the sum of the two shifts
+along either boundary path through the quad. These sums agree because
+the old pair of faces has zero cocycle around its boundary.
+
+Exhaustively checking all legal Type 4 flips and all 8! relabelings gives
+exactly these four inverse flips:
+    24 -> 06, 25 -> 17, 34 -> 17, 35 -> 06
+in the Lutz Type 4 labels. Jointly quotienting the pair (marking, flipped
+edge) by actual Type 4 automorphisms, lattice isometries and vertex gauges
+gives three classes when y>sqrt(3)/2:
+
+| Class | Marking | Lutz Type 4 edges that can be removed | Published basis h,g in terms of target h0,g0 |
+|---|---|---|---|
+| A | ray 2 | 24,25,34,35 | h0,g0 |
+| B | ray 1 | 24,25 | g0,h0 |
+| C | ray 1 | 34,35 | g0,g0-h0 |
+
+Here h0=(1,0), g0=(1/2,y). In all three rows, relabel and gauge to
+the same published Type 6 cochain and the flip 57 -> 23. The bases
+in the last column are actual unimodular bases of the same lattice,
+not necessarily reduced bases. Central inversion and the sharp-ray
+reflection account for the minor sign differences in the raw transports.
+For example class B has exact raw basis (-g0,-h0), equivalent to the
+displayed one by inversion. The checker explicitly compares all old
+edges up to an integer vertex coboundary and verifies the old and new
+diagonal labels. The new diagonal is determined by face coherence.
+
+For y>sqrt(3)/2 the shortest vectors are exactly +/-h0. An isometry
+of the lattice must send h0 to +/-h0, and the length and dot product
+of g0 then give precisely the four usual sharp-ray point-group matrices.
+At the hexagon there are twelve isometries. The same joint enumeration
+with these twelve matrices merges all eight marked inverse flips into
+one class. Thus a hexagonal search in the published marking loses no
+possible flip-ready construction, but a long-tail search in it alone
+does miss two classes. The completeness statement is for the flip-ready
+locus only; a Type 4 embedding without a convex coplanar quad supporting
+an inverse flip is not assumed to belong to this locus.
+
+There is also an exact short-link bound for each class. If the actual
+short slope has nonzero self-linking, the diameter theorem in section 9
+gives extrinsic diameter <1. Any k-edge cycle of period (m,n) in the
+target basis then gives
+    (m+n/2)^2+n^2*y^2 < k^2.
+Enumerating simple cycles in the two individual triangulations (never
+combining the intersecting diagonals in a single cycle) gives:
+
+| Class | Short slope in published labels | Best cycle bound for W=y^2 if short slope is linked | Cycle |
+|---|---|---|---|
+| A | h | W<4 | 1324 (new) |
+| B | g | W<25/4 | 15346 (old) |
+| C | h-g | W<25/4 | 01754 (old) |
+
+Repeated-vertex walks cannot improve this test, since their average
+period vectors are convex combinations of the simple-cycle averages.
+In particular only class A inherits the same-side conclusion from
+section 9: in B and C the short slope is different from the slope
+of the linked triangles used to exclude the mixed-side pattern.
+The side dichotomy itself does not depend on marking and applies to
+all three classes. The mixed-side pattern is NOT excluded in B or C
+by this test.
+
+The standalone integer/rational checker flip_markings.py was replayed
+on its equivalent local implementation. It checks the four flips,
+the exact joint orbit partitions, each explicit basis transport, and
+the cycle bounds. Its input face lists and cocycles are copied from
+Defs.lean and type4_gap_enum.py; the earlier geometric marking
+coverage premise remains the one in ray2_attack_coverage.md.
+
+## 11. Uniform finite reconstruction with eight parameters, seven on the nonsingular chart
+
+This strengthens section 7: rather than solve five coupled rational
+equalities in twelve variables, reconstruct metric candidates by three
+successive scalar quadratics. On the generic chart every metric
+equation is satisfied by construction, and the only remaining task
+is the intrinsic and extrinsic geometric validation. The exceptional
+charts have at most eight continuous parameters, and are not dropped
+from the mathematical reduction.
+
+The result applies to all three classes of section 10, using h,g
+for their physical published lattice vectors. In particular it does
+not require any lower bound on the area or aspect ratio of the convex
+quadrilateral or any outside height.
+
+### Fix Q and vertex 4
+
+Translate the coherent intrinsic quadrilateral so A5=0, and use
+its six remaining planar coordinates to specify Q=(5,7,2,3). Write
+its unique affine dependence in diagonal-intersection coordinates as
+    lambda=(1-s,s,-(1-t),-t),   0<s,t<1.
+Place the spatial quad at these same planar points with height zero.
+As in section 7, all four outside heights are nonzero in a genuine
+flat embedding. Normalize by ambient reflection so z4>0.
+
+For each outside vertex i, write the effective intrinsic lift
+from anchor j as P_ji=p_i+T_ji. Its squared edge length is
+|P_ji-A_j|^2. The four-neighbor compatibility at 4 is one
+linear equation in p4. In the order Q the relative shifts of 4
+are (0,-h,-g,-h). Hence the coefficient (apart from the factor 2)
+is
+    sum_j lambda_j T_j4 = (t-s) h + (1-t) g,
+which is nonzero since h,g are independent and 1-t>0.
+Choose a deterministic nonzero component, eliminate that intrinsic
+coordinate and use the other as the seventh parameter. Polarization
+against three noncollinear planar anchors determines U4 uniquely,
+and the radial squared-distance equation gives H4=z4^2. Reject
+H4<=0, and otherwise take z4=+sqrt(H4).
+
+### Vertex 6: an actual quadratic throughout the nonparallel chart
+
+Its four anchor-relative shifts are (0,-g,-g,0). Denote the two
+intrinsic lifts of 6 by P_A and P_B=P_A-g, with A the side 35 of Q
+and B the opposite side 27. Their actual exterior adjacent faces
+are 356 and 276. Coherent oriented intrinsic faces give that each
+P lies strictly outside its corresponding boundary side. Let n_A,
+n_B be the unit outward side normals in the plane of Q.
+
+Subtract the two squared-distance equations to the endpoints of
+side A. The spatial projection U6 and P_A have the same tangential
+coordinate, so P_A-U6=a*n_A. The height equation on the side is
+the difference of the squares of the signed normal distances
+from P_A and U6. Since H6>0 and P_A is strictly outside, a>0.
+The same argument for B gives P_B-U6=b*n_B with b>0. Thus
+    g = a*n_A - b*n_B.
+
+If the sides are nonparallel, this determines a and b uniquely
+from Q and g. Reject if either is nonpositive. The two radial
+equations are
+    H6 = a^2+2*a*n_A dot (U6-A5)
+       = b^2+2*b*n_B dot (U6-A7).
+Equating them gives the affine line
+    2*g dot U6 = b^2-a^2+2*a*n_A dot A5-2*b*n_B dot A7.
+Along that line, P_A=U6+a*n_A, hence p6 differs from U6 by a
+fixed vector and H6 is affine. Moreover H6 is **nonconstant**
+on this line: otherwise n_A would be parallel to g, which
+together with a,b>0 would force n_B parallel to n_A.
+
+Now impose edge 46 by
+    P46 = (|U4-U6|^2+H4+H6-d46)/2,
+    P46^2 = H4*H6.
+Here d46 is the intrinsic squared length. P46 is affine along
+the line because p6 and U6 have identical linear parts and
+H6 is affine. The resulting polynomial has degree at most two
+and is never identically zero: if P46 has nonzero slope, its
+square has positive quadratic coefficient; otherwise the linear
+coefficient is -H4 times the nonzero slope of H6. Therefore
+there are at most two real roots, counting repeated roots once.
+Keep positive H6 and set z6=P46/z4 (not an arbitrary square-root
+sign). This supplies all five edge equations of vertex 6 to
+Q and vertex 4, and every genuine solution occurs among the roots.
+The argument even covers a linear polynomial and arbitrarily small
+nonzero determinants of the quad; no uniform conditioning assumption
+is used.
+
+### Parallel opposite sides: the exceptional quad loses two parameters
+
+If sides 35 and 27 are parallel, n_B=-n_A by convexity. The
+same relation forces g=(a+b)*n_A, so the side direction is
+perpendicular to g. The quad now has only four continuous
+parameters: A5=0, the signed tangential coordinate of A3,
+the two tangential coordinates of A7,A2, and the distance w_Q
+between the two parallel sides. The sign of the outward normal
+is fixed by g. This chart includes every positive width, no
+matter how small.
+
+Put d=|g| and choose normal coordinate zero at side B and
+w_Q at side A. Write u for the normal coordinate of U6.
+The two height equations become
+    H6=a^2+2*a*(u-w_Q)=b^2-2*b*u,    a+b=d.
+Solving them yields the exact formulas
+    u=(b-a)/2 + a*w_Q/d,
+    H6=a*b*(1-2*w_Q/d).
+In particular w_Q<d/2. This also follows independently from
+strict shortestness of all quad chords. One can retain two
+parameters for 6: a in (0,d) and the tangential coordinate of
+U6. Recover b, P_A, p6 and H6 by these formulas. Retain edge
+46 as a filter and set z6=P46/z4. This parallel chart uses
+two fewer quad parameters and at most two more exterior-vertex
+parameters than the nonparallel chart, so it does not exceed
+the uniform parameter bound.
+
+### Vertex 1: one additional parameter only when the linear system drops rank
+
+Its five already reconstructed neighbors are 5,7,3,4,6.
+The first four form an affine basis in space (three noncollinear
+quad points and z4!=0). For an unknown vertex with fixed spatial
+neighbor positions r_j and effective intrinsic centers
+s_j=p_j-K_ji, subtract the equation to one neighbor j0:
+    (r_j-r_j0) dot r_i - (s_j-s_j0) dot p_i
+       = (|r_j|^2-|r_j0|^2-|s_j|^2+|s_j0|^2)/2.
+All equations are linear in (r_i,p_i), with three spatial and
+two intrinsic coordinates. Four known neighbors with affine
+independent spatial positions give r_i=L*p_i+b. The remaining
+radial equation is a nonzero quadratic in p_i. To see nonzero,
+translate both coordinate systems at j0. An identically zero
+polynomial would imply b=0 and L^T*L=I; the polarized equations
+would then give s_j=L^T*r_j and |s_j|=|r_j| for the three
+independent anchor vectors, forcing them all into im(L), a plane.
+This is impossible.
+
+Including the fifth neighbor 6 adds one affine equation on p1.
+If it has nonzero linear coefficient, solve on that line. Its
+radial quadratic cannot vanish identically for any genuine
+embedding in this chart. Indeed, an identically-zero restriction
+would give a nonzero spatial direction e and intrinsic direction d
+with |e|=|d|, and
+    e dot (r_j-r1) = d dot (s_j-p1)
+for each of the five neighbors, from the polarization and radial
+derivative. For every face along the actual vertex-1 link path
+5-4-7-6-3, face coherence and isometry imply that the orthogonal
+projection of e to the face plane is the image of d. Equality
+of their lengths forces e to lie in every one of those planes.
+But successive face planes along this path are distinct, by the
+strict K4s (1,5,4,7), (1,4,7,6), (1,7,6,3). Their intersections
+are the edge lines from vertex 1 to 4,7,6. Distinct incident edge
+rays cannot be parallel: coincident rays violate injectivity,
+opposite rays violate strict support. Thus no such nonzero e
+exists. This proves the nonzero scalar quadratic claim without
+assuming the complete star of vertex 1 has been reconstructed.
+
+If the fifth equation has zero linear coefficient but nonzero
+constant, there is no solution. If it is identically zero,
+keep one additional intrinsic parameter and solve the nonzero
+plane conic from the first four neighbors. Choose a deterministic
+direction with nonzero quadratic coefficient among (1,0),(0,1),
+(1,1); if the entire quadratic part vanishes, choose a direction
+where the linear part is nonzero. A constant nonzero equation
+rejects the chart. Each parameter choice gives at most two roots.
+This retains the rank-drop chart, without claiming it is impossible.
+
+### Vertex 0: no new continuous variable, including rank issues
+
+Its complete degree-five neighbor set is 1,2,3,4,5. All of
+those vertices are now known, and the set contains three
+noncollinear quad anchors and vertex 4 off the plane. Apply the
+full degree-five leaf argument of type4_focus/README.md, section 4,
+to the old Type 6 triangulation. Its hypotheses are exactly the
+strict support, nonplanar stars, strict K4s and non-antipodal
+rays established for both graphs in section 9. For completeness,
+the key steps of that argument are:
+
+* The four polarized rows have rank at least three. Rank three
+  would express the effective intrinsic neighbor coordinates as
+  an affine linear map of the spatial neighbors. At the unknown
+  vertex this gives an affine map W=L*U+b on the five link rays.
+  Each consecutive pair spans a projective line in the homogeneous
+  quadric |U|^2-|L*U+b*t|^2=0, by the exact three edge lengths of
+  the intervening face. Consecutive lines are distinct: three
+  consecutive link vertices cannot be collinear, by injectivity
+  and strict support at their middle vertex.
+* When the quadric has rank four and contains real projective
+  lines, it is the split (2,2) quadric; distinct intersecting
+  lines alternate its two rulings. Five lines in an odd cycle
+  cannot alternate. For rank three, every line lies through
+  the single singular projective point (the nondegenerate
+  three-dimensional quotient has Witt index at most one),
+  contradicting distinct link vertices. Rank at most two is
+  possible only if b=0: for b!=0, completing the square along
+  b leaves at least three nonzero directions. With b=0 the
+  zero set in U-space lies in a plane or union of two planes
+  (the form is nonzero because L has target dimension two).
+  Every face would lie in those planes, forcing a planar
+  star or two antipodal transition rays on their common line.
+  Both are impossible. Hence rank four is necessary.
+* The solution of the four polarized equations is an affine line
+  in (r0,p0). Its radial polynomial is not identically zero:
+  the same equal-norm derivative argument as for vertex 1 would
+  put a nonzero spatial direction in every face plane of the
+  complete star. A nonplanar cyclic star would have two transitions
+  with antipodal rays; a planar star is also forbidden.
+
+Thus keep all roots of one scalar quadratic (including its linear
+specialization). At most two candidates result for vertex 0.
+
+### Coverage, branch counts, and the remaining search
+
+For a nonparallel quad, there are six quad parameters and one for
+vertex 4. Every 6 completion is among at most two roots. If
+vertex 1 has the nonzero extra linear equation, there are at most
+two roots for 1 and two for 0. Hence the **seven-parameter chart
+gives at most eight candidates per parameter tuple, with all 24
+old-edge metric equations satisfied**. Only geometric inequalities
+remain. In its rank-drop chart for 1 one additional parameter is
+retained, still with at most eight candidates per tuple.
+
+For a parallel quad, there are four quad parameters, one for 4,
+two for 6, and at most one for 1. Thus the whole flip-ready locus
+has a finite family of charts with **at most eight real parameters
+and at most eight branches per tuple**, up to rigid motion and
+reflection. The parallel chart retains edge 46 as a scalar filter.
+The conic pivot choices can be finite and deterministic. No
+assumption of generic rank is made for the uniform theorem.
+
+In every chart one must still enforce intrinsic coherent positive
+face areas and quotient degree one, strict shortest lifts, both
+diagonals' strict convexity conditions, nondegenerate outside
+heights, actual spatial simplex nonintersection (including zero
+nonclique brackets), and the other necessary geometric tests.
+Metric reconstruction does not imply embeddedness. A rank-nine
+regularity or fixed-period residual rank certificate for an actual
+solution is an additional requirement for open modulus coverage.
+
+The new argument uses the old flat Type 6 star and the exact
+convex flip, so it covers all marked constructions from section
+10 but not Type 4 embeddings without such a flip. It is a hand
+proof, with finite incidence checks and previously established
+geometric premises, not a new Lean theorem.
+
+## 12. Direct branch search at the hexagon
+
+The seven-parameter chart gives a different search algorithm from
+least squares on the 26-variable residual system. Sample a convex
+quad whose six chords are strictly shortest, sample vertex 4 on
+its linear compatibility interval, and then solve the three
+five-neighbor line/quadratic systems in order 6,1,0. Retain both
+roots. This yields full metric candidates at floating-point
+precision rather than trying to minimize many simultaneous
+edge residuals. The numerical implementation samples only
+nonsingular rank-four charts with genuine, well-conditioned
+quadratics; the mathematical proof above retains every
+exceptional chart.
+
+A constrained SLSQP experiment from the published small-height
+seed, with exact squared-length residual constraints and
+edge-face cofactor separation inequalities, did not open the
+fold through to a convex flat spatial quad. This is only a
+local optimization diagnostic. The more useful batched branch
+search used the fixed RNG seed 808 and 100 batches of 20,000
+sampled quadrilaterals. Half the proposals were uniform and half
+perturbed the exact intrinsic seed in section 6. For each
+feasible quad, five points were sampled along the linear
+vertex-4 interval. No output from a floating-point computation
+is used as a proof.
+
+| Filter | Retained count |
+|---|---:|
+| Quad, all six shortest chords and convexity | 582,360 |
+| Nonempty vertex-4 interval | 417,859 |
+| Vertex 4 with positive squared height and metric/intrinsic checks | 1,793,377 |
+| Roots for 6 passing partial filters | 822,935 |
+| Roots for 1 passing partial filters | 307,767 |
+| Full candidates after vertex 0 | 407,874 |
+
+The full candidates passed the old and new edge metric checks
+to numerical tolerance 1e-8, the six hexagonal nearest-lift
+inequalities for each edge, all old/new face orientation checks,
+the necessary side pattern, and a limited nonedge contraction
+filter against seven translates. The edge-face cofactor test
+was then applied in batches. **No candidate had zero potential
+edge-face crossings.** The smallest count was three, and the
+metric residual for a three-crossing candidate was about
+3.33e-16. Directly checking one of the best candidates confirmed
+three crossings: edge 01 / face 246, edge 24 / face 015, and
+edge 03 / face 246 (published labels). It is not an embedding.
+
+The standalone numerical script flip_branch_search.py is the
+consolidated implementation of this run:
+
+    python3 research/type4_completion/flip_branch_search.py --batch-size 20000 --batches 100
+
+The counts above are from the equivalent scratch implementation.
+The output is a finite randomized diagnostic, not a covering or
+exhaustive real search; singular/linear numerical branches and
+very small margins were omitted, not mathematically excluded.
+The search also does not constitute exact algebraic certification
+of the sampled metric assignments. In particular it must not
+be used to infer nonuniversality at the hexagon.
+
+The next substantive step is to find a strictly embedded candidate
+on one of the finite metric charts, or a uniform geometric
+contradiction for the entire flip-ready locus. Neither has been
+achieved. The general Type 4 universality problem remains open,
+and the obstruction case count remains 0/8. No Lean source was
+changed.
