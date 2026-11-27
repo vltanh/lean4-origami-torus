@@ -118,6 +118,10 @@ not supply the final contradiction or a compiled Lean theorem.
 
 **Complete exclusion of one construction family, not of the hexagonal modulus.** At the hexagon the full three-parameter source family with positively oriented intrinsic triangles has no embedded Type 5 vertical lift after the two convex flips. All seven generic projected order patterns are closed: six by negative height-sign cycles and one by an exact positive five-inequality dependence. Rational Bernstein checks prove the fixed signs and cofactor weights uniformly. Nongeneric points follow by openness. The entire convex-flip graph has only three states in every pattern, so changing the flip order cannot rescue this family. See [proof](planar_flip.md) and [exact verifier](verify_planar_flip.py). The original elongated cell count is unchanged (0/19). Other folding patterns and nonplanar realizations remain open. No Lean source changes or new Lean theorem.
 
+## General planar-pattern reduction — 2026-11-27
+
+The new [proof and ledger](planar_patterns.md) enumerates the entire regular planar inflation route at the hexagonal marking, not just the two-flip family. An exact necessary-condition screen reduces 32,768 masks (global sign reversal identified) to 448 masks / 82 symmetry classes. Six complete three-parameter classes (33 masks) are excluded by uniform negative height-sign cycles, including a forced coincident projected pair. **415 masks / 76 classes remain.** See [screen verifier](verify_planar_patterns.py) and [family verifier](verify_planar_families.py); the latter prints the remaining ledger. The corrected intrinsic orientation is -2 for the recorded marking. No regular embedded lift has been constructed. This does not exclude nonregular or nonplanar embeddings; the elongated 0/19 count and full hexagonal status are unchanged.
+
 ## 1. What would finish Type 5?
 
 Existence is already established. The remaining question has two possible
