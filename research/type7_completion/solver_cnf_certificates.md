@@ -34,6 +34,15 @@ independently checked in 21.377 seconds, including the common coverage
 trace. Four formulas used the bounded clause-order retry described below.
 The final two triangle-pair formulas also passed, in 0.863 seconds.
 
+The independent checker now uses two watched literals per nonunit clause
+instead of rescanning every clause containing each newly false literal.
+On the same 24,504,592-byte coverage trace, matched sequential replays
+took **16.385 seconds with the earlier checker and 4.274 seconds with
+the watched checker**. Both reported exactly the same 67,473 RUP
+additions, 65,982 deletions, and 12,565 checked input lines. Replaying all
+96 mixed-case packets with the optimized checker took 9.258 seconds.
+These remain workspace timings.
+
 ## Reproduce
 
 Compile the checker with assertions enabled, then give the runner one or
@@ -45,6 +54,13 @@ python3 research/type7_completion/solver_cnf_certificates.py /tmp/type7-proofs \
   --checker /tmp/type7-rup-check /tmp/type7-fourzero-split /tmp/type7-four-cluster-v
 python3 research/type7_completion/solver_cnf_certificates.py /tmp/type7-proofs \
   --checker /tmp/type7-rup-check --replay-only
+```
+
+The propagation regression check is separately reproducible:
+
+```sh
+g++ -O3 -std=c++17 research/type7_completion/solver_check_rup_test.cpp -o /tmp/type7-rup-test
+/tmp/type7-rup-test
 ```
 
 Use `--jobs` to select one to eight worker processes, and `--seconds` for
@@ -82,6 +98,22 @@ Even trace lines marked as solver inputs must already be present or pass
 reverse unit propagation. Every other addition must pass the same check,
 and the trace must derive the empty clause. Deletions cannot introduce a
 contradiction.
+
+Watch positions persist between RUP checks, while assignments are freshly
+cleared. Two distinct watched literals remain valid after clearing all
+assignments; moving a watch never changes a clause. Deleted clauses are
+removed lazily from watch lists. The accepted proof calculus, checked
+inputs, and final empty-clause requirement are unchanged. The checker
+now refuses compilation with assertions disabled.
+
+The optimized engine passed 20,000 comparisons against a separate
+full-clause fixed-point propagation implementation, including repeated
+queries, duplicate clauses, deletions, tautologies, units, and early
+conflicts. Its 12,788 accepted random implications were also checked by
+exhaustively enumerating truth assignments. All 96 existing mixed-case
+proofs passed, and all four previously rejected non-RUP traces still
+failed. These regression checks supplement the unchanged mathematical
+RUP rule; they are not substitutes for checking each delivered proof.
 
 SAT, UNKNOWN, a timeout, a failed hash, or a missing final contradiction
 fails the run. Some solver traces use stronger DRAT transformations; those
