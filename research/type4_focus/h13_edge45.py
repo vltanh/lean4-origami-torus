@@ -16,6 +16,15 @@ for f in F:assert tuple(sum(K[i,j][k] for i,j in zip(f,f[1:]+f[:1])) for k in (0
 Q=list(it.combinations(range(8),4));signs='-++-++--++--+-+--+-++++--++-+-+++++-++--+--+--+--++--+-+-++--+--++----'
 assert len(signs)==70
 S=dict(zip(Q,signs));cliques={q for q in Q if all(e in E for e in it.combinations(q,2))}
+# verify_h13_strict.py proves this precise strictness set from the H13 weak closure.
+strict=set(Q)-{(0,1,4,7),(0,2,3,7),(0,2,5,6),(0,2,5,7),(0,4,6,7),(1,2,4,7),(1,3,5,7)}
+assert len(strict)==63 and cliques<=strict
+# A difference of two points in the open hexagonal Voronoi cell lies in
+# its double. Any lattice shift that brings it back into the closed cell
+# has all three integral strip coordinates of absolute value <=2.
+shifts=[(x,y) for x,y in it.product(range(-2,3),repeat=2)
+        if max(abs(2*x+y),abs(x+2*y),abs(x-y))<=2]
+assert len(shifts)==7
 def parity(q):return sum(a>b for i,a in enumerate(q) for b in q[i+1:])%2
 def sg(q):return (1 if S[tuple(sorted(q))]=='+' else -1)*(-1)**parity(q)
 order=(0,7,2,3,6,1)
@@ -57,25 +66,32 @@ def inner(x,y):return add(mul(G[0],x[0],y[0]),mul(G[1],add(mul(x[0],y[1]),mul(x[
 for (i,j),v in C.items():
     if i in (0,1) and j in (0,1):continue
     A('=',inner(b[i],b[j]),v)
-# Weak ordered wedge: strict exactly when the corresponding quadruple is a clique.
-for i,j in it.combinations(order,2):A('>' if tuple(sorted((4,5,i,j))) in cliques else '>=',det2(b[i],b[j]))
+# Ordered wedge, strengthened by exact circuit propagation.
+for i,j in it.combinations(order,2):A('>' if tuple(sorted((4,5,i,j))) in strict else '>=',det2(b[i],b[j]))
 # Intrinsic constraints: strict nearest lifts and consistently negative oriented faces.
 for i,j in E:
     x,y=shift(i,j)
     for z in (add(mul('2',x),y),add(x,mul('2',y)),sub(x,y)):
         A('<',z,'1');A('>',z,'(- 1)')
 for i,j,k in F:A('<',det2(shift(i,j),shift(i,k)))
-# Full H13 signs, with weak signs on noncliques.
+# Full H13 signs, with only seven possibly zero nonclique determinants.
 r={i:(*b[i],a[i]) for i in range(8)}
+vol={}
 for q in Q:
     i,j,k,l=q
     v=det3(diff(r[j],r[i]),diff(r[k],r[i]),diff(r[l],r[i]))
-    A('>' if q in cliques else '>=',v if S[q]=='+' else neg(v))
-# Necessary nonedge upper bounds (finite sample of lattice translates).
+    vol[q]=define('vol'+''.join(map(str,q)),v if S[q]=='+' else neg(v))
+    A('>' if q in strict else '>=',vol[q])
+# Strict volume comparisons from the H13 singleton circuits.
+for q,t in [('0245','2457'),('1246','1346'),('2456','3456'),('2467','3467')]:
+    A('>',vol[tuple(map(int,q))],vol[tuple(map(int,t))])
+# All four nonedges are strictly contracted: every edge is a genuine crease.
+# The seven shifts suffice to include every possible shortest lift.
 for i,j in it.combinations(range(8),2):
     if (i,j) in E:continue
     u=diff(b[j],b[i]);dd=add(inner(u,u),sq(sub(a[j],a[i])))
-    for k in it.product(range(-2,3),repeat=2):A('<=',dd,mul('4',L,norm(shift(i,j,k))))
+    A('>',dd)
+    for k in shifts:A('<',dd,mul('4',L,norm(shift(i,j,k))))
 print('variables',nvar,'assertions',nassert,flush=True)
 assert nvar==22
 smt='\n'.join(lines)+'\n'
