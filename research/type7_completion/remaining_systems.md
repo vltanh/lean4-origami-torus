@@ -10,6 +10,21 @@ triangle pairs are unlinked. Thus these queries include the embedding
 and linking information omitted by `type7_focus/generate_remaining.py`.
 No mask is declared infeasible.
 
+Two checked reductions now make these systems smaller. The
+[shared finite compiler](solver_remaining_compilation.md) covers all
+18,080 generic assignments and gives 1,436 K4 branches per marking after
+the seven gap-hull filters. Each branch retains only 3–50 actual circuit
+tests, with every allowed zero minor preserved by a weak decision diagram.
+Its face chart has 29 real variables and 21 quadratic metric equations.
+
+For global asymptotic work, the [bounded axis chart](exhaustive_remaining_axis.md)
+is valid for all `y>=32`, with no mask assumption. It has 38 bounded real
+variables, 24 quadratic metric equations and six quadratic product-scale
+equations. The [axis compiler](solver_remaining_axis.md) applies the full
+common sign cover in 268 branches per marking. Independent replay checks
+the reductions and emitted formulas. Neither reduction excludes a mask;
+three sampled axis queries returned `UNKNOWN` at 3,000 ms each.
+
 ## Correct long-ring linking target
 
 The alternating cycles `0246` and `1357` have period `(0,1)` in ray 1

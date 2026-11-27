@@ -172,7 +172,7 @@ The required sources are
 The common-line limit and second blow-up analyses are no longer gates
 to this ray-4 exclusion. Repeating them will not close rays 1–3.
 
-## 4. First completion gate: all of ray 3 at the common modulus
+## 4. Ray 3: completed eventual proof and finite-height certificates
 
 ### The system that must be decided
 
@@ -594,42 +594,61 @@ different proof-producing method; increasing the same timeout is not
 the next milestone. A result at `y=4` is diagnostic only for this
 `tau*` program unless the other markings are also covered at that modulus.
 
-## 5. After ray 3: finish both seven-mask unions
+## 5. Remaining geometric gates: complete rays 1 and 2
 
-Retain `tau*`. The [remaining-marking generator](remaining_systems.md)
-now supplies full necessary metric/embedding systems for all fourteen
-ray-1/2 IDs, with their own cocycles and masks, twelve horizontal
-unlinkings, all 524 actual circuit partitions, and the correctly retained
-long-link magnitudes one or two. Each has 18 reals, 382 Booleans, and
-8,305 Boolean clauses. The original basic fifteen-system generator
-remains only a metric relaxation.
+The current route seeks eventual exclusions for both complete markings.
+They would combine with the ray-3 and ray-4 bounds at one common height;
+no comparison between `Y3` and `10^6` is needed. The fourteen finite-mask
+systems at `tau*` remain an alternative route, with that comparison an
+additional gate if they are used to finish the negative classification.
 
-Exact rational witnesses show why a cheaper local-tetrahedron shortcut
+The [shared finite compiler](solver_remaining_compilation.md) now checks
+all 18,080 necessary generic sign assignments. A finite-domain Boolean
+backend reduces matched enumeration time from 121.338 to 3.951 seconds.
+An independent RUP trace proves completeness; the separate verifier
+replays 56,056 strictness deductions and every omitted actual circuit.
+The finite gap-hull filters give 1,436 K4 branches per marking, each with
+3–50 actual circuits and a weak decision diagram retaining every possible
+zero bracket. The [face chart](solver_remaining_face.py) has 29 real
+variables and 21 quadratic metric equations; all 28 marking/mask/anchor
+rewrites and 322 minor identities independently check.
+
+The [uniform axis compactification](exhaustive_remaining_axis.md) gives
+a stronger global domain for asymptotic work. It is valid for every
+`y>=32` in both markings, with no finite-mask assumption. Exact cocycle
+gauges justify rotating a vertical step of size at least `1/8` onto edge
+01. Common-neighbor polarization and the actual faces 346 and 356 bound
+every transverse coordinate and axial correction. Six products of small
+intrinsic increments remain explicit bounded variables; they are not
+discarded at a limiting collision. This gives **38 bounded real
+variables, 24 quadratic metric equations and six quadratic product
+equations** at fixed height.
+
+The [axis compiler](solver_remaining_axis.md) partitions the complete
+common sign set into **268 branches per marking**, without a mask split.
+Every branch preserves the full bounded metric prefix, shortest lifts,
+intrinsic areas, nonedge contractions and all necessary incidence tests.
+Independent replay checks the source hash, every group, its exact weak
+diagram, and all 268 emitted ray-2 queries. The topology-only symmetry
+group is used for Boolean enumeration; it does not quotient metric cases.
+
+Three representative new axis queries, with 3, 18 and 50 retained
+circuits, each returned `UNKNOWN` at a 3,000 ms limit. That diagnostic
+stopped after the sample. The next step requires exact geometric or
+algebraic certificates in the reduced domain, rather than unchanged
+retries. No ray-1/2 mask or marking has yet been excluded.
+
+Exact rational witnesses also show why a local-tetrahedron shortcut
 cannot finish this step: both `04` masks satisfy every shortest-edge,
-face-orientation, and individual K4 positive-definiteness condition.
+face-orientation and individual K4 positive-definiteness condition.
 These are not global spatial realizations. Global metric compatibility
-and embedding must remain in the search.
+and embedding remain indispensable. The markings have different
+Hamiltonian periods, `(-4,1)` and `(-3,1)`, and are not interchangeable.
 
-For each marking, prove that every realization maps by a checked joint
-marking/triangulation symmetry to one listed mask. Use the finite gap
-and component-sum estimates to derive quantitative spatial consequences,
-then combine them with the complete metric and embedding system. Do not
-assume that the two markings are interchangeable because their mask lists
-coincide. Their Hamiltonian periods are `(-4,1)` and `(-3,1)`.
-
-The successful ray-3 mechanism should determine the next mask. If it
-depends on a four-vertex cap at each end, `ray1_04` and `ray2_04` are
-natural transfer tests: the two isolated large edges separate four-vertex
-groups. This is a proposed order, not a proved equivalence or complexity
-claim. A proof for `04` must still be followed by `03`, `014`, `015`,
-`025`, `0125`, and `0145` in each marking, or by a uniform theorem
-covering all seven.
-
-Completion criteria are exact: seven of seven exclusions close ray 1;
-seven of seven close ray 2; both, together with ray 3 and the audited
-ray-4 theorem at the same modulus, close the negative classification.
-No symmetry reduction or successful partial certificate is counted as
-an excluded mask by itself.
+A complete eventual exclusion must cover every limit and every relative
+collapse rate in one marking. Alternatively, a finite-height proof must
+cover all seven masks there. A reduction or partial certificate alone
+does not close a marking.
 
 ## 6. Constructive alternative and pivot rules
 
@@ -700,15 +719,16 @@ must still be connected explicitly in Lean.
    where applicable. Replay each new nonlinear exclusion with a proved
    checker or translate its analytic proof into Lean. Python, C++, and
    SMT solver exit statuses are research evidence, not Lean proof terms.
-5. **Assemble the final theorem.** Dispatch all four markings at `tau*`,
+5. **Assemble the final theorem.** Dispatch all four markings at one
+   common height, using explicit exclusions or their eventual bounds,
    prove the negated realization statement, expose the classification
    through the public library and solution wrapper, and build both
    default targets. No `sorry`, new axiom, or unproved certificate
    soundness assumption may stand in for a completion gate.
 
-Ray 4's finite algebra and Boolean coverage can be formalized before
-solving ray 3. That would retire a genuine formalization dependency, but
-would not change the fifteen-system research count.
+Ray 4's finite algebra and Boolean coverage can be formalized while
+the ray-1/2 geometry is being completed. The ray-3 analytic proof also
+requires its compactness and uniform-estimate bridges in Lean.
 
 ## 8. Reproduction and review commands
 
@@ -770,8 +790,8 @@ CNF/proof traces outside the source tree. For the formal endpoint use the
 repository's pinned toolchain and run `lake build`; successful research
 script replay does not substitute for that build.
 
-**Review endpoint:** the first progress entry that closes a currently
-open Type 7 marking must be a full `ray3_phase0` exclusion at `tau*`
-with its premises discharged, or a certified embedded realization that
-changes the negative target. The next classification entry requires the
-remaining fourteen systems as well and the completed Lean bridge.
+**Review endpoint:** ray 3 now has a complete eventual research exclusion.
+The next marking closure requires a full ray-1 or ray-2 exclusion with
+all premises discharged, at an explicit height or eventually. The final
+classification requires a common counterexample height for all four
+markings and the completed Lean bridge, or a complete positive construction.

@@ -181,6 +181,16 @@ Rays 1 and 2 and the Lean assembly remain open. The separate
 `y=10^6` ledger is unchanged; see the
 [current roadmap](research/type7_completion/ROADMAP.md).
 
+The [ray-1/2 compiler](research/type7_completion/solver_remaining_compilation.md)
+now covers all 18,080 generic signs, with matched Boolean enumeration
+reduced from 121.338 to 3.951 seconds and independent completeness replay.
+A [uniform bounded axis chart](research/type7_completion/exhaustive_remaining_axis.md)
+retains all six collapse products for every `y>=32`. Its
+[268 branches per marking](research/type7_completion/solver_remaining_axis.md)
+have quadratic metric equations and only 3–50 remaining actual circuit
+tests. These verified reductions support further proof search; no ray-1/2
+exclusion is claimed.
+
 See [Type 7 reconstruction, rigidity and two elongated branches](research/type7_focus/README.md). The anchor-leaf reconstruction proves at most two embedded candidates per intrinsic placement on every marking. Using the earlier necessary clique-sign archive, the weighted mirror-distance identity and the checkerboard twist test strengthen this to **uniqueness up to congruence from the 24 labeled edge lengths**, conditional on the earlier strict-support and orientation-projection proof premises. The exact finite checker ran on the current input archives: 308/316 clique patterns have a unanimous anchor; the eight others have no admissible checkerboard partner. This is a rigidity result, not a universality result.
 
 For the elongated range y^2>=35/4, ray_4's 16 generic orientation models reduce under the joint 32-element marking stabilizer to two orbits of eight. Canonical anchor 0127 has opposite-side and same-side mirror patterns, respectively. Both have an exact Gram-completion formulation with 18 real unknowns for a fixed metric, or 19 over the entire elongated range. All nonclique determinant signs are weak, with full intersection circuit constraints retained. The new fixed y=4 R1 and R2 systems both returned unknown (5000 ms solver timeouts); no branch is excluded or realized.
