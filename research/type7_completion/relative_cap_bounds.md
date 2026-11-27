@@ -259,6 +259,119 @@ antiparallel **directions**, not a small area caused only by a vanishing
 edge. It still permits zero cross products and supplies no contradiction
 through that angular region. Full `ray3_phase0` remains open.
 
+## 5. A certified exclusion of the tested nonparallel two-stick corner
+
+The following computer-assisted research theorem excludes the proposed
+corner across all transverse directions, including nongeneric directions.
+It uses the geometric implications established in
+[`geometric_audit.md`](geometric_audit.md) and the existing necessary
+ray-3 linking conditions. It is not a fixed-modulus exclusion and has not
+been assembled into a Lean theorem.
+
+**Theorem.** There is no sequence of actual canonical ray-3 realizations
+with `y_n` tending to infinity having all the following properties in the
+normalized axial coordinates of Sections 3–4:
+
+1. `P_1,P_4` tend to `P_0=0`, and `P_3,P_6` tend to `P_2=0`.
+2. `P_5` and `P_7` tend to linearly independent transverse vectors `p,q`.
+3. The four collapsing short edges `01,14,23,36` have comparable lengths:
+   for `epsilon_n=max(h_01,h_14,h_23,h_36)`, which tends to zero, there is
+   a fixed `kappa>0` such that each of those four weights is at least
+   `kappa*epsilon_n`.
+
+The labels are part of the statement. The theorem covers arbitrary
+nonparallel vectors `p,q`, not merely orthogonal sticks. It makes no
+claim about a different labeled collapse pattern without a checked
+symmetry, or about a sequence in which some of these four edge ratios
+tend to zero.
+
+### Fix the moving anchors before taking a limit
+
+The four actual points `0,2,5,7` are eventually affinely independent.
+Apply their unique affine normalization to make them exactly
+
+    r_0=(0,0,0), r_2=(0,0,1), r_5=(1,0,0), r_7=(0,1,1).
+
+This normalization is used only for geometry and linking; no Euclidean
+metric equality is asserted after it. Its linear maps and inverses are
+uniformly bounded in the already normalized `(P,H)` coordinates.
+
+More explicitly, let `M_n` be the inverse of the matrix with columns
+`P_5,P_7`. The transverse coordinate becomes `M_n P`, and the new axial
+coordinate is
+
+    H-H_5*(M_n P)_1+(1-H_7)*(M_n P)_2.
+
+The two added coefficients are `O(1/w_n)`. The relative bounds from
+Sections 2–4 therefore imply, for every short edge,
+
+    |new axial displacement| = O(h_e/w_n).
+
+For the four collapsing edges this is `o(epsilon_n)`. Crucially, the
+anchors are fixed **at each member of the sequence**. Their original
+motion need not be `O(epsilon_n)`; the proof allows
+`epsilon_n` to be much smaller than `1/w_n`.
+
+Pass to a subsequence of the transverse collapsing-edge vectors divided
+by `epsilon_n`. They converge to four nonzero vectors `a,b,c,d`: the
+lower bounds in Section 3 and comparability prevent any from vanishing.
+The resulting first-order positions, with axial errors
+`o(epsilon_n)`, have the form
+
+    1 = (epsilon*a,0) + o(epsilon),
+    4 = (epsilon*(a+b),0) + o(epsilon),
+    3 = (epsilon*c,1) + o(epsilon),
+    6 = (epsilon*(c+d),1) + o(epsilon).
+
+No differentiability, power series, or common rate between `epsilon`
+and `1/w` is assumed.
+
+### Exact Boolean contradiction
+
+For each four-point bracket with a nonzero constant term, its sign is
+eventually fixed. For each bracket whose constant configuration has
+affine rank two, divide by `epsilon`; its limit is a linear form in
+the eight components of `a,b,c,d`. A nonzero limit fixes its eventual
+sign; a zero limit leaves its generic sign completion free. Brackets
+requiring higher-order data are left unconstrained.
+
+This gives nine constant bracket signs and 42 weak links to linear
+forms. The only forms needed are the eight individual coordinates and
+the four sums
+
+    ax+bx, ay+by, cx+dx, cy+dy.
+
+Represent each form by positive and negative Boolean variables, with
+both false meaning zero and both true forbidden. For a two-term sum,
+the signs of its two terms and its total have exactly thirteen possible
+triples. For example, two positive terms have a positive sum; opposite
+signs permit any sign of the sum. The verifier encodes the fourteen
+forbidden triples for each of the four independent sums. It also
+requires each of `a,b,c,d` to have a nonzero component.
+
+Combine these necessary sign conditions with the archived generic
+orientation formula, the two short-ring unlinkings, and long-ring
+linking of magnitude two. The first-bracket reflection gauge is removed
+because the moving frame has fixed the coordinate orientation; all
+remaining geometric conditions and the absolute linking target are
+reflection invariant. The formula has **433 variables and 8,543 clauses**.
+
+The independent exhaustive C++ checker reports
+
+    UNSAT nodes 6137
+
+This is a finite Boolean contradiction. It uses neither nonlinear SMT
+infeasibility nor numerical optimization. The necessity of the affine
+frame, nonzero limiting vectors, leading brackets, and sign-addition
+clauses is the hand argument above. Actual coplanar nonclique
+quadruples and vanishing leading coefficients remain permitted.
+
+**Remaining scope.** This closes the proposed comparable-edge corner
+as a construction route. It leaves hierarchical edge-collapse rates,
+other limiting cap configurations, and the full fixed-`y=10^6` system
+unresolved. The count of excluded systems among the fifteen open
+ray-1/2/3 systems remains zero.
+
 ## Reproduction
 
     python3 research/type7_completion/verify_relative_cap_bounds.py
@@ -268,3 +381,17 @@ archived cocycle, both windings, the area identity, the chosen face and
 baseline signs, and every rational constant above. The Cauchy,
 nearest-lift comparison, and determinant estimates are the hand proof
 given here. This is research verification, not a new Lean theorem.
+
+For the separately certified corner exclusion, generate the necessary
+formula outside the source tree and replay it independently:
+
+```sh
+python3 research/type7_completion/verify_nonparallel_corner.py /tmp/type7-nonparallel-corner.cnf
+g++ -O3 -std=c++17 research/orientation_checkpoint/check_unsat.cpp -o /tmp/type7-corner-checker
+/tmp/type7-corner-checker < /tmp/type7-nonparallel-corner.cnf
+```
+
+Require the checker's explicit `UNSAT nodes 6137` output. A zero exit
+status alone does not distinguish SAT from UNSAT for this checker.
+The generator uses repository data, SymPy, and shared libz3; it has no
+dependency on the exploratory scratch scripts or a saved sign model.

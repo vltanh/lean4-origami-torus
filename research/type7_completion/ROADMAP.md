@@ -286,6 +286,18 @@ Exact reconstruction and all 322 emitted incidence minors are checked
 against independent rational physical coordinates. Its 9,140-assertion
 query at `tau*` returned `UNKNOWN (timeout)` in one 30,000 ms trial.
 
+The [nonparallel-corner theorem](relative_cap_bounds.md#5-a-certified-exclusion-of-the-tested-nonparallel-two-stick-corner)
+now excludes one complete asymptotic construction family: clusters
+`014` and `236`, with tips `5` and `7` limiting to nonparallel transverse
+directions, cannot occur along `y -> infinity` if the four collapsing
+edges `01,14,23,36` remain comparable. The proof fixes the moving anchor
+tetrahedron before taking the common edge scale, so that scale can be
+arbitrarily smaller than `1/y^2`. Its 433-variable, 8,543-clause necessary
+sign formula independently replays as **`UNSAT nodes 6137`**. This is a
+checked exclusion of that family, not a fixed-`tau*` exclusion. Different
+collapse rates and other cap limits remain; the fifteen-system ledger
+is unchanged.
+
 The next requirement is a contradiction across the remaining angular
 region using the exact metric and required long-ring linking. An
 acceptable exclusion is a hand inequality proof or an independently
@@ -473,7 +485,17 @@ python3 research/type7_completion/projected_metric.py /tmp/type7-ray3-projected.
 python3 research/type7_completion/verify_relative_cap_bounds.py
 python3 research/type7_completion/verify_direct_metric.py
 python3 research/type7_completion/direct_metric.py /tmp/type7-ray3-direct.smt2 1000000
+python3 research/type7_completion/verify_nonparallel_corner.py /tmp/type7-nonparallel-corner.cnf
 ```
+
+Replay the last formula with the same independent C++ checker used above:
+
+```sh
+/tmp/type7-check-unsat < /tmp/type7-nonparallel-corner.cnf
+```
+
+Its printed result must be `UNSAT nodes 6137`. The proof and exact scope
+are in the relative-cap note; it does not close the fixed-modulus query.
 
 For ray-4 independent RUP replay, use a scratch working directory and
 follow the three-command producer/checker workflow in
