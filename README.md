@@ -25,6 +25,54 @@ The research goal is to classify which of the seven Lutz eight-vertex triangulat
 
 Types 4 and 6 share a degree sequence and have different graphs. Lean verifies the existence classification for all seven types. [Verification scope](docs/VERIFICATION.md) records which of these results Lean checks.
 
+## Completion roadmap
+
+The remaining classification question is **universality**. Existence or nonexistence is already settled for all seven types. The working order is to finish **Type 4**, starting with one complete case, before resuming Types 5 and 7. Historical research packages remain available, but their earlier active targets do not override this order.
+
+| Type | Completed result | Work needed to finish the type | Current action |
+|---|---|---|---|
+| 1 | Nonexistence, proved in Lean | None for this classification | Retain the proof |
+| 2 | Nonexistence, proved in Lean | None for this classification | Retain the proof |
+| 3 | Universality, proved in Lean | None for this classification | Retain the proof |
+| 4 | Existence and the full reduced open strip, proved in Lean | Decide the sharp-rhombic boundary: either one impossible modulus in both markings, or coverage of the entire missing boundary | **Active: finish `ray2_2`, then the other seven cases** |
+| 5 | Exact square and nonrectangular box, proved in Lean | A single-modulus obstruction covering every marking, or a construction covering every missing modulus | Deferred; the current elongated target has 19 open localized families |
+| 6 | Universality, proved in Lean | None for this classification | Retain the proof |
+| 7 | Existence and the full reduced open strip, proved in Lean | A single-modulus obstruction covering every marking, or coverage of the entire missing boundary | Deferred; the current target has 15 open branches, with ray 4 excluded under the recorded geometric premises |
+
+### Type 4: one fixed target, eight complete cases
+
+Fix
+
+\[
+\tau_* = \tfrac12 + 10^6 i.
+\]
+
+The [finite cover](research/type4_focus/fixed_metric.md) gives the following eight maximal closed families, including cap endpoints and collapsed limits. The names and labels below are exactly those of [the enumeration](research/type4_focus/type4_gap_enum.py). A family is a continuous feasibility problem; its appearance in this finite list is not a proof of infeasibility.
+
+| Case | Labels in vertex order 0,...,7 | Cap cycles in this representative | Full-case status |
+|---|---|---|---|
+| `ray2_2` | `20220012` | 145 / 0273; vertex 6 in the broadened strip | **Active; open** |
+| `ray2_1` | `12220002` | 456 / 1273; equivalent to 145 / 0263 | Next; open |
+| `ray1_1` | `00120212` | 014 / 357 | Open |
+| `ray1_2` | `00130222` | 014 / 567 | Open |
+| `ray1_3` | `00230223` | 014 / 256 | Open |
+| `ray1_4` | `01200223` | 034 / 256 | Open |
+| `ray1_5` | `02200323` | 034 / 126 | Open |
+| `ray1_6` | `12200023` | 345 / 126 | Open |
+
+1. **Finish `ray2_2`.** Use the exact ray-2 transport identities and full edge equations to control the degenerating triangle 145 and quadrilateral 0273. The previous cap-sidedness certificates exclude only their nondegenerate transverse regime. The missing proof must also cover arbitrarily small edges and cap areas, every allowed position of vertex 6, and nonclique coplanarity. An argument that divides by an area needs a bound that remains valid as that area approaches zero.
+2. **Finish `ray2_1`.** Reuse any proved estimate for the entire second marking, then handle its 145 / 0263 cap geometry. Closing both rows excludes the second marking at the same modulus.
+3. **Finish the six first-marking cases.** Work through the displayed rows, reusing arguments for the shared triangular caps. Every maximal family must be closed; excluding an orientation subchamber or only a limiting regime does not close its row.
+4. **Assemble the theorem.** Combine the eight exclusions with the marking and closed-cell coverage theorems, discharge their documented geometric premises, and then formalize the resulting nonuniversality proof in Lean. The existing open-strip theorem remains part of the final Type 4 classification.
+
+The present count is **0/8 full cases excluded**. A certified embedded solution in any row would refute this proposed counterexample modulus and trigger a deliberate change of target or a constructive boundary proof. It would settle that modulus, not universality.
+
+### Completion criteria and deferred work
+
+A case closes only with a mathematical contradiction valid on its entire domain, an independently replayable exact infeasibility certificate, or an exact embedded witness that changes the proposed obstruction strategy. Numerical nonconvergence, timeout, an uncheckable solver verdict, and an exclusion requiring a positive limiting area do not meet this criterion. Each new proof must state which geometric premises it uses; algebra checks alone do not discharge those premises.
+
+For Type 5, retain the [19-family fixed target](research/type5_focus/fixed_elongated/README.md) and the [complete weak-chamber tests](research/type5_closure/weak_chamber_reduction.md). For Type 7, retain the current fifteen ray-1/2/3 systems and the [ray-4 exclusion](research/linking_checkpoint/cycle_thresholds.md); the [ray-3 metric system](research/type7_closure/README.md) must retain its required linking and all degenerate intersection tests. Resume these types after the focused Type 4 work, without repeating the recorded undecided queries unchanged.
+
 ## Repository layout
 
 - `OrigamiTorus/Type*` contains the proofs for each triangulation.
@@ -67,13 +115,9 @@ To replay the archived research packages, use Python 3 with assertions enabled, 
 
 Direct searches for embedded sharp-rhombic realizations did not find a certified witness. This is not evidence of impossibility sufficient for a proof. The previously used trapezoidal family degenerates at x=1/2. Alternative diagonal flips and constant-height lifts did not supply global Type 5 or boundary constructions. Shortest-edge inequalities alone do not exclude the hexagonal metric; the elongated-limit disjoint-cycle test did not exclude any remaining type. Avoid extending pointwise continuation or creating more finite local subcases without a global coverage or obstruction argument.
 
-## Gated next steps
+## Verification before a final classification claim
 
-1. Audit the remaining positive interval and planar-inflation certificates. Check exact combinatorial labels and all degeneracies before stating full coverage.
-2. Fixed hexagonal metric: resolve all applicable marking orbits for one type using exact infeasibility or a certified embedded witness. Infeasibility of all markings for one metric suffices for nonuniversality. A witness at one metric does not suffice for universality.
-3. If the hexagonal metric is realizable, attack whole sharp-rhombic ray for Types 4 and 7 using a parametrized regular lift or finite coverage certificate; do not assume continuity of embeddings across a degenerating boundary.
-4. Type 5: use the radical reconstruction to seek a parameter-global construction or a rigorous single-metric obstruction. A finite number of marking families by itself does not guarantee practical quantifier elimination.
-5. Complete the geometric bridges and remaining certificates listed in [Verification scope](docs/VERIFICATION.md).
+The completion roadmap above sets the research order. For any new completed result, audit the exact combinatorial labels, coverage and degeneration arguments, then update the geometric bridges and certificate scope in [Verification scope](docs/VERIFICATION.md). Run the Lean build and Comparator in an environment with the repository toolchain before describing a new theorem as Lean-verified.
 
 ## Sources
 
