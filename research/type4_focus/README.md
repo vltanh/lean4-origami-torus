@@ -296,3 +296,74 @@ Reproduced locally:
     UNKNOWN timeout
 
 The final line is the libz3 result at 5000 ms; the circuit enumeration passed, but the metric system remains unresolved. The earlier exact angular-relaxation witness does not satisfy this complete system. No branch closure is claimed.
+
+
+## 14. Hand proof: a sharp convex-hull bound for linked short fibers
+
+This checkpoint uses mathematical reasoning only: no SAT enumeration, numerical optimization, nonlinear solver, interval search or computer-assisted proof. The aim is an obstruction valid on a whole modulus interval rather than more subdivision of H13 at one metric. It strengthens the earlier linking checkpoint's threshold, but does not settle the hexagonal metric.
+
+### Lemma (three intersecting convex hulls)
+
+Let C_1,C_2,C_3 be simple closed rectifiable curves in Euclidean 3-space, each of length at most L. Suppose their convex hulls intersect pairwise. If x_i belongs to conv(C_i), the perimeter of the triangle x_1 x_2 x_3 is strictly less than
+
+    (3 sqrt(3)/2) L.
+
+Proof. Any triangle with vertices in conv(C_i) has perimeter at most L. Indeed, the perimeter is convex in each of its three arguments separately. Express each of its vertices as a finite convex combination of points on C_i and apply convexity in all three arguments. Each resulting triangle on the curve has perimeter at most its length, by traversing the three intervening arcs. Also diam(conv(C_i))=diam(C_i)<L/2: between any two distinct points on a simple closed curve there are two arcs, and equality of their lengths with the chord would force the two arcs to coincide.
+
+Choose p_12, p_23, p_31 in the respective pairwise intersections. For i=1,2,3 with indices cyclic, let m_i be the midpoint of p_(i-1,i) and p_(i,i+1), and let d_i be their distance. The triangle perimeter bound just proved gives
+
+    |x_i-m_i| <= (|x_i-p_(i-1,i)|+|x_i-p_(i,i+1)|)/2
+               <= (L-d_i)/2,
+
+and 0<=d_i<L/2. The medial triangle on the m_i has perimeter (d_1+d_2+d_3)/2, including the degenerate case.
+
+If the x-triangle is degenerate, each of its pairwise distances is strictly less than L by going through the corresponding intersection point, so its perimeter is strictly less than 2L. Otherwise let A_i be its interior angles, u_i=(x_(i+1)-x_i)/|x_(i+1)-x_i|, and P its perimeter. Expanding the identity P=sum_i <u_i,x_(i+1)-x_i> around m_i gives
+
+    P <= perimeter(m_1,m_2,m_3) + sum_i |u_(i-1)-u_i| |x_i-m_i|
+      <= (d_1+d_2+d_3)/2 + sum_i (L-d_i) cos(A_i/2)
+       = L sum_i cos(A_i/2) + sum_i d_i (1/2-cos(A_i/2)).
+
+Here |u_(i-1)-u_i|=2 cos(A_i/2). If every A_i<=2 pi/3, all the d_i coefficients are nonpositive. Concavity of cosine on [0,pi/2] and sum A_i=pi yield
+
+    P <= L sum_i cos(A_i/2) <= (3 sqrt(3)/2) L.
+
+Equality would require all A_i=pi/3 and all d_i=0. In that case the three intersection points coincide at a point p, and |x_i-p|<L/2 by strict diameter of conv(C_i); the perimeter estimate is therefore strict.
+
+If one angle A_i>2 pi/3, write c=cos(A_i/2)<1/2. The other two angles have cosine of half-angle at most 1 and at least 1/2. Dropping their nonpositive d-terms and using d_i<=L/2 gives
+
+    P <= L(c+2) + (L/2)(1/2-c)
+       = L(9/4+c/2) < (5/2)L < (3 sqrt(3)/2)L.
+
+This proves the lemma without a general-position assumption. The constant is optimal for the abstract pairwise-convex-hull relaxation if degenerate doubled segments are allowed as limits: take three segments of length L/2 from a common point in coplanar directions 120 degrees apart, with x_i their outer endpoints. Thus improving the bound further requires additional geometry, not just the pairwise intersection and length premises.
+
+### Consequence for every embedded flat torus with linked short fibers
+
+Let h be a primitive lattice period and L=|h|. Suppose the linking number of two distinct parallel h-geodesics is nonzero. Every such fiber is a simple closed curve of length L, and the linking number is the same for every distinct pair (up to a common orientation convention), since the ordered pair of distinct parallel fibers can be moved continuously on the torus. Two linked curves have intersecting convex hulls: disjoint convex hulls admit a strict separating plane and hence have zero linking. For any three points of the torus, take their three h-fibers, using the same curve for repeated fibers. Their hulls intersect pairwise, so the lemma applies.
+
+In particular, every three-edge cycle of the triangulation has perimeter strictly less than (3 sqrt(3)/2)L. Its intrinsic perimeter equals its extrinsic perimeter by facewise isometry. If its period is g, its lifted path has length at least |g| by the Euclidean triangle inequality. We obtain the global necessary condition
+
+    |g| < (3 sqrt(3)/2)|h|
+
+for every triangular cycle whenever q(h)!=0.
+
+On the sharp-rhombic ray with basis (1,0),(1/2,y), choose h=(1,0). Each remaining marking has a triangular cycle of nonzero vertical winding, with period length at least sqrt(y^2+1/4) (for vertical coefficient +/-1 its horizontal component has magnitude at least 1/2; for larger coefficients the bound is also immediate on this ray). Consequently
+
+    q(1,0)!=0  =>  y^2+1/4 < 27/4  =>  y^2 < 13/2.
+
+Thus **q(1,0)=0 throughout y^2>=13/2**, improving the earlier threshold y^2>=35/4. This applies to every remaining sharp-ray marking of Types 4,5,7, independently of the SAT filters, conditional only on the corresponding marking's having the indicated triangular period. For Type 4 that property can be read directly from the two basis cycles 014 and 015. In the interior strip the same reasoning gives the general bound on every triangular period, not an assertion that the sharp-ray threshold carries over unchanged.
+
+### Direct H13 application, without any solver
+
+Use the first sharp-ray marking with the fixed H13 vertex labeling. The cycles (0,1,4) and (2,5,6) are vertex-disjoint triangular cycles, both of period (-1,0): in the gauge K_4j=0 the first sum is (-1,0), and the second is (-1,1)+(0,-1)+(0,0)=(-1,0).
+
+Their linking can be read by hand from the already recorded integer sign representative in section 10. The oriented triangle 014 is in z=0, with closed disk x>=0, y>=0, x+y<=1000. Vertices 2 and 6 have negative z, and vertex 5 has positive z. On edge 52 the plane intersection occurs at parameter 1/6 from 5 toward 2; its two coordinates are positive and their sum is 5548/6<1000. On edge 56 the plane intersection occurs at parameter 1000/4294 from 5 toward 6; the coordinate sum is 5452*1000/4294>1000. Edge 26 stays on the negative side. Thus precisely one transverse crossing of the disk occurs, and the triangular cycles have linking number of absolute value one.
+
+This is not an assumption that the integer representative is flat. The plane-side determinants and the five-point circuits for those two edge/triangle tests are strict in H13 even when the seven allowed nonclique determinants vanish: the tests involve only the vertex sets {0,1,2,4,5} and {0,1,4,5,6}, neither of which contains an allowed zero quadruple from section 11. Hence their sign partitions, and the linking conclusion, transfer to every actual H13 realization under the earlier strictness lemma.
+
+In this marking the triangular cycle (0,1,5) has period (-1,1), of length sqrt(y^2+1/4). The new lemma therefore gives, entirely by hand,
+
+    H13 with the first sharp-ray marking is impossible for y^2 >= 13/2.
+
+No exclusion at the hexagonal endpoint y^2=3/4 follows. Nor does this eliminate other H13 relabelings on non-equivalent markings away from that endpoint. The result is a global elongated-range obstruction, not closure of the H13 hexagonal branch or of Type 4. All 31 hexagonal classes remain unresolved. The preceding geometric proof-audit qualifications still apply.
+
+No computer-assisted calculation was used for this section; the sign representative and strictness lemma are prior data. The central linking bound itself needs neither that representative nor an orientation enumeration.
