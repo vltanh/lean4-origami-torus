@@ -624,6 +624,25 @@ discarded at a limiting collision. This gives **38 bounded real
 variables, 24 quadratic metric equations and six quadratic product
 equations** at fixed height.
 
+The [complete product-limit cover](exhaustive_remaining_locus.md) now
+reduces every unbounded sequence to two closed geometric families.
+All 64 zero-factor choices give six exact nearest-lift polygons; checked
+marked dihedral gauges reduce these to a three-step component opposite
+one half-step, or two pairs of consecutive steps. Five exact identities
+retain the full algebraic product closure, including component
+intersections. Every limit has two projected endpoint triangles of
+perimeter one, with alternate triangles handling the exceptional
+corners. This is an asymptotic cover, not a two-mask finite-height claim.
+
+In the two-block `04` limit of ray 1, the
+[focal-ellipse and weak-sign proof](remaining_ray1_mask04.md) forces all
+eight transverse points onto one common line, with `h0=h4=1/2` and
+three remaining closed weight families. It covers zero focal lengths,
+collinear triples and collapsed edges while retaining both outer
+product scales. All 52 direct Boolean certificates independently
+replayed in 3.066 seconds. The remaining common-line blow-up is still
+open, so this does not close `ray1_04`.
+
 The [axis compiler](solver_remaining_axis.md) partitions the complete
 common sign set into **268 branches per marking**, without a mask split.
 Every branch preserves the full bounded metric prefix, shortest lifts,

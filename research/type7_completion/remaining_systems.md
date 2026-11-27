@@ -25,6 +25,13 @@ common sign cover in 268 branches per marking. Independent replay checks
 the reductions and emitted formulas. Neither reduction excludes a mask;
 three sampled axis queries returned `UNKNOWN` at 3,000 ms each.
 
+The [complete asymptotic cover](exhaustive_remaining_locus.md) further
+gives six exact closed polygons and two canonical limit families, with
+five universal product-scale identities and all intersections retained.
+The [ray-1 two-block proof](remaining_ray1_mask04.md) forces that limit
+onto a common transverse line. These are necessary limit reductions;
+the common-line boundary and both full markings remain open.
+
 ## Correct long-ring linking target
 
 The alternating cycles `0246` and `1357` have period `(0,1)` in ray 1
