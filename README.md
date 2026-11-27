@@ -67,6 +67,20 @@ The [finite cover](research/type4_focus/fixed_metric.md) gives the following eig
 
 The present count is **0/8 full cases excluded**. A certified embedded solution in any row would refute this proposed counterexample modulus and trigger a deliberate change of target or a constructive boundary proof. It would settle that modulus, not universality.
 
+Generate just the active complete case, retaining every intersection test:
+
+```sh
+python3 research/type4_focus/type4_fixed_cubic.py /tmp/type4-ray2_2 --case ray2_2 --full
+```
+
+### Active case: checked proof work
+
+The [cap calculation](research/type4_completion/ray2_2_geometry.md) now gives exact Gram and vertex-to-edge identities for all three small-margin regimes of triangle 145, together with positive nearest-lift deficit inequalities. These retain the cap area and vertical tilt at their actual scales. The [local affine-sign lemma](research/type4_completion/core_signs.md) gives six allowed Radon patterns for each of the two five-vertex cliques, including the implications `lambda6(2)<0 => lambda4(2)>0` and `lambda6(3)<0 => lambda5(3)>0`. The strict K4 premise excludes zero coefficients, without requiring any uniform lower bound on them.
+
+An [exact algebraic core](research/type4_completion/algebra.md) satisfies all its metric equations, shortest lifts, intrinsic face orientations and the tested nonedge contractions while having opposite cap signs. Its certified edge 15 / face 264 crossing shows why those metric conditions alone cannot prove the desired sidedness. The [linking audit](research/type4_completion/linking_audit.md) likewise supplies actual nonflat configurations for both allowed linking forms and qualitative cap separation. These are diagnostics of insufficient arguments, not realizations of the target torus.
+
+All four new exact checkers passed on this checkout, and the active full system regenerated with 23 variables and 890 assertions. The next proof must combine the metric identities with the actual nonintersection conditions across the A, B and C collapse regimes. The proposed metric sign implication is explicitly **unproved**; no full-case count or Lean theorem has changed.
+
 ### Completion criteria and deferred work
 
 A case closes only with a mathematical contradiction valid on its entire domain, an independently replayable exact infeasibility certificate, or an exact embedded witness that changes the proposed obstruction strategy. Numerical nonconvergence, timeout, an uncheckable solver verdict, and an exclusion requiring a positive limiting area do not meet this criterion. Each new proof must state which geometric premises it uses; algebra checks alone do not discharge those premises.

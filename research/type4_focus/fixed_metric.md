@@ -122,6 +122,17 @@ From this directory:
     python3 type4_fixed_cubic.py /tmp/type4-cubic
     python3 type4_fixed_cubic.py /tmp/type4-full --full
 
+For the case-by-case completion roadmap, generate only the active full case:
+
+    python3 type4_fixed_cubic.py /tmp/type4-ray2_2 --case ray2_2 --full
+
+The `--case` option selects an existing maximal family; it does not change
+the generated equations or discard any of that family's boundaries. A fresh
+repository replay produced `ray2_2.smt2` with 23 real variables, 890 assertions,
+406079 bytes and SHA-256
+`61d0fe4c2736ef570433d025c93c085e43545faf1d90e016c1e60eb549d87e45`.
+This is an input-generation check, not a solver decision.
+
 To run a local libz3 query (timeout in milliseconds):
 
     python3 -c 'from type4_fixed_cubic import solve; from pathlib import Path; print(solve(Path("/tmp/type4-full/ray2_1.smt2").read_text().replace("(check-sat)",""),5000))'
@@ -131,3 +142,4 @@ The local exact finite enumeration gave the 56/9 relative counts, 10/4 maximal c
 An independent exploratory sampling of the published Type 3 three-parameter planar family at the sharp ray (150,000 parameter samples for each w=3/4,1,4,100, ten two-flip paths) found no simultaneously convex pair of flips to Type 4 among the numerically flat samples. This is inconclusive and not a premise of any theorem here.
 
 **Actual remaining gate: 0/8 full maximal families excluded at tau=1/2+10^6 i.** This is a finite target including all collapsed-cap boundaries, not an additional infinite hierarchy. The product theorem is a new exact restriction, not closure of ray_2. No construction on the sharp ray was certified, and Type 4 remains open.
+

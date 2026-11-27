@@ -114,8 +114,20 @@ def solve(smt,timeout):
   f0=getattr(z,f);f0.restype=ret;f0.argtypes=args
  cfg=z.Z3_mk_config();z.Z3_set_param_value(cfg,b'timeout',str(timeout).encode());ctx=z.Z3_mk_context(cfg);z.Z3_del_config(cfg);s=z.Z3_mk_solver_for_logic(ctx,z.Z3_mk_string_symbol(ctx,b'QF_NRA'));z.Z3_solver_inc_ref(ctx,s);z.Z3_solver_from_string(ctx,s,smt.encode());o=z.Z3_solver_check(ctx,s);why=z.Z3_solver_get_reason_unknown(ctx,s).decode() if o==0 else '';z.Z3_del_context(ctx);return o,why
 if __name__=='__main__':
- out=Path(sys.argv[1]);out.mkdir(exist_ok=True,parents=True);full='--full' in sys.argv
+ import argparse
+ parser=argparse.ArgumentParser(description=__doc__)
+ parser.add_argument('output',type=Path)
+ parser.add_argument('--full',action='store_true',help='include all degenerate simplex-intersection exclusions')
+ parser.add_argument('--case',choices=[f'ray1_{j}' for j in range(1,7)]+['ray2_1','ray2_2'],
+                     help='generate only this complete maximal case (default: all eight)')
+ args=parser.parse_args()
+ out=args.output;out.mkdir(exist_ok=True,parents=True)
  for m,sh in enumerate(SH,1):
+  if args.case and not args.case.startswith(f'ray{m}_'):continue
   K,raw=enumerate_cells(sh);rs=orbits(K,maximal(raw));assert len(rs)==(6 if m==1 else 2)
   for j,c in enumerate(rs,1):
-   smt,nv,na=build(K,c,full);name=f'ray{m}_{j}';(out/(name+'.smt2')).write_text(smt+'(check-sat)\n');print(name,nv,na,len(smt),flush=True)
+   name=f'ray{m}_{j}'
+   if args.case and name!=args.case:continue
+   smt,nv,na=build(K,c,args.full)
+   (out/(name+'.smt2')).write_text(smt+'(check-sat)\n');print(name,nv,na,len(smt),flush=True)
+
