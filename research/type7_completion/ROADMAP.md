@@ -314,6 +314,22 @@ checked exclusion of that family, not a fixed-`tau*` exclusion. Different
 collapse rates and other cap limits remain; the fifteen-system ledger
 is unchanged.
 
+The [arbitrary-rate extension](exhaustive_nonparallel_corner.md) now
+removes that comparability assumption for the same labeled nonparallel
+two-stick limit. Its finite scale cover includes a separately normalized
+missing-edge displacement `26`; an exact relative axial estimate prevents
+cancellation of edges `23,36` from invalidating the leading-sign proof.
+Seven independently replayed Boolean certificates close all cases of
+that family, including the nested cancellation case. This still supplies
+no finite-height threshold and is not a whole ray-3 exclusion.
+
+The [global cap-limit theorem](cap_limit.md) also proves that every
+unbounded ray-3 sequence has a projected cap limit with a collinear
+triple. It covers arbitrary limits with two nondegenerate caps. Exact
+weak line orders force aligned trapezoids, and an exact stress identity
+contradicts a quadratic inequality checked on 32 rational cones.
+Degenerate limiting caps remain the next geometric gate.
+
 The next requirement is a contradiction across the remaining angular
 region using the exact metric and required long-ring linking. An
 acceptable exclusion is a hand inequality proof or an independently
@@ -354,11 +370,19 @@ the next milestone. A result at `y=4` is diagnostic only for this
 
 ## 5. After ray 3: finish both seven-mask unions
 
-Retain `tau*`. Extend the full ray-3 implementation to the fourteen
-ray-1/2 IDs, importing the appropriate cocycle and mask and deriving the
-correct linking constraints for that marking. The basic fifteen-system
-generator is only a metric relaxation; it is not already a complete
-embedding generator for these fourteen cases.
+Retain `tau*`. The [remaining-marking generator](remaining_systems.md)
+now supplies full necessary metric/embedding systems for all fourteen
+ray-1/2 IDs, with their own cocycles and masks, twelve horizontal
+unlinkings, all 524 actual circuit partitions, and the correctly retained
+long-link magnitudes one or two. Each has 18 reals, 382 Booleans, and
+8,305 Boolean clauses. The original basic fifteen-system generator
+remains only a metric relaxation.
+
+Exact rational witnesses show why a cheaper local-tetrahedron shortcut
+cannot finish this step: both `04` masks satisfy every shortest-edge,
+face-orientation, and individual K4 positive-definiteness condition.
+These are not global spatial realizations. Global metric compatibility
+and embedding must remain in the search.
 
 For each marking, prove that every realization maps by a checked joint
 marking/triangulation symmetry to one listed mask. Use the finite gap

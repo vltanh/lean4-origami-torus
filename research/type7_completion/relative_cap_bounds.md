@@ -261,6 +261,12 @@ through that angular region. Full `ray3_phase0` remains open.
 
 ## 5. A certified exclusion of the tested nonparallel two-stick corner
 
+**Extension:** the [arbitrary-rate proof](exhaustive_nonparallel_corner.md)
+now removes the comparability hypothesis below. The original
+common-scale proof is retained here as the simpler first step. The
+stronger result still concerns the same labeled nonparallel limiting
+family and does not exclude the full fixed-height phase.
+
 The following computer-assisted research theorem excludes the proposed
 corner across all transverse directions, including nongeneric directions.
 It uses the geometric implications established in
@@ -366,11 +372,11 @@ frame, nonzero limiting vectors, leading brackets, and sign-addition
 clauses is the hand argument above. Actual coplanar nonclique
 quadruples and vanishing leading coefficients remain permitted.
 
-**Remaining scope.** This closes the proposed comparable-edge corner
-as a construction route. It leaves hierarchical edge-collapse rates,
-other limiting cap configurations, and the full fixed-`y=10^6` system
-unresolved. The count of excluded systems among the fifteen open
-ray-1/2/3 systems remains zero.
+**Remaining scope.** The original proof closes the comparable-edge
+corner; the linked extension closes arbitrary collapse rates for this
+labeled family. Other limiting cap configurations and the full
+fixed-`y=10^6` system remain unresolved. The count of excluded systems
+among the fifteen full ray-1/2/3 systems remains zero.
 
 ## Reproduction
 
