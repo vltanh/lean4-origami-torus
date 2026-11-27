@@ -367,3 +367,14 @@ In this marking the triangular cycle (0,1,5) has period (-1,1), of length sqrt(y
 No exclusion at the hexagonal endpoint y^2=3/4 follows. Nor does this eliminate other H13 relabelings on non-equivalent markings away from that endpoint. The result is a global elongated-range obstruction, not closure of the H13 hexagonal branch or of Type 4. All 31 hexagonal classes remain unresolved. The preceding geometric proof-audit qualifications still apply.
 
 No computer-assisted calculation was used for this section; the sign representative and strictness lemma are prior data. The central linking bound itself needs neither that representative nor an orientation enumeration.
+
+
+## 15. Hand-proof global attack: bounded caps and tube, all scales
+
+[Detailed proof](elongated_hand.md). We now use the entire elongated sharp-rhombic ray as the nonuniversality target, rather than continuing the nonlinear H13 hexagonal reformulations.
+
+For every elongated eight-vertex origami-torus sequence the normalized vertical image is a doubled segment with exactly two turns. A barycentric retraction of a nearby horizontal fiber proves each turn carries a horizontal essential cycle. Each turn cluster has three to five vertices. If its physical vertical width diverges, rescale by that width: the two tail directions are opposite, so there is a local turn carrying at least three of the cluster vertices. The cluster strictly shrinks, and after at most two refinements one obtains a bounded physical-width cap. This treats nested intermediate-scale degenerations without assuming relative-interior macroscopic limits.
+
+For Type 4 the graph after removing universal vertices 4,5 is the join of an independent pair and a four-vertex path. The chordless cycles and their lattice periods give six disjoint horizontal triangle-pair classes in ray 1, and two triangle/quadrilateral cap-pair classes in ray 2, with explicit vertical level intervals. Each row has a direct edge through each strip. The bounded cap diameters imply the two representative cap levels are y/2+O(1) apart, and the entire surface lies within a uniformly bounded distance of an actual edge of length y/2+O(1). This holds on both markings, including all endpoint and intermediate-scale degenerations. In ray 2 at least one final cap is isolated, so its physical vertical width tends to zero and its limiting transverse perimeter is one.
+
+No solver, numerical search or computer-assisted enumeration was used. The hand proof inherits the earlier winding-classification premise for the Type 4 tables. It does not exclude any of the eight surviving necessary cap-pair families. Type 4 universality and the H13 hexagonal gate remain open; the next goal is an exact obstruction to the two annuli embedding within the common tube, not more sign subdivisions.
