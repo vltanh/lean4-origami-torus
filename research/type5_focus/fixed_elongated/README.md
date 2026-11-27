@@ -97,3 +97,8 @@ The principal advance is the unconditional-in-the-localization-geometry replacem
 ## Phase checkpoint
 
 See [exact phase bounds and rational witnesses](phase_bounds.md). The rectangle relaxation is feasible in all 19 cases; the stronger signed Gram queries timed out. All nineteen branches remain open.
+
+
+## Signed-deficit checkpoint
+
+See [cyclic quadratic inequalities and cubic rank-one metric completion](cubic_metric.md). The basic quadratic relaxation is certifiably feasible for all four maximal families. The full cubic formulation is exact under inherited premises; no branch is closed.
