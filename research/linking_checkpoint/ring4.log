@@ -1,0 +1,9 @@
+Cross-edge directed graph: 16 edges, strongly connected, directed diameter 3
+Sign matrix: ---+ +--- -+-- --+-
+Sign matrix: -+++ +-++ ++-+ +++-
+Sign matrix: --+- ---+ +--- -+--
+Sign matrix: -+-- --+- ---+ +---
+First-order correction matrix rank 14; two independent residual cross-edge identities
+PASS exact degenerate t=0 witness: naive compact closure is feasible; not an embedding.
+PASS consistent intrinsic faces and absolute degree one at the weak limit
+PASS intrinsic horizontal lift bound 3
