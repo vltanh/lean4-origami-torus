@@ -1,0 +1,6 @@
+PASS face orientations and convex diagonal flip
+PASS all cone angles identically 2pi by continuity
+PASS marked modulus x+i*sqrt(w)
+PASS horizontal rank seven; explicit two-parameter family supplies the remaining modulus directions
+cell 9/20 1/2 certified signs 68 fail []
+PASS all listed Type 4 strips

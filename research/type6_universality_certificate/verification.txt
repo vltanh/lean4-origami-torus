@@ -1,0 +1,9 @@
+PASS family 1 x interval ['0', '1/6'] all y^2>=1-x^2
+  new lift certified volumes: 70 /70
+  uncertified: []
+  disjoint edge-face pairs: 140 witness counts: [90, 36, 14, 0]
+PASS family 2 x interval ['1/6', '1/2'] all y^2>=1-x^2
+  new lift certified volumes: 67 /70
+  uncertified: ['0124', '0127', '0267']
+  disjoint edge-face pairs: 140 witness counts: [96, 33, 10, 1]
+PASS type 6, full modular fundamental domain (assuming the published planar family and submersion lemmas).
