@@ -1,0 +1,77 @@
+version: v0.4
+project:
+  name: Nonexistence of a Type 2 origami torus
+  description: >-
+    No embedded realization of the Lutz Type 2 face complex has all cone angles equal to 2π.
+    Spherical vertex links give strict support and mixed-side witnesses. Lean checks the reduction
+    to determinant signs and a finite propositional refutation.
+  authors:
+  - The-Anh Vu-Le
+  responsible_maintainers:
+  - The-Anh Vu-Le
+  license: NOASSERTION
+classification:
+  arxiv:
+  - math.MG
+  - math.CO
+  msc2020:
+  - 52C25
+  - 57Q05
+sources:
+- title: Type 2 flatness obstruction
+  type: original-proof
+  relationship: other
+  note: The geometric reduction and explicit refutation are presented in docs/Type2.md.
+- title: The two most symmetric flat tori as eight-vertex paper tori
+  authors:
+  - Fabian Lander
+  id: arXiv:2609.10703v1
+  location: https://arxiv.org/abs/2609.10703v1
+  relationship: background
+  note: Section 6 poses the nonexistence conjecture for degree sequence 45567777.
+- title: Non-Realizable Minimal Vertex Triangulations of Surfaces
+  authors:
+  - Lars Schewe
+  id: arXiv:0801.2582
+  location: https://arxiv.org/abs/0801.2582
+  relationship: background
+  note: Section 2.4 supplies a precedent for chirotope and edge–triangle SAT encodings. The
+    Type 2 proof adds flatness constraints.
+status:
+  scope: >-
+    The nonexistence theorem permits arbitrary embedded vertex positions. Genericity is used
+    in the proof to derive strict signs.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+automation:
+  methods:
+  - method: agent
+    models:
+    - GPT-6
+    framework: OpenAI Codex
+    tool_setup: GPT-6 contributed to mathematical proof development, Lean implementation,
+      and separate review runs. See docs/CREDITS.md.
+    cost:
+      wall_time: not tracked
+      spend_usd: not tracked
+      hardware: local workstation
+  notes: The-Anh Vu-Le directed and maintains the project. See docs/CREDITS.md for the human
+    and AI contribution record.
+review:
+  status: agent-reviewed
+  notes: The review and AI contribution record is in docs/CREDITS.md. Independent human review
+    is pending.
+alignment:
+  namespace: OrigamiTorusChallenge
+  statements:
+  - source: docs/Type2.md, Type 2 nonexistence
+    lean: OrigamiTorusChallenge.type2_nonexistence
+    module: OrigamiTorus.Challenge
+    status: proved
+  - source: docs/Type2.md, Finite refutation
+    lean: OrigamiTorusChallenge.type2_sign_obstruction
+    module: OrigamiTorus.Challenge
+    status: proved
+acknowledgements: The-Anh Vu-Le directed and maintains the work. OpenAI Codex (GPT-6) contributed
+  proof development and Lean formalization.

@@ -1,0 +1,14 @@
+{
+  "challenge_module": "OrigamiTorus.Challenge",
+  "solution_module": "OrigamiTorus.Solution",
+  "theorem_names": [
+    "OrigamiTorusChallenge.type1_nonexistence"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

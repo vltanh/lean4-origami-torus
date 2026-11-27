@@ -1,0 +1,73 @@
+version: v0.4
+project:
+  name: Type 4 origami tori off the sharp-rhombic ray
+  description: >-
+    The Lutz Type 4 triangulation admits a piecewise-isometric embedding for every reduced
+    modulus x+iy with 0 ≤ x < 1/2, y > 0, and x²+y² ≥ 1. The proof flips a planar trapezoidal
+    chart and inflates an embedded height lift while preserving the marked modulus.
+  authors:
+  - The-Anh Vu-Le
+  responsible_maintainers:
+  - The-Anh Vu-Le
+  license: NOASSERTION
+classification:
+  arxiv:
+  - math.MG
+  - math.CO
+  msc2020:
+  - 52C25
+  - 57Q05
+sources:
+- title: The two most symmetric flat tori as eight-vertex paper tori
+  authors:
+  - Fabian Lander
+  id: arXiv:2609.10703v1
+  location: https://arxiv.org/abs/2609.10703v1
+  relationship: adapts
+  note: The construction uses the trapezoidal flat-base geometry, with a convex diagonal exchange
+    for Type 4.
+- title: A Universal 8-Vertex Origami Torus Triangulation
+  authors:
+  - Peter Doyle
+  - Fabian Lander
+  - Richard Evan Schwartz
+  - Steve Trettel
+  id: arXiv:2611.21909v1
+  location: https://arxiv.org/abs/2611.21909v1
+  relationship: background
+  note: Section 6 reports a second universal construction by degree sequence 55666677, shared
+    by Types 4 and 6. The reported face list is unresolved.
+status:
+  scope: >-
+    The Challenge uses the flipped Type 7 chart labels. The library verifies their relabeling
+    to Lutz Type 4 and a rank-nine version of the theorem.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+automation:
+  methods:
+  - method: agent
+    models:
+    - GPT-6
+    framework: OpenAI Codex
+    tool_setup: GPT-6 contributed to mathematical proof development, Lean implementation,
+      and separate review runs. See docs/CREDITS.md.
+    cost:
+      wall_time: not tracked
+      spend_usd: not tracked
+      hardware: local workstation
+  notes: The-Anh Vu-Le directed and maintains the project. See docs/CREDITS.md for the human
+    and AI contribution record.
+review:
+  status: agent-reviewed
+  notes: The review and AI contribution record is in docs/CREDITS.md. Independent human review
+    is pending.
+alignment:
+  namespace: OrigamiTorusChallenge
+  statements:
+  - source: docs/Type4.md, Marking after the flip
+    lean: OrigamiTorusChallenge.type4_open_strip
+    module: OrigamiTorus.Challenge
+    status: proved
+acknowledgements: The-Anh Vu-Le directed and maintains the work. OpenAI Codex (GPT-6) contributed
+  proof development and Lean formalization.

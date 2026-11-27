@@ -6,10 +6,12 @@ public import OrigamiTorus.Type1.Nonexistence
 public import OrigamiTorus.Type2.Nonexistence
 public import OrigamiTorus.Type3.Universal
 public import OrigamiTorus.Type4.WideLift
+public import OrigamiTorus.Type5.ContinuationTorus
 public import OrigamiTorus.Type5.Periodic
 public import OrigamiTorus.Type6.Inflation
 public import OrigamiTorus.Type6.Universal
 public import OrigamiTorus.Type7.Tiling
+public import OrigamiTorus.Type7.WideLift
 import OrigamiTorus.Type2.Certificate
 import OrigamiTorus.Type2.Perturbation
 import OrigamiTorus.Type6.Signs
@@ -178,6 +180,31 @@ theorem type5_square :
   obtain ⟨H,F,P,hE,hfold,hproj,hmetric⟩ := Type5.square_complex_by_faces
   exact ⟨H,F,Type5.squareExtrinsic,P,hE,hfold,hproj,hmetric⟩
 
+/-- The same Type 5 face complex realizes every lattice torus in the specified
+closed nonrectangular modulus box. -/
+theorem type5_nonrectangular_box (x y : ℝ)
+    (hx : x ∈ Set.Icc (174241221608834/10^15) (174241221628834/10^15))
+    (hy : y ∈ Set.Icc (1084897889745590/10^15) (1084897889765590/10^15)) :
+    let a : ℂ := 1
+    let b : ℂ := x+y*Complex.I
+    let fs : List Triangle :=
+      [(0,1,2), (0,3,1), (0,2,4), (0,5,3), (0,4,5), (1,5,2), (1,3,6), (1,6,4),
+        (1,4,7), (1,7,5), (2,6,3), (2,3,7), (2,7,4), (2,5,6), (3,5,7), (4,6,5)]
+    ∃ (H : triangleWeightSpace fs ≃ₜ ComplexTorus a b)
+      (F : ComplexTorus a b → Point3) (Q : Vertex → Point3) (P : Triangle → Vertex → ℂ),
+      Topology.IsClosedEmbedding F ∧
+      (∀ u, F (H u) = evaluateTriangles fs Q u) ∧
+      (∀ f ∈ fs, ∀ u, u.val ∈ faceWeights (triangleVertexSet f) →
+        H u = complexTorusProjection a b (∑ i, u.val i • P f i)) ∧
+      ∀ f ∈ fs, ∀ u v,
+        u.val ∈ faceWeights (triangleVertexSet f) →
+        v.val ∈ faceWeights (triangleVertexSet f) →
+        Type5.squared3 (F (H u) - F (H v)) =
+          dist (∑ i, u.val i • P f i) (∑ i, v.val i • P f i)^2 := by
+  obtain ⟨H,F,P,hE,hfold,hproj,hmetric⟩ :=
+    Type5.Continuation.torus_by_faces (x := x) (y := y) ⟨hx,hy⟩
+  exact ⟨H,F,Type5.Continuation.extrinsic x y,P,hE,hfold,hproj,hmetric⟩
+
 /-- Every rectangular flat torus has a piecewise-isometric Type 7 embedding. -/
 theorem type7_rectangular (a b : ℂ) (ha : a ≠ 0) (hb : b ≠ 0) (ho : (b/a).re = 0) :
     let fs : List Triangle :=
@@ -195,5 +222,26 @@ theorem type7_rectangular (a b : ℂ) (ha : a ≠ 0) (hb : b ≠ 0) (ho : (b/a).
         Type5.squared3 (F (H u) - F (H v)) =
           dist (∑ i, u.val i • P f i) (∑ i, v.val i • P f i)^2 :=
   Type7.rectangular_by_faces a b ha hb ho
+
+/-- Every reduced modulus off the sharp-rhombic ray admits a
+piecewise-isometric Type 7 embedding. -/
+theorem type7_open_strip (x w : ℝ) (hx : 0 ≤ x) (hx' : x < 1/2) (hw : 1-x^2 ≤ w) :
+    let a : ℂ := 1
+    let b : ℂ := x+Real.sqrt w*Complex.I
+    let fs : List Triangle :=
+      [(3,5,6), (3,2,5), (3,6,4), (3,0,2), (3,4,1), (3,1,0), (5,0,6), (5,2,4),
+        (5,4,7), (5,7,0), (6,7,4), (6,0,1), (6,1,7), (2,1,4), (2,0,7), (2,7,1)]
+    ∃ (H : triangleWeightSpace fs ≃ₜ ComplexTorus a b)
+      (F : ComplexTorus a b → Point3) (Q : Vertex → Point3) (P : Triangle → Vertex → ℂ),
+      Topology.IsClosedEmbedding F ∧
+      (∀ u, F (H u) = evaluateTriangles fs Q u) ∧
+      (∀ f ∈ fs, ∀ u, u.val ∈ faceWeights (triangleVertexSet f) →
+        H u = complexTorusProjection a b (∑ i, u.val i • P f i)) ∧
+      ∀ f ∈ fs, ∀ u v,
+        u.val ∈ faceWeights (triangleVertexSet f) →
+        v.val ∈ faceWeights (triangleVertexSet f) →
+        Type5.squared3 (F (H u) - F (H v)) =
+          dist (∑ i, u.val i • P f i) (∑ i, v.val i • P f i)^2 := by
+  exact Type7.chart_by_faces false 1 _ (Type7.open_strip_realizes hx hx' hw)
 
 end OrigamiTorusChallenge

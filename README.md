@@ -32,7 +32,7 @@ lake build
 lake env lake comparator --config=palomar/OrigamiTorus/comparator.json
 ```
 
-The [Challenge](palomar/OrigamiTorus/Challenge.lean) states the comparison targets independently, and the [Solution](palomar/OrigamiTorus/Solution.lean) supplies the proofs. All 13 configured statements passed local Comparator replay with Lean and NanoDa. The library includes the Type 5 box and the Type 4 and 7 rank-nine strip theorems. [Verification scope](docs/VERIFICATION.md) · [Palomar metadata](palomar/OrigamiTorus/formalization.yaml)
+The [Challenge](palomar/OrigamiTorus/Challenge.lean) states the comparison targets independently, and the [Solution](palomar/OrigamiTorus/Solution.lean) supplies the proofs. All 13 statements in the combined configuration passed local Comparator replay with Lean and NanoDa. The per-type entry drafts each have their own configuration and provenance. [Palomar entries](palomar/OrigamiTorus/README.md) · [Verification scope](docs/VERIFICATION.md)
 
 ## Credits
 
