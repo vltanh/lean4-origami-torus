@@ -94,3 +94,18 @@ Run from this directory:
     node verify.cjs
 
 The same finite integer/combinatorial computation was executed on the current branch's JSON inputs before upload. It checks graph structure, clique sign unanimity, checkerboard partners, the marking stabilizers and the two ray_4 orbits. For completeness of the input archives, independently replay the earlier orientation_checkpoint/verify_projection.py and linking_checkpoint/verify_full_ring4.py; these were not rerun in this checkpoint. No nonlinear solver result is asserted.
+
+### Exact Gram-completion systems for R1 and R2
+
+The new generator generate_ray4.py instantiates the Gram completion above, retaining the entire range y^2>=35/4 if no fixed aspect ratio is supplied. Set t=1/y^2, use the earlier integer gauge and narrow-level estimate, and write the adjusted normalized vertical coordinates as parity(i)/2+t*gamma_i, with x_0=gamma_0=0. Squared distances are multiplied by t, so each prescribed scaled squared edge length is t*X^2+Y^2. This avoids inverse powers of t. Use the four scaled squared nonedge distances as additional variables. There are 18 real unknowns at a fixed aspect ratio and 19 when t varies, versus 29 for the earlier Cartesian reconstruction at a fixed metric. All expressions are polynomial with rational coefficients after expansion of define-fun aliases.
+
+For orientation and intersection tests, use inner-product coordinates U, not the higher-degree coordinates H*U: multiplying actual anchor-basis coordinates by G is an invertible linear map of positive determinant. This keeps the affine determinants at degree at most six in the fixed-metric intrinsic coordinates and four nonedge distances. The Gram and cross-distance constraints enforce all 24 prescribed edges exactly. The generator retains intrinsic face orientation/degree one, strict nearest-image inequalities, necessary bounds from the narrow-level theorem, nonedge metric upper bounds, strict K4 determinants, weak nonclique signs, and the full earlier degeneracy-complete minimal-affine-circuit intersection test. In particular actual coplanar nonclique configurations are not excluded merely for being coplanar.
+
+For an actual embedded ray_4 torus in the elongated range, one of these two systems must be satisfiable after a marking-preserving symmetry; this necessity inherits the earlier geometric/SAT audit qualifications. Conversely a satisfying assignment supplies a nondegenerate marked flat intrinsic triangulation and an embedded Euclidean realization via the positive definite Gram matrix. One must extract and certify an actual witness before reporting a construction. The finite constraints do not supply a decision procedure with a practical runtime bound.
+
+Reproduce from this directory:
+    python generate_ray4.py /tmp/type7-4-fixed 16
+    python ../sharp_ray_checkpoint/solve.py 5000 /tmp/type7-4-fixed/R1.smt2 /tmp/type7-4-fixed/R2.smt2
+    python generate_ray4.py /tmp/type7-4-range
+
+Fresh local generation from transcribed current archive data produced two 256,956-byte fixed-metric systems (18 real unknowns each) and two 256,948-byte full-range systems (19 real unknowns each). The fixed y=4 queries parsed successfully in libz3, but both returned unknown (timeout at 5000 ms). The variable-t systems were generated, not solved. Neither timeout is an exclusion. The four sharp-ray marking families remain unresolved; only ray_4's elongated orientation classification is reduced to the two symmetry branches here.
