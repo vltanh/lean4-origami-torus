@@ -116,3 +116,37 @@ for j in (1,3):
  sub.update({C[i,k]:(PA[i].T*D0*PB[k])[0] for i in range(3) for k in range(3)})
  assert S.expand(sum(res).subs(sub,simultaneous=True)-(2*(A2*B2-uv)+2*A1+2*B0-1)*(1 if j==1 else -1))==0
 print('PASS: all exact limiting polynomial identities')
+
+# The rank-one (nonparallel collinear ring) cases.
+for ix,delta in ((0,1),(2,-1)):
+ model=models[ix]
+ # Swap the rings while preserving the weak mixed signs and marking.
+ pp=tuple((1-v)%8 for v in range(8))
+ mixed=[q for q in Q if q not in (A,B)];r=sign(model,tuple(pp[v] for v in mixed[0]))*sign(model,mixed[0])
+ assert all(sign(model,tuple(pp[v] for v in q))==r*sign(model,q) for q in mixed)
+ for transform in (lambda m,n:(m,n),lambda m,n:(-m,-n),lambda m,n:(m+n,-n),lambda m,n:(-m-n,n)):
+  g={0:(0,0)}
+  for _ in range(8):
+   for (i,j),k in K.items():
+    if i in g and j not in g:g[j]=plus(g[i],minus(K[pp[i],pp[j]],transform(*k)))
+  if len(g)==8 and all(minus(K[pp[i],pp[j]],transform(*k))==minus(g[j],g[i]) for (i,j),k in K.items()):break
+ else:raise AssertionError('swap marking')
+ # If B has nonzero edges 0,2 then B1=B2 and B0=B3. For each of
+ # these three A chords the mixed minors force parallelism with B.
+ bs=(0,1,1,0)
+ for i,j in ((0,1),(0,2),(2,3)):
+  signs={sign(model,(A[i],A[j],B[k],B[l]))*(bs[l]-bs[k]) for k,l in combinations(range(4),2) if bs[l]!=bs[k]}
+  assert signs=={-1,1}
+ # For adjacent nonzero B edges 0,1, the rank-one active A rows are
+ # (3,0) in R1 and (1,2) in R2. Check the signs of the first off-line edge.
+ assert sign(model,ring(A)[0 if delta==1 else 1]+ring(B)[0])==(-1 if delta==1 else 1)
+# Adjacent B half-stick residual.
+hs=S.symbols('h0:4')
+sub={b[0]:S.Rational(1,2),b[1]:S.Rational(1,2),b[2]:0,b[3]:0}
+sub.update({C[i,j]:hs[i]*(S.Rational(1,2) if j==0 else -S.Rational(1,2) if j==1 else 0) for i,j in product(range(3),repeat=2)})
+F=S.expand(sum(res).subs(sub,simultaneous=True));assert F==-a[0]-2*a[1]-a[2]+hs[0]-hs[2]+1
+# Use unit perimeter and zero sum of the dot components, with the two
+# parallel A edges pointing backwards (or having length zero).
+assert S.expand(F.subs({hs[2]:-a[2],hs[0]:a[1]+a[2]-hs[3]},simultaneous=True).subs(a[0],1-a[1]-a[2]-a[3])-(2*a[2]+a[3]-hs[3]))==0
+assert S.expand(F.subs({hs[0]:-a[0],hs[2]:a[0]+a[3]-hs[1]},simultaneous=True).subs(a[2],1-a[0]-a[1]-a[3])-(-2*a[0]-a[1]+hs[1]))==0
+print('PASS: rank-one ring-swap symmetry, opposite-stick minors and adjacent-stick residuals')
