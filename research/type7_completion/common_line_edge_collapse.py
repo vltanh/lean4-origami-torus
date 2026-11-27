@@ -63,6 +63,44 @@ def check(models):
     return counts, zeros
 
 
+def two_zero_cover(zeros, symmetries):
+    """Check that the four proved families partition every two-zero order.
+
+    This verifies the cover, not the analytic exclusions in the four
+    companion proofs. Each target uses the already checked marked group.
+    """
+    from remaining_flat_blowup import rank_tuple
+
+    phase = [entry['permutation'] for entry in symmetries if entry['phase_preserving']]
+    targets = {
+        ((0, 0, 1, 1), (1, 0, 1, 2)): 'split_pair',
+        ((0, 1, 1, 2), (1, 2, 2, 0)): 'paired_14_36',
+        ((0, 1, 1, 2), (2, 0, 1, 1)): 'paired_14_67',
+    }
+    counts, records = Counter(), []
+    for row in zeros:
+        sizes = len(row['zero_a_edges']), len(row['zero_b_edges'])
+        if sum(sizes) != 2:
+            continue
+        values = dict(zip(collinear.A, row['a'])) | dict(zip(collinear.B, row['b']))
+        matches = set()
+        for permutation, reflection in product(phase, (-1, 1)):
+            a, b = (rank_tuple([reflection*values[permutation[i]] for i in cap])
+                    for cap in (collinear.A, collinear.B))
+            if a == (0, 0, 0, 1) and all(b[i] != b[(i+1) % 4] for i in range(4)):
+                matches.add('triple_cluster')
+            if (a, b) in targets:
+                matches.add(targets[a, b])
+        assert len(matches) == 1, (row, matches)
+        family = matches.pop()
+        counts[family] += 1
+        records.append(dict(row, excluded_by=family))
+    assert counts == Counter(triple_cluster=288, split_pair=16,
+                             paired_14_36=32, paired_14_67=16), counts
+    assert len(records) == 352
+    return counts, records
+
+
 def main():
     if not __debug__:
         raise RuntimeError('run with assertions enabled')
@@ -72,17 +110,34 @@ def main():
     n, clauses, *_ = chambers.base_formula()
     models = chambers.enumerate_models(n, clauses, symmetries)
     counts, zeros = check(models)
-    assert sum(len(row['zero_a_edges'])+len(row['zero_b_edges']) == 1 for row in zeros) == 16
+    zero_counts = Counter(len(row['zero_a_edges'])+len(row['zero_b_edges']) for row in zeros)
+    assert zero_counts == Counter({1: 16, 2: 352, 3: 176, 4: 80})
+    two_counts, two_records = two_zero_cover(zeros, symmetries)
+    from remaining_flat_blowup import degenerate_cover
+    mixed, _ = degenerate_cover(models)
+    mixed_counts = Counter((sum(row['a'][i] == row['a'][(i+1) % 4] for i in range(4)),
+                            sum(row['x'][i] == row['x'][(i+1) % 4] for i in range(4)))
+                           for row in mixed)
+    assert mixed_counts == Counter({(0, 0): 24, (0, 1): 32, (0, 2): 24,
+                                    (1, 0): 48, (1, 2): 16, (2, 0): 544,
+                                    (2, 1): 304, (2, 2): 300})
     print('PASS all 5,476 weak-order pairs:', dict(counts))
     print('PASS every zero-stress survivor has a zero physical short-edge weight')
     print('PASS exactly 16 orders have one zero weight; the separate two-line proof excludes them')
+    print('PASS disjoint complete two-zero order cover:', dict(two_counts))
+    print('PASS complete mixed two-zero cover: 24 double-partner and 544 triple-cluster cells')
     if len(sys.argv) == 2:
         output = Path(sys.argv[1])
         output.mkdir(parents=True, exist_ok=True)
         (output/'two_line_zero_orders.json').write_text(json.dumps(zeros, separators=(',', ':'))+'\n')
+        (output/'two_line_two_zero_cover.json').write_text(json.dumps(two_records, indent=2)+'\n')
+        (output/'edge_count_ledger.json').write_text(json.dumps({
+            'two_line': dict(sorted(zero_counts.items())),
+            'mixed': {f'{a},{b}': count for (a, b), count in sorted(mixed_counts.items())},
+        }, indent=2)+'\n')
         blocked = clauses + [[-(i+1)*value for i, value in enumerate(model)] for model in models]
         chambers.write_cnf(output/'two_line_model_coverage.cnf', n, blocked)
-    print('The second-smallest-weight theorem additionally uses both one-zero mixed proofs and the two-line proof.')
+    print('The third-smallest-weight theorem additionally uses the analytic proofs for every one- and two-zero family.')
 
 
 if __name__ == '__main__':

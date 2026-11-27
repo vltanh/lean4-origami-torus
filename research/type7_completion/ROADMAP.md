@@ -437,7 +437,7 @@ Together, the complete one-zero covers strengthen the global theorem:
 ray-3 sequence**. The remaining boundary has at least two vanishing
 short edges; a finite-height exclusion is still required.
 
-The first two-zero families are also excluded. The
+The complete two-zero cover is also excluded. The
 [double-partner proof](remaining_double_partner_blowup.md) covers all
 24 mixed cells with four positive weights in the collinear cap and
 two zero partner weights. A pair of signed length defects restores
@@ -452,11 +452,31 @@ independently replayed directional certificates leave one branch;
 relative stress identities give moving height `-4*t*alpha` to leading
 order and a prohibited same-cap volume sign. The earlier
 [two-line proof](remaining_two_line_blowup.md#5-the-same-proof-excludes-32-paired-zero-orders)
-also extends to 32 orders with collapsed edges 14 and 36. Of the 352
-two-line orders with exactly two zero weights, these arguments cover
-320; two sixteen-order families remain. The mixed triple-cluster
-family is also still open. These reductions do not yet strengthen
-the global second-smallest-weight theorem or close a finite chamber.
+also extends to 32 orders with collapsed edges 14 and 36. The
+[split-pair proof](remaining_split_blowup.md) excludes sixteen more
+orders by forcing a second-order negative displacement of the nonedge
+26 and checking its independently normalized direction. The final
+[paired-edge proof](exhaustive_two_single_blowup.md) excludes sixteen
+orders with collapsed edges 14 and 67: the forced direction of 67
+gives the wrong sign for its cap volume. These four families partition
+all 352 two-line orders with exactly two zero weights.
+
+The [complete mixed cluster proof](remaining_cluster_blowup.md) covers
+the remaining 544 mixed two-zero cells. Its 61 canonical shapes and
+three small-edge ratios give 183 cases. Necessary weak signs exclude
+153 directly. Relative volume identities and two regularized metric
+charts exclude the other thirty, including the zero limiting slope
+boundary in the exceptional trapezoid. All 169 exported CNFs and all
+symbolic metric identities have independent replays.
+
+Consequently the global theorem now says **the third-smallest short-edge
+weight tends to zero in every unbounded ray-3 sequence**. The complete
+count checker verifies both the 568 mixed two-zero cells and the
+disjoint 352-order two-line cover. The remaining common-line boundaries
+have three or four zero weights. Every cap retains two positive weights,
+and in fact the fifth-smallest of all eight weights is at least `1/6`.
+This strengthens the asymptotic reduction; it does not yet close a
+finite chamber or the full marking at the common target modulus.
 
 The next requirement is a contradiction across the remaining angular
 region using the exact metric and required long-ring linking. An

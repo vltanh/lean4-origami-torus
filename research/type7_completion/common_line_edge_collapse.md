@@ -1,16 +1,16 @@
-# Every unbounded ray-3 sequence has at least two vanishing short edges
+# Every unbounded ray-3 sequence has at least three vanishing short edges
 
 **Theorem.** Along any sequence of actual canonical ray-3 realizations
-with `y -> infinity`, the second-smallest of the eight positive short-edge
+with `y -> infinity`, the third-smallest of the eight positive short-edge
 weights tends to zero:
 
 \[
- h_{(2)}\longrightarrow0,
+ h_{(3)}\longrightarrow0,
 \qquad h_e=-X_e>0.
 \]
 
 Here `h_(1)<=...<=h_(8)` are the weights in increasing order.
-Equivalently, no such unbounded sequence can keep seven weights
+Equivalently, no such unbounded sequence can keep six weights
 bounded below by one positive number. The proof includes all possible
 rates of transverse flattening. It uses the geometric necessity audit
 and the preceding exact cap and blow-up certificates.
@@ -18,8 +18,8 @@ and the preceding exact cap and blow-up certificates.
 This theorem still does not exclude an unbounded sequence whose edges
 shrink, provide a numerical height threshold, or close the full marking.
 Its purpose is to identify the remaining boundary precisely. Sections
-1–4 first prove `h_(1)->0`; section 5 rules out exactly one zero weight
-in a limiting configuration.
+1–4 first prove `h_(1)->0`; sections 5 and 6 rule out exactly one or
+two zero weights in a limiting configuration.
 
 ## 1. A bounded transverse blow-up must exist
 
@@ -160,6 +160,50 @@ limits or regularize its squared metric equation by a signed defect.
 They impose no relative rate on that edge, the transverse width, and t.
 Every possibility is excluded, proving `h_(2)->0`.
 
+## 6. Exactly two vanishing weights are also impossible
+
+Suppose instead that `h_(3)>=epsilon` on an unbounded subsequence.
+The preceding theorem and compactness give exactly two zero weights
+in the physical limit. Normalize a longest edge to 01 and form the
+same bounded, nontrivial transverse blow-up. Each cap has perimeter
+one and every edge weight is at most one half, so each cap retains at
+least two positive weights. In particular, every collinear stretched
+cap has a nonvertical line.
+
+Two noncollinear stretched caps again require at least four zero
+weights, which is impossible here. The two other cases have complete
+finite covers:
+
+| Stretched caps | Two-zero family | Cells or orders | Exclusion |
+|---|---|---:|---|
+| One collinear | Positive collinear cap, two zero partner weights | 24 | [Two signed defects](remaining_double_partner_blowup.md) |
+| One collinear | Triple cluster, positive partner | 544 | [Complete cluster proof](remaining_cluster_blowup.md) |
+| Both collinear | Triple cluster, positive partner | 288 | [Relative cap volume](remaining_two_line_triple.md) |
+| Both collinear | Paired zero edges 14 and 36 | 32 | [Paired-edge extension](remaining_two_line_blowup.md) |
+| Both collinear | Split pairs in one cap | 16 | [Second-order nonedge displacement](remaining_split_blowup.md) |
+| Both collinear | Paired zero edges 14 and 67 | 16 | [Partner cap volume](exhaustive_two_single_blowup.md) |
+
+The mixed cover contains exactly 568 two-zero cells and no cell with
+one zero weight in each cap. The two-line cover contains exactly 352
+two-zero orders. The checker verifies that its four rows above are
+disjoint and cover all 352, using only the checked phase symmetries and
+horizontal reflection. The component proofs check the canonical maps
+and all additional directional implications.
+
+The cluster proof retains all three relative scales of its two small
+edges. Its 183 canonical directional cases have 153 direct Boolean
+contradictions; the remaining cases are excluded by exact relative
+cap volumes or regular metric charts with signed length defects.
+The split-pair proof uses such a chart to force a negative horizontal
+displacement of the nonedge 26. Its independently normalized direction
+then contradicts the necessary signs. The last paired-edge proof uses
+only the direction of edge 67: the exact cap determinant has the
+opposite sign from its required weak sign.
+
+All arguments allow unrelated rates of edge lengths, transverse width,
+and t. Hence all possible two-zero blow-ups are excluded, and
+`h_(3)->0` follows by the same subsequence argument.
+
 ## Reproduction and exact remaining scope
 
 ```sh
@@ -168,18 +212,35 @@ python3 research/type7_completion/remaining_flat_blowup.py /tmp/type7-flat-blowu
 python3 research/type7_completion/remaining_adjacent_blowup.py /tmp/type7-adjacent-blowup
 python3 research/type7_completion/remaining_partner_blowup.py /tmp/type7-partner-blowup
 python3 research/type7_completion/remaining_two_line_blowup.py /tmp/type7-two-line-blowup
+python3 research/type7_completion/remaining_double_partner_blowup.py /tmp/type7-double-partner
+python3 research/type7_completion/remaining_two_line_triple.py /tmp/type7-two-line-triple
+python3 research/type7_completion/remaining_cluster_blowup.py /tmp/type7-cluster-blowup
+python3 research/type7_completion/remaining_split_blowup.py /tmp/type7-split
+python3 research/type7_completion/exhaustive_two_single_blowup.py /tmp/type7-two-single
 python3 research/type7_completion/common_line_trapezoids.py
 python3 research/type7_completion/exhaustive_vv_geometry.py /tmp/type7-vv
 ```
 
-The new two-line check uses exact integer coefficients. Its optional
-output contains all 624 zero-stress orders and the same complete-model
+The two-line check uses exact integer coefficients. Its optional
+output contains all 624 zero-stress orders, the disjoint two-zero
+partition, the mixed and two-line edge-count ledgers, and the same complete-model
 coverage CNF used by the other cap proofs. The earlier independent
 coverage replay, the two V/V unit-propagation contradictions, and the
 mixed-family required-sign replay are the finite certificates underlying
 the argument. The implicit-function step is an analytic research proof,
 not a Lean kernel check.
 
-The remaining common-line analysis must allow at least two vanishing
-edge weights. Such a boundary cannot be removed by imposing a minimum
-edge length or a numerical separation tolerance in the finite system.
+The remaining common-line analysis must allow at least three vanishing
+edge weights. The mixed cover has 320 three-zero cells and 300 four-zero
+cells. The two-line cover has 176 three-zero orders and 80 four-zero
+orders; two noncollinear stretched caps also remain possible only at
+four zero weights. No cap can have three zero weights, since its
+remaining edge would have weight one, exceeding one half.
+
+Quantitatively, the second-largest weight in each cap is at least
+`1/6`: otherwise its three smaller weights sum to less than one half,
+while its largest is at most one half. Thus `h_(5)>=1/6`. Further
+collapse reductions can therefore end after the four-zero boundary;
+they cannot continue indefinitely. Neither this observation nor the
+current third-smallest theorem supplies an explicit height bound.
+All positive edge lengths must remain allowed in the finite system.
