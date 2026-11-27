@@ -4,6 +4,7 @@
 \usepackage[hmargin=1.15in,vmargin=0.95in]{geometry}
 \usepackage{microtype}
 \usepackage{booktabs,tabularx}
+\usepackage{needspace}
 \usepackage[hidelinks]{hyperref}
 \hypersetup{
   pdftitle={An existence classification for eight-vertex origami tori},
@@ -30,17 +31,20 @@
 \begin{abstract}
 Of the seven simplicial triangulations of the torus on eight vertices,
 exactly Types \(3\)--\(7\) in Lutz numbering admit embedded realizations
-in \(\R^3\) with all cone angles equal to \(2\pi\). The remaining
-existence question concerned Type \(2\). We reduce a hypothetical flat
-embedding to a finite system of determinant signs and give a
-kernel-checked propositional refutation. A diagonal exchange in the
-planar families of Doyle, Lander, Schwartz, and Trettel, followed by
-inflation at fixed periods, gives a universal construction on Type \(6\).
-Types \(4\) and \(7\) realize every reduced modulus off the sharp-rhombic
-ray. For Type \(5\) we give exact radical coordinates for the square
-torus and a uniform radical construction on a closed box of
-nonrectangular moduli. The nonexistence and realization theorems are
-formalized in Lean~4.
+in \(\R^3\) with all cone angles equal to \(2\pi\). Lander's argument
+rules out Type \(1\). We resolve his conjecture for Type \(2\) by a
+determinant-sign refutation. We formalize the known universality of
+Type \(3\) and give a universal construction on the specified
+Type \(6\) face list by a diagonal exchange and fixed-period inflation.
+For Types \(4\) and \(7\) we construct embeddings with rank nine for
+the angle and marked modulus map at every reduced modulus off the
+sharp-rhombic ray. This completes the rectangular ray for Type \(7\).
+For Type \(5\) we give exact radical coordinates
+at the square and throughout a closed nonrectangular box of side
+\(2\cdot10^{-11}\) in modulus coordinates. The remaining universality
+questions concern the sharp-rhombic ray for Types \(4\) and \(7\)
+and the rest of the reduced domain for Type \(5\). The nonexistence
+and realization theorems are formalized in Lean~4.
 \end{abstract}
 
 \maketitle
@@ -72,17 +76,7 @@ Schwartz established the minimum vertex count of eight
 \cite{schwartz}. The census of small triangulations by Lutz and
 Sulanke gives seven types at this count \cite{sl}. Hougardy, Lutz,
 and Zelke gave integer-coordinate spatial embeddings of all
-seven with unrestricted cone angles \cite{hlz}. Lander observed that the
-degree-three vertex in Type \(1\) can be erased in any flat embedding,
-which would leave a forbidden seven-vertex origami torus. He found
-numerical examples on the other types except Type \(2\), and asked
-whether Type \(2\) admits any origami realization \cite[\S6]{lander}.
-Doyle and Schwartz proved near universality for Type \(7\), with
-the rectangular and sharp-rhombic rays omitted by their construction
-\cite{ds}. Lander then established a Type \(7\) realization of the
-square torus and local coverage around it, as well as a hexagonal
-realization on Type \(3\) \cite{lander}. Doyle, Lander, Schwartz,
-and Trettel proved that Type \(3\) is universal \cite[Theorem~1.1]{dlst}.
+seven with unrestricted cone angles \cite{hlz}.
 
 Write \(K_j\) for the type with index \(j\), with the face lists in
 Appendix~\ref{sec:facelists}. If \(p=(p_i)\) is a spatial placement,
@@ -100,7 +94,7 @@ Set \(D_{<1/2}=\{\tau\in D:x<1/2\}\). This set contains the
 rectangular ray and the unit-circle arc with the hexagonal endpoint
 excluded.
 
-\begin{theorem}\label{thm:type1}
+\begin{theorem}[Lander, using Schwartz's lower bound]\label{thm:type1}
 Every embedded spatial placement of \(K_1\) has a vertex whose cone
 angle differs from \(2\pi\).
 \end{theorem}
@@ -145,19 +139,58 @@ coordinates are given by rational arithmetic and square roots.
 \begin{theorem}\label{thm:type5box}
 Let \(x_0=0.174241221618834\) and \(y_0=1.084897889755590\), interpreted
 as exact rationals. The triangulation \(K_5\) realizes \(T_{\Z+\Z(x+iy)}\)
-for every \((x,y)\) in the closed box
+for every \((x,y)\) in the closed box \(B\)
 \[
  |x-x_0|\le 10^{-11},\qquad |y-y_0|\le 10^{-11}.
 \]
 \end{theorem}
 
-Together the theorems settle existence for all seven types. By
-Theorem~\ref{thm:type2}, the existence conjecture raised for \(K_2\)
-has a negative answer. Our proof of Theorem~\ref{thm:type6} identifies
-the type by its full face list. The preprint \cite[\S6]{dlst} reports
-a second exactly checked universal construction by degree sequence
-\(55666677\), shared by \(K_4\) and \(K_6\). That description leaves
-its relation to the construction here unresolved.
+Together the theorems settle whether each type admits at least one
+origami realization. Table~\ref{tab:contributions} identifies the
+prior results and the contribution for each type.
+
+\begin{table}[htbp]
+\caption{Prior results and the contributions for the eight-vertex types.}
+\label{tab:contributions}
+\small
+\begin{tabularx}{\linewidth}{@{}cXX@{}}
+\toprule
+Type & Prior work & This paper and its Lean formalization\\
+\midrule
+1 & Lander deduced nonexistence by a star collapse and the
+    seven-vertex lower bound \cite[\S6]{lander}. &
+    Checks the collapse and a determinant-sign proof for the
+    resulting seven-vertex complex.\\[1pt]
+2 & Lander conjectured nonexistence \cite[\S6]{lander}. &
+    Proves the conjecture for every modulus by a geometric reduction
+    and a checked refutation.\\[1pt]
+3 & Lander proved the hexagonal case \cite{lander}. Doyle, Lander,
+    Schwartz, and Trettel proved universality \cite[Theorem~1.1]{dlst}. &
+    Formalizes universality from their planar families and heights
+    using fixed-period inflation and an area proof of the quotient.\\[1pt]
+4 & Numerical square realizations \cite[\S6]{lander}. &
+    Constructs and verifies rank-nine embeddings for all
+    \(\tau\in D_{<1/2}\), including all rectangles.\\[1pt]
+5 & Numerical square realizations \cite[\S6]{lander}. &
+    Gives exact radical coordinates for the square and throughout
+    the box \(B\).\\[1pt]
+6 & Numerical square realizations \cite[\S6]{lander}. &
+    Gives a universal construction on the Type \(6\) face list by a
+    diagonal exchange on Type \(3\) and verifies rank nine.\\[1pt]
+7 & Near universality off the rectangular and sharp-rhombic rays
+    \cite{ds}. Existence at the square and nearby moduli \cite{lander}. &
+    Completes the rectangular ray beyond the square neighborhood and
+    verifies rank-nine embeddings throughout \(D_{<1/2}\).\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\Needspace{4\baselineskip}
+Doyle et al.\ report exact checks for a second universal family with
+degree sequence \(55666677\) \cite[\S6]{dlst}. Both \(K_4\) and \(K_6\)
+fit that description, leaving its relation to our Type \(4\) and Type \(6\)
+constructions unresolved.
+Section~\ref{sec:remaining} gives the exact coverage for each open type.
 
 \section{Nonexistence from determinant signs}\label{sec:obstruction}
 
@@ -832,13 +865,44 @@ conditions. The completeness statement takes the marked lifts
 as input. See
 \src{OrigamiTorus/Type5/MarkedReduction.lean}{Type5/MarkedReduction.lean}.
 
-\section{Remaining universality questions}
+\Needspace{10\baselineskip}
+\section{Remaining universality questions}\label{sec:remaining}
 
-Within the reduced domain, the remaining moduli for \(K_4\) and
-\(K_7\) lie on the sharp-rhombic ray \(x=1/2\),
-\(y\ge\sqrt3/2\). The covered regions for \(K_5\) are smaller.
-One can restrict the possible markings of a realization before
-solving for its spatial coordinates.
+\subsection*{Certified and remaining moduli}
+
+For each of \(K_4\) and \(K_7\), Theorems~\ref{thm:type4}
+and~\ref{thm:type7} cover the full two-dimensional interior of \(D\),
+every rectangular modulus, and the unit-circle arc with \(x<1/2\).
+The entire complement of this coverage is the
+one-dimensional sharp-rhombic ray
+\[
+ D_{\mathrm{rh}}=\{\tfrac12+iy:y\ge\tfrac{\sqrt3}{2}\}.
+\]
+This includes the hexagonal endpoint \(\tfrac12+i\tfrac{\sqrt3}{2}\).
+The coverage has full hyperbolic area in \(D\), and universality on
+either face list requires a spatial embedding at every point of the
+ray as well. The second trapezoidal chart in Section~\ref{sec:strip}
+limits to \(H=1\) and \(a=1/2\) as \(x\) approaches \(1/2\).
+Vertices \(6\) and \(7\) of its unflipped base coincide there, so the
+nondegenerate-base inflation argument needs different input on the ray.
+
+For \(K_5\), Theorems~\ref{thm:type5square} and~\ref{thm:type5box}
+certify the square point \(i\) and the closed box \(B\) in the
+interior of \(D\). For the hyperbolic area element \(\dd x\,\dd y/y^2\),
+the box with half-width \(\varepsilon=10^{-11}\) has area
+\(4\varepsilon^2/(y_0^2-\varepsilon^2)\), while \(D\) has area
+\(\int_0^{1/2}(1-x^2)^{-1/2}\dd x=\pi/6\).
+The square point has area zero, so the two constructions together
+certify a fraction of about \(6.49\cdot10^{-22}\) of the reduced
+hyperbolic area.
+The remainder of \(D\), including every nonsquare rectangle and the
+entire sharp-rhombic ray, lies outside the scope of these constructions.
+
+\subsection*{Markings and spatial lifts}
+
+A marking specifies the integer period shifts of the directed edges
+of an intrinsic development. Necessary conditions for these shifts
+reduce the possible markings to a finite list.
 
 For a piecewise-isometric embedded realization, an edge is
 strictly shorter than every alternative period lift of the
@@ -876,13 +940,16 @@ The column \(x<1/2\) uses central inversion uniformly.
 Additional symmetries at special moduli can identify further
 candidates there. The sharp-ray column uses the symmetries of the
 nonhexagonal part of the ray.
-At the hexagonal metric all the ray representatives admit
-positively oriented intrinsic triangulations with strictly
-shortest marked edges. The intrinsic construction uses
-rational coordinates in a lattice basis and the same area
-test as above. This leaves a spatial embedding problem for
-the four hexagonal orbits. The winding, orbit, and intrinsic
-statements are in
+At the hexagonal metric all seven sharp-ray representatives admit
+positively oriented intrinsic triangulations with strictly shortest
+marked edges. The intrinsic construction uses rational coordinates in
+a lattice basis and the same area test as above. The additional
+hexagonal symmetries group these markings into four orbits, one each
+for \(K_4\) and \(K_5\), and two for \(K_7\). To realize the
+hexagonal metric on a given type, one must find an admissible
+intrinsic placement in at least one of that type's orbits and realize
+its edge lengths by an embedded spatial placement. The winding,
+orbit, and intrinsic statements are in
 \src{OrigamiTorus/Winding/ShortestWinding.lean}{Winding/ShortestWinding.lean},
 \src{OrigamiTorus/Winding/WindingOrbits.lean}{Winding/WindingOrbits.lean},
 and \src{OrigamiTorus/Winding/HexagonalTiling.lean}{Winding/HexagonalTiling.lean}.
@@ -904,30 +971,40 @@ some non-anchor vertices are coplanar. The completeness statement
 takes the marking and representatives as input.
 \src{OrigamiTorus/Geometry/TetrahedralReconstruction.lean}{TetrahedralReconstruction.lean}
 
+For \(K_5\), Section~\ref{sec:radicals} gives at most \(32\)
+spatial candidates for a fixed marking and four fixed intrinsic
+core points. In both reductions the intrinsic positions remain
+continuous variables. For each uncovered modulus the remaining step
+is to find intrinsic positions realizing that modulus for which at
+least one spatial candidate passes the edge-length and intersection
+tests. Ruling out a marking would require treating every admissible
+choice of intrinsic positions for it.
+
 \section{Formal verification and availability}
 
 The Lean~4 development is available in the
 \href{https://github.com/vltanh/lean4-origami-torus}{origami-torus repository}.
-The results in this paper refer to the pinned
+The proof-source links in this paper refer to the pinned
 \href{https://github.com/vltanh/lean4-origami-torus/commit/\release}{source revision}.
-It includes the individual proof notes, exact coordinate
-tables, and complete finite certificates. The toolchain
-is Lean~4.36.0 with pinned Mathlib dependencies.
-The build and comparison commands run from the repository root.
+That revision includes the proof notes, exact coordinate tables,
+and complete finite certificates. The toolchain is Lean~4.36.0
+with pinned Mathlib dependencies. In the current checkout, each
+eight-vertex type has a standalone Palomar Challenge and Solution.
+For example, the Type~\(2\) entry can be checked from the repository root.
 {\small
 \begin{verbatim}
 lake build
-lake env lake comparator --config=palomar/OrigamiTorus/comparator.json
+entry=palomar/OrigamiTorus/EightVertex/Type2
+lake env lake comparator --config="$entry/comparator.json"
 \end{verbatim}
 }
-Lean and NanoDa accepted the 13 statements in the
-Comparator configuration in a local replay. This configuration
-includes the main obstructions, universality results with
-Type \(6\) regularity, Type \(4\) strip existence, Type \(5\)
-square, and Type \(7\) rectangular existence. The full
-Lean library also checks the Type \(5\) box and the rank-nine
-strip statements for Types \(4\) and \(7\). The main declarations
-are as follows.
+The
+\href{https://github.com/vltanh/lean4-origami-torus/blob/HEAD/palomar/OrigamiTorus/README.md}{Palomar index}
+lists the standalone configurations and the scope of each entry.
+It also lists a seven-vertex entry, which proves Schwartz's
+nonexistence theorem by a checked classification up to relabeling
+and a determinant-sign refutation. The main eight-vertex declarations
+are listed below.
 \begin{center}
 \small
 \begin{tabularx}{\linewidth}{@{}lX@{}}
