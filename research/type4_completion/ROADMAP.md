@@ -5,6 +5,18 @@ This is an independent Type 4 workstream. It does not prescribe Type 4 as
 the sole priority over Types 5 and 7, and it does not turn any of the
 research reductions below into a new Lean theorem.
 
+**Current attack:** the [direct strict-geometry proof](global_attack_support.md)
+now establishes neighbor support and all 23 strict K4 determinants from
+Type 4 embeddedness and flatness, without the earlier seven-vertex
+remeshing dependency. The [uniform ray-2 core reconstruction](ray2_attack_conics.md)
+has two genuine phase quadratics at every sharp-ray modulus, including
+all cap collapses. The proposed whole-six-core obstruction is **false**:
+an [exact embedded core](core_attack.md) survives tilted C collapse.
+Both of that core's metric completions by vertex 0 are nevertheless
+excluded by an exact edge `12` / face `045` crossing certificate.
+The active task is consequently a coupled core-and-leaf obstruction;
+this fixed-core certificate is not a full-row exclusion.
+
 ## 1. What would finish Type 4?
 
 Existence is already settled. The remaining question is universality.
@@ -156,6 +168,13 @@ steps of that implication are proved. Replaying a finite enumeration is
 only the finite part of this gate. This audit can run in parallel with
 the analytic work; it must be complete before a final nonuniversality claim.
 
+The strictness part has a [direct Type 4 hand proof](global_attack_support.md):
+the finite checker verifies all eight neighborhood K5 witnesses and all
+twenty possible nonedge antipodal-link cases. It supplies strict support
+and strict K4s uniformly, including arbitrarily small positive volumes.
+This closes that research premise, not the entire gate or its Lean
+formalization.
+
 ### Gate 1 — use one authoritative full domain per row
 
 **Inputs:** the checked marking and `(labels,q)` row, fixed `W=10^12`,
@@ -198,22 +217,26 @@ to all A/B/C corners or all vertex-6 positions. Proving one of these
 conditional signs would itself be an intermediate lemma, not yet the
 full `ray2_2` exclusion.
 
-**Next decisive task:** determine whether a *local* metric-plus-embedding
-lemma for the six-vertex core `{1,2,3,4,5,6}` is true across all three
-collapse regimes. Use the actual anchor `(4,5,1,6)`, exact root conics and
-the six allowed Radon patterns for each root. Retain every core face
-intersection test and contraction of chord `23`. Separate the three
-small-margin regimes only with an exhaustive rule, for example choosing
-the least of `A,B,C` and retaining ties. Within each, include vertex 6
-approaching either cap and all allowed vertical tilts.
+**Resolved local question:** the whole-six-core exclusion is false.
+The [exact tilted-C witness](core_attack.md) satisfies all fourteen core
+edge equations, strictly shortest lifts, six coherent intrinsic faces,
+strict core support, all strict K4s, chord `23` contraction and every core
+simplex intersection test. Its cap margin is `C=1/(4W)` and vertex 6 is
+within `21/(64y)` of the opposite cap. Both root masks are `{1}`. This
+does not refute the narrower negative-`lambda6` implication above, whose
+antecedent is false in the witness.
 
-The immediate falsification check should target B-collapse and tilted
-C-collapse with vertex 6 near the triangular cap; these are not justified
-by the existing A-collapse examples or the untilted C samples. A numerical
-candidate must be converted into an exact algebraic core and checked
-before it refutes a local lemma. An embedded core is still not a full
-torus: the leaves 0 and 7, the entire intrinsic triangulation, and all
-remaining intersections would require validation.
+**Next decisive task:** include the degree-five leaves 0 and 7 from the
+start. The [uniform core chart](ray2_attack_conics.md) gives at most four
+core candidates per eight-parameter input; its phase quadratic leading
+coefficients are positive on the whole sharp ray and exceed `4/5` for
+`y>=1`. For the displayed exact core, an invertible polarized system
+reduces every metric placement of vertex 0 to one quadratic. **Both**
+roots force edge `12` through face `045`, so no placement of vertex 7
+can complete that core to an embedding. The next required theorem must
+establish an extension obstruction uniformly over the full parameter
+domain, including exceptional leaf charts and cap endpoints. Neither
+this isolated core nor its two excluded completions changes the row count.
 
 **Stop/pivot conditions:**
 
@@ -329,12 +352,14 @@ hexagonal endpoint and the unbounded end explicitly.
 |---|---|---|
 | Pure orientation, linking and qualitative cap separation | Exact nonflat embedded witnesses satisfy both allowed linking forms and the active cap ordering | A new quantitative consequence of the flat metric |
 | Metric-only positivity of `[4512][4513]` | An exact six-vertex core has opposite signs while satisfying its edge metrics, shortest lifts, face orientations and tested chord contractions; edge 15 pierces face 264 | Actual core nonintersection or a stronger coupled theorem |
+| Exclusion using only the embedded six-vertex core | An exact tilted-C core satisfies every local metric, support and embedding test; both of its vertex-0 extensions fail | A coupled argument retaining the leaves or other full-torus constraints |
 | H13 intrinsic angular relaxation | An exact relaxed witness satisfies it but violates the required signs and has crossings | An equivalent full formulation or a proved new inequality |
 | Existing trapezoid family after modular transformation | The transformed sharp arc has no nondegenerate flat member of the defined positive-H parametrization, including all its sign chambers | A different family or a rigorously different singular chart |
 | Numerical endpoint continuation or random flip searches | No strict sharp-ray witness was certified | A candidate with exact validation or an analytic family, not more unchecked samples |
 | Nondegenerate transverse cap certificates alone | They force the surviving limits into collapsed-cap regimes | A finite, scale-sensitive treatment of those regimes |
 
 Sources: [linking audit](linking_audit.md), [exact metric-core diagnostic](algebra.md),
+[embedded core and exhaustive leaf obstruction](core_attack.md),
 [H13 ledger](../type4_focus/README.md), [transformed-chart theorem](../type7_closure/README.md),
 and [cap degeneration proof](../type4_focus/elongated_hand.md).
 
@@ -360,6 +385,10 @@ python3 research/type4_completion/verify_ray2_2_geometry.py
 python3 research/type4_completion/core_signs.py
 python3 research/type4_completion/algebra_core_witness.py
 python3 research/type4_completion/linking_witness.py
+python3 research/type4_completion/global_attack_support.py
+python3 research/type4_completion/ray2_attack_verify_conics.py
+python3 research/type4_completion/core_attack_witness.py
+python3 research/type4_completion/core_attack_leaf.py
 ```
 
 Regenerate the active complete input, then all eight if a change affects
@@ -386,7 +415,7 @@ lake build
 lake env lake comparator --config=palomar/OrigamiTorus/comparator.json
 ```
 
-This roadmap adds no exclusion and no Lean theorem. The next meaningful
-change to its completion count must be a full-row proof or a certified
+These research proofs and exact checks add no full-row exclusion or Lean
+theorem. The next change to the completion count must be a full-row proof or a certified
 embedded witness, with the resulting target or priority decision recorded
 explicitly.
