@@ -59,3 +59,35 @@ At fixed metric the eight parameters are bounded: after the gauge K_4j=0 every i
 This improves the previous 14-intrinsic-variable spanning-3-tree system, which retained six unsolved metric equalities, to eight free continuous parameters and no residual edge-length equalities. The new target is the single hexagonal marking: find an exact embedded witness or exclude the full bounded semialgebraic reconstruction. The Type 5 radical argument in research/torus_type5_reconstruction_certificate/type5_algebraic_certificate is the source of the odd-link quadric idea; the two-conic core here is specific to Type 4.
 
 No full nonlinear feasibility problem has yet been solved in this checkpoint.
+
+## 6. Hexagonal symmetry: 31 necessary clique-sign classes
+
+The two sharp-ray markings become equivalent at the hexagonal endpoint, by the lattice isometry with row-vector matrix ((0,1),(-1,1)) from the second representative to the first, followed by a vertex-lift gauge. All four Type 4 automorphisms are compatible with the first marking up to a hexagonal lattice isometry and a gauge. The four vertex permutations and their compensating matrices are:
+
+| permutation (images of 0,...,7) | lattice matrix |
+|---|---|
+| 01234567 | ((1,0),(0,1)) |
+| 01325467 | ((1,-1),(0,-1)) |
+| 76235410 | ((-1,0),(0,-1)) |
+| 76324510 | ((-1,1),(0,1)) |
+
+The verifier checks these claims by comparing integer edge cocycles: the difference after relabeling and applying the lattice matrix must be a vertex coboundary. The 12 matrices are exactly the symmetries of the Gram form ((2,1),(1,2))/2. Each permutation acts on signed clique determinants by permutation parity and normalization by ambient reflection. The 120 necessary Type 4 clique patterns in the preceding SAT archive split into 29 orbits of size four and two of size two, totaling **31** classes. This is a joint marking/orientation quotient, rather than an unjustified independent quotient by graph symmetry. Run `python3 research/type4_focus/verify_hex_orbits.py` to enumerate the exact H01--H31 representatives; it reads the previously checked clique pattern archive. The enumeration was also executed in integer arithmetic in the research environment; the saved Python script is an equivalent standalone replay, not an independent audit of the previous SAT or geometric lemmas.
+
+For each H01--H31, use the eight-parameter reconstruction and test the prescribed clique signs, complete embedding (including nonclique coplanarity), and intrinsic face orientations and degree. This is an exhaustive *necessary* branch decomposition at the fixed hexagonal metric. Each branch still contains a continuous feasibility problem; none is certified infeasible and no embedded witness has been obtained. A full exclusion of all 31 would establish Type 4 nonuniversality; a single positive witness would settle just this modulus.
+
+## 7. Exploratory numerical check (not an exclusion)
+
+A vectorized floating-point implementation of the two-conic and two-leaf reconstruction was tested on a seeded hit-and-run sample of 80,000 intrinsic points in the strict nearest-lift polytope, using their anchor coordinates and sampled root parameters. The best reconstructed candidate meeting strict intrinsic face orientation and nearest-lift checks still had six disjoint edge-face crossings (largest squared edge-length residual about 7.1e-16). A local constrained optimization over 30 nearby SAT sign models produced zero or slightly negative determinant/face/shortest-lift margins, not a certified embedding. These are exploratory computations, not proof certificates; no conclusion about infeasibility follows. The mathematical reduction and exact discrete symmetry checks do not depend on these experiments.
+
+## 8. Affine-coordinate implementation for rigorous solving
+
+The anchor Cholesky radicals need not enter feasibility solving. Write the ambient position of any vertex in the anchor basis, r_i=R^T c_i, with c_4=0 and c_5,c_1,c_6 the coordinate unit vectors. Then all squared extrinsic lengths are (c_i-c_j)^T G (c_i-c_j), where G=R R^T is the positive-definite Gram matrix already determined by the six anchor parameters. Every 4-point determinant has the sign of the corresponding affine-coordinate determinant after fixing a positive anchor orientation. For a root j, the equations become
+
+    G c_j = S_j u + b'_j,
+    c_j^T G c_j = |u|^2,
+
+where b'_j has entries (G_ii-|s_i|^2)/2. This is the same conic using only rational functions of the anchor data. For a leaf j, subtracting the equation to 4 similarly yields
+
+    c_i^T G c_j - s_i . u = (c_i^T G c_i-|s_i|^2)/2.
+
+The rank and nonzero-polynomial proofs above are unchanged by this invertible linear change of coordinates. For leaf 0 the three neighbors (1,2,5) span the anchor coordinates because (1,2,4,5) is a K4; for leaf 7 use (2,5,6). Solve these three equations for c_j as an affine function of u, then the fourth equation is a nontrivial linear constraint on u by rank four. Solve that line using a nonzero pivot and enforce its one remaining quadratic. Thus only four univariate quadratic equations remain in addition to the eight independent real parameters. Keeping the four dependent scalars as algebraic variables avoids expanding nested square roots; all extrinsic coordinates are rational functions of the resulting twelve scalars, and all edge equations hold exactly when the four quadratic equations hold. The parameter count refers to free scalars, not the number of variables in an auxiliary polynomial encoding. The complete degeneracy-aware embedding constraints can be tested in c-coordinates, with no Cholesky calculations. This is a natural representation for interval arithmetic or exact sign elimination.
