@@ -34,6 +34,19 @@ polynomial degree at most four. Its strengthened `ray2_2` query returned
 `UNKNOWN (timeout)` at 10,000 ms. All eight strengthened inputs regenerate;
 no row is excluded and the new hand proofs are not yet assembled in Lean.
 
+**Latest constructive checkpoint (2026-11-27):** the
+[Type 6 flip-ready route](flip_ready_type6.md#10-complete-marking-coverage-for-the-constructive-flip-locus)
+now covers all three marked inverse-flip classes on the sharp ray (one at
+the hexagon). The
+[finite reconstruction](flip_ready_type6.md#11-uniform-finite-reconstruction-with-eight-parameters-seven-on-the-nonsingular-chart)
+has seven continuous parameters and at most eight metric candidates on the
+nonsingular chart; the exceptional charts retain at most eight parameters.
+A numerical scan of 407,874 full metric candidates at the hexagon found
+no embedded solution (best: three crossings). These are not exclusion
+certificates. The constructive route is sufficient but not necessary for
+Type 4 universality; **0/8 original fixed-target cases remain excluded**.
+No new Lean theorem is claimed.
+
 ## 1. What would finish Type 4?
 
 Existence is already settled. The remaining question is universality.
