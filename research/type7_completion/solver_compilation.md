@@ -243,6 +243,13 @@ rational weights, and requires independent coordinate replay before
 export. It writes reviewable certificate packets without changing the
 accepted exclusion ledger. Its proof-only mode imports no LP library.
 
+An optional [metric filter](solver_metric_filter.md) replays those
+proofs and exports their whole phase orbits in both spatial orientations.
+Its 2,280 clauses exclude 1,140 normalized completion models, leaving
+748 for further directional geometry searches. Every clause is bound
+to its exact finite-height certificate. Initial filtered directional
+pilots remained satisfiable; this helper itself adds no exclusion.
+
 ## 6. Lower the metric degree and cancel positive factors
 
 [`remaining_null_chart.md`](remaining_null_chart.md) gives the exact

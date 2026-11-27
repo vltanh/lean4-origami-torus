@@ -1,4 +1,4 @@
-# Two collinear stretched caps cannot have exactly one collapsed edge
+# One-edge and paired-edge two-line exclusions
 
 Consider an unbounded ray-3 sequence whose physical cap limits lie on
 one common line. Suppose a transverse blow-up has two collinear caps on
@@ -162,8 +162,29 @@ Using (2) and (3),
 \]
 
 This contradicts the final necessary sign in (1), excluding all sixteen
-orders. The other 608 zero-stress two-line orders have at least two zero
-short weights; this theorem makes no claim about them.
+orders.
+
+## 5. The same proof excludes 32 paired-zero orders
+
+Among the forty-eight zero-stress orders with one zero edge in each
+cap, exactly thirty-two map to the boundary `v=u` of the same canonical
+picture. The collapsed edges are 14 and 36, with `0<r,u<1/2` and
+`w=1/2-u>0`.
+
+The separate sign certificate fixes only the nonzero brackets of this
+boundary picture. In particular, it leaves the new zero brackets
+containing 36 free. It still forces all four signs in (1).
+
+All metric and moving-frame steps above remain valid at `v=u`. The
+intrinsic and height coefficient matrices are constant and retain ranks
+fourteen and five. The direction calculation uses the positive lengths
+`r,u,w`, and no step divides by `v-u` or normalizes edge 36. Hence the
+same strictly negative limit `4r(2r-1)/u` contradicts (1), independently
+of the two edges' relative collapse rates.
+
+This extends the exclusion to thirty-two two-zero orders. The sixteen
+other one-zero-in-each-cap orders, and other multiple-zero families,
+are outside this proof.
 
 ## Reproduction
 
@@ -171,6 +192,7 @@ short weights; this theorem makes no claim about them.
 python3 research/type7_completion/remaining_two_line_blowup.py /tmp/type7-two-line-blowup
 g++ -O3 -std=c++17 research/orientation_checkpoint/check_unsat.cpp -o /tmp/type7-sign-check
 /tmp/type7-sign-check < /tmp/type7-two-line-blowup/two_line_required_signs.cnf
+/tmp/type7-sign-check < /tmp/type7-two-line-blowup/two_line_pair36_required_signs.cnf
 /tmp/type7-sign-check < /tmp/type7-two-line-blowup/two_line_model_coverage.cnf
 ```
 

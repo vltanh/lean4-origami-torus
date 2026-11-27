@@ -425,7 +425,7 @@ all sixteen zero-stress order pairs with two collinear stretched caps
 and exactly one zero physical edge. Its virtual-edge signs force a
 direction and scale comparison; the uniquely determined metric heights
 then contradict the same-cap bracket sign. The other 608 zero-stress
-two-line orders have at least two zero short weights and remain open.
+two-line orders have at least two zero short weights.
 
 The [partner-collapse proof](remaining_partner_blowup.md) closes the
 other 32 mixed cells with exactly one zero weight. Replacing the
@@ -436,6 +436,27 @@ Together, the complete one-zero covers strengthen the global theorem:
 **the second-smallest short-edge weight tends to zero in every unbounded
 ray-3 sequence**. The remaining boundary has at least two vanishing
 short edges; a finite-height exclusion is still required.
+
+The first two-zero families are also excluded. The
+[double-partner proof](remaining_double_partner_blowup.md) covers all
+24 mixed cells with four positive weights in the collinear cap and
+two zero partner weights. A pair of signed length defects restores
+a nonsingular metric Jacobian. When the cubic coefficient vanishes,
+the exact edge metric supplies a stronger positive defect that still
+forces a strictly negative bracket combination.
+
+For two collinear stretched caps, the
+[triple-cluster proof](remaining_two_line_triple.md) covers 288 orders
+with a triple cluster and a positive-weight partner. Twenty-eight
+independently replayed directional certificates leave one branch;
+relative stress identities give moving height `-4*t*alpha` to leading
+order and a prohibited same-cap volume sign. The earlier
+[two-line proof](remaining_two_line_blowup.md#5-the-same-proof-excludes-32-paired-zero-orders)
+also extends to 32 orders with collapsed edges 14 and 36. Of the 352
+two-line orders with exactly two zero weights, these arguments cover
+320; two sixteen-order families remain. The mixed triple-cluster
+family is also still open. These reductions do not yet strengthen
+the global second-smallest-weight theorem or close a finite chamber.
 
 The next requirement is a contradiction across the remaining angular
 region using the exact metric and required long-ring linking. An

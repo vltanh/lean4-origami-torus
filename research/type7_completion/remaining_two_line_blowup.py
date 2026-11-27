@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exclude the 16 two-line blow-up orders with exactly one zero weight.
+"""Exclude 16 one-zero and 32 paired-zero two-line blow-up orders.
 
 Usage: python remaining_two_line_blowup.py [OUTPUT_DIRECTORY]
 
@@ -28,7 +28,7 @@ REQUIRED = (lit((0, 1, 2, 4)), lit((1, 2, 3, 4)),
 FREE = (1, 4, 5, 6, 7)
 
 
-def canonical_maps(rows, symmetries):
+def canonical_maps(rows, symmetries, target_b=(1, 2, 3, 0)):
     phase = [entry['permutation'] for entry in symmetries if entry['phase_preserving']]
     for row in rows:
         values = dict(zip(A, row['a'])) | dict(zip(B, row['b']))
@@ -36,17 +36,17 @@ def canonical_maps(rows, symmetries):
         for permutation, reflection in product(phase, (-1, 1)):
             a = rank_tuple([reflection*values[permutation[i]] for i in A])
             b = rank_tuple([reflection*values[permutation[i]] for i in B])
-            if (a, b) == ((0, 1, 1, 2), (1, 2, 3, 0)):
+            if (a, b) == ((0, 1, 1, 2), target_b):
                 maps.append({'permutation': permutation, 'horizontal_reflection': reflection})
         assert maps, row
         row['canonical_map'] = maps[0]
 
 
-def sign_certificate():
+def sign_certificate(b=(1, 2, 3, 0)):
     variables, original, *_ = compiler.base_formula()
     assert original[0] == [1]
     clauses = [list(row) for row in original[1:]]
-    a, b = (0, 1, 1, 2), (1, 2, 3, 0)
+    a = (0, 1, 1, 2)
     for i, j in combinations(range(4), 2):
         for k, l in combinations(range(4), 2):
             value = -collinear.sign(a[j]-a[i])*collinear.sign(b[l]-b[k])
@@ -90,6 +90,7 @@ def exact_checks():
         residuals.extend(X(i, j)+weight for (i, j), weight
                          in zip(zip(cap, cap[1:]+cap[:1]), weights))
     matrix, rhs = s.linear_eq_to_matrix(residuals, xx[1:]+gamma[1:])
+    assert not matrix.free_symbols
     assert matrix.shape == (24, 14) and matrix.rank() == 14
     assert all(s.expand(value) == 0 for value in
                matrix*s.Matrix(list(family_x[1:])+list(family_g[1:]))-rhs)
@@ -108,6 +109,7 @@ def exact_checks():
                  -ell*(H[j]-H[i])-2*ky[i, j]*G(i, j))
         cross.append(s.expand(value.subs(intrinsic)))
     height_matrix, height_rhs = s.linear_eq_to_matrix(cross, [H[i] for i in FREE])
+    assert not height_matrix.free_symbols
     assert height_matrix.shape == (14, 5) and height_matrix.rank() == 5
     assert all(s.expand(value) == 0 for value in
                height_matrix*s.Matrix([family_zeta[i] for i in FREE])-height_rhs)
@@ -150,15 +152,32 @@ def main():
     print('PASS all 16 two-line orders with exactly one zero weight are canonical')
     proof_n, proof_c = sign_certificate()
     print(f'PASS necessary signs: UNSAT; {proof_n} variables, {len(proof_c)} clauses')
+    paired = []
+    phase = [entry['permutation'] for entry in symmetries if entry['phase_preserving']]
+    for row in zeros:
+        if len(row['zero_a_edges']) != 1 or len(row['zero_b_edges']) != 1:
+            continue
+        values = dict(zip(A, row['a'])) | dict(zip(B, row['b']))
+        if any((rank_tuple([reflection*values[p[i]] for i in A]),
+                rank_tuple([reflection*values[p[i]] for i in B]))
+               == ((0, 1, 1, 2), (1, 2, 2, 0))
+               for p, reflection in product(phase, (-1, 1))):
+            paired.append(row)
+    assert len(paired) == 32
+    canonical_maps(paired, symmetries, (1, 2, 2, 0))
+    pair_n, pair_c = sign_certificate((1, 2, 2, 0))
+    print(f'PASS 32 paired-zero orders and their required signs: UNSAT; {len(pair_c)} clauses')
     exact_checks()
     if len(sys.argv) == 2:
         output = Path(sys.argv[1])
         output.mkdir(parents=True, exist_ok=True)
         compiler.write_cnf(output/'two_line_required_signs.cnf', proof_n, proof_c)
+        compiler.write_cnf(output/'two_line_pair36_required_signs.cnf', pair_n, pair_c)
         blocked = clauses+[[-(i+1)*value for i, value in enumerate(model)] for model in models]
         compiler.write_cnf(output/'two_line_model_coverage.cnf', variables, blocked)
         (output/'two_line_one_zero_cells.json').write_text(json.dumps(one, indent=2)+'\n')
-    print('Scope: exactly one zero weight; the two-or-more-zero boundary remains open.')
+        (output/'two_line_pair36_cells.json').write_text(json.dumps(paired, indent=2)+'\n')
+    print('Scope: all one-zero orders and 32 paired-zero orders; other multiple-zero patterns remain open.')
 
 
 if __name__ == '__main__':
