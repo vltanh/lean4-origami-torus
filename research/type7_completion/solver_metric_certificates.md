@@ -4,7 +4,8 @@ For every `y>=8`, a five-sign obstruction excludes the complete weak
 phase chambers **129, 130, and 131** in the 132-chamber enumeration.
 Chamber 131 already has a final-polynomial exclusion, so this gives two
 additional cases. Together with the final-polynomial proof of chamber
-23, four chambers are excluded and 128 remain. This does not exclude a
+23, these two methods exclude four chambers. Later certificate collections
+are tracked in `solver_compilation.md`. This does not exclude a
 complete marking or finish Type 7.
 
 The argument uses one relative metric comparison and the five-point
@@ -137,4 +138,5 @@ identities and coefficient checks, verifies that the strict bracket is
 an actual K4, and binds the chamber coverage to the independently checked
 CNF. The original final-polynomial certificates are retained, including
 the overlapping certificate for chamber 131. The manifest retains all
-132 representatives, of which 128 still require metric exclusion.
+132 representatives; subsequent certificate collections can exclude
+additional cases without changing this cover.

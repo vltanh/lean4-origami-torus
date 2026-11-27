@@ -27,6 +27,7 @@ import time
 import direct_metric as direct
 import solver_final_polynomials
 import solver_metric_certificates
+import solver_metric_differences
 import verify_nonparallel_corner as corner
 from verify_linking import CNF, SAT, data, formula, lit, short_pairs
 
@@ -425,11 +426,14 @@ def main():
                'trace': trace, 'remaining_circuits': remaining}
         final_polynomial = solver_final_polynomials.verify(model, strict)
         metric_certificate = solver_metric_certificates.verify(model, symmetries)
+        metric_difference = solver_metric_differences.verify(model, symmetries, edges)
         if final_polynomial:
             row['final_polynomial'] = final_polynomial
         if metric_certificate:
             row['metric_certificate'] = metric_certificate
-        exclusion = final_polynomial or metric_certificate
+        if metric_difference:
+            row['metric_difference_certificate'] = metric_difference
+        exclusion = final_polynomial or metric_certificate or metric_difference
         if exclusion:
             # Do not leave a stale undecided query after regenerating an
             # output directory produced by the earlier compiler.
@@ -447,18 +451,19 @@ def main():
     (args.output / 'chambers.json').write_text(json.dumps(manifest, separators=(',', ':')) + '\n')
     if args.proof:
         write_proof(n, blocked, args.output.resolve())
+    excluded_count = sum(any(key in row for key in (
+        'final_polynomial', 'metric_certificate', 'metric_difference_certificate')) for row in rows)
     print(json.dumps({'models': len(models), 'phase_symmetries': 16,
                       'chambers': len(reps), 'enumeration_seconds': enumeration_time,
                       'final_polynomial_exclusions': sum('final_polynomial' in row for row in rows),
                       'metric_certificate_exclusions': sum('metric_certificate' in row for row in rows),
-                      'algebraically_excluded_chambers': sum(
-                          'final_polynomial' in row or 'metric_certificate' in row for row in rows),
-                      'remaining_metric_chambers': sum(
-                          'final_polynomial' not in row and 'metric_certificate' not in row for row in rows),
+                      'metric_difference_exclusions': sum('metric_difference_certificate' in row for row in rows),
+                      'algebraically_excluded_chambers': excluded_count,
+                      'remaining_metric_chambers': len(reps) - excluded_count,
                       'strict_counts': dict(Counter(len(row['strict']) for row in rows)),
                       'remaining_circuit_counts': dict(Counter(len(row['remaining_circuits']) for row in rows)),
                       'seconds': time.monotonic() - start}), flush=True)
-    print('Four weak chambers excluded by exact final-polynomial or metric certificates; '
+    print(f'{excluded_count} weak chambers excluded by exact final-polynomial or metric certificates; '
           'no full marking excluded. '
           'Replay coverage.cnf and coverage.drat independently when --proof was used.')
 

@@ -1,11 +1,13 @@
 # Finite chamber compilation for the full ray-3 search
 
-The full ray-3 search now has **128 remaining metric chambers**. Exact
+The full ray-3 search now has **119 remaining metric chambers**. Exact
 Boolean enumeration covers 1,888 generic sign completions, and verified
 phase symmetries reduce them to 132 representatives. Two complete weak
 chambers are excluded by Grassmann–Plücker final polynomials; two more
-are excluded by a metric volume comparison and an affine identity.
-The exclusions retain actual zero nonclique minors.
+are excluded by a metric volume comparison and an affine identity. Nine
+further chambers are excluded by exact weighted sums of raw-volume
+difference bounds and affine identities. The exclusions retain actual
+zero nonclique minors.
 
 The compiler removes all Boolean variables and almost all actual circuit
 tests. Its optional face chart uses **29 real variables and 21 quadratic
@@ -17,7 +19,7 @@ bytes**, after positive factor cancellation and linear area alternatives.
 
 Enumeration is approximately four times faster and its complete model
 set is unchanged. Representative nonlinear trials still returned
-`UNKNOWN (timeout)` at 3,000 ms. The four exclusions below have exact
+`UNKNOWN (timeout)` at 3,000 ms. The thirteen exclusions below have exact
 certificates independent of those trials. **The full ray-3 marking
 remains open.**
 
@@ -155,7 +157,7 @@ replaces the two orientation branches and redundant sum equations by
 the sixteen individual negative-area inequalities. Duplicate K4
 nonzero tests are absorbed into the corresponding strict chamber signs.
 
-## 5. Four complete weak chambers are excluded
+## 5. Thirteen complete weak chambers are excluded
 
 [`solver_final_polynomials.py`](solver_final_polynomials.py) excludes
 chambers **23 and 131**. Each proof uses six signed Grassmann–Plücker
@@ -190,6 +192,17 @@ The magnitude inequality applies to raw brackets before the query's
 individual positive rescalings. Those rescalings preserve signs and
 zeros, but not affine identities between magnitudes. The certificate
 checker keeps these two uses separate.
+
+The [general difference certificates](solver_metric_differences.md) add
+chambers **88, 91, 93, 95, 96, 97, 98, 99, and 100**. They use the same
+absolute raw-bracket difference bound when the two left signs agree as
+well as when they oppose. Each exact certificate adds 6–7 metric
+inequalities and 11–16 affine identities with integer weights. The
+result has nonnegative coefficients on all bracket magnitudes and a
+strictly positive coefficient on a nonzero K4. The standalone checker
+reconstructs every source inequality and adds its coefficients with
+rational arithmetic; no LP tolerance is used. These nine cases hold at
+every `y>=8` and leave 119 chambers.
 
 ## 6. Lower the metric degree and cancel positive factors
 
@@ -226,8 +239,8 @@ g++ -O3 -std=c++17 research/type7_completion/solver_check_rup.cpp -o /tmp/type7-
 
 The generated manifest records every model, exact symmetry and gauge,
 strictness witness, remaining circuit partition, exclusion certificate,
-and query size. It retains all 132 rows and emits 128 queries, omitting
-IDs 23, 129, 130, and 131. Regeneration removes stale query files for
+and query size. It retains all 132 rows and emits 119 queries, omitting
+the thirteen cases carrying verified exclusion certificates. Regeneration removes stale query files for
 these excluded chambers.
 Generated files and large proof traces stay outside the source tree.
 

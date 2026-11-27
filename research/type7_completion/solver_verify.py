@@ -22,6 +22,7 @@ import sympy as sym
 import solver_chambers as producer
 import solver_final_polynomials
 import solver_metric_certificates
+import solver_metric_differences
 from verify_linking import lk, short_pairs
 
 
@@ -98,6 +99,7 @@ def main(directory):
     total_witnesses = total_omitted = 0
     final_polynomial_excluded = []
     metric_excluded = []
+    metric_difference_excluded = []
     solver_metric_certificates.symbolic_checks()
     partitions = producer.circuit_partitions(faces, edges)
     for row in source['chambers']:
@@ -157,6 +159,11 @@ def main(directory):
             clique = tuple(sorted(permutation[v] for v in certificate['strict_clique']))
             assert clique in initial_strict
             metric_excluded.append(row['id'])
+        if 'metric_difference_certificate' in row:
+            certificate = solver_metric_differences.verify(model, source['symmetries'], edges)
+            assert certificate is not None
+            assert json.loads(json.dumps(certificate)) == row['metric_difference_certificate']
+            metric_difference_excluded.append(row['id'])
         retained = {(tuple(a), tuple(b)) for a, b in row['remaining_circuits']}
         expected_retained = set()
         for support, positive in partitions:
@@ -174,9 +181,12 @@ def main(directory):
         assert final_polynomial_excluded == [23, 131]
     if metric_excluded:
         assert metric_excluded == [129, 130, 131]
-    excluded = sorted(set(final_polynomial_excluded) | set(metric_excluded))
+    if metric_difference_excluded:
+        assert metric_difference_excluded == list(solver_metric_differences.CASES)
+    excluded = sorted(set(final_polynomial_excluded) | set(metric_excluded)
+                      | set(metric_difference_excluded))
     if final_polynomial_excluded and metric_excluded:
-        assert excluded == [23, 129, 130, 131]
+        assert {23, 129, 130, 131} <= set(excluded)
 
     x = [0] + list(sym.symbols('x1:8'))
     gamma = [0] + list(sym.symbols('gamma1:8'))
@@ -210,6 +220,8 @@ def main(directory):
         print('PASS exact final-polynomial exclusions of weak chambers 23 and 131')
     if metric_excluded:
         print('PASS exact raw-bracket metric exclusions of weak chambers 129, 130, 131 for y>=8')
+    if metric_difference_excluded:
+        print('PASS nine exact raw-bracket difference exclusions for y>=8')
     if excluded:
         print(f'PASS {len(excluded)} complete weak chambers excluded; {132 - len(excluded)} remain')
     print('Completeness additionally requires the independent RUP replay; no full marking exclusion is claimed.')

@@ -87,7 +87,7 @@ def main():
         for left, comparison, right in proof['inequalities']:
             show = lambda pair: '*'.join('|' + ''.join(map(str, q)) + '|' for q in pair)
             print(f'  {show(left)} {comparison} {show(right)}')
-    print('Two complete weak chambers excluded; the other 130 phase chambers remain.')
+    print('Two complete weak chambers excluded by this module; see the compiler for the combined ledger.')
 
 
 if __name__ == '__main__':

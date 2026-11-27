@@ -307,15 +307,18 @@ leaving only **2–16** of the original 524 actual circuit tests per chamber.
 Unproved nonclique zero boundaries remain, and the nonedge inequalities
 reduce from 252 to eight.
 
-Four complete weak chambers are now excluded: **23 and 131** by exact
-final polynomials, and **129 and 130** by a uniform metric volume
-comparison plus one five-point affine identity. The latter proof holds
-for every `y>=8`. Thus **128 of 132 metric chambers remain**. The manifest
-records the proofs and exports no query for the four excluded cases.
+Thirteen complete weak chambers are now excluded. Exact final
+polynomials close **23 and 131**; a uniform metric volume comparison and
+one affine identity close **129 and 130**. General raw-volume difference
+certificates close **88, 91, 93, 95, 96, 97, 98, 99, and 100** by exact
+weighted sums of metric inequalities and affine identities. All metric
+certificates hold for every `y>=8`. Thus **119 of 132 metric chambers
+remain**. The manifest records every proof and exports no query for an
+excluded case.
 The independent verifier binds the coverage CNF to the manifest and
 replays all strictness witnesses, circuit omissions, and chamber
 certificates. Representative nonlinear queries still returned `UNKNOWN`
-at 3,000 ms. These four chamber exclusions do not close the full marking
+at 3,000 ms. These chamber exclusions do not close the full marking
 or change the fifteen-system ledger.
 
 The [nonparallel-corner theorem](relative_cap_bounds.md#5-a-certified-exclusion-of-the-tested-nonparallel-two-stick-corner)
