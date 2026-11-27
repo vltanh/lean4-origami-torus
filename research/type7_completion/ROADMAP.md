@@ -383,8 +383,23 @@ anisotropic stretch. A stress identity excludes trapezoids whose bases
 have zero physical horizontal component. For the other base direction,
 the [complete zero-cone check](common_line_trapezoids.md) proves that two
 noncollinear stretched caps require a triple cluster and one tip in each
-original physical cap. Stretched limits with only one noncollinear cap,
-and the resulting common-line two-tip limits, remain to be excluded.
+original physical cap.
+
+The [positive-weight mixed blow-up proof](remaining_flat_blowup.md)
+excludes all 24 one-flat/one-trapezoid cells with positive limiting edge
+weights. It uses an exact planar metric family, a nonsingular 21-variable
+Jacobian, and a positive bracket combination whose linear and cubic
+metric terms are both strictly negative. This covers every ratio of
+normal width to `1/y` or `1/y^2`.
+
+The [global edge-collapse theorem](common_line_edge_collapse.md) now
+assembles all stretched-limit cases. The missing two-collinear case has
+an exact 5,476-order cover; its 624 zero-stress survivors all have a zero
+physical edge. Consequently **the minimum short-edge weight tends to
+zero in every unbounded ray-3 sequence**. The remaining asymptotic
+boundary necessarily contains a vanishing edge. No finite height
+threshold follows yet, and all actual positive edge lengths must remain
+allowed in the fixed-modulus system.
 
 The next requirement is a contradiction across the remaining angular
 region using the exact metric and required long-ring linking. An
