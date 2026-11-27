@@ -103,3 +103,26 @@ The new generate_remaining.py produces all fifteen localized systems at y=10^6, 
 The locally generated versions (from the transcribed case data) were run with libz3. Seven ray_1 masks and ray_2 mask 03 returned UNKNOWN at a 2000 ms per-query solver limit. The remaining six ray_2 masks and ray_3 phase0 returned UNKNOWN at 500 ms. These short first attempts are not a practical exhaustion, and no branch is excluded. Generated systems are about 56–59 kB. Reproduce with:
     python generate_remaining.py /tmp/type7-remaining 2000
 Use a longer timeout for subsequent experiments, but require a checkable infeasibility proof or a certified witness; do not interpret UNKNOWN as evidence of impossibility. The script is now committed with the actual archive loader.
+
+## Faster local metric test and stopped approaches
+
+For each of the 16 clique-adjacent edges ab, unfold the two actual incident faces abc and abd in a single intrinsic chart. Write b-a=(u,v), c-a=(p,q), d-a=(r,s) in coordinates with metric X^2+wY^2. Choose orientation so that A=uq-vp>0 and B=vr-us>0. Put L=u^2+w v^2. Let Delta be the squared length of cd in the unfolded chart minus its prescribed squared edge length. All 16 K4s of Type 7 occur exactly once in this way. Exact enumeration of the archived cocycles confirms that the two lifts of cd are distinct in every marking, so Delta>0 by strict shortest lifts.
+
+The Gram matrix of the extrinsic three vectors b-a,c-a,d-a has the intrinsic inner products except that the c,d entry is increased by Delta/2. Direct determinant expansion gives the identity
+    det G = Delta*(w*A*B - Delta*L/4).
+Consequently every true realization satisfies
+    0 < Delta*L < 4*w*A*B.
+Conversely, for these six lengths, nondegenerate intrinsic triangles and this strict inequality give a positive definite Gram matrix (use the positive 2-by-2 leading minor of abc and Sylvester's criterion). This is a local tetrahedron criterion, not global completion. It gives a low-degree intrinsic-only necessary test for each of the 16 cliques, avoiding general Gram determinant expansion. The determinant identity was verified with SymPy and the clique/lift counts by exact integer enumeration.
+
+For ray_1/ray_2, write beta_i for the normalized vertical step-1 displacement and use the large-step mask convention at y>=10^6. For a large step i, its clique-adjacent opposite edge is the step-3 chord from i+3 to i+6. Write S=beta_(i+3)+beta_(i+4)+beta_(i+5), with indices modulo 8. Its unfolded alternative has vertical displacement S-1 (up to reversing both directions). The nearest-lift constraints give |X|<1/2 and |V|<1/2+1/(8w) for every edge. Thus A,B<0.501, L>=w/10^6, and the new test gives Delta<1,004,004. The horizontal squared-distance contribution to Delta is greater than -1/4. Hence
+    S > 1/2 - 1,004,004.25/(2*w),
+    S < 1/2 + 1/(8*w).
+These are further necessary linear localization bounds at the fixed target. None of the seven unsigned masks is excluded just by these estimates; do not count them as closure.
+
+### Approaches tested and stopped
+
+- Spherical-angle LP: introduce the 15 pairwise neighbor-ray angles at each vertex, normalized by pi. Impose triangle angle sums for all graph triangles, flatness (sum 2) at each vertex, spherical triangle inequalities, perimeter <2 for spherical convex polygons in a strict supporting hemisphere, and the weak crossing-diagonal inequalities inferred from the generic sign model. On all 66 locally archived ray_3 representatives the uniform rational assignment of 1/3 to every angle passes every inequality, with margin 1/3 for the marked strict inequalities. This was checked in exact rational arithmetic, not merely inferred from LP status. This particular relaxation is too weak and should not be pursued.
+- Consistent-cross-lift metric-circuit filter: enumerating all 2-versus-3 five-vertex partitions with a complete bipartite cross graph yielded zero extra exclusions in all four markings.
+- Rescaled ray_3 construction search at y=4: 16 local starts in separated-hull orientation chambers found no positive certified margin (best numerical margin about 1.7e-13). A proper half-turn-symmetric ansatz, matching 12 independent edge equations, also yielded no positive certified margin in 18 local starts at y=4. These are failed exploratory searches, not impossibility proofs.
+
+No new marking or mask has been closed. Retain the original single-metric target; do not create additional asymptotic branches on the basis of the above observations. The main unresolved requirement is a certificate of infeasibility (or a certified positive realization that changes the intended direction) for the full metric-and-embedding system. 
