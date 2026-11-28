@@ -1,6 +1,6 @@
 # Related work and attribution
 
-The problem here fixes both the number of vertices and the labeled triangulation. An ordinary polyhedral embedding can have nonzero cone angles. An origami realization requires the intrinsic flat metric, and a universal triangulation realizes every such metric with the same face complex.
+The problem here fixes both the number of vertices and the labeled triangulation. An ordinary polyhedral embedding can have nonzero angle defects. An origami realization requires the intrinsic flat metric, and a universal triangulation realizes every such metric with the same face complex.
 
 ## Flat tori before the eight-vertex results
 
@@ -11,7 +11,7 @@ The problem here fixes both the number of vertices and the labeled triangulation
 
 ## The seven eight-vertex types
 
-The underlying census comes from enumerations by Lutz and Sulanke. Hougardy, Lutz, and Zelke tabulate seven types on eight vertices and give integer-coordinate polyhedral embeddings for all seven. The labels used here match the face lists in Lander and Trettel's numerical dataset. The two types of degree sequence $55666677$ can be distinguished by their face lists. [Sulanke and Lutz](https://arxiv.org/abs/math/0610022v3) · [Hougardy, Lutz, and Zelke, §2](https://arxiv.org/pdf/0709.2794#page=2) · [Lander and Trettel's dataset](https://github.com/FabianLander/low-vertex-flat-tori)
+The underlying census comes from enumerations by Lutz and Sulanke. Hougardy, Lutz, and Zelke tabulate seven types on eight vertices and give integer-coordinate polyhedral embeddings for all seven. We use the face lists in Lander and Trettel's numerical dataset. It credits Lutz for the labels of Types 1–6 and uses Schwartz's labels for Type 7. The two types of degree sequence $55666677$ can be distinguished by their face lists. [Sulanke and Lutz](https://arxiv.org/abs/math/0610022v3) · [Hougardy, Lutz, and Zelke, §2](https://arxiv.org/pdf/0709.2794#page=2) · [Lander and Trettel's dataset](https://github.com/FabianLander/low-vertex-flat-tori)
 
 Schwartz proved that no seven-vertex paper torus exists and constructed an eight-vertex one. Lander observed that flatness at the degree-three vertex of Type 1 permits removal of its star without changing the intrinsic surface. This gives Type 1 nonexistence from Schwartz's lower bound. Lander also reported numerical square realizations on five types and conjectured that the remaining type, with degree sequence $45567777$ (Type 2), admits no flat embedding at any modulus. [Schwartz, Theorems 1.1–1.2 and §2](https://arxiv.org/abs/2507.14998v9) · [PNAS account, 2026](https://doi.org/10.1073/pnas.2523301123) · [Lander, §6 and Appendix B](https://arxiv.org/html/2609.10703v1#S6)
 
@@ -27,7 +27,7 @@ Doyle, Lander, Schwartz, and Trettel proved Type 3 universality using two planar
 | 2 | Lander's nonexistence conjecture | Nonexistence for the entire type. The geometric reduction and propositional refutation both replay in Lean |
 | 3 | Universality theorem of Doyle, Lander, Schwartz, and Trettel | Their planar data and height vectors with a fixed-period length proof of inflation and a degree-one quotient proof |
 | 4 | Numerical square evidence and the unresolved identity of the second universal family | Regular embeddings for every reduced modulus with $x<1/2$, including every rectangle |
-| 5 | Numerical square evidence on this type and explicit square constructions with more vertices | Exact dyadic-grid radical construction at the square and throughout a closed near-square box |
+| 5 | Numerical square evidence on this type and explicit square constructions with more vertices | Every nonhexagonal lattice by successive folds and exact sign certificates. Lean verifies two modulus boxes, two spatial separation criteria, and the two leaf completions |
 | 6 | Numerical square evidence and the unresolved identity of the second universal family | A face-identified universal construction by flipping the Type 3 diagonal, with rank nine at the spatial embeddings |
 | 7 | Near universality and a neighborhood of the square | The entire rectangular ray and verification of the full $x<1/2$ region with rank nine |
 

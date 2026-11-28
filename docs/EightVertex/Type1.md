@@ -4,7 +4,7 @@ An embedded realization of the Lutz Type 1 triangulation has a vertex whose
 cone angle differs from \(2\pi\). The theorem takes a placement of the eight
 labeled vertices and injectivity of its affine evaluation on the face complex.
 Those hypotheses are the embedding conditions used in the other type results.
-[Lean theorem](../../OrigamiTorus/EightVertex/Type1/Nonexistence.lean)
+[Lean theorem](../../OrigamiTorus/EightVertex/Type1/Nonexistence.lean) · [Palomar Challenge](../../palomar/OrigamiTorus/EightVertex/Type1/Challenge.lean) · [Solution](../../palomar/OrigamiTorus/EightVertex/Type1/Solution.lean)
 
 The degree-three vertex has three link angles. At flatness their sum is
 \(2\pi\), and the complete graph on the center and its three neighbors rules

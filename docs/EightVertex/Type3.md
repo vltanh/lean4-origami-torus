@@ -6,7 +6,7 @@ homeomorphism from the published Type 3 face complex to \(\mathbb C/(\mathbb Za+
 the homeomorphism is projection of an affine planar lift and the spatial
 embedding preserves all distances in that lift. This is the universality
 statement of Doyle, Lander, Schwartz, and Trettel.
-[Lean theorem](../../OrigamiTorus/EightVertex/Type3/Universal.lean) · [Theorem 1.1](https://arxiv.org/html/2611.21909v1#S1.SS1)
+[Lean theorem](../../OrigamiTorus/EightVertex/Type3/Universal.lean) · [Theorem 1.1](https://arxiv.org/html/2611.21909v1#S1.SS1) · [Palomar Challenge](../../palomar/OrigamiTorus/EightVertex/Type3/Challenge.lean) · [Solution](../../palomar/OrigamiTorus/EightVertex/Type3/Solution.lean)
 
 The construction uses the paper's two planar families on
 \(0\le x\le 1/6\) and \(1/6\le x\le 1/2\), with \(y>0\) and

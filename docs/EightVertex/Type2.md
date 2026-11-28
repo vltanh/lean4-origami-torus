@@ -2,6 +2,8 @@
 
 No embedded polyhedral realization of Lutz Type 2 has cone angle $2\pi$ at all eight vertices. This answers the question in [Lander, §6](https://arxiv.org/abs/2609.10703). The proof below gives the geometric reduction by hand and uses an explicit finite propositional refutation for its final step.
 
+The entry compares the geometric nonexistence theorem and the unsatisfiability of its determinant-sign formula. [Palomar Challenge](../../palomar/OrigamiTorus/EightVertex/Type2/Challenge.lean) · [Solution](../../palomar/OrigamiTorus/EightVertex/Type2/Solution.lean)
+
 In this proof the faces are
 
 ```text

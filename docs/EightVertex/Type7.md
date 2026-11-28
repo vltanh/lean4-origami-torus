@@ -1,5 +1,7 @@
 # The Type 7 rectangular and open-strip families
 
+For every reduced modulus $x+iy$ with $0\le x<1/2$, the entry compares existence and rank nine at the spatial placement defining the embedding. It also compares rectangular existence for arbitrary orthogonal generators. Coverage on $x=1/2$ remains open. [Palomar Challenge](../../palomar/OrigamiTorus/EightVertex/Type7/Challenge.lean) · [Solution](../../palomar/OrigamiTorus/EightVertex/Type7/Solution.lean)
+
 For a rectangle of aspect ratio \(y\ge1\), set \(w=y^2\), \(H=33/20\), and \(q=33/13\). Scaling and exchanging the two sides put any rectangular torus in this form. At \(x=0\), the trapezoidal formula of [Type 4](Type4.md) with \(c=1/3\) gives the original Type 7 face list. The [Lean rectangular coordinates](../../OrigamiTorus/EightVertex/Type7/Rectangular.lean) multiply all these points by the same positive factor \(1+q^2w\). The physical plane has coordinates \((X,yY)\).
 
 Lean verifies all sixteen planar orientation signs. At each vertex, the product of the six complex corner factors is real. It is positive at \(w=1\) and remains positive on \([1,\infty)\), since the factors stay nonzero. Taking arguments gives a positive multiple of \(2\pi\) at each vertex. The sixteen triangle angle sums add to \(16\pi\), so all eight vertex sums are \(2\pi\). The [Lean angle calculation](../../OrigamiTorus/EightVertex/Type7/Angles.lean) proves these equalities for Euclidean angles.

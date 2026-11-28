@@ -1,6 +1,6 @@
 # Type 6 universality
 
-Every flat two-torus has an eight-vertex origami realization on Lutz Type 6. For each marked modulus the construction gives an embedded configuration of rank nine for the map consisting of seven angle deficits and the two modulus coordinates. This proof uses the two flattened families and the rank-seven calculation in [Doyle, Lander, Schwartz and Trettel, §§3 and 5](https://arxiv.org/abs/2611.21909). Their §6 also reports a second universal candidate of the same degree sequence. The explicit face list and flip below identify the triangulation used here.
+Every rank-two lattice torus admits a piecewise-isometric embedding on Lutz Type 6. At the spatial vertices of that embedding, the differential of the seven cone angles and the locally developed marked modulus has real rank nine. The construction uses the two flattened families of Doyle, Lander, Schwartz, and Trettel. Their §6 reports exact universality checks for a second family of the same degree sequence. The face list in that section is unspecified. The flip below identifies our Type 6 complex, and the spatial rank proof uses conformal length variations and variation of the periods. [Published construction and §6](https://arxiv.org/html/2611.21909v1#S6) · [Palomar Challenge](../../palomar/OrigamiTorus/EightVertex/Type6/Challenge.lean) · [Solution](../../palomar/OrigamiTorus/EightVertex/Type6/Solution.lean)
 
 ## The planar flip
 

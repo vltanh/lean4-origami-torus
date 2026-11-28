@@ -2,7 +2,8 @@
   "challenge_module": "OrigamiTorus.EightVertex.Type4.Challenge",
   "solution_module": "OrigamiTorus.EightVertex.Type4.Solution",
   "theorem_names": [
-    "OrigamiTorusType4Challenge.type4_open_strip"
+    "OrigamiTorusType4Challenge.type4_open_strip",
+    "OrigamiTorusType4Challenge.type4_regular_open_strip"
   ],
   "definition_names": [],
   "permitted_axioms": [

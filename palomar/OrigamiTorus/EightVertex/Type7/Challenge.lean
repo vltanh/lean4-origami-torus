@@ -17,7 +17,8 @@ import Mathlib.Tactic
 # Type 7 origami tori
 
 The Type 7 face complex admits piecewise-isometric embeddings throughout
-the reduced strip and for arbitrary-scale rectangular lattices.
+the reduced strip and for arbitrary-scale rectangular lattices. The strip
+embeddings have rank nine for the spatial angle and marked modulus map.
 -/
 
 @[expose] public section
@@ -26,6 +27,7 @@ namespace OrigamiTorus
 
 abbrev Vertex := Fin 8
 abbrev Triangle := Vertex × Vertex × Vertex
+abbrev Edge := Vertex × Vertex
 
 def triangleVertices (f : Triangle) : List Vertex := [f.1, f.2.1, f.2.2]
 
@@ -74,11 +76,118 @@ def squared3 {R : Type*} [Ring R] (p : Space R) : R := squared2 (horizontal p) +
 
 end Type5
 
+namespace Type2
+
+def euclideanPoint : Point3 →ₗ[ℝ] EuclideanSpace ℝ (Fin 3) where
+  toFun p := WithLp.toLp _ ![p.1,p.2.1,p.2.2]
+  map_add' p q := by ext i; fin_cases i <;> rfl
+  map_smul' r p := by ext i; fin_cases i <;> rfl
+
+end Type2
+
+open InnerProductGeometry
+
+/-- The two rays at a face corner in cyclic face order. -/
+def cornerRays (v : Vertex) (f : Triangle) : Option Edge :=
+  let (a,b,c) := f
+  if v = a then some (b,c) else if v = b then some (c,a) else if v = c then some (a,b) else none
+
+/-- Sum the Euclidean face angles at a labeled vertex of a spatial or planar placement. -/
+noncomputable def coneAngles {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (fs : List Triangle) (q : Vertex → E) (v : Vertex) : ℝ :=
+  (fs.map fun f => match cornerRays v f with
+    | none => 0
+    | some (a,b) => angle (q a-q v) (q b-q v)).sum
+
+/-- Keep the cone angles at vertices 1 through 7. -/
+noncomputable def sevenConeAngles {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (fs : List Triangle) (q : Vertex → E) (v : Fin 7) : ℝ :=
+  coneAngles fs q v.succ
+
+theorem developedTwo : Nat.AtLeastTwo 2 := ⟨by decide⟩
+
+/-- The horizontal coordinate of a triangle corner in the chart taking its first
+two corners to 0 and 1. The arguments are the squared lengths AB, AC, and BC. -/
+noncomputable def developedRe (ab ac bc : ℝ) : ℝ :=
+  letI : Nat.AtLeastTwo 2 := developedTwo
+  (ab+ac-bc)/(2*ab)
+
+/-- The squared height of the third triangle corner in the same chart. -/
+noncomputable def developedHeightSq (ab ac bc : ℝ) : ℝ := ac/ab-(developedRe ab ac bc)^2
+
+/-- The third vertex in the chart taking the first two vertices to 0 and 1.
+The side tag chooses which half-plane contains that vertex. -/
+noncomputable def developedCorner (positive : Bool) (ab ac bc : ℝ) : ℂ :=
+  (developedRe ab ac bc : ℂ) +
+    ((if positive then 1 else -1) * Real.sqrt (developedHeightSq ab ac bc) : ℝ) * Complex.I
+
+namespace Type7
+
+noncomputable def triangleCorner (s : Vertex → Vertex → ℝ) (positive : Bool)
+    (a b c : Vertex) : ℂ := developedCorner positive (s a b) (s a c) (s b c)
+
+/-- Squared edge lengths for a spatial placement. -/
+def spatialEdgeSq (q : Vertex → Point3) (a b : Vertex) : ℝ :=
+  Type5.squared3 (q b-q a)
+
+def faces : List Triangle :=
+  [(3,5,6), (3,2,5), (3,6,4), (3,0,2), (3,4,1), (3,1,0), (5,0,6), (5,2,4),
+    (5,4,7), (5,7,0), (6,7,4), (6,0,1), (6,1,7), (2,1,4), (2,0,7), (2,7,1)]
+
+-- The face list and the marking are developed in separate library modules.
+-- Name the marking's instance proof explicitly for the standalone comparison.
+theorem markingDisplacements._proof_1 : type_of% (@Nat.instNeZeroSucc 7) := @Nat.instNeZeroSucc 7
+
+/-- Develop the six triangles meeting the marked walks. The common root chart
+takes vertex 3 to 0 and vertex 5 to 1. The diagonal 35 is the unflipped chart. -/
+noncomputable def markingDisplacements (s : Vertex → Vertex → ℝ) : ℂ × ℂ :=
+  letI : NeZero 8 := markingDisplacements._proof_1
+  let z₂ := triangleCorner s false 3 5 2
+  let z₆ := triangleCorner s true 3 5 6
+  let z₄ := 1+(z₂-1)*triangleCorner s true 5 2 4
+  let z₀ := z₂-z₂*triangleCorner s true 2 3 0
+  let z₄' := z₆*triangleCorner s true 3 6 4
+  let z₀' := z₆+(1-z₆)*triangleCorner s true 6 5 0
+  (z₄'-z₄,z₀-z₀')
+
+/-- The local complex ratio of the marked displacements. -/
+noncomputable def markedShape (s : Vertex → Vertex → ℝ) : ℂ :=
+  let (U,V) := markingDisplacements s
+  V/U
+
+noncomputable def spatialAngleShape (q : Vertex → Point3) : (Fin 7 → ℝ) × ℂ :=
+  (sevenConeAngles faces (Type2.euclideanPoint ∘ q),markedShape (spatialEdgeSq q))
+
+/-- The spatial angle and marked-modulus map is smooth and has rank nine. -/
+def SpatiallyRegular (q : Vertex → Point3) : Prop :=
+  ContDiffAt ℝ 1 spatialAngleShape q ∧ Function.Surjective (fderiv ℝ spatialAngleShape q)
+
+end Type7
+
 end OrigamiTorus
 
 namespace OrigamiTorusType7Challenge
 
 open OrigamiTorus
+
+/-- On the reduced strip, the seven cone angles and complex marked modulus
+have surjective joint spatial derivative at the vertices of the Type 7 embedding. -/
+theorem type7_regular_open_strip (x w : ℝ) (hx : 0 ≤ x) (hx' : x < 1/2) (hw : 1-x^2 ≤ w) :
+    let a : ℂ := 1
+    let b : ℂ := x+Real.sqrt w*Complex.I
+    let fs := Type7.faces
+    ∃ (H : triangleWeightSpace fs ≃ₜ ComplexTorus a b)
+      (F : ComplexTorus a b → Point3) (Q : Vertex → Point3) (P : Triangle → Vertex → ℂ),
+      Type7.SpatiallyRegular Q ∧ Topology.IsClosedEmbedding F ∧
+      (∀ u, F (H u) = evaluateTriangles fs Q u) ∧
+      (∀ f ∈ fs, ∀ u, u.val ∈ faceWeights (triangleVertexSet f) →
+        H u = complexTorusProjection a b (∑ i, u.val i • P f i)) ∧
+      ∀ f ∈ fs, ∀ u v,
+        u.val ∈ faceWeights (triangleVertexSet f) →
+        v.val ∈ faceWeights (triangleVertexSet f) →
+        Type5.squared3 (F (H u) - F (H v)) =
+          dist (∑ i, u.val i • P f i) (∑ i, v.val i • P f i)^2 := by
+  sorry
 
 /-- Every reduced modulus off the sharp-rhombic ray admits a
 piecewise-isometric Type 7 embedding. -/
@@ -99,7 +208,8 @@ theorem type7_open_strip (x w : ℝ) (hx : 0 ≤ x) (hx' : x < 1/2) (hw : 1-x^2 
         v.val ∈ faceWeights (triangleVertexSet f) →
         Type5.squared3 (F (H u) - F (H v)) =
           dist (∑ i, u.val i • P f i) (∑ i, v.val i • P f i)^2 := by
-  sorry
+  obtain ⟨H,F,Q,P,_,h⟩ := type7_regular_open_strip x w hx hx' hw
+  exact ⟨H,F,Q,P,h⟩
 
 /-- Every rectangular flat torus has a piecewise-isometric Type 7 embedding. -/
 theorem type7_rectangular (a b : ℂ) (ha : a ≠ 0) (hb : b ≠ 0) (ho : (b/a).re = 0) :

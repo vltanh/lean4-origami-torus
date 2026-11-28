@@ -5,7 +5,8 @@ project:
     The Lutz Type 7 triangulation realizes every reduced modulus x+iy with 0 ≤ x < 1/2, y
     > 0, and x²+y² ≥ 1. It also realizes every rectangular lattice torus at its given scale.
     The construction uses trapezoidal planar bases, exact height separation, and inflation
-    at a fixed marked modulus.
+    at a fixed marked modulus. The seven cone angles and complex marked modulus have a
+    surjective differential at the same eight spatial vertices as the strip embedding.
   authors:
   - The-Anh Vu-Le
   responsible_maintainers:
@@ -37,8 +38,9 @@ sources:
     for the full rectangular extension.
 status:
   scope: >-
-    The Challenge compares strip and rectangular existence. The library verifies a rank-nine
-    strip theorem and leaves the sharp-rhombic ray open.
+    The Challenge compares the original open-strip embedding theorem, its rank-nine
+    refinement, and the embedding theorem for arbitrary-scale rectangular lattices.
+    The sharp-rhombic ray remains open.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -65,6 +67,10 @@ alignment:
   statements:
   - source: docs/EightVertex/Type7.md, The full open strip
     lean: OrigamiTorusType7Challenge.type7_open_strip
+    module: OrigamiTorus.EightVertex.Type7.Challenge
+    status: proved
+  - source: docs/EightVertex/Type7.md, The full open strip
+    lean: OrigamiTorusType7Challenge.type7_regular_open_strip
     module: OrigamiTorus.EightVertex.Type7.Challenge
     status: proved
   - source: docs/EightVertex/Type7.md, Interpreting the marked displacements

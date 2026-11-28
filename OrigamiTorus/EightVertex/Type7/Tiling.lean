@@ -296,6 +296,35 @@ theorem rectangular (a b : ℂ) (ha : a ≠ 0) (hb : b ≠ 0) (ho : (b/a).re = 0
     Realizes a b :=
   chart_rectangular false a b ha hb ho
 
+/-- Index the intrinsic lifts by labeled faces while retaining a property of
+the same eight spatial vertices. -/
+theorem chart_by_faces_with (flipped : Bool) (a b : ℂ) {C : (Vertex → Point3) → Prop}
+    (h : ChartRealizesWith flipped a b C) :
+    ∃ (H : triangleWeightSpace (faceChoice flipped) ≃ₜ ComplexTorus a b)
+      (F : ComplexTorus a b → Point3) (Q : Vertex → Point3) (P : Triangle → Vertex → ℂ),
+      C Q ∧ Topology.IsClosedEmbedding F ∧
+      (∀ u, F (H u) = evaluateTriangles (faceChoice flipped) Q u) ∧
+      (∀ f ∈ faceChoice flipped, ∀ u, u.val ∈ faceWeights (triangleVertexSet f) →
+        H u = complexTorusProjection a b (∑ i, u.val i • P f i)) ∧
+      ∀ f ∈ faceChoice flipped, ∀ u v,
+        u.val ∈ faceWeights (triangleVertexSet f) →
+        v.val ∈ faceWeights (triangleVertexSet f) →
+        squared3 (F (H u) - F (H v)) =
+          dist (∑ i, u.val i • P f i) (∑ i, v.val i • P f i)^2 := by
+  classical
+  obtain ⟨H,F,Q,P,⟨hE,hfold,hproj,hmetric⟩,hC⟩ := h
+  have exists_lift (f : Triangle) (hf : f ∈ faceChoice flipped) : ∃ j : Fin 16, markedFace flipped j = f := exists_markedFace flipped f hf
+  let index (f : Triangle) := if hf : f ∈ faceChoice flipped then (exists_lift f hf).choose else 0
+  have hindex (f : Triangle) (hf : f ∈ faceChoice flipped) : markedFace flipped (index f) = f := by
+    simp only [index,dite_eq_left hf]
+    exact (exists_lift f hf).choose_spec
+  refine ⟨H,F,Q,P ∘ index,hC,hE,hfold,?_,?_⟩
+  · intro f hf u hu
+    exact hproj (index f) u (by simpa only [hindex f hf] using hu)
+  · intro f hf u v hu hv
+    exact hmetric (index f) u v (by simpa only [hindex f hf] using hu)
+      (by simpa only [hindex f hf] using hv)
+
 /-- A chart realization indexed by its labeled faces. -/
 theorem chart_by_faces (flipped : Bool) (a b : ℂ) (h : ChartRealizes flipped a b) :
     ∃ (H : triangleWeightSpace (faceChoice flipped) ≃ₜ ComplexTorus a b)
@@ -309,19 +338,10 @@ theorem chart_by_faces (flipped : Bool) (a b : ℂ) (h : ChartRealizes flipped a
         v.val ∈ faceWeights (triangleVertexSet f) →
         squared3 (F (H u) - F (H v)) =
           dist (∑ i, u.val i • P f i) (∑ i, v.val i • P f i)^2 := by
-  classical
-  obtain ⟨H,F,Q,P,hE,hfold,hproj,hmetric⟩ := h
-  have exists_lift (f : Triangle) (hf : f ∈ faceChoice flipped) : ∃ j : Fin 16, markedFace flipped j = f := exists_markedFace flipped f hf
-  let index (f : Triangle) := if hf : f ∈ faceChoice flipped then (exists_lift f hf).choose else 0
-  have hindex (f : Triangle) (hf : f ∈ faceChoice flipped) : markedFace flipped (index f) = f := by
-    simp only [index,dite_eq_left hf]
-    exact (exists_lift f hf).choose_spec
-  refine ⟨H,F,Q,P ∘ index,hE,hfold,?_,?_⟩
-  · intro f hf u hu
-    exact hproj (index f) u (by simpa only [hindex f hf] using hu)
-  · intro f hf u v hu hv
-    exact hmetric (index f) u v (by simpa only [hindex f hf] using hu)
-      (by simpa only [hindex f hf] using hv)
+  obtain ⟨H,F,Q,P,hreal⟩ := h
+  have hwith : ChartRealizesWith flipped a b (fun _ => True) := ⟨H,F,Q,P,hreal,trivial⟩
+  obtain ⟨H',F',Q',P',_,h'⟩ := chart_by_faces_with flipped a b hwith
+  exact ⟨H',F',Q',P',h'⟩
 
 /-- The rectangular embedding, with its specified lift indexed by each labeled face. -/
 theorem rectangular_by_faces (a b : ℂ) (ha : a ≠ 0) (hb : b ≠ 0) (ho : (b/a).re = 0) :

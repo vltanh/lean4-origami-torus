@@ -1,5 +1,7 @@
 # Type 4 near-universality
 
+For every reduced modulus $x+iy$ with $0\le x<1/2$, the entry compares existence and rank nine at the spatial placement defining the embedding. Coverage on $x=1/2$ remains open. [Palomar Challenge](../../palomar/OrigamiTorus/EightVertex/Type4/Challenge.lean) · [Solution](../../palomar/OrigamiTorus/EightVertex/Type4/Solution.lean)
+
 Write the normalized modulus as \(x+i\sqrt w\), with \(0\le x<1/2\) and \(w\ge 1-x^2\). The [two planar families](../../OrigamiTorus/EightVertex/Type4/Strips.lean) use \((H,c)=(33/(20+26x),1/3)\) up to \(x=9/20\) and \((1+3(1-2x)^2/2,2/3)\) from \(9/20\) onward. Here \(c\) is the positive ratio \(-r/(H-1+Hx)\). Both have \(H>1\), and the second has \(H\le6/5\).
 
 Use \(a=Hx\), \(D=H-1+a\), and \(Q=D^2+H^2w\). Set

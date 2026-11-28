@@ -3,6 +3,7 @@
   "solution_module": "OrigamiTorus.EightVertex.Type7.Solution",
   "theorem_names": [
     "OrigamiTorusType7Challenge.type7_open_strip",
+    "OrigamiTorusType7Challenge.type7_regular_open_strip",
     "OrigamiTorusType7Challenge.type7_rectangular"
   ],
   "definition_names": [],

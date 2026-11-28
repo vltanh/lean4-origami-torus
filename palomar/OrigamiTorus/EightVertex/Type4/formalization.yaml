@@ -4,7 +4,9 @@ project:
   description: >-
     The Lutz Type 4 triangulation admits a piecewise-isometric embedding for every reduced
     modulus x+iy with 0 ≤ x < 1/2, y > 0, and x²+y² ≥ 1. The proof flips a planar trapezoidal
-    chart and inflates an embedded height lift while preserving the marked modulus.
+    chart and inflates an embedded height lift while preserving the marked modulus. The
+    differential of the seven cone angles and complex marked modulus is surjective at the
+    same eight spatial vertices as the embedding.
   authors:
   - The-Anh Vu-Le
   responsible_maintainers:
@@ -39,8 +41,8 @@ sources:
     by Types 4 and 6. The reported face list is unresolved.
 status:
   scope: >-
-    The Challenge uses the flipped Type 7 chart labels. The library verifies their relabeling
-    to Lutz Type 4 and a rank-nine version of the theorem.
+    The Challenge compares both the original open-strip embedding theorem and its rank-nine
+    refinement in flipped Type 7 chart labels. The library verifies the relabeling to Lutz Type 4.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -67,6 +69,10 @@ alignment:
   statements:
   - source: docs/EightVertex/Type4.md, Marking after the flip
     lean: OrigamiTorusType4Challenge.type4_open_strip
+    module: OrigamiTorus.EightVertex.Type4.Challenge
+    status: proved
+  - source: docs/EightVertex/Type4.md, Marking after the flip
+    lean: OrigamiTorusType4Challenge.type4_regular_open_strip
     module: OrigamiTorus.EightVertex.Type4.Challenge
     status: proved
 acknowledgements: The-Anh Vu-Le directed and maintains the work. OpenAI Codex (GPT-6) contributed
