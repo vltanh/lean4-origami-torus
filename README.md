@@ -31,6 +31,8 @@ The remaining classification question is **universality**. Existence or nonexist
 
 **Current Type 7 target: complete the ray-1 and ray-2 markings.** Ray 3 now has a complete research exclusion at every sufficiently large height, and ray 4 has an audited explicit exclusion. Eventual bounds for the other two markings would supply one common counterexample modulus. The final Lean assembly remains open. Type 4's ray-2 transport estimates remain useful, but no full Type 4 case is closed. The counts of eight Type 4 families, nineteen Type 5 cells, and fifteen fixed-target Type 7 systems describe different continuous domains and do not rank their difficulty. The previous instruction to defer Types 5 and 7 until Type 4 is finished is superseded.
 
+The latest Type 7 proofs close [every both-collinear interior ray-1 C0 limit](research/type7_completion/remaining_c0_middle_lines.md), extend [two open height edges to an opposite collinear cap](research/type7_completion/remaining_c0_one_regular_height.md), and exclude [the full interior EE/FF zero-edge orbit for ray-2 C1](research/type7_completion/remaining_c1_same_zero.md). All 76 new Boolean obligations independently replay, with exact metric and source checks. Ray 1 still requires one-collinear C0 with `u<v` and the remaining degenerate height boundaries; ray 2 still requires the other zero-edge cases, C0, and height boundaries. No full marking or new Lean theorem is claimed.
+
 | Type | Completed result | Work needed to finish the type | Current action |
 |---|---|---|---|
 | 1 | Nonexistence, proved in Lean | None for this classification | Retain the proof |

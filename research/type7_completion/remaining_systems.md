@@ -62,7 +62,10 @@ C0 limit in this height region is excluded. The
 excludes both-regular-cap limits on all four open height edges. The
 [corner proof](remaining_c0_corner.md) completes the entire regular
 C0 height boundary, including every product-scale degeneration.
-Collinear-cap height boundaries remain. The
+The [one-regular-cap height extension](remaining_c0_one_regular_height.md)
+also closes `u=1/2` with regular 067 and `v=0` with regular 123,
+including an opposite collinear cap. Other collinear-cap height
+boundaries remain. The
 [common-line classification](exhaustive_c0_flat_common.md) reduces
 interior limits with both caps on the same transverse line to eight
 line families and one coincident-vertex circle. The
@@ -73,6 +76,10 @@ The [relative endpoint proof](remaining_c0_line_endpoints.md) also
 closes `h1=0,h7=0`, using the new
 [C0 short-edge estimates](remaining_c0_short_edges.md). Thus all
 four closed endpoint-deficit families are excluded.
+The [middle-line completion](remaining_c0_middle_lines.md) closes the
+four middle families and both circle line directions, completing
+all common-line interior C0 limits. Its 66 independent certificates
+retain unrelated short-diagonal, cap-area, and normal-width scales.
 The [relative circle argument](exhaustive_c0_circle.md) also excludes
 the entire nonflat coincident-vertex circle, retaining its two line
 directions. Both virtual-direction CNFs independently replayed.
@@ -88,6 +95,8 @@ Only bd/da remain among nonparallel both-collinear orders.
 The [asymmetric-cap proof](exhaustive_c0_flat_asymmetric.md) now
 excludes both, completing the entire nonparallel both-collinear
 interior C0 stratum.
+Thus every both-collinear interior C0 limit is excluded for ray 1;
+the remaining interior C0 gate has exactly one collinear cap and `u<v`.
 The
 [endpoint support bound](exhaustive_c0_endpoint_bound.md) and
 [opposite-cone proof](solver_remaining_c0_opposite_cones.md) reduce
