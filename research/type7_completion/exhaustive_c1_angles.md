@@ -5,6 +5,9 @@ It assumes that projected endpoint triangles `234` and `067` are
 noncollinear and that `0<alpha,beta<1`. It does not exclude any metric
 case. The closed metric identities, including the exceptional corner,
 remain in [the C1 circle package](solver_remaining_c1_geometry.md).
+The subsequent [turning-angle proof](solver_remaining_c1_turning.md)
+excludes this entire regular domain for ray 1. The present topology
+cover applies to both markings; ray 2 requires a separate metric argument.
 
 ## Cap orientations and complete coverage
 
@@ -102,6 +105,6 @@ python research/type7_completion/solver_cnf_certificates.py /tmp/c1-angles-rup \
 ```
 
 Use the independent checker built from `solver_check_rup.cpp`, with
-assertions enabled. The metric component remains open after this
-reduction. Degenerate cap triangles and height endpoints require their
+assertions enabled. The metric exclusion for ray 1 is in the
+turning-angle companion. Degenerate cap triangles and height endpoints require their
 own covers; their vanishing cap brackets do not justify these ten units.

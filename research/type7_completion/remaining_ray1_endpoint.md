@@ -30,7 +30,8 @@ This note supplies exact metric necessities and the Boolean source
 binding for the virtual-direction certificates in
 `solver_remaining_virtual12.md`. Together they reduce the normalized
 horizontal deficit to three boundary regimes. They do not yet exclude
-those regimes.
+those regimes within this reduction. All three are now excluded by the
+[complete two-block proof](ray1_two_block_exclusion.md).
 
 ## 1. Complete generic source and unique height constants
 
@@ -257,8 +258,10 @@ The remaining normalized deficit regimes are consequently
 
 In the third row, the other five deficits sum to `h+o(h)`. The surviving
 sign counts describe necessary Boolean/linear relaxations and do not
-assert geometric realizations. Excluding these three regimes remains
-open in this package.
+assert geometric realizations. The subsequent
+[negative-X](remaining_ray1_negative_x.md),
+[nonedge15](remaining_ray1_nonedge.md), and
+[positive-axial](remaining_ray1_positive_z.md) proofs exclude all three.
 
 ## 5. An exact all-t reference for further endpoint estimates
 
@@ -331,7 +334,7 @@ coordinates are `(P3x*P_ix+W3*W_i)/L` and
 
 ```sh
 python research/type7_completion/remaining_ray1_endpoint.py OUTPUT
-python research/type7_completion/solver_remaining_virtual12.py OUTPUT2
+python research/type7_completion/solver_remaining_virtual12.py
 ```
 
 The endpoint producer checks the rank-ten necessity system, projection

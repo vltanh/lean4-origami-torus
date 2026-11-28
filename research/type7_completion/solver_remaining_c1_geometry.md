@@ -4,6 +4,9 @@
 for both remaining markings. Its identities hold on the entire closed
 C1 component, including zero weights and zero cap areas. It does not
 exclude that component.
+The [turning-angle companion](solver_remaining_c1_turning.md) uses these
+identities to exclude its regular part for ray 1, with boundaries and
+ray 2 still requiring separate arguments.
 
 ## Parameters and endpoint triangles
 

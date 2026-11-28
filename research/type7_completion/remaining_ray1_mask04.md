@@ -42,7 +42,8 @@ assumed to vanish. A further analysis of the common-line boundary in
 (1)–(2) remains necessary. The subsequent
 [first transverse stretch](remaining_ray1_mask04_blowup.md) excludes
 20 of its 24 closed weak-order cases and reduces it to four symmetric
-single-edge endpoints, which remain open.
+single-edge endpoints. All four are now excluded by the
+[complete two-block proof](ray1_two_block_exclusion.md).
 
 ## 1. Four exact focal triangles and two stresses
 

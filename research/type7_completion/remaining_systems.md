@@ -36,12 +36,16 @@ provides twelve projected identities per generic component and retains
 the eleven-identity exceptional corners. At a canonical endpoint,
 [uniform metric estimates](remaining_ray1_endpoint.md) and
 [426 exact virtual-direction certificates](solver_remaining_virtual12.md)
-leave three normalized deficit regimes. The regular components have
+leave three normalized deficit regimes, now all excluded in the
+[complete two-block theorem](ray1_two_block_exclusion.md). The regular components have
 [18-pattern](exhaustive_c0_angles.md) and
 [14-pattern](exhaustive_c1_angles.md) angular covers with additional
 necessary tetrahedron signs. Exact metric witnesses show why the first
-cover's anchor signs alone are insufficient. These are necessary limit
-reductions; the three endpoint regimes and both full markings are open.
+cover's anchor signs alone are insufficient; its
+[complete cells](exhaustive_c0_cells.md) retain all seventy sign
+dependencies. The [turning-angle proof](solver_remaining_c1_turning.md)
+excludes regular C1 for ray 1. Other ray-1 limits and both full markings
+remain open.
 
 ## Correct long-ring linking target
 

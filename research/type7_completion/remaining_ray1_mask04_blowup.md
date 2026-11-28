@@ -207,7 +207,9 @@ h_1=\sum_{i\ne1}(\tfrac12-h_i).
 
 Each summand is positive and at most `h1`. This observation does not
 by itself control the relative size of the vertical step `b1`.
-The four endpoint families remain the next geometric task.
+All four endpoint families are now excluded by the
+[complete two-block proof](ray1_two_block_exclusion.md), using the
+verified marked equivalence and three exact endpoint contradictions.
 
 ## 5. Replay
 

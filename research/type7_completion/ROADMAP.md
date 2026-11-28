@@ -10,6 +10,12 @@ last steps cover all 300 mixed four-zero cells and all sixteen
 two-noncollinear zero-cone supports. The finite certificates and exact
 metric identities independently replay.
 
+For ray 1, the [entire two-block limit](ray1_two_block_exclusion.md)
+and the [regular C1 component](solver_remaining_c1_turning.md) are now
+excluded. The two-block proof closes all four symmetric endpoints,
+including every relative collapse rate. Ray 1's other limit regions,
+ray 2, and the Lean assembly remain open.
+
 The proof gives a threshold `Y3` but no numerical value. It therefore
 does not establish the separate target `tau* = 1/2 + 10^6 i`. The finite
 ledger remains 78 of 132 ray-3 chambers excluded and zero of the fifteen
@@ -653,6 +659,11 @@ inequality to `T36<0`; the regular witness violates one of the added
 signs. The bounded quadratic LP and PSD pilots produced no certificate.
 Height endpoints and degenerate cap triangles are outside this regular
 cover.
+The [complete eighteen-cell compiler](exhaustive_c0_cells.md) now
+retains all 669 cap-compatible generic models and all seventy actual
+sign dependencies, including zeros. Its 36 coverage/sign CNFs passed
+fresh independent replay in 2.858 seconds. All 72 marking/height/cell
+query variants parsed and passed their exact binding checks.
 
 The second canonical family has a separate
 [fourteen-pattern regular cover](exhaustive_c1_angles.md), with 132
@@ -660,7 +671,12 @@ complete generic projections and two additional tetrahedron signs.
 All six orientation/coverage/sign CNFs independently replayed in
 0.605 seconds. Its [closed circle and dot identities](solver_remaining_c1_geometry.md)
 retain the exceptional product scale and hold at every parameter
-boundary. Neither regular component has yet been excluded.
+boundary. The [turning-angle proof](solver_remaining_c1_turning.md)
+now excludes the entire regular C1 component for ray 1: the first
+metric pair and cap angles force one strict orientation, while the
+second metric pair and certified signs force the opposite orientation.
+Its zero-deficit cases are treated directly. The C1 boundary and ray 2
+remain outside that theorem.
 
 In the two-block `04` limit of ray 1, the
 [focal-ellipse and weak-sign proof](remaining_ray1_mask04.md) forces all
@@ -668,8 +684,7 @@ eight transverse points onto one common line, with `h0=h4=1/2` and
 three remaining closed weight families. It covers zero focal lengths,
 collinear triples and collapsed edges while retaining both outer
 product scales. All 52 direct Boolean certificates independently
-replayed in 3.066 seconds. The remaining common-line blow-up is still
-open, so this does not close `ray1_04`.
+replayed in 3.066 seconds.
 The [first transverse stretch](remaining_ray1_mask04_blowup.md) now
 excludes twenty of its 24 closed horizontal-order cases. Its weak-slope
 encoding retains zero horizontal edges explicitly and makes no comparison
@@ -685,9 +700,17 @@ by its horizontal weight. The [virtual-edge package](solver_remaining_virtual12.
 replays 426 exact Farkas certificates in 0.892 seconds, including 102
 parameter-polynomial certificates valid on the entire open interval.
 It reduces the normalized deficit simplex to three boundary regimes,
-with 172, 38 and 15 compatible primary completions respectively. These
-three regimes still require metric exclusion. An exact all-height
-planar reference records the cancellations needed for further estimates.
+with 172, 38 and 15 compatible primary completions respectively.
+All three are now excluded. The [negative-X proof](remaining_ray1_negative_x.md)
+subtracts two exact face polarizations with incompatible limits. The
+[nonedge15 cut](remaining_ray1_nonedge.md) excludes every negative
+limit of the normalized vertical step. The
+[positive-axial proof](remaining_ray1_positive_z.md) combines a relative
+face027 Gram factorization, fifteen exact profile implications, and a
+rank-one metric stress on clique3456. The
+[consolidated theorem](ray1_two_block_exclusion.md) therefore closes
+the entire two-block limit and all four symmetric endpoints. It gives
+no numerical neighborhood or height threshold for a finite-target mask.
 
 The [axis compiler](solver_remaining_axis.md) partitions the complete
 common sign set into **268 branches per marking**, without a mask split.

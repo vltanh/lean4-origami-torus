@@ -194,8 +194,8 @@ A [uniform bounded axis chart](research/type7_completion/exhaustive_remaining_ax
 retains all six collapse products for every `y>=32`. Its
 [268 branches per marking](research/type7_completion/solver_remaining_axis.md)
 have quadratic metric equations and only 3–50 remaining actual circuit
-tests. These verified reductions support further proof search; no ray-1/2
-exclusion is claimed.
+tests. These verified reductions support further proof search; no full
+ray-1/2 marking is yet excluded.
 
 The [complete limiting cover](research/type7_completion/exhaustive_remaining_locus.md)
 has two canonical families and retains all product scales at their
@@ -208,14 +208,15 @@ excludes twenty more closed cases, leaving four symmetric single-edge
 endpoints. The [metric reducer](research/type7_completion/solver_remaining_limit.md)
 also supplies exact projected identities for both canonical families;
 all 54 parameter strata and 642 row certificates independently check.
-The canonical endpoint now has
-[three remaining deficit regimes](research/type7_completion/remaining_ray1_endpoint.md),
-supported by 426 exact virtual-direction certificates. Regular parts of
-the two canonical families have
-[18-pattern](research/type7_completion/exhaustive_c0_angles.md) and
-[14-pattern](research/type7_completion/exhaustive_c1_angles.md) angular
-covers with necessary tetrahedron signs retained. No full ray-1/2
-marking is yet excluded.
+All three canonical endpoint regimes are now excluded by exact metric
+contradictions, completing the
+[entire ray-1 two-block limit](research/type7_completion/ray1_two_block_exclusion.md).
+The [turning-angle proof](research/type7_completion/solver_remaining_c1_turning.md)
+also excludes every regular C1 limit for ray 1, including zero individual
+deficits. The [complete C0 cells](research/type7_completion/exhaustive_c0_cells.md)
+retain all 669 generic models in eighteen angular patterns, with exact
+weak-sign decision diagrams and independent coverage proofs. Ray 1's
+other limit regions, ray 2, and the Lean assembly remain open.
 
 See [Type 7 reconstruction, rigidity and two elongated branches](research/type7_focus/README.md). The anchor-leaf reconstruction proves at most two embedded candidates per intrinsic placement on every marking. Using the earlier necessary clique-sign archive, the weighted mirror-distance identity and the checkerboard twist test strengthen this to **uniqueness up to congruence from the 24 labeled edge lengths**, conditional on the earlier strict-support and orientation-projection proof premises. The exact finite checker ran on the current input archives: 308/316 clique patterns have a unanimous anchor; the eight others have no admissible checkerboard partner. This is a rigidity result, not a universality result.
 
