@@ -634,6 +634,15 @@ intersections. Every limit has two projected endpoint triangles of
 perimeter one, with alternate triangles handling the exceptional
 corners. This is an asymptotic cover, not a two-mask finite-height claim.
 
+An [exact metric reducer](solver_remaining_limit.md) eliminates fourteen
+linear correction variables from the full 29-row limit system. It gives
+twelve projected identities on each component, with eleven at the two
+exceptional corners. All 54 parameter strata and 642 polynomial
+row-combination certificates independently check, including every
+feasible vanishing pivot. The two canonical families each have a sparse
+identity set valid on their whole closed parameter domain. This retains
+global metric compatibility in twenty projected variables.
+
 In the two-block `04` limit of ray 1, the
 [focal-ellipse and weak-sign proof](remaining_ray1_mask04.md) forces all
 eight transverse points onto one common line, with `h0=h4=1/2` and
@@ -642,6 +651,13 @@ collinear triples and collapsed edges while retaining both outer
 product scales. All 52 direct Boolean certificates independently
 replayed in 3.066 seconds. The remaining common-line blow-up is still
 open, so this does not close `ray1_04`.
+The [first transverse stretch](remaining_ray1_mask04_blowup.md) now
+excludes twenty of its 24 closed horizontal-order cases. Its weak-slope
+encoding retains zero horizontal edges explicitly and makes no comparison
+between the width, height parameter and collapsing edge lengths. All
+twenty independent RUP certificates passed in 2.687 seconds. Only four
+symmetric endpoints remain in this limit: one of `h1,h3,h5,h7` is zero
+and all seven other horizontal weights equal one half.
 
 The [axis compiler](solver_remaining_axis.md) partitions the complete
 common sign set into **268 branches per marking**, without a mask split.

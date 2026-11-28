@@ -39,7 +39,10 @@ h_0=h_4=\tfrac12,\qquad
 These statements retain arbitrary relative rates of all vanishing
 vertical steps. In particular, neither `b1*b3/t` nor `b5*b7/t` is
 assumed to vanish. A further analysis of the common-line boundary in
-(1)–(2) remains necessary.
+(1)–(2) remains necessary. The subsequent
+[first transverse stretch](remaining_ray1_mask04_blowup.md) excludes
+20 of its 24 closed weak-order cases and reduces it to four symmetric
+single-edge endpoints, which remain open.
 
 ## 1. Four exact focal triangles and two stresses
 

@@ -29,8 +29,12 @@ The [complete asymptotic cover](exhaustive_remaining_locus.md) further
 gives six exact closed polygons and two canonical limit families, with
 five universal product-scale identities and all intersections retained.
 The [ray-1 two-block proof](remaining_ray1_mask04.md) forces that limit
-onto a common transverse line. These are necessary limit reductions;
-the common-line boundary and both full markings remain open.
+onto a common transverse line. Its
+[first stretch](remaining_ray1_mask04_blowup.md) leaves four symmetric
+single-edge endpoints. The [exact metric reducer](solver_remaining_limit.md)
+provides twelve projected identities per generic component and retains
+the eleven-identity exceptional corners. These are necessary limit
+reductions; the remaining endpoints and both full markings are open.
 
 ## Correct long-ring linking target
 

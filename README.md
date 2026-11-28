@@ -203,7 +203,12 @@ intersections. For ray 1's two-block limit, the
 [focal-ellipse proof](research/type7_completion/remaining_ray1_mask04.md)
 forces a common transverse line, including every degenerate focal
 triangle; its 52 Boolean certificates independently replayed. The
-remaining common-line boundary still requires exclusion.
+[first transverse stretch](research/type7_completion/remaining_ray1_mask04_blowup.md)
+excludes twenty more closed cases, leaving four symmetric single-edge
+endpoints. The [metric reducer](research/type7_completion/solver_remaining_limit.md)
+also supplies exact projected identities for both canonical families;
+all 54 parameter strata and 642 row certificates independently check.
+No full ray-1/2 marking is yet excluded.
 
 See [Type 7 reconstruction, rigidity and two elongated branches](research/type7_focus/README.md). The anchor-leaf reconstruction proves at most two embedded candidates per intrinsic placement on every marking. Using the earlier necessary clique-sign archive, the weighted mirror-distance identity and the checkerboard twist test strengthen this to **uniqueness up to congruence from the 24 labeled edge lengths**, conditional on the earlier strict-support and orientation-projection proof premises. The exact finite checker ran on the current input archives: 308/316 clique patterns have a unanimous anchor; the eight others have no admissible checkerboard partner. This is a rigidity result, not a universality result.
 
