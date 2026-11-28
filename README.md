@@ -213,10 +213,16 @@ contradictions, completing the
 [entire ray-1 two-block limit](research/type7_completion/ray1_two_block_exclusion.md).
 The [turning-angle proof](research/type7_completion/solver_remaining_c1_turning.md)
 also excludes every regular C1 limit for ray 1, including zero individual
-deficits. The [complete C0 cells](research/type7_completion/exhaustive_c0_cells.md)
-retain all 669 generic models in eighteen angular patterns, with exact
-weak-sign decision diagrams and independent coverage proofs. Ray 1's
-other limit regions, ray 2, and the Lean assembly remain open.
+deficits. Its [collinear-cap extension](research/type7_completion/solver_remaining_c1_collinear_rank.md)
+excludes every interior C1 limit with exactly one collinear cap,
+including coincident vertices. The
+[complete C0 cells](research/type7_completion/exhaustive_c0_cells.md)
+retain all 669 generic models in eighteen angular patterns. A strict
+metric turn reduces them to 202; on the equal-height diagonal,
+[50 exact product certificates](research/type7_completion/exhaustive_c0_diagonal.md)
+now exclude every regular limit. The C0 off-diagonal and boundary
+regions, C1 with two collinear caps or boundary heights, ray 2, and the
+Lean assembly remain open.
 
 See [Type 7 reconstruction, rigidity and two elongated branches](research/type7_focus/README.md). The anchor-leaf reconstruction proves at most two embedded candidates per intrinsic placement on every marking. Using the earlier necessary clique-sign archive, the weighted mirror-distance identity and the checkerboard twist test strengthen this to **uniqueness up to congruence from the 24 labeled edge lengths**, conditional on the earlier strict-support and orientation-projection proof premises. The exact finite checker ran on the current input archives: 308/316 clique patterns have a unanimous anchor; the eight others have no admissible checkerboard partner. This is a rigidity result, not a universality result.
 

@@ -43,8 +43,14 @@ leave three normalized deficit regimes, now all excluded in the
 necessary tetrahedron signs. Exact metric witnesses show why the first
 cover's anchor signs alone are insufficient; its
 [complete cells](exhaustive_c0_cells.md) retain all seventy sign
-dependencies. The [turning-angle proof](solver_remaining_c1_turning.md)
-excludes regular C1 for ray 1. Other ray-1 limits and both full markings
+dependencies. Its [strict metric turn](exhaustive_c0_turning.md) reduces
+669 generic models to 202, and the
+[diagonal certificates](exhaustive_c0_diagonal.md) exclude every regular
+equal-height C0 limit for ray 1. The
+[turning-angle proof](solver_remaining_c1_turning.md) excludes regular
+C1, and its [rank/height extension](solver_remaining_c1_collinear_rank.md)
+excludes every interior C1 limit with exactly one collinear cap,
+including coincident vertices. Other ray-1 limits and both full markings
 remain open.
 
 ## Correct long-ring linking target

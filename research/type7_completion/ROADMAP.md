@@ -12,8 +12,12 @@ metric identities independently replay.
 
 For ray 1, the [entire two-block limit](ray1_two_block_exclusion.md)
 and the [regular C1 component](solver_remaining_c1_turning.md) are now
-excluded. The two-block proof closes all four symmetric endpoints,
-including every relative collapse rate. Ray 1's other limit regions,
+excluded. The [C1 boundary extension](solver_remaining_c1_collinear_rank.md)
+also excludes every interior limit with exactly one collinear cap,
+including coincidence. The [regular C0 diagonal](exhaustive_c0_diagonal.md)
+is excluded by exact product certificates. The two-block proof closes
+all four symmetric endpoints, including every relative collapse rate.
+Ray 1's other limit regions,
 ray 2, and the Lean assembly remain open.
 
 The proof gives a threshold `Y3` but no numerical value. It therefore
@@ -664,6 +668,16 @@ retains all 669 cap-compatible generic models and all seventy actual
 sign dependencies, including zeros. Its 36 coverage/sign CNFs passed
 fresh independent replay in 2.858 seconds. All 72 marking/height/cell
 query variants parsed and passed their exact binding checks.
+The [strict metric-turn proof](exhaustive_c0_turning.md) reduces the
+regular ray-1 cover from 669 to 202 generic models; its 36 complete
+cover CNFs replayed in 2.744 seconds. On the equal-height diagonal,
+it also supplies an actual strict determinant disjunction. Retaining
+that disjunction permits [50 exact product certificates](exhaustive_c0_diagonal.md)
+to exclude the entire regular diagonal. Their 496 rational-weighted
+terms replayed in 0.351 seconds, and the additional complete-cover
+CNF independently passed in 0.277 seconds. Positive projective
+normalization covers every interior diagonal height. Off-diagonal,
+collinear-cap, and height-endpoint C0 limits remain open.
 
 The second canonical family has a separate
 [fourteen-pattern regular cover](exhaustive_c1_angles.md), with 132
@@ -675,8 +689,14 @@ boundary. The [turning-angle proof](solver_remaining_c1_turning.md)
 now excludes the entire regular C1 component for ray 1: the first
 metric pair and cap angles force one strict orientation, while the
 second metric pair and certified signs force the opposite orientation.
-Its zero-deficit cases are treated directly. The C1 boundary and ray 2
-remain outside that theorem.
+Its zero-deficit cases are treated directly. The
+[collinear-cap package](solver_remaining_c1_collinear.md) and
+[rank/height extension](solver_remaining_c1_collinear_rank.md) now
+exclude every interior C1 limit with exactly one collinear cap,
+including coincident vertices. Five weak-sign implications and three
+negative-cap exclusions use actual bracket trits, exact height
+identities, and checked marked symmetries. Two collinear caps,
+height endpoints, and ray 2 remain open.
 
 In the two-block `04` limit of ray 1, the
 [focal-ellipse and weak-sign proof](remaining_ray1_mask04.md) forces all
