@@ -2,6 +2,8 @@
 """Generate one degeneracy-complete Type 7 ray_3 metric/embedding system,
 with necessary generic sign completion and |long-ring linking|=2.
 Usage: python linked_metric.py OUTPUT [Y [TIMEOUT_MS]]
+The generate() API also supports localized ray-1/2 masks, retaining both
+possible nonzero long-ring linking magnitudes; its default is unchanged.
 The optional solver run is an experiment, not a certificate unless its
 result is independently validated. Output files should be in scratch.
 """
@@ -16,13 +18,15 @@ sp=importlib.util.spec_from_file_location('remaining',ROOT/'type7_focus/generate
 m=importlib.util.module_from_spec(sp);sp.loader.exec_module(m)
 op,add,mul,sub,neg,det,all_,any_=m.op,m.add,m.mul,m.sub,m.neg,m.det,m.all_,m.any_
 
-def generate(y):
- assert y>=4
+def generate(y,mark=3,mask='phase0'):
+ assert mark in (1,2,3)
+ assert y>=4 if mark==3 else y>=10**6
+ assert mask=='phase0' if mark==3 else mask in m.MASKS
  m.Y=y;m.W=y*y;m.t=F(1,y*y)
- case=next(c for c in json.loads((ROOT/'linking_checkpoint/cases.json').read_text()) if c['file']=='t7_ray_3.smt2')
+ case=next(c for c in json.loads((ROOT/'linking_checkpoint/cases.json').read_text()) if c['file']==f't7_ray_{mark}.smt2')
  faces=[tuple(map(int,f)) for f in json.loads((ROOT/'linking_checkpoint/lutz_faces.json').read_text())['7'].split()]
  K,_,_=data(case)
- L=m.gen(3,K,faces,'phase0').removesuffix('(check-sat)\n').splitlines()
+ L=m.gen(mark,K,faces,mask).removesuffix('(check-sat)\n').splitlines()
  def define(a,b):L.append(f'(define-fun {a} () Real {b})');return a
  def require(a):L.append(op('assert',a))
  # Inner-product coordinates are the image of the unique rank-three
@@ -62,7 +66,13 @@ def generate(y):
    if terminal not in C:C=[-c for c in C]
    terms.extend([op('ite',all_([bool_lit(c) for c in C]),'1.0','0.0'),
                  neg(op('ite',all_([bool_lit(-c) for c in C]),'1.0','0.0'))])
- lk=define('long_link',add(*terms));require(any_([op('=',lk,'2.0'),op('=',lk,'(- 2.0)')]))
+ lk=define('long_link',add(*terms))
+ # The audited alternating-ring theorem forces nonzero linking in every
+ # marking. For ray 3 the linking form strengthens this to magnitude two.
+ # Rays 1/2 have not been proved to have magnitude one; retain both.
+ magnitudes=(2,) if mark==3 else (1,2)
+ require(any_([op('=',lk,v) for k in magnitudes
+               for v in (f'{k}.0',f'(- {k}.0)')]))
  # Full minimal affine-circuit tests for disjoint simplices, including
  # nongeneric configurations; distances already exclude coincidences.
  simplex={(i,) for i in range(8)}|edges|set(tri)
