@@ -97,6 +97,15 @@ excludes both, completing the entire nonparallel both-collinear
 interior C0 stratum.
 Thus every both-collinear interior C0 limit is excluded for ray 1;
 the remaining interior C0 gate has exactly one collinear cap and `u<v`.
+The [upper-b quartic proof](remaining_c0_upper_b_quartic.md) now closes
+the full order `d2=0<d1` in that region and its marked reflection.
+Three full integer identities and the complete actual-sign source
+cover independently replay. The [coincident-cap proof](remaining_c0_coincident_quartic.md)
+also closes that entire order, using exact zero implications to force
+a segment incompatible with the metric radius. Only the upper-a
+order remains in the interior; its [common-axis family](remaining_c0_one_collinear_axis.md)
+is excluded by finite nested sections, without asserting that every
+remaining limit has that axis form.
 The
 [endpoint support bound](exhaustive_c0_endpoint_bound.md) and
 [opposite-cone proof](solver_remaining_c0_opposite_cones.md) reduce
@@ -157,10 +166,23 @@ orders; this is a scale lemma, not another exclusion. The remaining
 EF orbit now has a [nonparallel-cap exclusion](remaining_c1_opposite_zero.md),
 and the [double-zero scalar reduction](remaining_c1_zero_common.md)
 puts all EF and both EE endpoints on one common line. Four and six
-fresh independent CNFs passed, respectively. Their scalar families
-and the other zero-edge cases remain open. Degenerate ray-1 C0 limits,
-ray-2 C0, height endpoints, and both full markings
-remain open.
+fresh independent CNFs passed, respectively. The
+[same-zero proof](remaining_c1_same_zero.md) closes the EE/FF open
+parameter interval. The [single-zero common-line completion](remaining_c1_single_zero_common.md)
+then puts every surviving zero-edge limit on one common line, and the
+[EB/ED scalar proof](remaining_c1_single_zero_scalar.md),
+[EA/EC proof](remaining_c1_ea_ec_scalar.md), and
+[EF/EE completion](remaining_c1_double_zero_completion.md) exclude all
+remaining scalar families, with actual zeros and independent edge
+scales retained. The [consolidated theorem](remaining_ray2_c1_exclusion.md)
+therefore excludes **the entire interior C1 component for ray 2**.
+
+The [nested-quadrilateral C0 proof](remaining_c0_nested_quadrilaterals.md)
+also excludes 296 of 363 regular generic completions when `0<v<u<1/2`,
+leaving 67, and the full complementary-annulus-inner alternative on
+`u=v`. It uses the ray-2 metric quantity `D=d0+L+M-1`, not the ray-1
+budget. Degenerate ray-1 C0 limits, ray-2 C0, height endpoints,
+both full markings, and the Lean assembly remain open.
 
 ## Correct long-ring linking target
 

@@ -31,7 +31,7 @@ The remaining classification question is **universality**. Existence or nonexist
 
 **Current Type 7 target: complete the ray-1 and ray-2 markings.** Ray 3 now has a complete research exclusion at every sufficiently large height, and ray 4 has an audited explicit exclusion. Eventual bounds for the other two markings would supply one common counterexample modulus. The final Lean assembly remains open. Type 4's ray-2 transport estimates remain useful, but no full Type 4 case is closed. The counts of eight Type 4 families, nineteen Type 5 cells, and fifteen fixed-target Type 7 systems describe different continuous domains and do not rank their difficulty. The previous instruction to defer Types 5 and 7 until Type 4 is finished is superseded.
 
-The latest Type 7 proofs close [every both-collinear interior ray-1 C0 limit](research/type7_completion/remaining_c0_middle_lines.md), extend [two open height edges to an opposite collinear cap](research/type7_completion/remaining_c0_one_regular_height.md), and exclude [the full interior EE/FF zero-edge orbit for ray-2 C1](research/type7_completion/remaining_c1_same_zero.md). All 76 new Boolean obligations independently replay, with exact metric and source checks. Ray 1 still requires one-collinear C0 with `u<v` and the remaining degenerate height boundaries; ray 2 still requires the other zero-edge cases, C0, and height boundaries. No full marking or new Lean theorem is claimed.
+The latest Type 7 proofs close [the entire interior ray-2 C1 component](research/type7_completion/remaining_ray2_c1_exclusion.md), including every zero cap edge and unrelated collapse rate. Ray 1 already has its entire interior C1 excluded, along with [every both-collinear interior C0 limit](research/type7_completion/remaining_c0_middle_lines.md) and every regular C0 height. Its [upper-b collinear C0 stratum](research/type7_completion/remaining_c0_upper_b_quartic.md) is now excluded too, by three exact integer polynomial identities and a complete independently checked sign cover. Its [coincident-cap C0 stratum](research/type7_completion/remaining_c0_coincident_quartic.md) is also excluded by exact zero implications and a segment-radius contradiction. Ray 1 still requires the upper-a C0 order with `u<v` and the remaining degenerate height boundaries. Ray 2 still requires C0 and height boundaries; its new [nested-quadrilateral proof](research/type7_completion/remaining_c0_nested_quadrilaterals.md) reduces one regular height-order region from 363 generic completions to 67. No full marking or new Lean theorem is claimed.
 
 | Type | Completed result | Work needed to finish the type | Current action |
 |---|---|---|---|
@@ -290,6 +290,18 @@ the full open height region, with every actual zero retained.
 Independent coordinate replay and the complete source-cover proof
 passed. Together with the earlier height-order and boundary results,
 **every regular ray-1 C0 limit is excluded, including all height boundaries**.
+The [upper-b quartic proof](research/type7_completion/remaining_c0_upper_b_quartic.md)
+also excludes the complete interior collinear order `d2=0<d1`, with
+a regular opposite cap. Its three full integer identities have 7,489
+terms, and the entire actual-sign source cover independently replays.
+The [section proof](research/type7_completion/remaining_c0_upper_b_sections.md)
+separately excludes its direct-annulus-outer nesting alternative.
+The [coincident-cap proof](research/type7_completion/remaining_c0_coincident_quartic.md)
+adds five exact identities with 7,210 terms. Their zero implications
+force a segment that contradicts the exact metric radius, closing
+that entire interior stratum and its reflection. The upper-a order
+remains; its [common-axis section obstruction](research/type7_completion/remaining_c0_one_collinear_axis.md)
+closes the stated axis family without asserting a full axis reduction.
 The [C0 section identities](research/type7_completion/solver_remaining_c0_sections.md)
 also give unit section perimeters and strict shortening of the three
 middle projected edges; they are supporting identities, not a further
@@ -322,10 +334,21 @@ cover of all twenty zero-edge orders. The remaining ray-1 C0
 cases have degenerate caps. For ray-2 C1, the
 [opposite-zero proof](research/type7_completion/remaining_c1_opposite_zero.md)
 and [scalar reduction](research/type7_completion/remaining_c1_zero_common.md)
-put all EF limits and both EE endpoints on one common line; ten
-new independent sign proofs passed. The scalar families, other
-zero-edge cases, ray-2 C0, height boundaries, and the
-Lean assembly remain open; neither full marking is yet excluded.
+put all EF limits and both EE endpoints on one common line. The
+[same-zero proof](research/type7_completion/remaining_c1_same_zero.md)
+excludes the EE/FF open parameter interval. The new
+[single-zero reduction](research/type7_completion/remaining_c1_single_zero_common.md)
+completes the common-line reduction for every surviving zero-edge
+orbit. The [EB/ED scalar proof](research/type7_completion/remaining_c1_single_zero_scalar.md),
+[EA/EC proof](research/type7_completion/remaining_c1_ea_ec_scalar.md), and
+[double-zero completion](research/type7_completion/remaining_c1_double_zero_completion.md)
+then exclude every remaining scalar family. Their independently
+normalized short edges preserve all collapse rates. Exact positive
+linear identities retain determinant coefficients that the earlier
+sign relaxation omitted. The [consolidated theorem](research/type7_completion/remaining_ray2_c1_exclusion.md)
+therefore closes **the entire interior C1 component for ray 2**.
+Ray-2 C0, height boundaries, and the Lean assembly remain open;
+neither full marking is yet excluded.
 
 See [Type 7 reconstruction, rigidity and two elongated branches](research/type7_focus/README.md). The anchor-leaf reconstruction proves at most two embedded candidates per intrinsic placement on every marking. Using the earlier necessary clique-sign archive, the weighted mirror-distance identity and the checkerboard twist test strengthen this to **uniqueness up to congruence from the 24 labeled edge lengths**, conditional on the earlier strict-support and orientation-projection proof premises. The exact finite checker ran on the current input archives: 308/316 clique patterns have a unanimous anchor; the eight others have no admissible checkerboard partner. This is a rigidity result, not a universality result.
 

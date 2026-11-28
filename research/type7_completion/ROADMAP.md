@@ -82,8 +82,22 @@ all four remaining common-line middle families and both line directions
 of the coincident-vertex circle. Its 66 independently replayed proofs
 retain both shrinking diagonal scales and the normal width separately.
 Together these results exclude **every both-collinear interior ray-1
-C0 limit**, parallel or nonparallel. The interior C0 gap is now exactly
-the one-collinear-cap region `0<u<v<1/2`.
+C0 limit**, parallel or nonparallel. The
+[upper-b quartic proof](remaining_c0_upper_b_quartic.md) now also
+closes the complete interior order `d2=0<d1` with a regular lower cap,
+and its marked reflection. Three exact integer identities, with
+7,489 terms in total, supplement the existing 23 one-cap implications;
+their full-coordinate replay and complete actual-sign cover pass.
+The [section obstruction](remaining_c0_upper_b_sections.md) independently
+excludes the direct-annulus-outer alternative. The
+[common-axis proof](remaining_c0_one_collinear_axis.md) excludes the
+stated axis families in the other two orders.
+The [coincident-cap completion](remaining_c0_coincident_quartic.md)
+now closes the other collapsed-base order too. Five exact integer
+identities and zero implications from the earlier quartic identities
+force a segment inconsistent with the metric radius. The remaining
+interior C0 gate is exactly the upper-a order `d1=0<d2` in
+`0<u<v<1/2`, together with its marked reflection.
 
 For ray 2, the [nested-section argument](remaining_c1_sections.md)
 now excludes every regular interior C1 limit. Its finite nesting and
@@ -108,9 +122,28 @@ The [same-zero interior proof](remaining_c1_same_zero.md) excludes
 the entire EE/FF open parameter range: nonnesting of the limiting
 section curves, separately normalized edge directions, and exact
 two-circle factors give five independently replayed contradictions.
-The scalar endpoints remain open.
-The remaining ray-1 C0 cases, ray-2 C0, height boundaries,
-and the Lean assembly remain open. Neither full marking is yet excluded.
+The [single-zero nonparallel proof](remaining_c1_single_zero_nonparallel.md)
+and [common-line completion](remaining_c1_single_zero_common.md) now
+put every surviving interior C1 zero-edge limit on one common line.
+The [EB/ED scalar proof](remaining_c1_single_zero_scalar.md) excludes
+both complete single-zero orbits. The
+[EA/EC scalar proof](remaining_c1_ea_ec_scalar.md) closes their eight
+families with three exact positive linear identities and 28 Boolean
+obligations. The [double-zero endpoint proof](remaining_c1_double_zero_endpoints.md)
+and [completion](remaining_c1_double_zero_completion.md) close EF and
+the EE/FF endpoints using independently normalized short edges and
+exact positive polynomial combinations of their determinant forms.
+Together with the earlier cap cases, the
+[consolidated theorem](remaining_ray2_c1_exclusion.md) excludes
+**the entire interior C1 component for ray 2**, including every
+zero edge, actual zero minor, and unrelated collapse rate.
+
+The new [C0 quadrilateral proof](remaining_c0_nested_quadrilaterals.md)
+also excludes 296 of 363 regular generic completions in `0<v<u<1/2`,
+leaving 67, and excludes the complementary-annulus-inner alternative
+on `u=v`. This is a scoped C0 reduction; the remaining ray-1 C0
+cases, ray-2 C0, height boundaries, and Lean assembly remain open.
+Neither full marking is yet excluded.
 
 The proof gives a threshold `Y3` but no numerical value. It therefore
 does not establish the separate target `tau* = 1/2 + 10^6 i`. The finite
@@ -840,8 +873,28 @@ projection. The
 faces, critical sections, unit perimeters, strict middle-edge
 contractions, and the directions forced by zero mixed brackets.
 These are exact supporting identities, not a further exclusion.
-Other collinear-cap C0 limits, including their height endpoints,
-remain open.
+The [upper-b collinear completion](remaining_c0_upper_b_quartic.md)
+adds three exact integer identities in the gauge `P2=-h1 e`, `P3=d1 e`,
+`d2=0`. The core timelike gap is strict even when `d0=0`, since lower
+cap regularity excludes equality in the triangle inequality. All four
+quadratic mass factors are therefore positive. Three separately strict
+residuals, plus 23 inherited one-cap implications, give the complete
+actual-sign contradiction. Fresh full-coordinate replay took 8.705
+seconds and the independent source-cover proof took 0.474 seconds.
+This closes the entire upper-b interior order and its marked reflection.
+The [section proof](remaining_c0_upper_b_sections.md) supplies a separate
+direct-annulus-outer obstruction. The
+[common-axis proof](remaining_c0_one_collinear_axis.md) excludes the
+specified axis family for the upper-a and coincident orders. The
+[coincident-cap completion](remaining_c0_coincident_quartic.md) then
+closes that entire interior order: five exact identities with 7,210
+terms provide 159 zero implications, supplementing 1,570 inherited
+ones. Their complete actual-trit source forces `C56=0`, `C57>=0`,
+`[1567]<=0`, and `C27<0`. Thus `P5` lies in the segment
+`[0,(1-2v)P6]`, while the exact metric requires a strictly larger
+radius because the core sign makes `d0>0`. All actual zeros remain
+valid and no strict Lorentz mass is assumed. The upper-a order and
+the remaining degenerate height boundaries remain open.
 
 The [regular height-boundary proof](remaining_c0_height_boundary.md)
 now excludes all four open edges of the C0 height square. At `u=0`,
@@ -1128,7 +1181,48 @@ contradiction. All five distinct proofs independently replayed. The
 source binds all 24 specialized section vertices to their original
 edges and all sixteen source faces. The two short edges are divided
 independently, including their common determinant. Scalar endpoints,
-other zero-edge orbits, and height endpoints remain open.
+other zero-edge orbits, and height endpoints remain outside that package.
+
+The [single-zero nonparallel proof](remaining_c1_single_zero_nonparallel.md)
+uses finite section tracking, independent edge normalization, and exact
+Gram inequalities to rule out nonparallel EB/ED cap directions. Seven
+CNFs independently replay. The [parallel completion](remaining_c1_single_zero_common.md)
+then excludes both possible off-line vectors, using three exhaustive
+scalar anchor formulas and twenty further independently checked CNFs.
+Consequently every surviving interior ray-2 C1 limit is common-line.
+The [four-family scalar proof](remaining_c1_single_zero_scalar.md)
+excludes the entire EB/ED orbits: two direct normal contradictions,
+two forced-zero implications, and six independently normalized edge
+contradictions. All ten proofs independently replayed in 0.881 seconds.
+
+The [EA/EC scalar proof](remaining_c1_ea_ec_scalar.md) closes all eight
+families in those orbits. Three exact positive rational combinations
+of macro and independently divided determinants retain the coefficient
+information absent from the sign relaxation. The exceptional opposite
+EC family uses the complete three-cell height-order cover. Fresh source
+replay took 11.495 seconds; all 28 independent proofs passed in 2.199
+seconds. The [double-zero endpoint proof](remaining_c1_double_zero_endpoints.md)
+first excludes three families with five independently checked CNFs.
+The [double-zero completion](remaining_c1_double_zero_completion.md)
+then excludes the remaining EF/EE scalar families through two
+independent short-edge scales and exact positive polynomial identities.
+The [consolidated theorem](remaining_ray2_c1_exclusion.md) records the
+complete cap and six-orbit cover. **Every interior C1 limit is now
+excluded for ray 2**, without a lower bound on any individual edge,
+area, normal width, or ratio of degeneration rates.
+
+For regular C0, the [nested-quadrilateral reduction](remaining_c0_nested_quadrilaterals.md)
+uses the correct ray-2 quantity `D=d0+L+M-1`. Its two effective critical
+quadrilaterals have perimeter one, and their distinguished-corner
+inequality stays strict even when the effective edge equals `1/2`.
+When the complementary annulus is inner, either favorable generic turn
+forces convexity, equal perimeter, and impossible corner tracking.
+In `0<v<u<1/2` this excludes 296 of 363 generic completions, leaving
+43 direct-annulus-inner and 24 complementary-annulus-inner completions.
+At `u=v`, the latter alternative is excluded outright by its critical
+triangle. Six independently replayed CNFs bind the source and coverage;
+the finite-section proof is essential to the geometric exclusions.
+Ray-2 C0 and all remaining height boundaries are separate open gates.
 
 In the two-block `04` limit of ray 1, the
 [focal-ellipse and weak-sign proof](remaining_ray1_mask04.md) forces all
