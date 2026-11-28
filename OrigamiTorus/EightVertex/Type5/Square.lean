@@ -8,7 +8,7 @@ import OrigamiTorus.Certificates.RadicalIntervals
 import Mathlib.Tactic
 import Mathlib.Tactic.Inclusion.Extension.IntervalDyadicReal.Tactic
 
-/-! The exact radical Type 5 square witness, in its gauge with vertex 1 at the origin. -/
+/-! The dyadic-grid Type 5 square witness, with vertex 1 at the origin. -/
 
 @[expose] public section
 
@@ -40,12 +40,13 @@ theorem squareShift_cocycle :
         squareShift f.2.2 f.1 = 0) := by
   decide +kernel
 
-/-- The four exact rational coordinates in the core, and the origin at vertex 1. -/
+/-- The dyadic-grid core with unfolding parameter `s = 1/512`.
+The shared displacement in unit-square coordinates is `s^2`. -/
 def squareCore {R : Type*} [Field R] : Vertex → Plane R :=
-  ![(0,0), (0,0), (444720882667740 / 10^15,-499972918103549 / 10^15),
-    (499999999999045 / 10^15,87262616850970 / 10^15),
-    (-81664706988789 / 10^15,418104802964447 / 10^15),
-    (-39101278348661 / 10^15,-213154941393696 / 10^15), (0,0), (0,0)]
+  let displacement : R := (1 / 512)^2
+  ![(0,0), (0,0), (29 / 64, -1 / 2 + displacement),
+    (1 / 2 - displacement, 5 / 64), (-4 / 64, 27 / 64),
+    (-2 / 64, -12 / 64), (0,0), (0,0)]
 
 def offsetCore {R : Type*} [Field R] (a b : Vertex) : Plane R :=
   squareCore a - shiftPoint a b
@@ -365,14 +366,14 @@ theorem square_total_area (u : Vertex → Plane ℝ) : (faces.map (orientedArea 
   ring
 
 private def coordinateFloors : Vertex → Fin 5 → ℤ :=
-  ![![49911999,-39249564,33199625,-54115052,1040164],
+  ![![49875750,-40045485,34959493,-53563446,149788],
     ![0,0,0,0,0],
-    ![44472088,-49997292,44472088,-49997292,0],
-    ![49999999,8726261,49164893,-9464610,8329591],
-    ![-8166471,41810480,17294615,-24439617,-30305263],
-    ![-3910128,-21315495,-3910128,-21315495,0],
-    ![30334901,49856051,30695977,-49534863,-3144280],
-    ![-43934815,8495072,43492663,-7542680,7343730]]
+    ![45312500,-49999619,45312500,-49999619,0],
+    ![49999618,7812500,49030047,-8690537,9029177],
+    ![-6250000,42187500,20934201,-20676534,-30872121],
+    ![-3125000,-18750000,-3125000,-18750000,0],
+    ![37535559,49936211,37733735,-49756613,-1728640],
+    ![-26680640,6793635,26979497,-2149721,5049297]]
 
 private noncomputable def coordinate (j : Vertex) : Fin 5 → ℝ :=
   ![(squareIntrinsic j).1,(squareIntrinsic j).2,
@@ -474,22 +475,17 @@ private theorem square_component_mem (e : Edge) (second : Bool) :
   · exact add_mem (sub_mem (coordinate_mem e.2 1) (coordinate_mem e.1 1)) (intCast_mem _)
 
 private def squareComponentCheck (e : Edge) (second : Bool) : Bool :=
-  if e = (1,3) ∧ second = false then true else
-    let u := (Interval.singleton (2 : Dyadic)).mul (squareComponentBox e second)
-    let N := Interval.singleton (1 : Dyadic)
-    decide (0 < signCert (N.sub u) ∧ 0 < signCert (N.add u))
+  let u := (Interval.singleton (2 : Dyadic)).mul (squareComponentBox e second)
+  let N := Interval.singleton (1 : Dyadic)
+  decide (0 < signCert (N.sub u) ∧ 0 < signCert (N.add u))
 
 private theorem square_component_slack_at {e : Edge} (he : e ∈ edgeList) (second : Bool) :
     |2*squareComponent e second| < 1 := by
-  by_cases ht : e = (1,3) ∧ second = false
-  · obtain ⟨rfl,rfl⟩ := ht
-    norm_num [squareComponent,squareDisplacement,squareIntrinsic,squareCore,leaves,shiftPoint,
-      squareShift,positiveShift]
   have checked : edgeList.all (fun e => [false,true].all (squareComponentCheck e)) = true := by
     decide +kernel
   have hm : second ∈ [false,true] := by cases second <;> simp
   have hc := List.all_eq_true.mp (List.all_eq_true.mp checked e he) second hm
-  simp only [squareComponentCheck,ite_eq_right ht,decide_eq_true_eq] at hc
+  simp only [squareComponentCheck,decide_eq_true_eq] at hc
   have h₂ : (2 : ℝ) ∈ Interval.singleton (2 : Dyadic) := by exact_mod_cast intCast_mem (2 : ℤ)
   have h₁ : (1 : ℝ) ∈ Interval.singleton (1 : Dyadic) := by simpa using intCast_mem (1 : ℤ)
   have hu := mul_mem h₂ (square_component_mem e second)

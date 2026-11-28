@@ -39,9 +39,8 @@ Type \(6\) face list by a diagonal exchange and fixed-period inflation.
 For Types \(4\) and \(7\) we construct embeddings with rank nine for
 the angle and marked modulus map at every reduced modulus off the
 sharp-rhombic ray. This completes the rectangular ray for Type \(7\).
-For Type \(5\) we give exact radical coordinates
-at the square and throughout a closed nonrectangular box of side
-\(2\cdot10^{-11}\) in modulus coordinates. The remaining universality
+For Type \(5\) a dyadic-grid radical construction works throughout
+an explicit closed box adjoining the square. The remaining universality
 questions concern the sharp-rhombic ray for Types \(4\) and \(7\)
 and the rest of the reduced domain for Type \(5\). The nonexistence
 and realization theorems are formalized in Lean~4.
@@ -137,11 +136,9 @@ coordinates are given by rational arithmetic and square roots.
 \end{theorem}
 
 \begin{theorem}\label{thm:type5box}
-Let \(x_0=0.174241221618834\) and \(y_0=1.084897889755590\), interpreted
-as exact rationals. The triangulation \(K_5\) realizes \(T_{\Z+\Z(x+iy)}\)
-for every \((x,y)\) in the closed box \(B\)
+The triangulation \(K_5\) realizes \(T_{\Z+\Z(x+iy)}\) whenever
 \[
- |x-x_0|\le 10^{-11},\qquad |y-y_0|\le 10^{-11}.
+ 0\le x\le 2^{-36},\qquad 1\le y\le 1+2^{-36}.
 \]
 \end{theorem}
 
@@ -172,8 +169,8 @@ Type & Prior work & This paper and its Lean formalization\\
     Constructs and verifies rank-nine embeddings for all
     \(\tau\in D_{<1/2}\), including all rectangles.\\[1pt]
 5 & Numerical square realizations \cite[\S6]{lander}. &
-    Gives exact radical coordinates for the square and throughout
-    the box \(B\).\\[1pt]
+    Gives a dyadic-grid radical construction for the square and
+    an explicit box of nearby moduli.\\[1pt]
 6 & Numerical square realizations \cite[\S6]{lander}. &
     Gives a universal construction on the Type \(6\) face list by a
     diagonal exchange on Type \(3\) and verifies rank nine.\\[1pt]
@@ -782,23 +779,21 @@ leaves. Every leaf is adjacent to all five core vertices.
 Use the integral shifts \(K_{ij}\) given in
 Appendix~\ref{sec:shifts}, interpreted in the requested basis.
 Vertex \(1\) is the origin and all shifts incident to it vanish.
-The anchors lie in the horizontal plane at their respective
-intrinsic positions. The following integers, divided by
-\(10^{15}\), give the physical planar core coordinates.
-\begin{center}
-\small
-\begin{tabular}{@{}crrrr@{}}
-\toprule
-&\multicolumn{2}{c}{Square}&\multicolumn{2}{c}{Nonrectangular box}\\
-\(i\)&\(10^{15}X_i\)&\(10^{15}Y_i\)&\(10^{15}X_i\)&\(10^{15}Y_i\)\\
-\midrule
-2 & \(444720882667740\) & \(-499972918103549\) & \(305146237868087\) & \(-605447047939750\)\\
-3 & \(499999999999045\) & \(87262616850970\) & \(499997454165673\) & \(181480875778771\)\\
-4 & \(-81664706988789\) & \(418104802964447\) & \(-100309264271995\) & \(459493147984820\)\\
-5 & \(-39101278348661\) & \(-213154941393696\) & \(-154596026157111\) & \(-274376548947718\)\\
-\bottomrule
-\end{tabular}
-\end{center}
+The anchors lie in the horizontal plane at their intrinsic positions.
+Use the following physical core coordinates for the periods
+\((1,0),(x,y)\), with \(s=1/512\) and \(X=29/64\).
+They are the fixed-\(s\) instance of the
+\href{https://github.com/vltanh/lean4-origami-torus/blob/fe5a6eee0cf14dc8cfb0614505d63812f1bbfa25/research/type5_completion/dyadic_scale.md}{dyadic-grid construction}.
+\[
+ \begin{aligned}
+ p_2&=\left(X,\frac{(s^2-\tfrac12)(x^2+y^2)-xX}{y}\right),
+ & p_3&=\left(\tfrac12-s^2,\tfrac5{64}y\right),\\
+ p_4&=\left(-\tfrac4{64},\tfrac{27}{64}y\right),
+ & p_5&=\left(-\tfrac2{64},-\tfrac{12}{64}y\right).
+ \end{aligned}
+\]
+At the square, multiplying by 64 gives the four grid points
+\((29,-32+64s^2),(32-64s^2,5),(-4,27),(-2,-12)\).
 
 To reconstruct a vertex \(j\), write \(u\in\R^2\) for its
 intrinsic position, \(v\in\R^3\) for its spatial position, and
@@ -834,8 +829,8 @@ in the quadratic formula for \(0,7\), and the minus sign for
 lengths. Together with the two roots and the anchor triangle,
 this accounts for all 24 edges.
 
-For the square and the entire nonrectangular box, Lean verifies
-the necessary nonzero denominators, positive radicands, 16
+For the square and the entire near-square box, Lean verifies
+the necessary nonzero denominators, nonnegative radicands, 16
 positive face orientations, 70 nonzero four-point determinants,
 and strict tests on the 138 disjoint edge--face pairs.
 Dyadic and rational interval bounds enclose the radicals and
@@ -846,10 +841,10 @@ have compatible edge pairings. The sum of signed double areas
 is 2 in lattice coordinates, since all terms depending on the
 vertex representatives cancel in pairs. Physical coordinates
 multiply this area by \(y\). The argument in
-Section~\ref{sec:method} gives the desired square and nonrectangular
+Section~\ref{sec:method} gives the desired lattice
 quotients. The formulas and interval checks are in
-\src{OrigamiTorus/Type5/Square.lean}{Type5/Square.lean} and
-\src{OrigamiTorus/Type5/ContinuationCertificate.lean}{Type5/ContinuationCertificate.lean}.
+\href{https://github.com/vltanh/lean4-origami-torus/blob/HEAD/OrigamiTorus/EightVertex/Type5/Square.lean}{\texttt{Type5/Square.lean}} and
+\href{https://github.com/vltanh/lean4-origami-torus/blob/HEAD/OrigamiTorus/EightVertex/Type5/ContinuationCertificate.lean}{\texttt{Type5/ContinuationCertificate.lean}}.
 This proves Theorems~\ref{thm:type5square} and~\ref{thm:type5box}.
 
 The same length elimination bounds the number of reconstruction
@@ -886,17 +881,15 @@ limits to \(H=1\) and \(a=1/2\) as \(x\) approaches \(1/2\).
 Vertices \(6\) and \(7\) of its unflipped base coincide there, so the
 nondegenerate-base inflation argument needs different input on the ray.
 
-For \(K_5\), Theorems~\ref{thm:type5square} and~\ref{thm:type5box}
-certify the square point \(i\) and the closed box \(B\) in the
-interior of \(D\). For the hyperbolic area element \(\dd x\,\dd y/y^2\),
-the box with half-width \(\varepsilon=10^{-11}\) has area
-\(4\varepsilon^2/(y_0^2-\varepsilon^2)\), while \(D\) has area
-\(\int_0^{1/2}(1-x^2)^{-1/2}\dd x=\pi/6\).
-The square point has area zero, so the two constructions together
-certify a fraction of about \(6.49\cdot10^{-22}\) of the reduced
-hyperbolic area.
-The remainder of \(D\), including every nonsquare rectangle and the
-entire sharp-rhombic ray, lies outside the scope of these constructions.
+For \(K_5\), the Lean-certified box has hyperbolic area \(r^2/(1+r)\)
+with \(r=2^{-36}\), since its side lengths in modulus coordinates
+are \(r\) and its lower edge is at \(y=1\). The reduced domain \(D\)
+has hyperbolic area \(\pi/6\).
+The \href{https://github.com/vltanh/lean4-origami-torus/blob/fe5a6eee0cf14dc8cfb0614505d63812f1bbfa25/research/type5_completion/dyadic_scale.md}{interval proof for the varying unfolding parameter}
+covers the larger box \(0\le x\le 1/4096,\ 1\le y\le 1+1/4096\)
+and the rectangular interval \(x=0,\ 1\le y\le 41/40\) for all
+sufficiently small positive \(s\), uniformly over these sets.
+The sharp-rhombic ray and elongated moduli remain open for this type.
 
 \subsection*{Markings and spatial lifts}
 
@@ -984,7 +977,8 @@ choice of intrinsic positions for it.
 
 The Lean~4 development is available in the
 \href{https://github.com/vltanh/lean4-origami-torus}{origami-torus repository}.
-The proof-source links in this paper refer to the pinned
+The dyadic-grid witnesses are linked to the repository's default branch.
+The other Lean proof-source links refer to the pinned
 \href{https://github.com/vltanh/lean4-origami-torus/commit/\release}{source revision}.
 That revision includes the proof notes, exact coordinate tables,
 and complete finite certificates. The toolchain is Lean~4.36.0
@@ -1023,7 +1017,7 @@ Theorem~\ref{thm:type5box}&\texttt{Type5.Continuation.torus\_by\_faces}\\
 \end{tabularx}
 \end{center}
 For the square, \texttt{Type5.square\_torus} verifies the embedding
-built from the radical coordinates defined in \texttt{Type5/Square.lean}.
+built from the dyadic-grid core and radical coordinates in \texttt{Type5/Square.lean}.
 The local comparison checks the independently stated Challenge claims
 against the Solution proofs. The finite proofs replay through Lean's
 kernel and require no SAT solver at proof-checking time. The project

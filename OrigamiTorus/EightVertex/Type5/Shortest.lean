@@ -38,7 +38,7 @@ theorem edges_strictShortest {x y : ℝ} (h : ModulusBox x y) {e : Edge} (he : e
   have h₃ : 2*|dot u (translatePoint x y (-1,1) (0,0))| < squared2 (translatePoint x y (-1,1) (0,0)) :=
     nearest_slack h he (by decide +kernel)
   have hV : y^2*(u.2/y) = u.2*y := by field_simp [hy.ne']
-  apply Winding.strictShortest_of_three hx.le hx'.le hw.le
+  apply Winding.strictShortest_of_three hx hx' hw
   · rw [abs_mul,abs_of_pos (by norm_num : (0 : ℝ) < 2)]
     simpa [dot,squared2,translatePoint] using h₁
   · rw [abs_mul,abs_of_pos (by norm_num : (0 : ℝ) < 2),hV]

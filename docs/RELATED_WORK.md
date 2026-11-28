@@ -27,7 +27,7 @@ Doyle, Lander, Schwartz, and Trettel proved Type 3 universality using two planar
 | 2 | Lander's nonexistence conjecture | Nonexistence for the entire type. The geometric reduction and propositional refutation both replay in Lean |
 | 3 | Universality theorem of Doyle, Lander, Schwartz, and Trettel | Their planar data and height vectors with a fixed-period length proof of inflation and a degree-one quotient proof |
 | 4 | Numerical square evidence and the unresolved identity of the second universal family | Regular embeddings for every reduced modulus with $x<1/2$, including every rectangle |
-| 5 | Numerical square evidence on this type and explicit square constructions with more vertices | Exact radical coordinates on the labeled Type 5 square torus and a uniform closed nonrectangular box |
+| 5 | Numerical square evidence on this type and explicit square constructions with more vertices | Exact dyadic-grid radical construction at the square and throughout a closed near-square box |
 | 6 | Numerical square evidence and the unresolved identity of the second universal family | A face-identified universal construction by flipping the Type 3 diagonal, with rank nine at the spatial embeddings |
 | 7 | Near universality and a neighborhood of the square | The entire rectangular ray and verification of the full $x<1/2$ region with rank nine |
 

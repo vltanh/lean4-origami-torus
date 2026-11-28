@@ -3,7 +3,7 @@ module
 public import OrigamiTorus.EightVertex.Type5.ContinuationCertificate
 import Mathlib.Tactic
 
-/-! The intrinsic development and face metrics of the Type 5 nonrectangular family. -/
+/-! The intrinsic development and face metrics of the Type 5 near-square family. -/
 
 @[expose] public section
 
@@ -139,8 +139,8 @@ theorem weighted_face_metric {x y : ℝ} (h : ModulusBox x y) (i : Fin 16)
   simp only [f,ha,hb,hc]
   exact lifted_face_metric h i _ _
 
-/-- The exact radical formula realizes every lattice torus in the archived
-nonrectangular box by an embedded, piecewise-isometric Type 5 surface. -/
+/-- The dyadic-grid formula realizes every lattice torus in the near-square
+box by an embedded, piecewise-isometric Type 5 surface. -/
 theorem torus_by_faces {x y : ℝ} (h : ModulusBox x y) :
     let τ : ℂ := x+y*Complex.I
     ∃ (H : triangleWeightSpace faces ≃ₜ ComplexTorus 1 τ)

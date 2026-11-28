@@ -17,7 +17,7 @@ import Mathlib.Tactic
 # Type 5 origami tori
 
 The Type 5 face complex admits piecewise-isometric embeddings for the
-unit square and for every modulus in the specified closed nonrectangular box.
+unit square and for every modulus in the specified closed near-square box.
 -/
 
 @[expose] public section
@@ -101,10 +101,10 @@ theorem type5_square :
   sorry
 
 /-- The same Type 5 face complex realizes every lattice torus in the specified
-closed nonrectangular modulus box. -/
+closed box adjoining the square. -/
 theorem type5_nonrectangular_box (x y : ℝ)
-    (hx : x ∈ Set.Icc (174241221608834/10^15) (174241221628834/10^15))
-    (hy : y ∈ Set.Icc (1084897889745590/10^15) (1084897889765590/10^15)) :
+    (hx : x ∈ Set.Icc 0 ((1 / 512)^4))
+    (hy : y ∈ Set.Icc 1 (1 + (1 / 512)^4)) :
     let a : ℂ := 1
     let b : ℂ := x+y*Complex.I
     let fs : List Triangle :=
