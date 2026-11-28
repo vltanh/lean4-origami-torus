@@ -69,17 +69,27 @@ line families and one coincident-vertex circle. The
 [normal-stretch proof](solver_remaining_c0_flat_stretch.md) excludes
 all four endpoint-deficit interiors and the `h2=0,h6=0` endpoints;
 the other line cases have a certified 32-pattern normal cover.
+The [relative circle argument](exhaustive_c0_circle.md) also excludes
+the entire nonflat coincident-vertex circle, retaining its two line
+directions. Both virtual-direction CNFs independently replayed.
 For nonparallel cap lines, the
 [first-order sign proof](exhaustive_c0_flat_nonparallel.md) leaves
 two canonical coincidence cases, retaining all cap-area/height rates.
 The [relative diagonal argument](exhaustive_c0_double_coincidence.md)
 also excludes the double coincidence with `cross(P2,P7)>0`, with no
 relative-rate assumption on either shrinking diagonal.
+The [four-cell companion](exhaustive_c0_double_flat.md) excludes its
+negative orientation as well, throughout the open height square.
+Only bd/da remain among nonparallel both-collinear orders.
 The
 [endpoint support bound](exhaustive_c0_endpoint_bound.md) and
 [opposite-cone proof](solver_remaining_c0_opposite_cones.md) reduce
 the regular `v>u` region from 202 to exactly 42 compatible generic
-completions, retaining every actual zero. Other C0 boundary cases
+completions, retaining every actual zero. The
+[middle-wedge argument](solver_remaining_c0_middle_wedge.md) excludes
+sixteen more uniformly over the full height region. Two independent
+completeness certificates bind the excluded list and the remaining
+26 words to the complete source. Other C0 boundary cases
 remain. The [section identities](solver_remaining_c0_sections.md)
 give unit perimeters and strict middle-edge contractions without
 claiming another exclusion. The
@@ -116,7 +126,12 @@ orbits. Its fifteen CNFs independently replayed. The
 excludes all twenty scalar common-line families when all four cap
 edges are positive, after an exhaustive 128-case budget classification.
 All twenty independent proofs passed. Interior ray-2 C1 is therefore
-reduced to two-collinear-cap cases with a zero cap edge. The remaining
+reduced to two-collinear-cap cases with a zero cap edge. The
+[relative short-edge lemma](remaining_c1_short_edges.md) proves unit
+transverse directions and axial errors `O(t*h)` at every shrinking
+cap edge, including independent simultaneous scales. Its exact source
+replay also checks the complete six-orbit cover of twenty zero-edge
+orders; this is a scale lemma, not another exclusion. The remaining
 ray-1 C0 limits, ray-2 C0, height endpoints, and both full markings
 remain open.
 

@@ -88,9 +88,10 @@ def metric_checks():
 class VirtualUpper(common.FlatModel):
     """Actual macro signs and the independently normalized diagonal13."""
 
-    def __init__(self):
+    def __init__(self, core_positive=True, independent_pair=(2, 7)):
         super().__init__('d', 'd', boundary.height_relations())
-        self.clauses.append([self.bits((0, 1, 2, 7))[0]])
+        if core_positive:
+            self.clauses.append([self.bits((0, 1, 2, 7))[0]])
         nodes = (2, 4, 5, 7, 8)  # 8 is the unit limit P3/L.
         self.virtual = {(i, 8): self.new_trit() for i in nodes[:-1]}
 
@@ -103,8 +104,10 @@ class VirtualUpper(common.FlatModel):
             return pair if sign > 0 else pair[::-1]
 
         self.cross = cross
-        # P2,P7 are independent and the virtual vector is nonzero.
-        self.clauses.append(list(cross(2, 8))+list(cross(7, 8)))
+        # The caller's two projected vectors are independent, and the
+        # virtual vector is nonzero. The default is the proved core case.
+        assert len(set(independent_pair)) == 2 and set(independent_pair) <= set(nodes[:-1])
+        self.clauses.append([bit for node in independent_pair for bit in cross(node, 8)])
         products = {}
 
         def multiply(left, right):
@@ -144,6 +147,7 @@ class VirtualUpper(common.FlatModel):
             return heights[i]*ci(j, k)-heights[j]*ci(i, k)+heights[k]*ci(i, j)
 
         count = 0
+        self.normalized = {}
         for quad in common.QUADS:
             if not {1, 3} <= set(quad):
                 continue
@@ -153,6 +157,7 @@ class VirtualUpper(common.FlatModel):
             expression = s.expand(polynomial/alpha)
             assert not expression.has(alpha)
             normalized = self.new_trit()
+            self.normalized[quad] = normalized
             forms = [normalized[::-1]]
             for pair, variable in crosses.items():
                 coefficient = expression.coeff(variable)

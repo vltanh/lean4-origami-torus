@@ -256,18 +256,28 @@ coincident-vertex circle. The
 [normal stretch](research/type7_completion/solver_remaining_c0_flat_stretch.md)
 now excludes all four endpoint-deficit interiors and the zero-edge
 endpoints `h2=0,h6=0`; eight further certificates reduce the remaining
-line families to 32 normal sign patterns. For nonparallel cap lines,
+line families to 32 normal sign patterns. The
+[relative circle proof](research/type7_completion/exhaustive_c0_circle.md)
+also excludes every nonflat direction of the coincident-vertex circle;
+its two line directions remain. For nonparallel cap lines,
 the [first-order cap sign](research/type7_completion/exhaustive_c0_flat_nonparallel.md)
 excludes six of nine order pairs at every cap-area/height rate,
 leaving two canonical coincidence cases. The
 [relative diagonal proof](research/type7_completion/exhaustive_c0_double_coincidence.md)
 also excludes the double coincidence with `cross(P2,P7)>0`,
 retaining arbitrary relative rates of both shrinking diagonals.
+Its [four-cell companion](research/type7_completion/exhaustive_c0_double_flat.md)
+excludes the negative orientation at every interior height pair.
+Thus every nonparallel double coincidence is closed; only bd/da
+remain among the nonparallel both-collinear orders.
 For regular C0 with `v>u`, an
 [endpoint support bound](research/type7_completion/exhaustive_c0_endpoint_bound.md)
 and [complete cone reduction](research/type7_completion/solver_remaining_c0_opposite_cones.md)
 exclude 160 of the 202 generic completions, including their actual-zero
-boundaries. Exactly 42 completions remain, with `cross(P3,P6)>=0`.
+boundaries. The [middle-wedge proof](research/type7_completion/solver_remaining_c0_middle_wedge.md)
+excludes sixteen more throughout `0<u<v<1/2`, leaving exactly 26
+completions with `cross(P3,P6)>=0`. Both completeness certificates
+independently replayed.
 The [C0 section identities](research/type7_completion/solver_remaining_c0_sections.md)
 also give unit section perimeters and strict shortening of the three
 middle projected edges; they are supporting identities, not a further
@@ -292,7 +302,11 @@ Its fifteen CNFs independently replayed. The
 now excludes every such interior limit with all four cap edges
 positive. Its exact 128-case scalar cover and twenty independent
 proofs passed. Interior ray-2 C1 is therefore reduced to
-two-collinear-cap cases with a zero cap edge. The remaining ray-1 C0
+two-collinear-cap cases with a zero cap edge. The
+[relative short-edge lemma](research/type7_completion/remaining_c1_short_edges.md)
+gives unit transverse directions at every shrinking cap edge, with
+axial errors `O(t*h)` at arbitrary rates, and checks the six-orbit
+cover of all twenty zero-edge orders. The remaining ray-1 C0
 cases, ray-2 C0, height boundaries, and the
 Lean assembly remain open; neither full marking is yet excluded.
 
