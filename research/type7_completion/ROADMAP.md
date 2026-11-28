@@ -14,9 +14,16 @@ For ray 1, the [entire two-block limit](ray1_two_block_exclusion.md)
 and the [regular C1 component](solver_remaining_c1_turning.md) are now
 excluded. The [C1 boundary extension](solver_remaining_c1_collinear_rank.md)
 also excludes every interior limit with exactly one collinear cap,
-including coincidence. The [regular C0 height-order region](remaining_c0_height_order.md)
+including coincidence. The
+[two-collinear-cap boundary](solver_remaining_c1_flat_limits.md) reduces
+to six explicit flat families, including zero-edge endpoints. They
+remain compatible with all limiting metric equations and the six
+active nonedge inequalities; their relative-scale analysis remains open.
+The [regular C0 height-order region](remaining_c0_height_order.md)
 `0<v<=u<1/2` is excluded by exact metric and sign arguments, extending
-the earlier diagonal certificates. The two-block proof closes
+the earlier diagonal certificates. A
+[collinear extension](exhaustive_c0_collinear.md) also excludes two strict
+cap orders in this region, with the opposite cap regular. The two-block proof closes
 all four symmetric endpoints, including every relative collapse rate.
 Ray 1's other limit regions,
 ray 2, and the Lean assembly remain open.

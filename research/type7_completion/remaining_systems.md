@@ -48,13 +48,23 @@ dependencies. Its [strict metric turn](exhaustive_c0_turning.md) reduces
 [diagonal certificates](exhaustive_c0_diagonal.md) exclude every regular
 equal-height C0 limit for ray 1. Their
 [height-order extension](remaining_c0_height_order.md) now excludes
-the entire regular half `0<v<=u<1/2`; the region `v>u` and C0 boundary
-cases remain. The
+the entire regular half `0<v<=u<1/2`. A
+[collinear boundary extension](exhaustive_c0_collinear.md) excludes
+`d2=0<d1` with a regular lower cap and its cap-swapped counterpart
+`d6=0<d7` in the same height region. The region `v>u` and other C0
+boundary cases remain. The
+[nonedge vector formulas](exhaustive_c0_nonedge_vectors.md) give exact
+norm and dot bounds for `v>u`, although these selected nonedge bounds
+already follow from the limiting circle identities. The
 [turning-angle proof](solver_remaining_c1_turning.md) excludes regular
 C1, and its [rank/height extension](solver_remaining_c1_collinear_rank.md)
 excludes every interior C1 limit with exactly one collinear cap,
-including coincident vertices. Other ray-1 limits and both full markings
-remain open.
+including coincident vertices. The
+[remaining interior C1 boundary](solver_remaining_c1_flat_limits.md)
+reduces to six explicit flat families. All satisfy the full 29-row
+limiting system and all six active nonedge inequalities, so further
+relative-scale arguments are needed. Other ray-1 limits and both full
+markings remain open.
 
 ## Correct long-ring linking target
 
