@@ -3,10 +3,15 @@
 
 Usage: python solver_remaining_axis.py SOURCE_DIRECTORY OUTPUT_DIRECTORY
        [--queries --mark 2 --y 1000000]
+       python solver_remaining_axis.py SOURCE_DIRECTORY OUTPUT_DIRECTORY
+       --queries --mark 2 --all-heights --y 32
 
 SOURCE_DIRECTORY contains the replayable common 18,080-model cover from
 solver_remaining_chambers.py. This wrapper does not impose any finite
 mask. The separate axis gauge covers every realization for y>=32.
+With --all-heights, every branch retains the entire finite-height tail
+0<t<=1/y^2. The branch index binds the 268 stable IDs to their exact
+formulas; it records no nonlinear decision or exclusion.
 """
 
 import argparse
@@ -64,8 +69,8 @@ def compile_cover(source):
     return {'models': len(models), 'cliques': source['cliques'], 'branches': branches}
 
 
-def query_parts(mark, y=10**6):
-    full, metadata = axis.generate(mark, y)
+def query_parts(mark, y=10**6, *, all_heights=False):
+    full, metadata = axis.generate(mark, y, all_heights=all_heights)
     prefix, suffix = full.split('(declare-fun b1 () Bool)', 1)
     prefix = '\n'.join(line for line in prefix.splitlines()
                        if not re.match(r'\(define-fun m[0-7]{4} ', line)
@@ -88,9 +93,13 @@ def main():
     parser.add_argument('--queries', action='store_true')
     parser.add_argument('--mark', type=int, choices=(1, 2))
     parser.add_argument('--y', type=int, default=10**6)
+    parser.add_argument('--all-heights', action='store_true',
+                        help='keep 0<t<=1/y^2; --y supplies the minimum height')
     args = parser.parse_args()
     if args.queries and args.mark is None:
         parser.error('--queries requires --mark')
+    if args.all_heights and not args.queries:
+        parser.error('--all-heights requires --queries')
     if args.y < 32:
         parser.error('the bounded axis chart requires y>=32')
     start = time.monotonic()
@@ -102,15 +111,37 @@ def main():
     result['axis_identity_checks'] = axis.verify()
     if args.queries:
         result['query_request'] = {'mark': args.mark, 'y': args.y}
+        if args.all_heights:
+            result['query_request']['all_heights'] = True
     args.output.mkdir(parents=True, exist_ok=True)
-    (args.output/'axis_chambers.json').write_text(json.dumps(result, separators=(',', ':'))+'\n')
     sizes = []
+    query_index = []
     if args.queries:
-        parts = query_parts(args.mark, args.y)
+        parts = query_parts(args.mark, args.y, all_heights=args.all_heights)
+        if args.all_heights:
+            result['query_metadata'] = parts[2]
         for index, branch in enumerate(result['branches']):
             text = common.generate_query(parts, result['cliques'], branch)
-            (args.output/f'ray{args.mark}_axis_k4_{index:03d}.smt2').write_text(text)
+            suffix = '_all_heights' if args.all_heights else ''
+            filename = f'ray{args.mark}_axis_k4_{index:03d}{suffix}.smt2'
+            (args.output/filename).write_text(text)
             sizes.append(len(text))
+            if args.all_heights:
+                query_index.append({'id': f'ray{args.mark}_k4_{index:03d}',
+                                    'pattern': branch['pattern'],
+                                    'generic_models': branch['models'],
+                                    'query_file': filename,
+                                    'query_sha256': hashlib.sha256(text.encode()).hexdigest()})
+    manifest_text = json.dumps(result, separators=(',', ':'))+'\n'
+    (args.output/'axis_chambers.json').write_text(manifest_text)
+    if args.all_heights:
+        index_record = {'format': 1, 'mark': args.mark,
+                        'minimum_y': args.y, 'height_scope': 'entire tail',
+                        't_interval': f'0 < t <= 1/{args.y*args.y}',
+                        'common_manifest_sha256': result['common_manifest_sha256'],
+                        'axis_manifest_sha256': hashlib.sha256(manifest_text.encode()).hexdigest(),
+                        'nonlinear_decisions': 0, 'branches': query_index}
+        (args.output/'branch_index.json').write_text(json.dumps(index_record, indent=2)+'\n')
     summary = {'models': result['models'], 'K4_branches': len(result['branches']),
                'minimum_y': 32, 'seconds': time.monotonic()-start,
                'strict_range': [min(len(row['strict']) for row in result['branches']),
@@ -121,6 +152,10 @@ def main():
                                  max(len(row['diagram']['nodes']) for row in result['branches'])]}
     if sizes:
         summary['query_byte_range'] = [min(sizes), max(sizes)]
+    if args.all_heights:
+        summary.update(query_minimum_y=args.y, height_scope='entire tail',
+                       real_variables=39, indexed_queries=len(query_index),
+                       nonlinear_decisions=0)
     (args.output/'summary.json').write_text(json.dumps(summary, indent=2)+'\n')
     print(json.dumps(summary), flush=True)
     print('Independent common-cover, RUP and axis-wrapper replays are required; no marking is excluded.')

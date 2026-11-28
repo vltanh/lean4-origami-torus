@@ -24,6 +24,32 @@ the [geometric audit](geometric_audit.md),
 [ray-3 theorem](ray3_boundedness.md), and
 [complete interior ray-2 C1 theorem](remaining_ray2_c1_exclusion.md).
 
+## Fixed finite completion ledger
+
+The existing exhaustive K4 cover is now compiled and independently
+replayed over the entire positive-height tail for both open markings.
+Keep these branch IDs fixed; do not replace them with a growing list of
+limiting subcases.
+
+| Marking | Fixed branch IDs | Complete tail formulas verified | Whole branches certified excluded |
+|---|---|---:|---:|
+| Ray 1 | `ray1_k4_000` through `ray1_k4_267` | 268 | 0 |
+| Ray 2 | `ray2_k4_000` through `ray2_k4_267` | 268 | 0 |
+| Total | 536 fixed obligations | 536 | 0 |
+
+The [axis compiler](solver_remaining_axis.md) emits a hash-bound
+`branch_index.json` for each marking. Every query includes `0<t<=1/Y^2`,
+so all finite configurations with arbitrarily small positive scales
+remain covered. Actual nonclique zeros are retained. A certificate may
+increase `Y` and may cover multiple IDs, but a branch is closed only when
+the complete branch is excluded above its recorded finite threshold.
+The finite maximum of 536 such thresholds would close both markings.
+The earlier C0/C1 proofs have not been certified as closing any of these
+whole branches; their stratum counts are not added to this ledger.
+
+The latest attempt completed the uniform compilation and exact algebraic
+reduction below. It did **not** prove any of the 536 branches infeasible.
+
 ## The negative completion target
 
 Prove **both** remaining markings absent above finite heights `Y1,Y2`.
@@ -92,6 +118,41 @@ Two complete `Y=32` solver attempts, each with a 30,000 ms internal limit
 and a 45-second external bound, both returned **UNKNOWN (timeout)**.
 Neither marking is excluded. Repeating these calls with a larger time
 limit is not a proof strategy by itself.
+
+## Exact elimination within every fixed branch
+
+The [Gram reduction](branch_gram_chart.md) uses the K4 pattern and its
+proved-strict minors to select one nondegenerate anchor tetrahedron and
+one propagation star for each original branch. The same 268 choices work
+for both markings. No subdivision or uniform lower bound for a shrinking
+minor is introduced.
+
+Four missing spatial distances first reduce to one quadratic seed and
+three linear reconstructions. Every residual edge equation and actual
+minor becomes affine in the seed after exact quadratic reduction, with
+only proved-positive factors removed from sign tests. The two strict K4
+signs at the seed select its unique quadratic root.
+
+The [root projection](branch_metric_root.md) then eliminates that root
+using exact polynomial sign conditions, including equality. This leaves
+**14 intrinsic coordinates and `t`**, with all original Boolean sign and
+actual-circuit conditions retained. Thus all 536 fixed branches have an
+intrinsic-only polynomial formulation. This is a reduction in free
+variables, not a completed nonlinear classification or an established
+runtime improvement: the resulting polynomials have much higher degree.
+
+Exact source identities, all 268 propagation plans, rational coordinate
+fixtures including zero minors, and the universal root-sign table passed
+independent replay and review. The original 39-variable tail formulation
+remains the reference target. No Lean proof of these new reductions is
+claimed.
+
+Additional joint-linking checks over all 691 vertex-disjoint graph-cycle
+pairs retained every one of the 18,080 common sign models. Topology-only
+determinant certificates eliminated some generic completions but closed
+no whole K4 branch. The first reduced nonlinear diagnostics also returned
+UNKNOWN. The remaining obstruction is the continuous metric feasibility
+problem, rather than a missing finite cover.
 
 ## What the global audit ruled out
 

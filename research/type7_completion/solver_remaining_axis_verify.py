@@ -7,6 +7,8 @@ The common manifest is replayed first and must separately have an accepted
 coverage.cnf/coverage.drat RUP proof. The wrapper checks its exact hash,
 reconstructs every unfiltered group, decodes every weak sign diagram, and
 binds emitted formulas to the bounded chart and original actual circuits.
+For symbolic-height packets it also checks t>0, the exact upper bound,
+all degree/scope metadata, and the stable branch IDs and query hashes.
 """
 
 from collections import defaultdict
@@ -28,7 +30,11 @@ def verify_queries(directory, record, partitions):
     if 'query_request' not in record:
         return 0
     mark, y = (record['query_request'][name] for name in ('mark', 'y'))
-    full, _ = axis.generate(mark, y)
+    all_heights = record['query_request'].get('all_heights', False)
+    assert isinstance(all_heights, bool)
+    full, metadata = axis.generate(mark, y, all_heights=all_heights)
+    if all_heights:
+        assert record['query_metadata'] == json.loads(json.dumps(metadata))
     prefix_text, suffix = full.split('(declare-fun b1 () Bool)', 1)
     prefix = []
     for form in parse(prefix_text):
@@ -38,6 +44,10 @@ def verify_queries(directory, record, partitions):
                 and re.fullmatch(r'm[0-7]{4}', form[1][1])):
             continue
         prefix.append(form)
+    if all_heights:
+        assert ['declare-fun', 't', [], 'Real'] in prefix
+        assert ['assert', ['>', 't', '0']] in prefix
+        assert ['assert', ['<=', 't', ['/', '1', str(y*y)]]] in prefix
     suffix_forms = parse(suffix)
     definitions = {form[1]: form for form in suffix_forms if form[0] == 'define-fun'
                    and re.fullmatch(r'a[0-7]+c[012]+', form[1])}
@@ -54,7 +64,8 @@ def verify_queries(directory, record, partitions):
         return 'false' if identifier == 0 else 'true' if identifier == 1 else f'choice{identifier}'
 
     for index, branch in enumerate(record['branches']):
-        text = (directory/f'ray{mark}_axis_k4_{index:03d}.smt2').read_text()
+        suffix = '_all_heights' if all_heights else ''
+        text = (directory/f'ray{mark}_axis_k4_{index:03d}{suffix}.smt2').read_text()
         forms = parse(text)
         assert forms[:len(prefix)] == prefix
         remaining = forms[len(prefix):]
@@ -79,16 +90,41 @@ def verify_queries(directory, record, partitions):
                      for support, positive in branch['remaining_circuits']]
         expected.append(['check-sat'])
         assert remaining == expected
-        assert len(re.findall(r'^\(declare-fun \S+ \(\) Real\)', text, re.M)) == 38
+        assert len(re.findall(r'^\(declare-fun \S+ \(\) Real\)', text, re.M)) == (39 if all_heights else 38)
         assert '(declare-fun b' not in text and 'long_link' not in text
         parse_count(text)
     return len(record['branches'])
 
 
+def verify_branch_index(directory, record, manifest_bytes):
+    """Bind the frozen tail-query index; it is not an exclusion ledger."""
+    request = record.get('query_request', {})
+    if not request.get('all_heights', False):
+        return
+    mark, y = request['mark'], request['y']
+    index = json.loads((directory/'branch_index.json').read_text())
+    assert index['format'] == 1 and index['mark'] == mark
+    assert index['minimum_y'] == y and index['height_scope'] == 'entire tail'
+    assert index['t_interval'] == f'0 < t <= 1/{y*y}'
+    assert index['common_manifest_sha256'] == record['common_manifest_sha256']
+    assert index['axis_manifest_sha256'] == hashlib.sha256(manifest_bytes).hexdigest()
+    assert index['nonlinear_decisions'] == 0
+    expected = []
+    for number, branch in enumerate(record['branches']):
+        filename = f'ray{mark}_axis_k4_{number:03d}_all_heights.smt2'
+        expected.append({'id': f'ray{mark}_k4_{number:03d}',
+                         'pattern': branch['pattern'], 'generic_models': branch['models'],
+                         'query_file': filename,
+                         'query_sha256': hashlib.sha256((directory/filename).read_bytes()).hexdigest()})
+    assert index['branches'] == expected
+    assert len({entry['id'] for entry in expected}) == 268
+
+
 def main(source_directory, output_directory):
     source_bytes = (source_directory/'remaining_chambers.json').read_bytes()
     source = json.loads(source_bytes)
-    record = json.loads((output_directory/'axis_chambers.json').read_text())
+    manifest_bytes = (output_directory/'axis_chambers.json').read_bytes()
+    record = json.loads(manifest_bytes)
     assert record['common_manifest_sha256'] == hashlib.sha256(source_bytes).hexdigest()
     replay.main(source_directory)
     assert record['axis_identity_checks'] == json.loads(json.dumps(axis.verify()))
@@ -133,9 +169,12 @@ def main(source_directory, output_directory):
         assert set(order) == set(range(70))-set(clique_indices)
         assert decoded == {tuple(model[index] for index in order) for model in members}
     count = verify_queries(output_directory, record, partitions)
+    verify_branch_index(output_directory, record, manifest_bytes)
     print('PASS unfiltered 18080-model cover: 268 exact K4 groups, rank facts, circuits and weak diagrams', flush=True)
     if count:
         print(f'PASS {count} bounded-axis formulas: complete metric prefix, original retained circuits, zero boundaries and parse', flush=True)
+    if record.get('query_request', {}).get('all_heights', False):
+        print('PASS entire-height-tail interval, 39-real metadata and 268 frozen query IDs/hashes', flush=True)
     print('The common RUP replay and bounded-axis necessity proof remain premises; no marking is excluded.')
 
 

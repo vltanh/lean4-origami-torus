@@ -2,8 +2,10 @@
 
 `solver_remaining_axis.py` applies the checked common sign cover to the
 uniform bounded chart in `exhaustive_remaining_axis.py`. It produces
-**268 necessary quadratic branches per marking**, uniformly for
-`y >= 32`. No seven-mask split is imposed.
+**268 necessary branches per marking**, uniformly for `y >= 32`.
+They are quadratic at a fixed height. The `--all-heights` mode retains
+`0 < t <= 1/Y^2` for every height `y >= Y >= 32`; its metric equations
+have degree at most three. No seven-mask split is imposed.
 
 The input is the complete 18,080-model manifest produced by
 `solver_remaining_chambers.py`. The wrapper binds that file by SHA-256,
@@ -21,7 +23,7 @@ not use the topology-only sixteen-element symmetry group to identify
 metric cases. Its 268 branches cover the entire unfiltered common sign
 set after the valid axis normalization.
 
-Each branch preserves the full bounded-axis metric prefix: 38 real
+Each fixed-height branch preserves the full bounded-axis metric prefix: 38 real
 variables, all 24 quadratic edge equations, six quadratic product-scale
 equations, coordinate bounds, shortest lifts, intrinsic areas and all
 nonedge contraction conditions. It replaces only the generic Boolean
@@ -79,3 +81,44 @@ three queries. It supplies no exclusion or realizability evidence.
 
 The reduction does not itself exclude a marking. A nonlinear certificate
 or a geometric argument is still required for the remaining branches.
+
+## The fixed 536-branch completion target
+
+Both markings now have complete symbolic-height compilations. The original
+sorted K4 patterns define stable IDs `ray1_k4_000` through `ray1_k4_267`,
+and the corresponding 268 ray-2 IDs. No geometric subclass is added.
+Every emitted tail query has 39 real variables, including strictly positive
+`t`; it retains the original metric prefix, nonedge contractions, actual
+circuits, and overlapping weak sign tests. The limiting fiber `t=0` is
+excluded from the query.
+
+`branch_index.json` binds every ID and K4 pattern to its exact query SHA-256,
+the source manifest hash, and the requested minimum height. The independent
+wrapper replay checks this index as well as every formula. This is a query
+index; it records no nonlinear decisions. A branch is closed only when a
+verified certificate excludes its entire positive-height tail, possibly
+after increasing its minimum height. Earlier limiting-stratum exclusions
+do not by themselves close one of these complete branches.
+
+After producing and checking the common source cover:
+
+```sh
+python3 research/type7_completion/solver_remaining_axis.py \
+  /tmp/type7-536-source /tmp/type7-536-ray1 \
+  --queries --mark 1 --all-heights --y 32
+python3 research/type7_completion/solver_remaining_axis.py \
+  /tmp/type7-536-source /tmp/type7-536-ray2 \
+  --queries --mark 2 --all-heights --y 32
+python3 research/type7_completion/solver_remaining_axis_verify.py \
+  /tmp/type7-536-source /tmp/type7-536-ray1
+python3 research/type7_completion/solver_remaining_axis_verify.py \
+  /tmp/type7-536-source /tmp/type7-536-ray2
+```
+
+Both complete replays passed: **536 of 536 formulas verified**. The common
+coverage proof independently passed 63,034 RUP additions against 26,687
+original clauses. Fixed-height query components for both markings at
+`y=64` remain byte-for-byte identical to the previous compiler.
+
+**Whole branches excluded by this update: 0 of 536.** Verification of the
+finite cover and its formulas is separate from proving their infeasibility.
