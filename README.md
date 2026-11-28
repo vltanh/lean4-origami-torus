@@ -235,11 +235,28 @@ remain independently replayable. A
 [collinear C0 extension](research/type7_completion/exhaustive_c0_collinear.md)
 also excludes the strict orders `d2=0<d1` with a regular lower cap and
 `d6=0<d7` with a regular upper cap in this height region.
-The C0 region `v>u` and its other boundary cases, boundary heights,
-ray 2, and the Lean assembly remain open. For ray 2's regular C1
-region, a [closed turning constraint](research/type7_completion/exhaustive_c1_holonomy.md)
-rules out an extra full turn using 32 exact polynomial certificates;
-it does not yet contradict that marking's metric budget.
+The [positive-cap boundary extension](research/type7_completion/exhaustive_c0_collinear_positive.md)
+now covers all three collinear upper orders, including coincident
+vertices, when the regular lower cap has positive orientation.
+For regular C0 with `v>u`, an
+[endpoint support bound](research/type7_completion/exhaustive_c0_endpoint_bound.md)
+and [complete cone reduction](research/type7_completion/solver_remaining_c0_opposite_cones.md)
+exclude 160 of the 202 generic completions, including their actual-zero
+boundaries. Exactly 42 completions remain, with `cross(P3,P6)>=0`.
+The [C0 section identities](research/type7_completion/solver_remaining_c0_sections.md)
+also give unit section perimeters and strict shortening of the three
+middle projected edges; they are supporting identities, not a further
+exclusion.
+
+For ray 2, the [nested-section proof](research/type7_completion/remaining_c1_sections.md)
+now excludes **every regular interior C1 limit**. It first proves
+nesting and convexity for finite embedded sections, then uses exact
+limiting perimeters and a complete boundary-matching argument. Its
+seven CNFs independently replayed. The earlier
+[closed turning constraint](research/type7_completion/exhaustive_c1_holonomy.md)
+remains available as an independent necessary condition. The remaining
+C0 cases, height endpoints, ray-2 degenerate C1 limits, and the Lean
+assembly remain open; neither full marking is yet excluded.
 
 See [Type 7 reconstruction, rigidity and two elongated branches](research/type7_focus/README.md). The anchor-leaf reconstruction proves at most two embedded candidates per intrinsic placement on every marking. Using the earlier necessary clique-sign archive, the weighted mirror-distance identity and the checkerboard twist test strengthen this to **uniqueness up to congruence from the 24 labeled edge lengths**, conditional on the earlier strict-support and orientation-projection proof premises. The exact finite checker ran on the current input archives: 308/316 clique patterns have a unanimous anchor; the eight others have no admissible checkerboard partner. This is a rigidity result, not a universality result.
 

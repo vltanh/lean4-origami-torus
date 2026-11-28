@@ -26,10 +26,21 @@ The [regular C0 height-order region](remaining_c0_height_order.md)
 `0<v<=u<1/2` is excluded by exact metric and sign arguments, extending
 the earlier diagonal certificates. A
 [collinear extension](exhaustive_c0_collinear.md) also excludes two strict
-cap orders in this region, with the opposite cap regular. The two-block proof closes
-all four symmetric endpoints, including every relative collapse rate.
-Ray 1's other limit regions,
-ray 2, and the Lean assembly remain open.
+cap orders in this region, with the opposite cap regular. Its
+[positive-cap follow-up](exhaustive_c0_collinear_positive.md) now
+covers all three upper-collinear orders, including coincidence,
+with a positively oriented regular lower cap. For regular `v>u`,
+the [endpoint support bound](exhaustive_c0_endpoint_bound.md) and
+[cone proof](solver_remaining_c0_opposite_cones.md) leave exactly
+42 of the 202 compatible generic completions, with all actual zeros
+retained. The two-block proof closes all four symmetric endpoints,
+including every relative collapse rate.
+
+For ray 2, the [nested-section argument](remaining_c1_sections.md)
+now excludes every regular interior C1 limit. Its finite nesting and
+convexity argument does not require the ray-1 total-weight budget.
+The remaining C0 cases, height endpoints, ray-2 degenerate C1 limits,
+and the Lean assembly remain open. Neither full marking is yet excluded.
 
 The proof gives a threshold `Y3` but no numerical value. It therefore
 does not establish the separate target `tau* = 1/2 + 10^6 i`. The finite
@@ -701,6 +712,28 @@ remaining regular height order is `v>u`; its quantitative mixed-bracket
 bounds are also recorded by that topological package. The
 [collinear extension](exhaustive_c0_collinear.md) additionally excludes
 two strict collinear orders in `u>=v`, with the opposite cap regular.
+Its [positive-cap follow-up](exhaustive_c0_collinear_positive.md)
+extends that height-order exclusion to all three collinear upper
+orders with positive regular lower cap, including coincidence.
+Four new actual-trit CNFs independently replayed in 1.347 seconds;
+the collapsed-base equality case is treated explicitly.
+
+The [positive mixed-branch proof](exhaustive_c0_endpoint_bound.md)
+uses a one-triangle support inequality and concavity along the lower
+ellipse. Together with the certified conditional cone signs, it
+excludes both actual positive mixed brackets in regular `v>u`.
+The [opposite-cone extension](solver_remaining_c0_opposite_cones.md)
+also covers actual-zero positive completions and the two reflected
+negative-cone branches. It removes 160 of 202 complete generic words,
+leaving exactly 42 with positive generic `0136` and negative generic
+`2345,4567`. An independent completeness CNF binds that residual
+list. All six CNFs independently replayed in 0.663 seconds.
+Actual `cross(P3,P6)<0` is therefore excluded; its zero boundary
+with a positive generic completion remains. The
+[C0 section helper](solver_remaining_c0_sections.md) checks source
+faces, critical sections, unit perimeters, strict middle-edge
+contractions, and the directions forced by zero mixed brackets.
+These are exact supporting identities, not a further exclusion.
 Other collinear-cap and height-endpoint C0 limits remain open.
 
 The second canonical family has a separate
@@ -740,9 +773,23 @@ disjunctions retain all zero cross-product boundaries. Thirty-two
 exact polynomial certificates with 2,687 rational terms cover all
 264 word/branch combinations; their replay took 0.812 seconds and
 the four source CNFs independently passed in 0.479 seconds. This
-is a necessary topology reduction for ray 2, not a metric exclusion;
-retained numerical diagnostics demonstrate that the reduced anchor
+is a necessary topology reduction for ray 2; by itself it is not a metric exclusion.
+Retained numerical diagnostics demonstrate that the reduced anchor
 conditions alone remain insufficient.
+
+The [nested-section proof](remaining_c1_sections.md) now excludes
+every regular interior C1 limit for both remaining markings. It
+establishes nesting and strict convexity for finite generic sections
+of the actual embedded sequence, then passes to the limiting
+unit-perimeter sections. Convex perimeter equality forces matching
+boundaries; sixteen vertex-tracking identities exclude unequal
+critical heights, while four quadrilateral and 27 triangle matches
+exclude equal heights. The exact checker binds all 24 section
+vertices to the sixteen original faces and checks both annulus
+boundaries and intermediate links. All seven source CNFs
+independently replayed in 0.773 seconds, and the source-binding
+extension reproduced those formulas byte for byte. No ray-1 weight
+budget is used. Ray-2 collinear caps and height endpoints remain.
 
 In the two-block `04` limit of ray 1, the
 [focal-ellipse and weak-sign proof](remaining_ray1_mask04.md) forces all

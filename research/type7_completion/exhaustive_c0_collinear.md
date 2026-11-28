@@ -4,8 +4,8 @@ For ray 1 and `0<v<=u<1/2`, the following C0 limits are impossible:
 
 - The upper cap 123 is collinear with vertex 1 strictly between 2
   and 3, and the lower cap 067 is noncollinear.
-- The lower cap 067 is collinear with vertex 7 strictly between 0
-  and 6, and the upper cap 123 is noncollinear.
+- The lower cap 067 is collinear with vertex 0 strictly between 6
+  and 7, and the upper cap 123 is noncollinear.
 
 In deficit notation these are respectively `d2=0<d1` with a regular
 lower cap, and `d6=0<d7` with a regular upper cap. The result combines

@@ -51,8 +51,17 @@ equal-height C0 limit for ray 1. Their
 the entire regular half `0<v<=u<1/2`. A
 [collinear boundary extension](exhaustive_c0_collinear.md) excludes
 `d2=0<d1` with a regular lower cap and its cap-swapped counterpart
-`d6=0<d7` in the same height region. The region `v>u` and other C0
-boundary cases remain. The
+`d6=0<d7` in the same height region. Its
+[positive-cap follow-up](exhaustive_c0_collinear_positive.md) covers
+all three upper-collinear orders with a positively oriented regular
+lower cap, including coincidence. The
+[endpoint support bound](exhaustive_c0_endpoint_bound.md) and
+[opposite-cone proof](solver_remaining_c0_opposite_cones.md) reduce
+the regular `v>u` region from 202 to exactly 42 compatible generic
+completions, retaining every actual zero. Other C0 boundary cases
+remain. The [section identities](solver_remaining_c0_sections.md)
+give unit perimeters and strict middle-edge contractions without
+claiming another exclusion. The
 [nonedge vector formulas](exhaustive_c0_nonedge_vectors.md) give exact
 norm and dot bounds for `v>u`, although these selected nonedge bounds
 already follow from the limiting circle identities. The
@@ -66,10 +75,16 @@ limiting system and all six active nonedge inequalities. Their
 [normal-stretch exclusion](solver_remaining_c1_flat_stretch.md) now
 closes every family, including all endpoints and relative rates;
 **the entire interior C1 component is excluded for ray 1**.
-The [closed regular-C1 turning constraint](exhaustive_c1_holonomy.md)
-also supplies a necessary zero-total-turn condition for ray 2, with
-all 264 closed sign branches certified. Other ray-1 limits and both
-full markings remain open.
+The [nested-section proof](remaining_c1_sections.md) now excludes
+regular interior C1 for ray 2 as well. It uses finite embedded
+sections to establish nesting and strict convexity before passing
+to the limiting unit-perimeter geometry; all seven source CNFs
+independently replayed. The
+[closed regular-C1 turning constraint](exhaustive_c1_holonomy.md)
+also supplies an independent necessary zero-total-turn condition,
+with all 264 closed sign branches certified. Ray-2 degenerate C1,
+the remaining C0 limits, height endpoints, and both full markings
+remain open.
 
 ## Correct long-ring linking target
 
