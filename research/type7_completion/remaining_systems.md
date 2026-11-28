@@ -62,9 +62,14 @@ excludes every interior C1 limit with exactly one collinear cap,
 including coincident vertices. The
 [remaining interior C1 boundary](solver_remaining_c1_flat_limits.md)
 reduces to six explicit flat families. All satisfy the full 29-row
-limiting system and all six active nonedge inequalities, so further
-relative-scale arguments are needed. Other ray-1 limits and both full
-markings remain open.
+limiting system and all six active nonedge inequalities. Their
+[normal-stretch exclusion](solver_remaining_c1_flat_stretch.md) now
+closes every family, including all endpoints and relative rates;
+**the entire interior C1 component is excluded for ray 1**.
+The [closed regular-C1 turning constraint](exhaustive_c1_holonomy.md)
+also supplies a necessary zero-total-turn condition for ray 2, with
+all 264 closed sign branches certified. Other ray-1 limits and both
+full markings remain open.
 
 ## Correct long-ring linking target
 

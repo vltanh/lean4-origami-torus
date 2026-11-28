@@ -17,8 +17,11 @@ also excludes every interior limit with exactly one collinear cap,
 including coincidence. The
 [two-collinear-cap boundary](solver_remaining_c1_flat_limits.md) reduces
 to six explicit flat families, including zero-edge endpoints. They
-remain compatible with all limiting metric equations and the six
-active nonedge inequalities; their relative-scale analysis remains open.
+are compatible with all limiting metric equations and the six active
+nonedge inequalities, but their
+[nontrivial normal stretches](solver_remaining_c1_flat_stretch.md) are
+now all excluded. This closes **the entire interior C1 component for
+ray 1**, including every degeneracy and relative collapse rate.
 The [regular C0 height-order region](remaining_c0_height_order.md)
 `0<v<=u<1/2` is excluded by exact metric and sign arguments, extending
 the earlier diagonal certificates. A
@@ -695,8 +698,10 @@ polynomial certificate replayed in 1.705 seconds. Two
 [conditional-sign CNFs](exhaustive_c0_height_order.md), independently
 replayed in 0.279 seconds, provide the contrary orientations. The
 remaining regular height order is `v>u`; its quantitative mixed-bracket
-bounds are also recorded by that topological package. Collinear-cap
-and height-endpoint C0 limits remain open.
+bounds are also recorded by that topological package. The
+[collinear extension](exhaustive_c0_collinear.md) additionally excludes
+two strict collinear orders in `u>=v`, with the opposite cap regular.
+Other collinear-cap and height-endpoint C0 limits remain open.
 
 The second canonical family has a separate
 [fourteen-pattern regular cover](exhaustive_c1_angles.md), with 132
@@ -714,8 +719,30 @@ Its zero-deficit cases are treated directly. The
 exclude every interior C1 limit with exactly one collinear cap,
 including coincident vertices. Five weak-sign implications and three
 negative-cap exclusions use actual bracket trits, exact height
-identities, and checked marked symmetries. Two collinear caps,
-height endpoints, and ray 2 remain open.
+identities, and checked marked symmetries. The
+[two-collinear-cap classification](solver_remaining_c1_flat_limits.md)
+leaves six explicit flat families, including all zero-edge endpoints.
+Their full 29-row metric witnesses and six active nonedge inequalities
+check exactly. The [normal-stretch proof](solver_remaining_c1_flat_stretch.md)
+then excludes every family: all seventy determinants become linear
+in five normal coordinates, and 560 projection identities per family
+give uniform sign constraints. Exact multilinear coefficient signs
+cover the entire height rectangle and every closed deficit interval.
+All fourteen CNFs, with ten distinct proofs, independently replayed
+in 1.383 seconds; a separate peer replay took 1.159 seconds. This
+completes the research exclusion of interior C1 for ray 1. Height
+endpoints and the full ray-2 marking remain open.
+
+For regular C1 in either marking, the
+[closed turning constraint](exhaustive_c1_holonomy.md) excludes an
+additional full turn of the six linked-vector angles. Its two strict
+disjunctions retain all zero cross-product boundaries. Thirty-two
+exact polynomial certificates with 2,687 rational terms cover all
+264 word/branch combinations; their replay took 0.812 seconds and
+the four source CNFs independently passed in 0.479 seconds. This
+is a necessary topology reduction for ray 2, not a metric exclusion;
+retained numerical diagnostics demonstrate that the reduced anchor
+conditions alone remain insufficient.
 
 In the two-block `04` limit of ray 1, the
 [focal-ellipse and weak-sign proof](remaining_ray1_mask04.md) forces all

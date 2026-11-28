@@ -218,6 +218,28 @@ def verify_nonedge_expansion():
     return auxiliaries
 
 
+def family_coordinates(key):
+    """The six exact classified families, shared with the normal stretch."""
+    deficit = [s.Integer(0)]*8
+    P = [s.Integer(0)]*8
+    if isinstance(key, tuple):
+        assert key in ((2, 6), (2, 7), (3, 6), (3, 7))
+        deficit[key[0]], deficit[key[1]] = R, HALF-R
+        P[3] = HALF/ALPHA-HALF+deficit[2]
+        P[2], P[4] = HALF/ALPHA, HALF/ALPHA+deficit[2]-deficit[3]
+        P[7], P[6] = deficit[7]-HALF, deficit[7]-deficit[6]
+        P[5] = (BETA/(2*ALPHA)-HALF+BETA*(deficit[2]-deficit[3])
+                +(1-BETA)*(deficit[7]-deficit[6]))
+    elif key == 'left':
+        deficit[0], deficit[1] = (1-ALPHA)/2, ALPHA/2
+        P = [s.Integer(value)/2 for value in (0, 0, 0, 1, 0, 1, 0, 1)]
+    else:
+        assert key == 'right'
+        deficit[4], deficit[5] = BETA/2, (1-BETA)/2
+        P = [0, 0, HALF/ALPHA, HALF/ALPHA-HALF, HALF/ALPHA, BETA/(2*ALPHA), 0, -HALF]
+    return deficit, P
+
+
 def verify_families():
     hsymbols = s.symbols('h0:8')
     matrix = reducer.original_system([ALPHA/2, HALF, HALF, HALF, -BETA/2, 0])
@@ -237,21 +259,7 @@ def verify_families():
         'right': [0, 0, 0, 0, 0, -1],
     }
     for key, residuals in expected.items():
-        deficit = [s.Integer(0)]*8
-        P = [s.Integer(0)]*8
-        if isinstance(key, tuple):
-            deficit[key[0]], deficit[key[1]] = R, HALF-R
-            P[3] = HALF/ALPHA-HALF+deficit[2]
-            P[2], P[4] = HALF/ALPHA, HALF/ALPHA+deficit[2]-deficit[3]
-            P[7], P[6] = deficit[7]-HALF, deficit[7]-deficit[6]
-            P[5] = (BETA/(2*ALPHA)-HALF+BETA*(deficit[2]-deficit[3])
-                    +(1-BETA)*(deficit[7]-deficit[6]))
-        elif key == 'left':
-            deficit[0], deficit[1] = (1-ALPHA)/2, ALPHA/2
-            P = [s.Integer(value)/2 for value in (0, 0, 0, 1, 0, 1, 0, 1)]
-        else:
-            deficit[4], deficit[5] = BETA/2, (1-BETA)/2
-            P = [0, 0, HALF/ALPHA, HALF/ALPHA-HALF, HALF/ALPHA, BETA/(2*ALPHA), 0, -HALF]
+        deficit, P = family_coordinates(key)
         weights = [HALF-value for value in deficit]
         assert s.expand(sum(weights)-s.Rational(7, 2)) == 0
         X = geometry.horizontal_displacements(weights)

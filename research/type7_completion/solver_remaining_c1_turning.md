@@ -339,4 +339,7 @@ topology proof remains independently replayable through
 The proof is specific to the ray-1 deficit sum `1/2`. Ray 2 has deficit
 sum `3/2`, so these positive gaps do not follow. A collinear cap or a
 height endpoint also requires its own argument: their vanishing cap
-brackets do not justify the regular-cap topology units.
+brackets do not justify the regular-cap topology units. The separate
+[one-collinear-cap extension](solver_remaining_c1_collinear_rank.md)
+and [flat normal-stretch proof](solver_remaining_c1_flat_stretch.md)
+now cover all collinear caps in the interior height rectangle.

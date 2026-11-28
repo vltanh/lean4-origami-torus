@@ -5,7 +5,8 @@ For ray 1 and `0<alpha,beta<1`, suppose exactly one endpoint triangle
 coincident pair 2=4 or 0=6. The proof combines three new CNFs with
 the five implications in [the collinear package](solver_remaining_c1_collinear.md)
 and two checked marked symmetries. All eight CNFs require independent
-RUP replay. Two collinear caps remain outside this conclusion.
+RUP replay. Two collinear caps are treated separately by the
+[flat-family classification and normal stretch](solver_remaining_c1_flat_stretch.md).
 
 ## 1. A nonvanishing pair in the projected plane
 
@@ -185,5 +186,5 @@ The companion to the preceding package must also be generated and its
 five CNFs replayed. This yields an asymptotic ray-1 research exclusion
 for every interior C1 limit with exactly one collinear endpoint cap.
 It supplies no finite height threshold and does not replace a Lean
-proof. Limits with both endpoint caps collinear still require further
-arguments.
+proof. The separate [normal-stretch proof](solver_remaining_c1_flat_stretch.md)
+now excludes the limits with both endpoint caps collinear as well.

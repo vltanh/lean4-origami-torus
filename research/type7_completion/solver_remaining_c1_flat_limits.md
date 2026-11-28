@@ -9,6 +9,11 @@ six active nonedge inequalities. This is a classification of the
 remaining necessary limit system, not an embedding construction or an
 exclusion of this boundary.
 
+The subsequent [normal-stretch proof](solver_remaining_c1_flat_stretch.md)
+excludes all six families as limits of actual unbounded realizations,
+including every endpoint and relative collapse rate. The metric
+witnesses here remain valid for the unstretched necessary limit system.
+
 Write `d_i=1/2-h_i`, so `d_i>=0` and `sum d_i=1/2`. The symbols
 `P_i` denote transverse points, and the axial heights remain
 
@@ -391,6 +396,7 @@ python research/type7_completion/solver_cnf_certificates.py /tmp/c1-flat-limits-
 
 The regular-cap and exactly-one-collinear-cap C1 cases are treated in
 their separate verified packages. The present result identifies the
-remaining two-collinear-cap boundary and supplies exact test families
-for the next relative-scale argument. It does not assert a finite
+two-collinear-cap boundary and supplies the exact families used in
+the subsequent [complete normal-stretch exclusion](solver_remaining_c1_flat_stretch.md).
+This classification package does not assert a finite
 height threshold, a Lean closure, or a realizable embedding.
