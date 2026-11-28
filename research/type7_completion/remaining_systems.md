@@ -69,6 +69,10 @@ line families and one coincident-vertex circle. The
 [normal-stretch proof](solver_remaining_c0_flat_stretch.md) excludes
 all four endpoint-deficit interiors and the `h2=0,h6=0` endpoints;
 the other line cases have a certified 32-pattern normal cover.
+The [relative endpoint proof](remaining_c0_line_endpoints.md) also
+closes `h1=0,h7=0`, using the new
+[C0 short-edge estimates](remaining_c0_short_edges.md). Thus all
+four closed endpoint-deficit families are excluded.
 The [relative circle argument](exhaustive_c0_circle.md) also excludes
 the entire nonflat coincident-vertex circle, retaining its two line
 directions. Both virtual-direction CNFs independently replayed.
@@ -81,6 +85,9 @@ relative-rate assumption on either shrinking diagonal.
 The [four-cell companion](exhaustive_c0_double_flat.md) excludes its
 negative orientation as well, throughout the open height square.
 Only bd/da remain among nonparallel both-collinear orders.
+The [asymmetric-cap proof](exhaustive_c0_flat_asymmetric.md) now
+excludes both, completing the entire nonparallel both-collinear
+interior C0 stratum.
 The
 [endpoint support bound](exhaustive_c0_endpoint_bound.md) and
 [opposite-cone proof](solver_remaining_c0_opposite_cones.md) reduce
@@ -90,7 +97,13 @@ completions, retaining every actual zero. The
 sixteen more uniformly over the full height region. Two independent
 completeness certificates bind the excluded list and the remaining
 26 words to the complete source. Other C0 boundary cases
-remain. The [section identities](solver_remaining_c0_sections.md)
+remain before the [uniform quartic proof](solver_remaining_c0_quartic.md).
+Its fourteen exact integer identities exclude all twenty-six words
+throughout the open height triangle. Independent coordinate replay
+and the finite source-cover proof passed. Combined with the opposite
+height order and the complete regular height boundary, this excludes
+**every regular ray-1 C0 limit**. Degenerate caps remain separate.
+The [section identities](solver_remaining_c0_sections.md)
 give unit perimeters and strict middle-edge contractions without
 claiming another exclusion. The
 [nonedge vector formulas](exhaustive_c0_nonedge_vectors.md) give exact
@@ -132,7 +145,12 @@ transverse directions and axial errors `O(t*h)` at every shrinking
 cap edge, including independent simultaneous scales. Its exact source
 replay also checks the complete six-orbit cover of twenty zero-edge
 orders; this is a scale lemma, not another exclusion. The remaining
-ray-1 C0 limits, ray-2 C0, height endpoints, and both full markings
+EF orbit now has a [nonparallel-cap exclusion](remaining_c1_opposite_zero.md),
+and the [double-zero scalar reduction](remaining_c1_zero_common.md)
+puts all EF and both EE endpoints on one common line. Four and six
+fresh independent CNFs passed, respectively. Their scalar families
+and the other zero-edge cases remain open. Degenerate ray-1 C0 limits,
+ray-2 C0, height endpoints, and both full markings
 remain open.
 
 ## Correct long-ring linking target

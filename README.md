@@ -257,6 +257,9 @@ coincident-vertex circle. The
 now excludes all four endpoint-deficit interiors and the zero-edge
 endpoints `h2=0,h6=0`; eight further certificates reduce the remaining
 line families to 32 normal sign patterns. The
+[relative endpoint proof](research/type7_completion/remaining_c0_line_endpoints.md)
+closes `h1=0,h7=0` as well, completing every closed endpoint-deficit
+family. The
 [relative circle proof](research/type7_completion/exhaustive_c0_circle.md)
 also excludes every nonflat direction of the coincident-vertex circle;
 its two line directions remain. For nonparallel cap lines,
@@ -269,7 +272,9 @@ retaining arbitrary relative rates of both shrinking diagonals.
 Its [four-cell companion](research/type7_completion/exhaustive_c0_double_flat.md)
 excludes the negative orientation at every interior height pair.
 Thus every nonparallel double coincidence is closed; only bd/da
-remain among the nonparallel both-collinear orders.
+remain before the [asymmetric-cap proof](research/type7_completion/exhaustive_c0_flat_asymmetric.md).
+It excludes both, completing every nonparallel both-collinear interior
+C0 order at all collapse rates.
 For regular C0 with `v>u`, an
 [endpoint support bound](research/type7_completion/exhaustive_c0_endpoint_bound.md)
 and [complete cone reduction](research/type7_completion/solver_remaining_c0_opposite_cones.md)
@@ -277,7 +282,12 @@ exclude 160 of the 202 generic completions, including their actual-zero
 boundaries. The [middle-wedge proof](research/type7_completion/solver_remaining_c0_middle_wedge.md)
 excludes sixteen more throughout `0<u<v<1/2`, leaving exactly 26
 completions with `cross(P3,P6)>=0`. Both completeness certificates
-independently replayed.
+independently replayed. The [uniform quartic certificates](research/type7_completion/solver_remaining_c0_quartic.md)
+now exclude all twenty-six: fourteen exact integer identities cover
+the full open height region, with every actual zero retained.
+Independent coordinate replay and the complete source-cover proof
+passed. Together with the earlier height-order and boundary results,
+**every regular ray-1 C0 limit is excluded, including all height boundaries**.
 The [C0 section identities](research/type7_completion/solver_remaining_c0_sections.md)
 also give unit section perimeters and strict shortening of the three
 middle projected edges; they are supporting identities, not a further
@@ -307,7 +317,12 @@ two-collinear-cap cases with a zero cap edge. The
 gives unit transverse directions at every shrinking cap edge, with
 axial errors `O(t*h)` at arbitrary rates, and checks the six-orbit
 cover of all twenty zero-edge orders. The remaining ray-1 C0
-cases, ray-2 C0, height boundaries, and the
+cases have degenerate caps. For ray-2 C1, the
+[opposite-zero proof](research/type7_completion/remaining_c1_opposite_zero.md)
+and [scalar reduction](research/type7_completion/remaining_c1_zero_common.md)
+put all EF limits and both EE endpoints on one common line; ten
+new independent sign proofs passed. The scalar families, other
+zero-edge cases, ray-2 C0, height boundaries, and the
 Lean assembly remain open; neither full marking is yet excluded.
 
 See [Type 7 reconstruction, rigidity and two elongated branches](research/type7_focus/README.md). The anchor-leaf reconstruction proves at most two embedded candidates per intrinsic placement on every marking. Using the earlier necessary clique-sign archive, the weighted mirror-distance identity and the checkerboard twist test strengthen this to **uniqueness up to congruence from the 24 labeled edge lengths**, conditional on the earlier strict-support and orientation-projection proof premises. The exact finite checker ran on the current input archives: 308/316 clique patterns have a unanimous anchor; the eight others have no admissible checkerboard partner. This is a rigidity result, not a universality result.

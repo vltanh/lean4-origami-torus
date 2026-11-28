@@ -36,7 +36,13 @@ the [endpoint support bound](exhaustive_c0_endpoint_bound.md) and
 retained. The [middle-wedge comparison](solver_remaining_c0_middle_wedge.md)
 excludes sixteen further completions uniformly throughout the height
 region, leaving exactly 26. The two-block proof closes all four symmetric endpoints,
-including every relative collapse rate.
+including every relative collapse rate. The
+[uniform quartic certificates](solver_remaining_c0_quartic.md) now
+exclude all twenty-six remaining regular completions. Fourteen exact
+integer identities cover the full open height triangle, and the
+complete finite source-cover proof independently replays. Together
+with the height-boundary theorem below, **every regular ray-1 C0
+limit is excluded at every limiting height**.
 
 The [negative-coincidence proof](exhaustive_c0_negative_coincidence.md)
 now completes the opposite regular-cap orientation. Consequently all
@@ -51,6 +57,8 @@ and one coincident-vertex circle. The
 [normal stretch](solver_remaining_c0_flat_stretch.md) excludes the
 four endpoint-deficit interiors and the `h2=0,h6=0` endpoints, while
 giving a finite necessary normal cover for the residual line cases.
+The [relative endpoint proof](remaining_c0_line_endpoints.md) closes
+`h1=0,h7=0` too, completing all four closed endpoint-deficit families.
 The [relative circle proof](exhaustive_c0_circle.md) excludes every
 nonflat direction of the coincident-vertex circle, at arbitrary rates.
 The [first-order nonparallel-cap sign](exhaustive_c0_flat_nonparallel.md)
@@ -61,6 +69,9 @@ excludes the double coincidence with `cross(P2,P7)>0`. Its
 [four-cell companion](exhaustive_c0_double_flat.md) closes the other
 nonparallel orientation for every interior height pair, leaving only
 bd/da among the nonparallel both-collinear orders.
+The [asymmetric-cap proof](exhaustive_c0_flat_asymmetric.md) now
+excludes both, completing the entire nonparallel both-collinear
+interior C0 stratum.
 
 For ray 2, the [nested-section argument](remaining_c1_sections.md)
 now excludes every regular interior C1 limit. Its finite nesting and
@@ -77,6 +88,10 @@ Interior ray-2 C1 is reduced to two-collinear-cap cases with a zero
 cap edge. The [relative short-edge lemma](remaining_c1_short_edges.md)
 justifies unit virtual directions and joint determinant normalizations
 at every shrinking cap edge, with a complete six-orbit order cover.
+The [opposite-zero proof](remaining_c1_opposite_zero.md) and
+[scalar reduction](remaining_c1_zero_common.md) now put every EF
+limit and both EE endpoints on a common line. Their remaining scalar
+families and the other zero-edge cases still require exclusion.
 The remaining ray-1 C0 cases, ray-2 C0, height boundaries,
 and the Lean assembly remain open. Neither full marking is yet excluded.
 
@@ -781,7 +796,29 @@ zero-safe half-angle comparisons give two incompatible metric bounds.
 An exact positive deficit identity supplies the strict contradiction.
 The analytic proof retains every actual zero, and its two fresh
 completeness CNFs independently replayed in 0.228 seconds. Exactly
-26 regular `v>u` completions remain. The
+26 regular `v>u` completions remain before the following exact proof.
+The [uniform quartic package](solver_remaining_c0_quartic.md) now
+excludes all twenty-six. Fourteen integer identities contain 50,550
+terms, with weights up to 380 bits. Every identity is expanded in
+twenty-three independent variables, and every residual term is
+nonnegative with a separately justified strict term. The source
+checks bind twelve metric equations, all seventy uniformly scaled
+brackets, nonnegative causal masses, and the marked reflection.
+Fresh exact source and coordinate replay passed in 7.172 seconds;
+the independent coverage CNF passed in 0.154 seconds. A separate
+analytic/source audit and fresh peer replay passed as well.
+This completes regular C0 on the open height square. Combined with
+the complete height-boundary argument, every regular C0 limit is
+excluded. Collinear caps remain separate.
+
+The optional discovery tool uses 4,500 exact projected coefficient
+rows and a strictness normalization. Zero-objective bounded LP
+feasibility found thirteen reflection representatives in roughly
+8--12 seconds each. Adding fifteen nonnegative squares of point
+sums found the last in 11.42 seconds. Exact rational reconstruction
+and independent full-coordinate expansion validate every candidate;
+the replay does not trust numerical feasibility or the discovery
+projection. The
 [C0 section helper](solver_remaining_c0_sections.md) checks source
 faces, critical sections, unit perimeters, strict middle-edge
 contractions, and the directions forced by zero mixed brackets.
@@ -839,6 +876,18 @@ peer replay passed in 2.063 seconds. The remaining line cases have
 middle-deficit families, and two line directions of the coincident-vertex
 circle remain after the following circle exclusion.
 
+The [relative endpoint proof](remaining_c0_line_endpoints.md) now
+excludes the `h1=0,h7=0` endpoints too. The
+[C0 short-edge lemma](remaining_c0_short_edges.md) bounds each cap
+edge's axial error by `O(t*h)` and gives a unit transverse direction
+for both markings. Exact finite cap/core polarizations at `h1=0`
+bound its horizontal direction. A nontrivial normal stretch and
+division by the actual short edge then leave two virtual directions;
+both contradict the original generic source. Three fresh CNFs
+independently passed in 0.446 seconds, and the separate analytic
+and relative-rate audit passed with peer replay in 0.464 seconds.
+All four closed endpoint-deficit families are now excluded.
+
 The [relative circle proof](exhaustive_c0_circle.md) now excludes the
 nonflat part of that circle. Exact diagonal polarizations make the
 shrinking diagonal13 a unit virtual direction with axial error
@@ -887,6 +936,16 @@ The proof holds for all interior height pairs and all collapse rates.
 A separate analytic/source audit passed, and the fresh independent
 CNF replay took 1.079 seconds. Thus every nonparallel dd limit is
 excluded; only the reflected pair bd/da remains in this stratum.
+
+The [asymmetric-cap proof](exhaustive_c0_flat_asymmetric.md) now
+excludes bd/da. A relative lower-diagonal estimate, 53 exact macro
+links and fifteen separately divided determinants give a complete
+three-cell cover. Two strict circle identities and the exact
+upper-b cap tilt contradict every cell, including zero-angle
+endpoints. Both new CNFs independently passed in 0.662 seconds.
+Together with the preceding six-order and double-coincidence
+theorems, this excludes every nonparallel both-collinear interior
+C0 limit, for every height order and relative collapse rate.
 
 The second canonical family has a separate
 [fourteen-pattern regular cover](exhaustive_c1_angles.md), with 132
@@ -995,6 +1054,25 @@ lengths. The marked reflection and cap swap give six disjoint orbits
 covering all twenty zero-edge orders. EA and EC already have common-line
 limits by the earlier reduction. This lemma makes subsequent virtual
 direction arguments valid; it does not itself exclude a zero-edge orbit.
+
+The [opposite-zero EF proof](remaining_c1_opposite_zero.md) uses those
+relative directions to exclude nonparallel cap directions. A regular
+virtual cap would give finite nested sections, whereas the limiting
+two-segment trees cannot contain one another throughout an interval.
+The remaining parallel virtual directions have a complete three-pattern
+cover and three further contradictions. Its source checker binds all
+seventy separately normalized determinants to one generic completion.
+Fresh generation took 2.063 seconds and all four RUP proofs passed
+in 0.641 seconds; a separate analytic/source audit passed.
+
+The [double-zero scalar reduction](remaining_c1_zero_common.md)
+then puts all EF limits, and both EE endpoints, on a common line.
+Six further strict-minor CNFs passed independently in 0.705 seconds.
+All twelve closed projected stresses are checked on each of the
+eight resulting scalar families, including their endpoints. This
+is a necessary reduction, not an exclusion of those scalar families.
+The interior EE range and EB/ED remain nonflat zero-edge gates;
+EA/EC were already reduced to common lines.
 
 In the two-block `04` limit of ray 1, the
 [focal-ellipse and weak-sign proof](remaining_ray1_mask04.md) forces all
