@@ -134,6 +134,10 @@ The active direction is now positive construction, not closing the regular-plana
 
 [One-scale core](one_scale.md): set $a=1/19$ and use a common near-tie margin $s^2$. The two tangent leaves have discriminants with an explicit $s^2$ factor, and the exceptional volumes 1236 and 1357 vanish exactly at $s=0$. [The derivative interval verifier](verify_one_scale.py) certifies every $0<s\le1/512$ at the square (64 intervals); it also certifies the boundary of $0\le x\le1/4096$, $1\le y\le4097/4096$ (32 subboxes), giving a uniform positive unfolding threshold by compactness without calculating it. This simplifies the core and avoids tuning the perturbation but does not supersede the wider modulus ranges of `simple_family.md`. No Lean formalization or universality claim.
 
+## Dyadic-grid unfolding
+
+[Dyadic core](dyadic_scale.md) replaces the specially chosen 1/19 scale by a 1/64 grid: in a square of side 64 the four nonzero core points are `(29,-32+delta)`, `(32-delta,5)`, `(-4,27)`, `(-2,-12)`. The same template certifies every square unfolding $0<s\le1/512$, the full rectangular interval $1\le y\le41/40$ with sufficiently small positive $s$, a small oblique box, and a continuous range of scale choices near 1/64. [Exact interval verifier](verify_dyadic_scale.py) passed 396 subboxes across the four domains. The non-square and free-scale thresholds follow by compactness and are not explicitly evaluated. The larger oblique box check timed out; the previous certificates are preserved. No Lean theorem or universality claim.
+
 ## 1. What would finish Type 5?
 
 Existence is already established. The remaining question has two possible

@@ -96,11 +96,16 @@ def audit_source():
         assert F==[tuple(map(int,f)) for f in json.loads((root/'research/type5_focus/lutz_faces.json').read_text())['5'].split()]
         print('PASS source face and shift tables')
 
-def points(box):
-    J.delta=tuple(I(-I((hi-lo)/2).h,I((hi-lo)/2).h) for lo,hi in box)
-    x,y,s=[J(I(I(lo).l,I(hi).h),I((lo+hi)/2),tuple(I(int(i==j)) for j in range(3))) for i,(lo,hi) in enumerate(box)]
-    a=Q(1,19);e=s*s;phys=lambda k:[J(k[0])+x*k[1],y*k[1]]
+def old_core(x,y,s):
+    a=Q(1,19);e=s*s
     p={1:[J(0),J(0)],2:[J(Q(1,2)-a),((-Q(1,2)+e)*(x*x+y*y)-x*(Q(1,2)-a))/y],3:[Q(1,2)-e,y*(3*a/2)],4:[J(-3*a/2),y*(Q(1,2)-3*a/2)],5:[J(-2*a/3),-4*a*y]}
+    return x,y,s,p
+
+def points(box,core=old_core):
+    J.delta=tuple(I(-I((hi-lo)/2).h,I((hi-lo)/2).h) for lo,hi in box)
+    args=[J(I(I(lo).l,I(hi).h),I((lo+hi)/2),tuple(I(int(i==j)) for j in range(3))) for i,(lo,hi) in enumerate(box)]
+    x,y,s,p=core(*args)
+    phys=lambda k:[J(k[0])+x*k[1],y*k[1]]
     r={i:p[i]+[J(0)] for i in A};D=cross(p[2],p[5]);D.sign()
     def solve(e,f):
         a,b=p[2];c,d=p[5];return [(e*d-b*f)/D,(a*f-e*c)/D]
@@ -147,18 +152,18 @@ def separate(signs):
         pairs+=sum(not set(e)&set(f) and set(e)|set(f)==set(q) for e in E for f in FF)
     assert pairs==138
 
-def check(box,reference):
-    areas,volumes=points(box);assert all(z.sign()==1 for z in areas)
+def check(box,reference,core=old_core):
+    areas,volumes=points(box,core);assert all(z.sign()==1 for z in areas)
     # For the two zero-limit determinants, verify the derivative sign, not an artificial volume margin.
     ss={q:(v.d[2].sign() if q in EXCEPT else v.sign()) for q,v in volumes.items()};assert ss==reference
     return min(z.v.abslo() for z in areas),min(v.v.abslo() for q,v in volumes.items() if q not in EXCEPT),min(v.d[2].abslo() for q,v in volumes.items() if q in EXCEPT)
 
-def cover(box,reference,maxdepth=34):
+def cover(box,reference,maxdepth=34,core=old_core):
     todo=[(box,0)];n=dep=0;mins=[B,B,B];st=time.time();last=st
     while todo:
         b,d=todo.pop()
         try:
-            m=check(b,reference);mins=[min(a,b) for a,b in zip(mins,m)];n+=1;dep=max(dep,d)
+            m=check(b,reference,core);mins=[min(a,b) for a,b in zip(mins,m)];n+=1;dep=max(dep,d)
         except AssertionError:
             assert d<maxdepth,(b,d)
             axis=max(range(3),key=lambda i:b[i][1]-b[i][0]);lo,hi=b[axis];assert lo<hi;c=(lo+hi)/2;b1=list(b);b2=list(b);b1[axis]=(lo,c);b2[axis]=(c,hi);todo.extend([(tuple(b2),d+1),(tuple(b1),d+1)])
