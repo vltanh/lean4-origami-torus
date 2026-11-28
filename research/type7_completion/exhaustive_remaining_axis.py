@@ -2,11 +2,15 @@
 """Uniform bounded axis coordinates for Type-7 markings 1 and 2.
 
 Usage: python exhaustive_remaining_axis.py [OUTPUT] [--mark 1] [--y 32]
+       python exhaustive_remaining_axis.py OUTPUT --all-heights --y 32
 
 The exact checks run before optional query generation.  The generated
 38-real necessary systems keep every edge equation, six bounded product
 variables, and the full generic-sign/actual-circuit embedding constraints.
 There is no mask assumption and no marking is declared excluded.
+With --all-heights, t=1/y^2 is a 39th variable with 0<t<=1/Y^2,
+where --y supplies Y>=32. This keeps the entire finite-height tail,
+not its t=0 relaxation. Metric equations then have total degree three.
 """
 
 import argparse
@@ -197,10 +201,16 @@ def _smt(expression):
     raise ValueError(expression)
 
 
-def generate(mark, y=10**6):
-    """Complete necessary query; the long axis replaces the seven masks."""
+def generate(mark, y=10**6, *, all_heights=False):
+    """One full marking, at fixed y or for every height >= the given y.
+
+    In all_heights mode an UNSAT proof excludes the entire height tail.
+    SAT still requires independent reconstruction; UNKNOWN is no result.
+    No positive lower bound is imposed on t or on a collapsing edge.
+    """
     assert mark in (1, 2) and isinstance(y, int) and not isinstance(y, bool) and y >= 32
-    t = s.Rational(1, y*y)
+    assert isinstance(all_heights, bool)
+    t = s.Symbol('t') if all_heights else s.Rational(1, y*y)
     shifts, faces, edges = case_data(mark)
     x = [s.Integer(0)]+list(s.symbols('x1:8'))
     v = [s.Integer(0)]+list(s.symbols('v1:8'))
@@ -219,13 +229,15 @@ def generate(mark, y=10**6):
     declared = x[1:]+[v[i] for i in (1, 2, 3, 4, 5, 7)]+[w]+H[1:]
     declared += [value for point in P for value in point if value != 0]+list(q.values())
     assert len(declared) == len(set(declared)) == 38
+    if all_heights:
+        declared.append(t)
     lines = ['(set-logic QF_NRA)']+[f'(declare-fun {name} () Real)' for name in declared]
 
     def require(condition):
         lines.append(m.op('assert', condition))
 
     def bound(expression, size):
-        text, limit = _smt(expression), m.rat(size)
+        text, limit = _smt(expression), _smt(size)
         require(m.all_([m.op('<', text, limit), m.op('>', text, m.neg(limit))]))
 
     def definition(name, expression):
@@ -236,6 +248,10 @@ def generate(mark, y=10**6):
 
     def scaled_distance(i, j):
         return t*transverse_distance(i, j)+(axial[j]-axial[i])**2
+
+    if all_heights:
+        require(m.op('>', 't', '0'))
+        require(m.op('<=', 't', m.rat(F(1, y*y))))
 
     # Bounds proven uniformly, with no lower bound on a collapsing edge.
     require(m.op('>=', 'v1', m.rat(F(1, 8))))
@@ -271,12 +287,12 @@ def generate(mark, y=10**6):
         require(m.op('>', f'D{i}{j}', '0'))
         bound(X[i, j], F(1, 2))
         for sign in (-1, 1):
-            bound(V[i, j]+sign*t*X[i, j]/2, F(1, 2)+F(1, 8*y*y))
+            bound(V[i, j]+sign*t*X[i, j]/2, s.Rational(1, 2)+t/8)
         V0 = intrinsic[j]-intrinsic[i]+shifts[i, j][1]
         dz, dh, dw = z[j]-z[i], H[j]-H[i], offsets[j]-offsets[i]
         metric = transverse_distance(i, j)-X[i, j]**2+q.get((i, j), 0)
         metric += 2*dz*dh-2*V0*dw+t*(dh*dh-dw*dw)
-        assert s.Poly(metric, *declared).total_degree() <= 2
+        assert s.Poly(metric, *declared).total_degree() <= (3 if all_heights else 2)
         require(m.op('=', _smt(metric), '0'))
     for i in range(8):
         require(m.op('<', _smt(X[i, (i+1) % 8]), '0'))
@@ -329,14 +345,18 @@ def generate(mark, y=10**6):
         lines.append(line)
     assert counts == {1: 84, 2: 168, 3: 70}
     text = '\n'.join(lines)+'\n'
-    assert len(re.findall(r'^\(declare-fun \S+ \(\) Real\)', text, re.M)) == 38
+    assert len(re.findall(r'^\(declare-fun \S+ \(\) Real\)', text, re.M)) == len(declared)
     assert text.count('(check-sat)') == 1
-    metadata = dict(metadata, y=y, real_variables=38, mask=None,
+    metadata = dict(metadata, y=y, real_variables=len(declared), mask=None,
                     axis='01 with v1>=1/8', metric_equations=24,
-                    product_equations=6, metric_degree_bound=2,
-                    actual_minor_degree_bound=3, direct_minor_counts=counts,
+                    product_equations=6, metric_degree_bound=3 if all_heights else 2,
+                    actual_minor_degree_bound=4 if all_heights else 3, direct_minor_counts=counts,
                     transverse_bound=12, axial_correction_bound=144, product_bound=2048,
                     necessary_system_only=True)
+    if all_heights:
+        metadata.update(y=None, minimum_y=y, t_interval=f'0 < t <= 1/{y*y}',
+                        height_scope='entire tail', limit_at_zero=False,
+                        product_degree_bound=2, nonedge_degree_bound=4)
     return text, metadata
 
 
@@ -345,16 +365,21 @@ def main():
     parser.add_argument('output', type=Path, nargs='?')
     parser.add_argument('--mark', type=int, choices=(1, 2))
     parser.add_argument('--y', type=int, default=10**6)
+    parser.add_argument('--all-heights', action='store_true',
+                        help='keep t>0 symbolic; --y is the minimum height, not a sample')
     args = parser.parse_args()
+    if args.y < 32:
+        parser.error('the bounded axis chart requires y>=32')
     record = verify()
     print(json.dumps({key: value for key, value in record.items() if key != 'rotation_gauges'}), flush=True)
     if args.output is not None:
         args.output.mkdir(parents=True, exist_ok=True)
         (args.output/'axis_verification.json').write_text(json.dumps(record, indent=2)+'\n')
         for mark in (args.mark,) if args.mark else (1, 2):
-            text, metadata = generate(mark, args.y)
-            (args.output/f'ray{mark}_axis.smt2').write_text(text)
-            (args.output/f'ray{mark}_axis.json').write_text(json.dumps(metadata, indent=2)+'\n')
+            text, metadata = generate(mark, args.y, all_heights=args.all_heights)
+            name = f'ray{mark}_axis'+('_all_heights' if args.all_heights else '')
+            (args.output/f'{name}.smt2').write_text(text)
+            (args.output/f'{name}.json').write_text(json.dumps(metadata, indent=2)+'\n')
             print(json.dumps(dict(metadata, bytes=len(text))), flush=True)
 
 
