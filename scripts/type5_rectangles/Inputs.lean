@@ -1,10 +1,13 @@
+module
+
+meta import OrigamiTorus.EightVertex.Type5.Square
 import OrigamiTorus.EightVertex.Type5.Square
 import Lean.Data.Json
 
 open OrigamiTorus OrigamiTorus.Type5
 
 /-- Export the oriented complex and its square marking for the rectangle certificate. -/
-def main : IO Unit := do
+public def main : IO Unit := do
   let triangles := faces.map fun (a,b,c) => [a.val,b.val,c.val]
   let shifts := edgeList.map fun (a,b) =>
     let k := squareShift a b
