@@ -30,12 +30,24 @@ public import OrigamiTorus.EightVertex.Type4.Strips
 public import OrigamiTorus.EightVertex.Type4.WideLift
 
 public import OrigamiTorus.EightVertex.Type5.ContinuationTorus
+public import OrigamiTorus.EightVertex.Type5.DistanceRigidity
+public import OrigamiTorus.EightVertex.Type5.HexagonalFold
+public import OrigamiTorus.EightVertex.Type5.HexagonalMetric
+public import OrigamiTorus.EightVertex.Type5.HingeChart
+public import OrigamiTorus.EightVertex.Type5.HingeStress
+public import OrigamiTorus.EightVertex.Type5.HarmonicGap
 public import OrigamiTorus.EightVertex.Type5.LeafRank
 public import OrigamiTorus.EightVertex.Type5.MarkedReduction
 public import OrigamiTorus.EightVertex.Type5.Normalize
 public import OrigamiTorus.EightVertex.Type5.Periodic
+public import OrigamiTorus.EightVertex.Type5.PlanarFold
+public import OrigamiTorus.EightVertex.Type5.ProjectedFaces
+public import OrigamiTorus.EightVertex.Type5.SharpCore
+public import OrigamiTorus.EightVertex.Type5.SharpFamily
+public import OrigamiTorus.EightVertex.Type5.SharpOpening
 public import OrigamiTorus.EightVertex.Type5.Shortest
 public import OrigamiTorus.EightVertex.Type5.Square
+public import OrigamiTorus.EightVertex.Type5.StarDirections
 
 public import OrigamiTorus.EightVertex.Type6.FaceMetric
 public import OrigamiTorus.EightVertex.Type6.Inflation

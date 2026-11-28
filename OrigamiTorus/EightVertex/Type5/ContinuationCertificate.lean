@@ -74,10 +74,10 @@ private theorem volume_mem {x y : ℝ} (h : ModulusBox x y) (a b c d : Vertex) :
       (mul_mem (coordinate_mem h c 4) (area_mem h a b d)))
     (mul_mem (coordinate_mem h d 4) (area_mem h a b c))
 
-private def strictSign (I : Interval Dyadic) : ℤ :=
+def strictSign (I : Interval Dyadic) : ℤ :=
   if I.lb.any fun l => 0 < l then 1 else if I.ub.any fun r => r < 0 then -1 else 0
 
-private theorem sign_pos {v : ℝ} {I : Interval Dyadic} (hv : v ∈ I) (h : 0 < strictSign I) : 0 < v := by
+theorem sign_pos {v : ℝ} {I : Interval Dyadic} (hv : v ∈ I) (h : 0 < strictSign I) : 0 < v := by
   rw [mem_iff_mem_map,Interval.mem_map_iff] at hv
   rcases I with ⟨_ | a,b⟩
   · simp [strictSign] at h
@@ -90,7 +90,7 @@ private theorem sign_pos {v : ℝ} {I : Interval Dyadic} (hv : v ∈ I) (h : 0 <
     have hz : 0 < Dyadic.toReal a := by simpa [Dyadic.toReal] using Dyadic.toReal_lt_toReal.mpr ha
     exact hz.trans_le (hv.1 a rfl)
 
-private theorem sign_neg {v : ℝ} {I : Interval Dyadic} (hv : v ∈ I) (h : strictSign I < 0) : v < 0 := by
+theorem sign_neg {v : ℝ} {I : Interval Dyadic} (hv : v ∈ I) (h : strictSign I < 0) : v < 0 := by
   rw [mem_iff_mem_map,Interval.mem_map_iff] at hv
   rcases I with ⟨a,_ | b⟩
   · simp [strictSign] at h
@@ -104,13 +104,13 @@ private theorem sign_neg {v : ℝ} {I : Interval Dyadic} (hv : v ∈ I) (h : str
         · omega
     exact (hv.2 b rfl).trans_lt (by simpa [Dyadic.toReal] using Dyadic.toReal_lt_toReal.mpr hb)
 
-private theorem sign_mul_pos {u v : ℝ} {I J : Interval Dyadic} (hu : u ∈ I) (hv : v ∈ J)
+theorem sign_mul_pos {u v : ℝ} {I J : Interval Dyadic} (hu : u ∈ I) (hv : v ∈ J)
     (h : 0 < strictSign I*strictSign J) : 0 < u*v := by
   rcases mul_pos_iff.mp h with ⟨ha,hb⟩ | ⟨ha,hb⟩
   · exact mul_pos (sign_pos hu ha) (sign_pos hv hb)
   · exact mul_pos_of_neg_of_neg (sign_neg hu ha) (sign_neg hv hb)
 
-private theorem sign_mul_neg {u v : ℝ} {I J : Interval Dyadic} (hu : u ∈ I) (hv : v ∈ J)
+theorem sign_mul_neg {u v : ℝ} {I J : Interval Dyadic} (hu : u ∈ I) (hv : v ∈ J)
     (h : strictSign I*strictSign J < 0) : u*v < 0 := by
   rcases mul_neg_iff.mp h with ⟨ha,hb⟩ | ⟨ha,hb⟩
   · exact mul_neg_of_pos_of_neg (sign_pos hu ha) (sign_neg hv hb)

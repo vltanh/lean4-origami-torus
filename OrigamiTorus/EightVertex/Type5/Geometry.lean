@@ -67,35 +67,41 @@ theorem core_not_coplanar (q : Vertex → Point3) (he : Function.Injective (eval
   exact core_not_in_plane_of_embedding q he (q (coreLabels 0)) _
     h.finrank_le_two (fun i => vsub_mem_vectorSpan ℝ ⟨i,rfl⟩ ⟨0,rfl⟩)
 
-private theorem mem_orientedLinkCycle (v w : Vertex) :
+theorem mem_orientedLinkCycle (v w : Vertex) :
     w ∈ orientedLinkCycle v ↔ Adjacent faces v w := by
   rw [adjacency_test]
   revert v w
   decide +kernel
 
-private structure RootArc where
-  a : Vertex
-  b : Vertex
-  x : Vertex
-  y : Vertex
-  rest : List Vertex
-  other : Vertex
+private def rotatedTail (v a : Vertex) : List Vertex :=
+  ((orientedLinkCycle v).rotate ((orientedLinkCycle v).idxOf a)).tail
 
-private def rootArc (v : Vertex) : RootArc :=
-  ![⟨3,4,1,2,[],5⟩,⟨4,3,7,5,[2,0],6⟩,⟨4,3,0,1,[5,6],7⟩,⟨3,4,1,2,[],5⟩,
-    ⟨3,4,1,2,[],5⟩,⟨4,3,6,2,[1,7],0⟩,⟨3,4,2,5,[],1⟩,⟨3,4,5,1,[],2⟩] v
+private def arc (v a b : Vertex) : List Vertex :=
+  (rotatedTail v a).take ((rotatedTail v a).idxOf b)
 
-private def rootArcCycle (d : RootArc) : List Vertex :=
-  d.a :: ((d.x :: d.y :: d.rest) ++ d.b :: [d.other])
+private def arcRest (v a b : Vertex) : List Vertex :=
+  (rotatedTail v a).drop ((rotatedTail v a).idxOf b + 1)
 
-private theorem rootArc_checked (v : Vertex) (hv : v ∈ leaves ∨ v ∈ anchors) :
-    let d := rootArc v
-    (d.a,d.b) ∈ ([(3,4),(4,3)] : List Edge) ∧
-    (orientedLinkCycle v).rotate ((orientedLinkCycle v).idxOf d.a) = rootArcCycle d ∧
-    Adjacent faces d.a d.y ∧ Adjacent faces d.x d.b := by
-  dsimp only
-  rw [adjacency_test,adjacency_test]
-  revert hv
+private def hasCrossEdges (v a b : Vertex) : Prop :=
+  ∃ x y : Vertex, [x,y].Sublist (arc v a b) ∧
+    edgeList.contains (orderedEdge a y) = true ∧ edgeList.contains (orderedEdge x b) = true
+
+private instance (v a b : Vertex) : Decidable (hasCrossEdges v a b) := by
+  unfold hasCrossEdges
+  infer_instance
+
+private theorem link_arcs (v a b : Vertex) (ha : a ∈ orientedLinkCycle v)
+    (hb : b ∈ orientedLinkCycle v) (hne : a ≠ b) :
+    (orientedLinkCycle v).rotate ((orientedLinkCycle v).idxOf a) =
+      a :: (arc v a b ++ b :: arcRest v a b) := by
+  revert a b
+  fin_cases v <;> decide +kernel
+
+private theorem missing_pair_arcs (v a b : Vertex) (ha : a ∈ orientedLinkCycle v)
+    (hb : b ∈ orientedLinkCycle v) (hne : a ≠ b) (hab : ¬ Adjacent faces a b) :
+    hasCrossEdges v a b ∨ hasCrossEdges v b a := by
+  rw [adjacency_test] at hab
+  revert a b
   fin_cases v <;> decide +kernel
 
 private theorem angularCycleLength_rotate (a : List Vertex) (n : ℕ) (d : Vertex → EuclideanSpace ℝ (Fin 3)) :
@@ -103,48 +109,56 @@ private theorem angularCycleLength_rotate (a : List Vertex) (n : ℕ) (d : Verte
   rw [List.rotate_eq_drop_append_take_mod,List.map_append,angularCycleLength_append_comm,
     ← List.map_append,List.take_append_drop]
 
-/-- The neighbors at vertices 3 and 4 cannot be opposite at a flat leaf or
-anchor star. Two interior rays on one minimizing semicircle would force
-the intersection of disjoint edges. -/
+/-- In any embedded flat Type 5 star, the rays to two distinct neighbors cannot
+be opposite. Each missing pair has a link arc whose diagonals would meet
+radial edges on a minimizing semicircle. -/
+theorem neighbors_not_opposite (q : Vertex → Point3)
+    (he : Function.Injective (evaluateTriangles faces q)) {v a b : Vertex}
+    (ha : a ∈ orientedLinkCycle v) (hb : b ∈ orientedLinkCycle v) (hne : a ≠ b)
+    (hf : angularCycleLength ((orientedLinkCycle v).map (linkDirection q v)) = 2*Real.pi) :
+    angle (linkDirection q v a) (linkDirection q v b) ≠ Real.pi := by
+  let ns := orientedLinkCycle v
+  let d := linkDirection q v
+  intro hop
+  have hn := no_edge_of_opposite_rays_of_embedding q he
+    ((mem_orientedLinkCycle _ _).mp ha) ((mem_orientedLinkCycle _ _).mp hb) hop
+  have exclude (a b : Vertex) (ha : a ∈ ns) (hb : b ∈ ns) (hne : a ≠ b)
+      (hπ : angle (d a) (d b) = Real.pi) (hcross : hasCrossEdges v a b) : False := by
+    obtain ⟨x,y,hxy,hay,hxb⟩ := hcross
+    let xs := arc v a b
+    let ys := arcRest v a b
+    have hc : ns.rotate (ns.idxOf a) = a :: (xs ++ b :: ys) := link_arcs _ _ _ ha hb hne
+    have hp : (a :: (xs ++ b :: ys)).Perm ns := hc ▸ List.rotate_perm _ _
+    have hfour : [a,x,y,b].Sublist (a :: (xs ++ b :: ys)) :=
+      (hxy.append (List.sublist_append_left [b] ys)).cons_cons a
+    have hs : angularPathLength (d a) (xs.map d) (d b) +
+        angularPathLength (d b) (ys.map d) (d a) = 2*Real.pi := by
+      rw [← angularCycleLength_split_pair]
+      simpa only [hc,List.map_cons,List.map_append] using
+        (angularCycleLength_rotate ns (ns.idxOf a) d).trans hf
+    have hge := angle_le_angularPathLength (d b) (d a) (ys.map d)
+    rw [angle_comm (d b) (d a),hπ] at hge
+    have hle := angle_le_angularPathLength (d a) (d b) (xs.map d)
+    rw [hπ] at hle
+    exact impossible_minimal_arc_of_embedding q he
+      (hfour.nodup (hp.nodup_iff.mpr (linkCycles_checked v).1))
+      (fun z hz => (mem_orientedLinkCycle _ _).mp (hp.mem_iff.mp (hfour.subset hz)))
+      hxy ((adjacency_test _ _).mpr hay) ((adjacency_test _ _).mpr hxb) hπ (by linarith)
+  rcases missing_pair_arcs v a b ha hb hne hn with h | h
+  · exact exclude a b ha hb hne hop h
+  · exact exclude b a hb ha hne.symm ((angle_comm _ _).trans hop) h
+
+/-- In particular the two roots cannot be opposite at a flat leaf or anchor. -/
 theorem roots_not_opposite_at_flat_star (q : Vertex → Point3)
     (he : Function.Injective (evaluateTriangles faces q)) (v : Vertex)
     (hv : v ∈ leaves ∨ v ∈ anchors)
     (hf : angularCycleLength ((orientedLinkCycle v).map (linkDirection q v)) = 2*Real.pi) :
     angle (linkDirection q v 3) (linkDirection q v 4) ≠ Real.pi := by
-  let r := rootArc v
-  obtain ⟨horder,hcycle,hay,hxb⟩ := rootArc_checked v hv
-  change (r.a,r.b) ∈ ([(3,4),(4,3)] : List Edge) at horder
-  change (orientedLinkCycle v).rotate ((orientedLinkCycle v).idxOf r.a) = (rootArcCycle r) at hcycle
-  let d := linkDirection q v
-  intro hop
-  have hπ : angle (d r.a) (d r.b) = Real.pi := by
-    simp only [List.mem_cons,List.not_mem_nil,or_false,Prod.mk.injEq] at horder
-    obtain ⟨ha,hb⟩ | ⟨ha,hb⟩ := horder <;> simp [ha,hb,angle_comm (d 4) (d 3),hop,d]
-  have hrot : angularCycleLength ((rootArcCycle r).map d) = 2*Real.pi := by
-    rw [← hcycle, angularCycleLength_rotate]
-    exact hf
-  have hsum : angularPathLength (d r.a) ((r.x :: r.y :: r.rest).map d) (d r.b) +
-      angularPathLength (d r.b) ([r.other].map d) (d r.a) = 2*Real.pi := by
-    rw [← angularCycleLength_split_pair]
-    simpa only [rootArcCycle,List.map_cons,List.map_append] using hrot
-  have hge := angle_le_angularPathLength (d r.b) (d r.a) ([r.other].map d)
-  rw [angle_comm (d r.b) (d r.a),hπ] at hge
-  have hle := angle_le_angularPathLength (d r.a) (d r.b) ((r.x :: r.y :: r.rest).map d)
-  rw [hπ] at hle
-  have hmin : angularPathLength (d r.a) ((r.x :: r.y :: r.rest).map d) (d r.b) = Real.pi := by
-    linarith
-  have hperm : (rootArcCycle r).Perm (orientedLinkCycle v) := hcycle ▸ List.rotate_perm _ _
-  have hfour : [r.a,r.x,r.y,r.b].Sublist (rootArcCycle r) := by
-    change [r.a,r.x,r.y,r.b].Sublist (r.a :: r.x :: r.y :: (r.rest ++ [r.b,r.other]))
-    apply List.Sublist.cons_cons
-    apply List.Sublist.cons_cons
-    apply List.Sublist.cons_cons
-    exact (List.sublist_append_left [r.b] [r.other]).trans (List.sublist_append_right _ _)
-  have hn := hfour.nodup (hperm.nodup_iff.mpr (linkCycles_checked v).1)
-  have hm (k : Vertex) (hk : k ∈ [r.a,r.x,r.y,r.b]) : Adjacent faces v k :=
-    (mem_orientedLinkCycle v k).mp (hperm.mem_iff.mp (hfour.subset hk))
-  exact impossible_minimal_arc_of_embedding q he hn hm
-    (List.sublist_append_left [r.x,r.y] r.rest) hay hxb hπ hmin
+  have hm : 3 ∈ orientedLinkCycle v ∧ 4 ∈ orientedLinkCycle v := by
+    clear hf
+    revert v
+    decide +kernel
+  exact neighbors_not_opposite q he hm.1 hm.2 (by decide) hf
 
 /-- The intrinsic angle sum at a Type 5 vertex is one full turn. -/
 def FlatAt (q : Vertex → Point3) (v : Vertex) : Prop :=
