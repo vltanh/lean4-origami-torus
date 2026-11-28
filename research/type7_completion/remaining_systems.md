@@ -72,6 +72,9 @@ the other line cases have a certified 32-pattern normal cover.
 For nonparallel cap lines, the
 [first-order sign proof](exhaustive_c0_flat_nonparallel.md) leaves
 two canonical coincidence cases, retaining all cap-area/height rates.
+The [relative diagonal argument](exhaustive_c0_double_coincidence.md)
+also excludes the double coincidence with `cross(P2,P7)>0`, with no
+relative-rate assumption on either shrinking diagonal.
 The
 [endpoint support bound](exhaustive_c0_endpoint_bound.md) and
 [opposite-cone proof](solver_remaining_c0_opposite_cones.md) reduce
@@ -108,8 +111,13 @@ with all 264 closed sign branches certified. The
 [ray-2 both-collinear reduction](remaining_c1_flat_reduction.md)
 puts all transverse points on one line when all four cap edges are
 positive, and forces parallel directions in two zero-edge order
-orbits. Its fifteen CNFs independently replayed. Ray-2 both-collinear C1,
-the remaining C0 limits, height endpoints, and both full markings
+orbits. Its fifteen CNFs independently replayed. The
+[positive-edge stretch](remaining_c1_flat_positive_stretch.md) now
+excludes all twenty scalar common-line families when all four cap
+edges are positive, after an exhaustive 128-case budget classification.
+All twenty independent proofs passed. Interior ray-2 C1 is therefore
+reduced to two-collinear-cap cases with a zero cap edge. The remaining
+ray-1 C0 limits, ray-2 C0, height endpoints, and both full markings
 remain open.
 
 ## Correct long-ring linking target

@@ -51,7 +51,9 @@ four endpoint-deficit interiors and the `h2=0,h6=0` endpoints, while
 giving a finite necessary normal cover for the residual line cases.
 The [first-order nonparallel-cap sign](exhaustive_c0_flat_nonparallel.md)
 leaves two canonical coincidence cases, with every relative
-cap-area/height rate retained.
+cap-area/height rate retained. The
+[relative diagonal proof](exhaustive_c0_double_coincidence.md) also
+excludes the double coincidence with `cross(P2,P7)>0`.
 
 For ray 2, the [nested-section argument](remaining_c1_sections.md)
 now excludes every regular interior C1 limit. Its finite nesting and
@@ -62,8 +64,10 @@ including both zero-edge cases. The
 [both-collinear reduction](remaining_c1_flat_reduction.md) now puts
 every limit with four positive cap edges on one common transverse
 line; two additional zero-edge orbits have parallel directions.
-The remaining C0 cases, height
-boundaries, ray-2 both-collinear C1 limits,
+The [positive-edge normal stretch](remaining_c1_flat_positive_stretch.md)
+now excludes all twenty scalar families in the former stratum.
+Interior ray-2 C1 is reduced to two-collinear-cap cases with a zero
+cap edge. The remaining ray-1 C0 cases, ray-2 C0, height boundaries,
 and the Lean assembly remain open. Neither full marking is yet excluded.
 
 The proof gives a threshold `Y3` but no numerical value. It therefore
@@ -827,6 +831,18 @@ passed in 1.807 seconds. Only bd/da and dd remain, with bd and da
 exchanged by the checked marked reflection. Every residual
 nonparallel case has an endpoint coincidence.
 
+The [double-coincidence proof](exhaustive_c0_double_coincidence.md)
+excludes `P1=P3`, `P0=P6` with `cross(P2,P7)>0`. Exact finite
+polarizations control the shrinking diagonal13 relative to its
+horizontal length, so its normalized direction is nonzero and its
+axial error is `O(tL)` with no assumption on `L/t`. One virtual-direction
+CNF then fixes that direction and a generic cap sign. A strictly
+signed divided metric tilt forces the opposite finite determinant
+sign. The fresh CNF replay took 1.101 seconds; a separate analytic,
+source, and rate audit passed with a fresh peer replay in 0.677
+seconds. The nonparallel cases left are bd/da and dd with negative
+`cross(P2,P7)`.
+
 The second canonical family has a separate
 [fourteen-pattern regular cover](exhaustive_c1_angles.md), with 132
 complete generic projections and two additional tetrahedron signs.
@@ -907,6 +923,22 @@ source CNFs independently replayed in 7.762 seconds, and a separate
 analytic/source audit passed. Scalar common-line families and the
 other zero-edge orbits remain; this is a reduction, not a complete
 boundary exclusion.
+
+The [positive-edge ray-2 stretch](remaining_c1_flat_positive_stretch.md)
+now completes the latter common-line stratum. The two linked circle
+pairs have four exact scalar sign solutions; their exceptional or
+zero-radius solution costs one half of the entire available budget
+and is impossible. Exhausting all 128 cap-order/radius/direction
+choices gives 108 exact strict budget contradictions and twenty
+remaining families. Positive affine shears remove their height
+denominators, and exact sixteen-corner coefficient interpolation
+proves all twenty normal stretches impossible. Fresh generation took
+22.980 seconds and all twenty distinct RUP proofs replayed in 2.194
+seconds. A separate analytic/source review and peer replay in 2.180
+seconds passed. All actual zero minors and relative collapse rates
+remain covered. Interior ray-2 C1 now requires only the
+two-collinear-cap strata with a zero cap edge. Ray-2 C0 has not been
+reduced to C1 and remains a separate open gate.
 
 In the two-block `04` limit of ray 1, the
 [focal-ellipse and weak-sign proof](remaining_ray1_mask04.md) forces all
