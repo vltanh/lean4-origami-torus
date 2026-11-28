@@ -33,8 +33,15 @@ onto a common transverse line. Its
 [first stretch](remaining_ray1_mask04_blowup.md) leaves four symmetric
 single-edge endpoints. The [exact metric reducer](solver_remaining_limit.md)
 provides twelve projected identities per generic component and retains
-the eleven-identity exceptional corners. These are necessary limit
-reductions; the remaining endpoints and both full markings are open.
+the eleven-identity exceptional corners. At a canonical endpoint,
+[uniform metric estimates](remaining_ray1_endpoint.md) and
+[426 exact virtual-direction certificates](solver_remaining_virtual12.md)
+leave three normalized deficit regimes. The regular components have
+[18-pattern](exhaustive_c0_angles.md) and
+[14-pattern](exhaustive_c1_angles.md) angular covers with additional
+necessary tetrahedron signs. Exact metric witnesses show why the first
+cover's anchor signs alone are insufficient. These are necessary limit
+reductions; the three endpoint regimes and both full markings are open.
 
 ## Correct long-ring linking target
 

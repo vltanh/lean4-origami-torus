@@ -19,6 +19,23 @@ import subprocess
 import time
 
 
+# A bounded alternative when the default SAT simplifications emit steps
+# that the deliberately narrower independent RUP checker cannot accept.
+# This profile is not trusted to produce RUP: every resulting step is
+# still replayed from the original CNF by the unchanged checker.
+RUP_FOCUSED_OPTIONS = {
+    'sat.elim_vars': False,
+    'sat.elim_vars_bdd': False,
+    'sat.scc': False,
+    'sat.asymm_branch': False,
+    'sat.ate': False,
+    'sat.probing': False,
+    'sat.probing_binary': False,
+    'sat.subsumption': False,
+    'sat.simplify.delay': 2147483647,
+}
+
+
 def digest(data):
     return hashlib.sha256(data).hexdigest()
 
@@ -63,7 +80,7 @@ def dimacs(n, clauses):
         ' '.join(map(str, clause))+' 0\n' for clause in clauses)).encode('ascii')
 
 
-def produce_trace(n, clauses, path, milliseconds):
+def produce_trace(n, clauses, path, milliseconds, options=None):
     # Keep the same guarded variable mapping as solver_chambers.write_proof.
     # The independent checker validates every logged input, including any
     # simplification added by the producer, against this exact CNF.
@@ -84,6 +101,8 @@ def produce_trace(n, clauses, path, milliseconds):
     lines = [f'(set-option :timeout {milliseconds})',
              f'(set-option :sat.drat.file "{filename}")',
              '(set-option :sat.drat.binary false)']
+    lines += [f'(set-option :{name} {str(value).lower()})'
+              for name, value in (options or {}).items()]
     lines += [f'(declare-const x{i} Bool)' for i in range(1, n+1)]
     lines += ['(declare-const guard Bool)']
     lines += [f'(assert (or guard x{i}))' for i in range(1, n+1)]
@@ -119,29 +138,35 @@ def check_packet(job):
                 raise ValueError('CNF hash does not match verified manifest')
             if digest(proof.read_bytes()) != expected['proof_sha256']:
                 raise ValueError('proof hash does not match verified manifest')
-        orders = [('replay' if replay else 'source', clauses)]
+        orders = [('replay' if replay else 'source', clauses,
+                   'replay' if replay else 'default', {})]
         canonical_order = sorted(tuple(sorted(clause)) for clause in clauses)
         if not replay and canonical_order != clauses:
-            orders.append(('canonical', canonical_order))
-        for order, candidate in orders:
+            orders.append(('canonical', canonical_order, 'default', {}))
+        if not replay:
+            orders.append(('source', clauses, 'rup_focused', RUP_FOCUSED_OPTIONS))
+        for order, candidate, profile, options in orders:
             attempt_started = time.monotonic()
             if not replay:
                 proof.unlink(missing_ok=True)
-                produce_trace(n, candidate, proof, int(1000*seconds))
+                produce_trace(n, candidate, proof, int(1000*seconds), options)
             produced = time.monotonic()
             result = subprocess.run([checker, str(cnf), str(proof)], capture_output=True,
                                     text=True, timeout=seconds, check=False)
             verified = result.returncode == 0 and result.stdout.startswith('PASS UNSAT: ')
-            attempts.append({'order': order, 'verified': verified,
+            attempts.append({'order': order, 'producer_profile': profile,
+                             'sat_options': dict(options), 'verified': verified,
                              'producer_seconds': 0 if replay else produced-attempt_started,
                              'checker_seconds': time.monotonic()-produced,
                              'checker_result': (result.stdout+' '+result.stderr).strip()})
             if verified:
                 break
-            # A different deterministic clause order can yield a RUP-only
-            # trace. It proves the identical formula and is independently
-            # checked from the beginning; the rejected trace is never used.
-            if not result.stderr.startswith('non-RUP proof step '):
+            # Only a specifically rejected non-RUP step permits another
+            # deterministic producer. SAT/UNKNOWN, parser/hash errors,
+            # invalid inputs, checker crashes and timeouts never do.
+            # The final alternative disables optional SAT simplifications;
+            # all attempts prove the identical CNF from the beginning.
+            if result.returncode != 1 or not result.stderr.startswith('non-RUP proof step '):
                 break
         if not attempts[-1]['verified']:
             raise RuntimeError('independent replay failed: '+attempts[-1]['checker_result'])

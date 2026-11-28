@@ -121,7 +121,23 @@ are deliberately rejected by this smaller checker. If the source-order
 trace contains a non-RUP step, production makes one bounded retry with
 canonically ordered clauses and literals. The original CNF is unchanged;
 the replacement trace is independently checked from its beginning.
-The manifest records both attempts. If neither trace is accepted, the run
+If every distinct default ordering is rejected specifically for a non-RUP
+step, one final bounded attempt uses the source order with optional SAT
+simplifications disabled. Its exact options are:
+
+```text
+sat.elim_vars=false           sat.elim_vars_bdd=false
+sat.scc=false                 sat.asymm_branch=false
+sat.ate=false                 sat.probing=false
+sat.probing_binary=false      sat.subsumption=false
+sat.simplify.delay=2147483647
+```
+
+This profile is only another untrusted trace producer. The unchanged RUP
+checker must accept every step. The manifest records each ordering,
+producer profile, exact option map, timing, and checker result. No further
+attempt is made for SAT, UNKNOWN, malformed input, a hash error, an invalid
+logged input, a checker failure, or a timeout. If no trace passes, the run
 fails. Proof-only mode never searches or retries.
 
 During validation, one clause-reordered trace was rejected while its
@@ -130,11 +146,23 @@ retry. Thus neither ordering is universally better. Only the fully
 accepted replacement trace is retained as a proof, and no checker rule
 is relaxed to accommodate a producer.
 
+The 9,641-clause ray-1 endpoint primary-coverage formula required the new
+profile: both default orderings produced rejected non-RUP steps. The
+replacement took 0.077 seconds to produce and 0.100 seconds to check,
+with 677 accepted RUP additions. The full seven-formula endpoint batch,
+including its two rejected discovery attempts, passed in 2.391 seconds;
+proof-only replay took 0.433 seconds. Its six previously successful
+formulas retained their original default production path.
+
 Validation also confirmed that reordered/multiline equivalent inputs
 share one proof, modified proofs are rejected, satisfiable inputs cannot
 produce a verified packet, and malformed DIMACS is rejected. A fabricated
 manifest with internally consistent hashes and a false empty-clause proof
 was rejected by the independent checker itself.
+The new fallback was also checked against real SAT and UNKNOWN producer
+results, an invalid logged proof input, a false proof with matching hashes,
+a formula-hash mismatch, and a checker process failure. None triggered a
+fallback; replay never invoked the producer.
 
 ## Scope
 

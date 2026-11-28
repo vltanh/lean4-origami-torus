@@ -1,16 +1,16 @@
 # Eighteen angular chambers for the regular C0 limit
 
-This is a small exact topological target for the remaining geometric
+This is a small exact topological reduction for the remaining geometric
 proof. It assumes that both projected endpoint triangles 123 and 067
 are noncollinear, and that the two intermediate heights satisfy
 $0<u,v<1/2$. It does not exclude a metric chamber.
 
 The companion exhaustive_c0_angles.py projects the necessary generic
 orientation system onto 15 anchor signs. It finds exactly 18 patterns.
-The opposite-cap-orientation formula and the complete projection
-coverage formula were independently accepted by the RUP checker.
-Independent certificate production and RUP replay of these two CNFs
-took 0.366 seconds in the shared workspace.
+It also proves all six additional unanimous non-cap signs. The three
+UNSAT formulas were independently accepted by the RUP checker in
+0.33 seconds. Exact witnesses below show why the anchor patterns alone
+are insufficient, even when both projected caps are noncollinear.
 
 ## 1. Why the finite cap-unit cover is necessary
 
@@ -75,6 +75,43 @@ endpoint a proposed cap unit can vanish, and at a collinear cap the
 five signs need not agree. Such cases belong to the separate boundary
 analysis.
 
+The positive-cap formula has 669 generic sign completions. Its complete
+list of unanimous signs outside the ten cap units is
+
+$$
+ [0127]\le0,\quad [0135]\le0,\quad [0146]\le0,\quad
+ [0234]\ge0,\quad [1567]\le0,\quad [3456]\le0.          \tag{S}
+$$
+
+The first three already occur in every anchor pattern. A third CNF
+proves all six signs necessary. For every other bracket, the JSON
+contains complete Boolean assignments witnessing both signs; every
+assignment is checked against every input clause. These SAT witnesses
+and the UNSAT certificate establish completeness of the unanimous
+sign list without trusting the model enumeration alone.
+
+The three new signs have simple planar forms. Define
+
+$$
+ Q_4=P_4-2uP_3-(1-2u)P_6,\qquad
+ Q_5=P_5-2vP_3-(1-2v)P_6.
+$$
+
+Exact symbolic determinant expansion gives
+
+$$
+ 2[0234]=\operatorname{cross}(P_3-P_2,(1-2u)P_6+Q_4),
+$$
+
+$$
+ -2[1567]=\operatorname{cross}(P_7-P_6,2vP_3+Q_5),
+ \qquad -2[3456]=\operatorname{cross}(Q_4,Q_5).
+$$
+
+All three displayed cross products are therefore nonnegative. The
+companion verifies these formulas with symbolic $u,v$ and arbitrary
+projected coordinates.
+
 ## 3. A strict ray-1 metric inequality
 
 Write $h_i=-X_{i,i+1}$ and $d_i=1/2-h_i$. In the ray-1 limit,
@@ -126,11 +163,102 @@ $T_{36}<0$, including possible half-length edges. The divisions in
 this equality argument are justified only by the noncollinear caps;
 no conclusion for degenerate caps is asserted here.
 
-A proof that the metric equations and each angular chamber imply
-$T_{36}\ge0$ would therefore exclude the entire regular ray-1 C0
-case. That opposite inequality remains a research target.
+A contradiction to this strict inequality using the full necessary
+topology would exclude the regular ray-1 C0 case. The 18 anchor
+patterns alone do not suffice: Section 5 gives an exact regular
+metric witness satisfying the first pattern. Both the cap regularity
+and the additional topological signs must be retained.
 
-## 4. Bounded certificate pilot and its limit
+## 4. An exact obstruction on the closed boundary
+
+At $u=v=1/4$, choose $0<a<1/2$ and put
+
+$$
+ h=(1/2,1/2,1/2-a,1/2,1/2,1/2,1/2,a),
+$$
+
+$$
+ P_i=(p_i,0),\qquad
+ p=(0,0,1/2,a,1/2,0,1/2-a,-a).
+$$
+
+This family satisfies all 12 closed C0 metric stresses. The verifier
+also gives explicit auxiliary values and checks all 24 original
+limiting metric equations and all five product syzygies, with no
+division or numerical solve. The nearest-lift bounds hold, and every
+intrinsic oriented face area is strictly positive for $0<a<1/2$.
+Nevertheless,
+
+$$
+ T_{36}=2a(2a-1)<0.
+$$
+
+Every projected cross product vanishes, so this family satisfies
+all 18 angular patterns with their required weak interpretation.
+Both projected endpoint caps are collinear. It is therefore a
+counterexample to the proposed inequality on the closed metric and
+angular relaxation, while it makes no claim about an actual
+embedding or about the regular-cap case.
+
+A certificate seeking to exclude regular caps can localize directly
+by their area product. For example, proving
+$-\operatorname{cross}(P_2,P_3)\operatorname{cross}(P_6,P_7)\ge0$
+would contradict (1) and would vanish when either cap is collinear.
+It is essential to include more than the anchor patterns in such a
+search, as the next example shows.
+
+## 5. An exact regular witness for the anchor relaxation
+
+Again set $u=v=1/4$, and define
+
+$$
+ X=41/100,\quad Y=3\sqrt5/25,\quad R=43/200,\quad
+ Z=\sqrt{14}/20,\quad L=1/10.
+$$
+
+Take the projected points
+
+$$
+ (P_0,\ldots,P_7)=
+ (0,0,(X,-Y),(L,0),(R,-Z),(-R,-Z),(-L,0),(-X,-Y))
+$$
+
+and the horizontal lengths
+
+$$
+ h=(89/250,49/100,41/100,457/1000,43/100,
+       457/1000,41/100,49/100).
+$$
+
+Their sum is $7/2$. The exact checker verifies all nearest-lift bounds,
+strict positivity of every intrinsic oriented face area, all 12
+closed C0 stresses, and all 29 original limiting metric and syzygy
+rows with explicit auxiliary values. Both projected cap areas are
+
+$$
+ \operatorname{cross}(P_2,P_3)
+ =\operatorname{cross}(P_6,P_7)=3\sqrt5/250>0,
+$$
+
+while $T_{36}=-1224/15625<0$. Every other anchor cross product is
+strictly negative except $\operatorname{cross}(P_3,P_6)=0$.
+Thus this regular metric witness satisfies the weak first pattern
+`+-------------+`.
+
+It fails the additional topological requirement in (S):
+
+$$
+ [3456]=43\sqrt{14}/4000>0.
+$$
+
+The anchor projection loses this constraint. Consequently neither
+$T_{36}\ge0$ nor the proposed negative cap-area-product inequality
+can follow from the closed metric equations and the 18 anchor
+patterns alone, even under the regular-cap assumptions. The
+strengthened system including (S) remains a geometric research
+target. No actual embedding is asserted for this witness.
+
+## 6. Bounded certificate pilot and its limit
 
 A fixed-parameter discovery test set $u=v=1/4$ and tried three angular
 patterns. The degree-two Farkas cone included the 12 exact C0 stresses,
@@ -146,18 +274,20 @@ returned `infeasible_inaccurate` after 0.369 seconds. No certificate
 was extracted, and that numerical status gives no geometric
 conclusion.
 
-These are failures of the particular discovery searches. They supply
-neither a feasible metric witness nor evidence that the target
-inequality is false. A possible next step is a higher-degree identity
-localized by a strictly positive cap area. Any success would still
-require exact coefficient replay, and a fixed-parameter result would
-not supply a uniform proof in $u,v$.
+The numerical statuses alone have no geometric implication. The
+exact families in Sections 4 and 5 separately prove that the
+unlocalized target and its cap-area localization are false on the
+anchor-only relaxation. A meaningful next search must retain the
+additional necessary signs in (S), or a stronger part of the full
+generic topology. Any success would still require exact coefficient
+replay, and a fixed-parameter result would not supply a uniform proof
+in $u,v$.
 
 ## Reproduction
 
     python research/type7_completion/exhaustive_c0_angles.py /tmp/type7-c0-angles
 
-The two emitted CNFs can be passed to the existing
+The three emitted CNFs can be passed to the existing
 solver_cnf_certificates.py producer and independent RUP checker.
 The metric equations are the closed C0 basis in
 solver_remaining_limit.py and its accompanying note.

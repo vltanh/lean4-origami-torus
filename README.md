@@ -208,7 +208,14 @@ excludes twenty more closed cases, leaving four symmetric single-edge
 endpoints. The [metric reducer](research/type7_completion/solver_remaining_limit.md)
 also supplies exact projected identities for both canonical families;
 all 54 parameter strata and 642 row certificates independently check.
-No full ray-1/2 marking is yet excluded.
+The canonical endpoint now has
+[three remaining deficit regimes](research/type7_completion/remaining_ray1_endpoint.md),
+supported by 426 exact virtual-direction certificates. Regular parts of
+the two canonical families have
+[18-pattern](research/type7_completion/exhaustive_c0_angles.md) and
+[14-pattern](research/type7_completion/exhaustive_c1_angles.md) angular
+covers with necessary tetrahedron signs retained. No full ray-1/2
+marking is yet excluded.
 
 See [Type 7 reconstruction, rigidity and two elongated branches](research/type7_focus/README.md). The anchor-leaf reconstruction proves at most two embedded candidates per intrinsic placement on every marking. Using the earlier necessary clique-sign archive, the weighted mirror-distance identity and the checkerboard twist test strengthen this to **uniqueness up to congruence from the 24 labeled edge lengths**, conditional on the earlier strict-support and orientation-projection proof premises. The exact finite checker ran on the current input archives: 308/316 clique patterns have a unanimous anchor; the eight others have no admissible checkerboard partner. This is a rigidity result, not a universality result.
 

@@ -645,12 +645,22 @@ global metric compatibility in twenty projected variables.
 
 For the regular part of the first canonical family, the
 [angular cover](exhaustive_c0_angles.md) has only eighteen patterns of
-fifteen anchor cross products. Its two completeness/orientation CNFs
-independently replayed in 0.366 seconds. In ray 1 the metric forces
-`T36<0` on this regular domain; proving the opposite inequality from
-each angular pattern is a smaller remaining target. The bounded
-quadratic LP and PSD pilots produced no certificate. Height endpoints
-and degenerate cap triangles are outside this regular-case cover.
+fifteen anchor cross products, together with three additional necessary
+tetrahedron signs. All three coverage/sign CNFs independently replayed
+in 0.465 seconds. Exact degenerate and regular metric witnesses show
+that the anchor patterns alone cannot prove the proposed opposite
+inequality to `T36<0`; the regular witness violates one of the added
+signs. The bounded quadratic LP and PSD pilots produced no certificate.
+Height endpoints and degenerate cap triangles are outside this regular
+cover.
+
+The second canonical family has a separate
+[fourteen-pattern regular cover](exhaustive_c1_angles.md), with 132
+complete generic projections and two additional tetrahedron signs.
+All six orientation/coverage/sign CNFs independently replayed in
+0.605 seconds. Its [closed circle and dot identities](solver_remaining_c1_geometry.md)
+retain the exceptional product scale and hold at every parameter
+boundary. Neither regular component has yet been excluded.
 
 In the two-block `04` limit of ray 1, the
 [focal-ellipse and weak-sign proof](remaining_ray1_mask04.md) forces all
@@ -667,6 +677,17 @@ between the width, height parameter and collapsing edge lengths. All
 twenty independent RUP certificates passed in 2.687 seconds. Only four
 symmetric endpoints remain in this limit: one of `h1,h3,h5,h7` is zero
 and all seven other horizontal weights equal one half.
+
+At the canonical endpoint, [uniform relative metric identities](remaining_ray1_endpoint.md)
+control the collapsing edge without comparing its scale to the height
+or transverse width. A four-edge polarization bounds its vertical step
+by its horizontal weight. The [virtual-edge package](solver_remaining_virtual12.md)
+replays 426 exact Farkas certificates in 0.892 seconds, including 102
+parameter-polynomial certificates valid on the entire open interval.
+It reduces the normalized deficit simplex to three boundary regimes,
+with 172, 38 and 15 compatible primary completions respectively. These
+three regimes still require metric exclusion. An exact all-height
+planar reference records the cancellations needed for further estimates.
 
 The [axis compiler](solver_remaining_axis.md) partitions the complete
 common sign set into **268 branches per marking**, without a mask split.
