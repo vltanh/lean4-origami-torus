@@ -2,8 +2,10 @@
 
 There is no ray-1 C0 limit with two noncollinear endpoint caps and
 equal interior heights `0<u=v<1/2`. This is an asymptotic research
-exclusion. The off-diagonal region, collinear caps, and height endpoints
-require separate arguments.
+exclusion. The later [height-order proof](remaining_c0_height_order.md)
+extends it to the full regular region `0<v<=u<1/2`; the present packet
+remains an independent diagonal proof. The other height order,
+collinear caps, and height endpoints require separate arguments.
 
 The proof combines the [strict metric turn](exhaustive_c0_turning.md),
 a positive projective normalization, and **50 exact polynomial

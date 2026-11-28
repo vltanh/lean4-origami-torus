@@ -14,8 +14,9 @@ For ray 1, the [entire two-block limit](ray1_two_block_exclusion.md)
 and the [regular C1 component](solver_remaining_c1_turning.md) are now
 excluded. The [C1 boundary extension](solver_remaining_c1_collinear_rank.md)
 also excludes every interior limit with exactly one collinear cap,
-including coincidence. The [regular C0 diagonal](exhaustive_c0_diagonal.md)
-is excluded by exact product certificates. The two-block proof closes
+including coincidence. The [regular C0 height-order region](remaining_c0_height_order.md)
+`0<v<=u<1/2` is excluded by exact metric and sign arguments, extending
+the earlier diagonal certificates. The two-block proof closes
 all four symmetric endpoints, including every relative collapse rate.
 Ray 1's other limit regions,
 ray 2, and the Lean assembly remain open.
@@ -676,8 +677,19 @@ that disjunction permits [50 exact product certificates](exhaustive_c0_diagonal.
 to exclude the entire regular diagonal. Their 496 rational-weighted
 terms replayed in 0.351 seconds, and the additional complete-cover
 CNF independently passed in 0.277 seconds. Positive projective
-normalization covers every interior diagonal height. Off-diagonal,
-collinear-cap, and height-endpoint C0 limits remain open.
+normalization covers every interior diagonal height.
+The [height-order extension](remaining_c0_height_order.md) now excludes
+the entire regular region `0<v<=u<1/2`. Its three middle angles have
+sum less than pi: an exact degree-eight simplex and degree-(2,2)
+Bernstein certificate checks 10,148 nonnegative coefficients and a
+strict positive slack term. The five metric identities retain both
+required product-scale syzygies; their seven source rows and the
+polynomial certificate replayed in 1.705 seconds. Two
+[conditional-sign CNFs](exhaustive_c0_height_order.md), independently
+replayed in 0.279 seconds, provide the contrary orientations. The
+remaining regular height order is `v>u`; its quantitative mixed-bracket
+bounds are also recorded by that topological package. Collinear-cap
+and height-endpoint C0 limits remain open.
 
 The second canonical family has a separate
 [fourteen-pattern regular cover](exhaustive_c1_angles.md), with 132

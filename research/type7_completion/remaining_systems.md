@@ -46,7 +46,10 @@ cover's anchor signs alone are insufficient; its
 dependencies. Its [strict metric turn](exhaustive_c0_turning.md) reduces
 669 generic models to 202, and the
 [diagonal certificates](exhaustive_c0_diagonal.md) exclude every regular
-equal-height C0 limit for ray 1. The
+equal-height C0 limit for ray 1. Their
+[height-order extension](remaining_c0_height_order.md) now excludes
+the entire regular half `0<v<=u<1/2`; the region `v>u` and C0 boundary
+cases remain. The
 [turning-angle proof](solver_remaining_c1_turning.md) excludes regular
 C1, and its [rank/height extension](solver_remaining_c1_collinear_rank.md)
 excludes every interior C1 limit with exactly one collinear cap,

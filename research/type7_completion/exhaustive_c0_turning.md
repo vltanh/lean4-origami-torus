@@ -261,7 +261,9 @@ orientation factors.
 
 The [diagonal certificate package](exhaustive_c0_diagonal.md) now
 excludes all 50 diagonal models while retaining the actual strict
-disjunction. The off-diagonal 202-model problem and degenerate-cap or
-height-endpoint limits require additional arguments. The strict turn
+disjunction. The [height-order extension](remaining_c0_height_order.md)
+also excludes the entire regular half `0<v<=u<1/2`. The other height
+order `v>u` and degenerate-cap or height-endpoint limits require
+additional arguments. The strict turn
 theorem uses ray 1's deficit sum and makes no corresponding claim for
 ray 2.
