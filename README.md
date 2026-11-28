@@ -238,6 +238,12 @@ also excludes the strict orders `d2=0<d1` with a regular lower cap and
 The [positive-cap boundary extension](research/type7_completion/exhaustive_c0_collinear_positive.md)
 now covers all three collinear upper orders, including coincident
 vertices, when the regular lower cap has positive orientation.
+The [negative-orientation coincidence proof](research/type7_completion/exhaustive_c0_negative_coincidence.md)
+completes the other orientation. Thus every exactly-one-collinear-cap
+C0 limit with `0<v<=u<1/2` is excluded. The
+[height-boundary proof](research/type7_completion/remaining_c0_height_boundary.md)
+also excludes regular C0 on all four open edges of its height square,
+using endpoint support estimates and nested sections.
 For regular C0 with `v>u`, an
 [endpoint support bound](research/type7_completion/exhaustive_c0_endpoint_bound.md)
 and [complete cone reduction](research/type7_completion/solver_remaining_c0_opposite_cones.md)
@@ -254,9 +260,12 @@ nesting and convexity for finite embedded sections, then uses exact
 limiting perimeters and a complete boundary-matching argument. Its
 seven CNFs independently replayed. The earlier
 [closed turning constraint](research/type7_completion/exhaustive_c1_holonomy.md)
-remains available as an independent necessary condition. The remaining
-C0 cases, height endpoints, ray-2 degenerate C1 limits, and the Lean
-assembly remain open; neither full marking is yet excluded.
+remains available as an independent necessary condition. Its
+[one-collinear-cap extension](research/type7_completion/remaining_c1_one_collinear.md)
+now covers all such interior ray-2 C1 limits, including both zero-edge
+cases. Eight further CNFs independently replayed. The remaining
+C0 cases, height boundaries, ray-2 both-collinear C1 limits, and the
+Lean assembly remain open; neither full marking is yet excluded.
 
 See [Type 7 reconstruction, rigidity and two elongated branches](research/type7_focus/README.md). The anchor-leaf reconstruction proves at most two embedded candidates per intrinsic placement on every marking. Using the earlier necessary clique-sign archive, the weighted mirror-distance identity and the checkerboard twist test strengthen this to **uniqueness up to congruence from the 24 labeled edge lengths**, conditional on the earlier strict-support and orientation-projection proof premises. The exact finite checker ran on the current input archives: 308/316 clique patterns have a unanimous anchor; the eight others have no admissible checkerboard partner. This is a rigidity result, not a universality result.
 

@@ -9,7 +9,10 @@ For a ray-1 C0 limit with collinear upper cap 123 and positively oriented regula
 
 Consequently all three positive-other-cap orders are excluded when `0<v<=u<1/2`, by the existing metric height-order argument. This extends the [earlier boundary package](exhaustive_c0_collinear.md), which had proved the mixed signs only for the order with vertex 1 between 2 and 3.
 
-This note retains the other height order and the negative-other-cap coincidence case as separate problems. It does not assert that every one-collinear C0 limit is excluded.
+The other height order remains a separate problem. The
+[negative-other-cap coincidence case](exhaustive_c0_negative_coincidence.md)
+is excluded by a separate segment-and-radius argument. This note
+does not assert that every one-collinear C0 limit is excluded.
 
 ## 1. Four actual-trit certificates
 
@@ -120,7 +123,12 @@ Combining the four new CNFs, the two metric endpoint arguments, and the earlier 
 
 For `u>=v`, the metric height-order proof now applies to all three orders. Its positive slack is `d0+d1+d7>0`, because the lower cap is regular. Its denominators `h2,h6` remain positive, and its norm and cosine factorizations allow `d1=0`, `d2=0`, or both. The weak-turn extension has upper angle `A=0` and still gives `0<B+phi<pi`. The same clockwise-path contradiction therefore excludes all three orders.
 
-The marked reflection transfers this statement to the corresponding cases with regular upper cap and collinear lower cap, with the orientation fixed by the checked transformation. The negative-other-cap coincidence case and the `v>u` both-nonpositive region are not removed by this note.
+The marked reflection transfers this statement to the corresponding
+cases with regular upper cap and collinear lower cap, with the
+orientation fixed by the checked transformation. The separate
+negative-coincidence proof completes all exactly-one-collinear-cap
+cases in `u>=v`. The `v>u` both-nonpositive region remains outside
+these results.
 
 ## Reproduction
 

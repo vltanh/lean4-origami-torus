@@ -55,6 +55,12 @@ the entire regular half `0<v<=u<1/2`. A
 [positive-cap follow-up](exhaustive_c0_collinear_positive.md) covers
 all three upper-collinear orders with a positively oriented regular
 lower cap, including coincidence. The
+[negative-coincidence proof](exhaustive_c0_negative_coincidence.md)
+completes the other orientation, so every exactly-one-collinear-cap
+C0 limit in this height region is excluded. The
+[height-boundary proof](remaining_c0_height_boundary.md) additionally
+excludes both-regular-cap limits on all four open height edges;
+the corners and collinear-cap height boundaries remain. The
 [endpoint support bound](exhaustive_c0_endpoint_bound.md) and
 [opposite-cone proof](solver_remaining_c0_opposite_cones.md) reduce
 the regular `v>u` region from 202 to exactly 42 compatible generic
@@ -79,10 +85,14 @@ The [nested-section proof](remaining_c1_sections.md) now excludes
 regular interior C1 for ray 2 as well. It uses finite embedded
 sections to establish nesting and strict convexity before passing
 to the limiting unit-perimeter geometry; all seven source CNFs
-independently replayed. The
+independently replayed. Its
+[one-collinear extension](remaining_c1_one_collinear.md) also excludes
+every interior ray-2 C1 limit with exactly one collinear cap, including
+both zero-edge cases, using eight further independent CNFs and an
+explicit winding-stability argument. The
 [closed regular-C1 turning constraint](exhaustive_c1_holonomy.md)
 also supplies an independent necessary zero-total-turn condition,
-with all 264 closed sign branches certified. Ray-2 degenerate C1,
+with all 264 closed sign branches certified. Ray-2 both-collinear C1,
 the remaining C0 limits, height endpoints, and both full markings
 remain open.
 

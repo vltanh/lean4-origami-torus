@@ -36,10 +36,20 @@ the [endpoint support bound](exhaustive_c0_endpoint_bound.md) and
 retained. The two-block proof closes all four symmetric endpoints,
 including every relative collapse rate.
 
+The [negative-coincidence proof](exhaustive_c0_negative_coincidence.md)
+now completes the opposite regular-cap orientation. Consequently all
+exactly-one-collinear-cap C0 limits with `u>=v` are excluded. The
+[height-boundary proof](remaining_c0_height_boundary.md) also excludes
+regular C0 on all four open height edges; the corners and collinear
+cap boundaries are kept separate.
+
 For ray 2, the [nested-section argument](remaining_c1_sections.md)
 now excludes every regular interior C1 limit. Its finite nesting and
 convexity argument does not require the ray-1 total-weight budget.
-The remaining C0 cases, height endpoints, ray-2 degenerate C1 limits,
+The [one-collinear extension](remaining_c1_one_collinear.md) now also
+excludes every interior ray-2 C1 limit with exactly one collinear cap,
+including both zero-edge cases. The remaining C0 cases, height
+boundaries, ray-2 both-collinear C1 limits,
 and the Lean assembly remain open. Neither full marking is yet excluded.
 
 The proof gives a threshold `Y3` but no numerical value. It therefore
@@ -717,6 +727,12 @@ extends that height-order exclusion to all three collinear upper
 orders with positive regular lower cap, including coincidence.
 Four new actual-trit CNFs independently replayed in 1.347 seconds;
 the collapsed-base equality case is treated explicitly.
+The [negative-coincidence proof](exhaustive_c0_negative_coincidence.md)
+closes the remaining negative-other-cap order for every interior
+height pair. One actual-trit implication forces `P5` into a segment
+whose maximal norm is strictly below its exact circle radius.
+Its independent CNF replay took 1.452 seconds. Together these results
+exclude every exactly-one-collinear-cap C0 limit with `u>=v`.
 
 The [positive mixed-branch proof](exhaustive_c0_endpoint_bound.md)
 uses a one-triangle support inequality and concavity along the lower
@@ -735,6 +751,20 @@ faces, critical sections, unit perimeters, strict middle-edge
 contractions, and the directions forced by zero mixed brackets.
 These are exact supporting identities, not a further exclusion.
 Other collinear-cap and height-endpoint C0 limits remain open.
+
+The [regular height-boundary proof](remaining_c0_height_boundary.md)
+now excludes all four open edges of the C0 height square. At `u=0`,
+the exact metric puts vertex 4 on segment 67, including its coincident
+endpoint. Six actual-trit CNFs and the reflected support bound exclude
+both cases; their independent replay took 1.647 seconds. At `u=1/2`,
+nested finite annulus sections limit to two unit-perimeter upper
+triangles. Convex perimeter equality forces them to coincide, which
+contradicts the regular lower cap and the deficit budget. The checked
+marked reflection gives both `v` edges. Source checks include the
+closed product-scale rows, all 55 height relations, twelve upper
+section-edge bindings, and the exact critical link. A separate peer
+audit and all six fresh certificates passed. Corner heights and
+collinear-cap height boundaries remain outside this result.
 
 The second canonical family has a separate
 [fourteen-pattern regular cover](exhaustive_c1_angles.md), with 132
@@ -790,6 +820,20 @@ boundaries and intermediate links. All seven source CNFs
 independently replayed in 0.773 seconds, and the source-binding
 extension reproduced those formulas byte for byte. No ray-1 weight
 budget is used. Ray-2 collinear caps and height endpoints remain.
+
+The [ray-2 one-collinear proof](remaining_c1_one_collinear.md) extends
+this to every interior C1 limit with exactly one collinear cap.
+The three strict line orders reduce to a convex inner critical
+section; exact positive affine dependencies exclude its possible
+backtracking ordering. One zero-edge case gives a triangle directly.
+For the other, winding stability confines the inner curve to an outer
+triangle plus a segment traversed out and back. Exact endpoint
+containment and the ray-2 weight budget force equality in a triangle
+inequality, contradicting the regular lower cap. The producer checks
+all four parallel-vector cases, the 4+27 lower-area coincidence matches,
+and nine additional zero-edge matches. Exact generation took 2.123
+seconds, and all eight source CNFs independently replayed in 1.618
+seconds. Both-collinear ray-2 C1 and height endpoints remain open.
 
 In the two-block `04` limit of ray 1, the
 [focal-ellipse and weak-sign proof](remaining_ray1_mask04.md) forces all
