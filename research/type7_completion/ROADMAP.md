@@ -40,8 +40,13 @@ The [negative-coincidence proof](exhaustive_c0_negative_coincidence.md)
 now completes the opposite regular-cap orientation. Consequently all
 exactly-one-collinear-cap C0 limits with `u>=v` are excluded. The
 [height-boundary proof](remaining_c0_height_boundary.md) also excludes
-regular C0 on all four open height edges; the corners and collinear
-cap boundaries are kept separate.
+regular C0 on all four open height edges. The
+[corner proof](remaining_c0_corner.md) completes the entire regular
+C0 height boundary. Collinear-cap height boundaries remain separate.
+The [common-line classification](exhaustive_c0_flat_common.md) reduces
+two collinear caps on the same transverse line to eight line families
+and one coincident-vertex circle; this classification is not yet an
+exclusion of their normal deformations.
 
 For ray 2, the [nested-section argument](remaining_c1_sections.md)
 now excludes every regular interior C1 limit. Its finite nesting and
@@ -750,7 +755,8 @@ with a positive generic completion remains. The
 faces, critical sections, unit perimeters, strict middle-edge
 contractions, and the directions forced by zero mixed brackets.
 These are exact supporting identities, not a further exclusion.
-Other collinear-cap and height-endpoint C0 limits remain open.
+Other collinear-cap C0 limits, including their height endpoints,
+remain open.
 
 The [regular height-boundary proof](remaining_c0_height_boundary.md)
 now excludes all four open edges of the C0 height square. At `u=0`,
@@ -763,8 +769,30 @@ contradicts the regular lower cap and the deficit budget. The checked
 marked reflection gives both `v` edges. Source checks include the
 closed product-scale rows, all 55 height relations, twelve upper
 section-edge bindings, and the exact critical link. A separate peer
-audit and all six fresh certificates passed. Corner heights and
-collinear-cap height boundaries remain outside this result.
+audit and all six fresh certificates passed. The
+[corner completion](remaining_c0_corner.md) now excludes all four
+regular height corners as well. At `(u,v)=(0,1/2)`, seven actual-trit
+certificates force two positively oriented limiting section triangles
+to overlap; their winding number two contradicts the simple finite
+section curves. At `(0,0)` and `(1/2,1/2)`, equal-perimeter nesting
+forces two regular triangles to coincide, and two further certificates
+exclude the possible matching. The fourth corner is the completed
+two-block case. The exact producer took 4.062 seconds and all nine
+fresh RUP proofs replayed in 2.982 seconds; a separate geometric and
+certificate audit passed. Thus every regular C0 height-boundary limit
+is excluded. Collinear-cap height boundaries remain open.
+
+For interior C0 with both endpoint caps on one transverse line, the
+[common-line classification](exhaustive_c0_flat_common.md) gives nine
+families: four closed endpoint-deficit line families, four
+middle-deficit line families, and one circle with coincident vertices
+4 and 5. It retains all zero outer-edge endpoints. Nine actual-trit
+implications, additional strict Gram coefficients, and all twelve
+projected stresses on every family were checked. The nine fresh RUP
+proofs replayed in 2.244 seconds, following an independent analytic
+audit. These are necessary limit families; no embedded realization or
+sequence exclusion is asserted. Nonparallel cap lines and normal
+deformations remain separate gates.
 
 The second canonical family has a separate
 [fourteen-pattern regular cover](exhaustive_c1_angles.md), with 132

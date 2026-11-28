@@ -244,6 +244,16 @@ C0 limit with `0<v<=u<1/2` is excluded. The
 [height-boundary proof](research/type7_completion/remaining_c0_height_boundary.md)
 also excludes regular C0 on all four open edges of its height square,
 using endpoint support estimates and nested sections.
+The [corner proof](research/type7_completion/remaining_c0_corner.md)
+completes its entire regular height boundary: a winding-number
+contradiction handles one corner, equal-perimeter nested triangles
+handle two, and the completed two-block theorem handles the fourth.
+All nine new CNFs independently replayed. For two collinear caps on
+one transverse line, the
+[common-line classification](research/type7_completion/exhaustive_c0_flat_common.md)
+reduces the interior limit system to eight line families and one
+coincident-vertex circle. This is a classification; their exclusion
+still requires control of normal deformations.
 For regular C0 with `v>u`, an
 [endpoint support bound](research/type7_completion/exhaustive_c0_endpoint_bound.md)
 and [complete cone reduction](research/type7_completion/solver_remaining_c0_opposite_cones.md)

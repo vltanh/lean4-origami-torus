@@ -59,8 +59,14 @@ lower cap, including coincidence. The
 completes the other orientation, so every exactly-one-collinear-cap
 C0 limit in this height region is excluded. The
 [height-boundary proof](remaining_c0_height_boundary.md) additionally
-excludes both-regular-cap limits on all four open height edges;
-the corners and collinear-cap height boundaries remain. The
+excludes both-regular-cap limits on all four open height edges. The
+[corner proof](remaining_c0_corner.md) completes the entire regular
+C0 height boundary, including every product-scale degeneration.
+Collinear-cap height boundaries remain. The
+[common-line classification](exhaustive_c0_flat_common.md) reduces
+interior limits with both caps on the same transverse line to eight
+line families and one coincident-vertex circle, whose normal
+deformations still need exclusion. The
 [endpoint support bound](exhaustive_c0_endpoint_bound.md) and
 [opposite-cone proof](solver_remaining_c0_opposite_cones.md) reduce
 the regular `v>u` region from 202 to exactly 42 compatible generic
