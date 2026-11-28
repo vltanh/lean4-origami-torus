@@ -130,6 +130,10 @@ The [geometric saturated-route theorem](saturated_routes.md) characterizes dista
 
 The active direction is now positive construction, not closing the regular-planar exclusion ledger. [A single simple radical family](simple_family.md) with six low-denominator core constants and a fixed perturbation $2^{-20}$ certifies every rectangular modulus $x=0$, $1\le y\le 41/40$ and the two-dimensional box $0\le x\le 1/1024$, $1\le y\le 513/512$. A new signed-Gram product identity for the leaf discriminants permits stable exact interval verification. [Standard-library verifier](verify_simple_family.py) passed all 460 accepted subboxes and the square point. This is a research proof, not a new Lean theorem; universality remains open. The 62-class regular-planar ledger and the 0/19 elongated ledger are unchanged. Prioritize extending this formula or deriving a different simple constructive chart, rather than pursuing further restricted negative cases.
 
+## One-scale unfolding construction
+
+[One-scale core](one_scale.md): set $a=1/19$ and use a common near-tie margin $s^2$. The two tangent leaves have discriminants with an explicit $s^2$ factor, and the exceptional volumes 1236 and 1357 vanish exactly at $s=0$. [The derivative interval verifier](verify_one_scale.py) certifies every $0<s\le1/512$ at the square (64 intervals); it also certifies the boundary of $0\le x\le1/4096$, $1\le y\le4097/4096$ (32 subboxes), giving a uniform positive unfolding threshold by compactness without calculating it. This simplifies the core and avoids tuning the perturbation but does not supersede the wider modulus ranges of `simple_family.md`. No Lean formalization or universality claim.
+
 ## 1. What would finish Type 5?
 
 Existence is already established. The remaining question has two possible
