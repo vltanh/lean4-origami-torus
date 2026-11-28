@@ -130,6 +130,7 @@ sat.elim_vars=false           sat.elim_vars_bdd=false
 sat.scc=false                 sat.asymm_branch=false
 sat.ate=false                 sat.probing=false
 sat.probing_binary=false      sat.subsumption=false
+sat.dyn_sub_res=false
 sat.simplify.delay=2147483647
 ```
 
@@ -153,6 +154,17 @@ with 677 accepted RUP additions. The full seven-formula endpoint batch,
 including its two rejected discovery attempts, passed in 2.391 seconds;
 proof-only replay took 0.433 seconds. Its six previously successful
 formulas retained their original default production path.
+
+The C0 residual-normal cover exposed one further non-RUP step from
+dynamic learned-clause minimization. Disabling `sat.dyn_sub_res` in
+the same bounded fallback produced a replacement with 232 accepted
+RUP additions: 0.052 seconds to produce and 0.060 seconds to check.
+All sixteen C0 stretch obligations (fourteen distinct packets) then
+passed in 1.672 seconds, including the rejected default attempts.
+A fresh peer replay passed in 2.063 seconds. The earlier rejected
+trace still fails the unchanged checker. This option affects only
+the final fallback after an explicit non-RUP rejection; all failure
+conditions and the proof-only path remain unchanged.
 
 Validation also confirmed that reordered/multiline equivalent inputs
 share one proof, modified proofs are rejected, satisfiable inputs cannot

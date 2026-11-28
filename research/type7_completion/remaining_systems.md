@@ -65,8 +65,14 @@ C0 height boundary, including every product-scale degeneration.
 Collinear-cap height boundaries remain. The
 [common-line classification](exhaustive_c0_flat_common.md) reduces
 interior limits with both caps on the same transverse line to eight
-line families and one coincident-vertex circle, whose normal
-deformations still need exclusion. The
+line families and one coincident-vertex circle. The
+[normal-stretch proof](solver_remaining_c0_flat_stretch.md) excludes
+all four endpoint-deficit interiors and the `h2=0,h6=0` endpoints;
+the other line cases have a certified 32-pattern normal cover.
+For nonparallel cap lines, the
+[first-order sign proof](exhaustive_c0_flat_nonparallel.md) leaves
+two canonical coincidence cases, retaining all cap-area/height rates.
+The
 [endpoint support bound](exhaustive_c0_endpoint_bound.md) and
 [opposite-cone proof](solver_remaining_c0_opposite_cones.md) reduce
 the regular `v>u` region from 202 to exactly 42 compatible generic
@@ -98,7 +104,11 @@ both zero-edge cases, using eight further independent CNFs and an
 explicit winding-stability argument. The
 [closed regular-C1 turning constraint](exhaustive_c1_holonomy.md)
 also supplies an independent necessary zero-total-turn condition,
-with all 264 closed sign branches certified. Ray-2 both-collinear C1,
+with all 264 closed sign branches certified. The
+[ray-2 both-collinear reduction](remaining_c1_flat_reduction.md)
+puts all transverse points on one line when all four cap edges are
+positive, and forces parallel directions in two zero-edge order
+orbits. Its fifteen CNFs independently replayed. Ray-2 both-collinear C1,
 the remaining C0 limits, height endpoints, and both full markings
 remain open.
 

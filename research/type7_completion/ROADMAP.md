@@ -45,15 +45,24 @@ regular C0 on all four open height edges. The
 C0 height boundary. Collinear-cap height boundaries remain separate.
 The [common-line classification](exhaustive_c0_flat_common.md) reduces
 two collinear caps on the same transverse line to eight line families
-and one coincident-vertex circle; this classification is not yet an
-exclusion of their normal deformations.
+and one coincident-vertex circle. The
+[normal stretch](solver_remaining_c0_flat_stretch.md) excludes the
+four endpoint-deficit interiors and the `h2=0,h6=0` endpoints, while
+giving a finite necessary normal cover for the residual line cases.
+The [first-order nonparallel-cap sign](exhaustive_c0_flat_nonparallel.md)
+leaves two canonical coincidence cases, with every relative
+cap-area/height rate retained.
 
 For ray 2, the [nested-section argument](remaining_c1_sections.md)
 now excludes every regular interior C1 limit. Its finite nesting and
 convexity argument does not require the ray-1 total-weight budget.
 The [one-collinear extension](remaining_c1_one_collinear.md) now also
 excludes every interior ray-2 C1 limit with exactly one collinear cap,
-including both zero-edge cases. The remaining C0 cases, height
+including both zero-edge cases. The
+[both-collinear reduction](remaining_c1_flat_reduction.md) now puts
+every limit with four positive cap edges on one common transverse
+line; two additional zero-edge orbits have parallel directions.
+The remaining C0 cases, height
 boundaries, ray-2 both-collinear C1 limits,
 and the Lean assembly remain open. Neither full marking is yet excluded.
 
@@ -794,6 +803,30 @@ audit. These are necessary limit families; no embedded realization or
 sequence exclusion is asserted. Nonparallel cap lines and normal
 deformations remain separate gates.
 
+The [common-line normal stretch](solver_remaining_c0_flat_stretch.md)
+now excludes all four endpoint-deficit interiors and the zero-edge
+endpoints `h2=0` and `h6=0`. A positive limiting anchor supplies five
+bounded nontrivial normals without dividing any axial error by their
+width. Exact multilinear coefficient signs turn seventy determinant
+expansions and 560 projected identities per family into finite source
+obligations. Eight exclusion CNFs and eight residual-cover CNFs
+independently replayed: sixteen obligations, fourteen distinct proof
+packets, in 1.672 seconds. A separate analytic/source audit and fresh
+peer replay passed in 2.063 seconds. The remaining line cases have
+32 listed normal sign patterns. The `h1=0,h7=0` endpoints, four
+middle-deficit families, and the coincident-vertex circle remain.
+
+The [nonparallel-cap proof](exhaustive_c0_flat_nonparallel.md) excludes
+six of the nine collinear-cap order pairs. Four source CNFs and an
+exact first-order cap tilt force a finite determinant to have the
+opposite sign from every compatible generic completion. The argument
+retains both the actual cap area and the inverse-height term, so it
+covers every ratio between them. All four fresh certificates passed
+in 2.908 seconds; a separate analytic/source audit and peer replay
+passed in 1.807 seconds. Only bd/da and dd remain, with bd and da
+exchanged by the checked marked reflection. Every residual
+nonparallel case has an endpoint coincidence.
+
 The second canonical family has a separate
 [fourteen-pattern regular cover](exhaustive_c1_angles.md), with 132
 complete generic projections and two additional tetrahedron signs.
@@ -862,6 +895,18 @@ all four parallel-vector cases, the 4+27 lower-area coincidence matches,
 and nine additional zero-edge matches. Exact generation took 2.123
 seconds, and all eight source CNFs independently replayed in 1.618
 seconds. Both-collinear ray-2 C1 and height endpoints remain open.
+
+The [both-collinear ray-2 reduction](remaining_c1_flat_reduction.md)
+now proves that all transverse vertices lie on one common line when
+`h2,h3,h6,h7>0`. It covers all sixteen cap-order pairs and all 32
+order/direction cases, including the central-between order. Exact
+circle saturation and four strict metric minors close its final
+nonparallel case. Two zero-edge order orbits also have parallel cap
+directions, by two checked positive affine dependencies. The fifteen
+source CNFs independently replayed in 7.762 seconds, and a separate
+analytic/source audit passed. Scalar common-line families and the
+other zero-edge orbits remain; this is a reduction, not a complete
+boundary exclusion.
 
 In the two-block `04` limit of ray 1, the
 [focal-ellipse and weak-sign proof](remaining_ray1_mask04.md) forces all

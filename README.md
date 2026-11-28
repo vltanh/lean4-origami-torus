@@ -252,8 +252,14 @@ All nine new CNFs independently replayed. For two collinear caps on
 one transverse line, the
 [common-line classification](research/type7_completion/exhaustive_c0_flat_common.md)
 reduces the interior limit system to eight line families and one
-coincident-vertex circle. This is a classification; their exclusion
-still requires control of normal deformations.
+coincident-vertex circle. The
+[normal stretch](research/type7_completion/solver_remaining_c0_flat_stretch.md)
+now excludes all four endpoint-deficit interiors and the zero-edge
+endpoints `h2=0,h6=0`; eight further certificates reduce the remaining
+line families to 32 normal sign patterns. For nonparallel cap lines,
+the [first-order cap sign](research/type7_completion/exhaustive_c0_flat_nonparallel.md)
+excludes six of nine order pairs at every cap-area/height rate,
+leaving two canonical coincidence cases.
 For regular C0 with `v>u`, an
 [endpoint support bound](research/type7_completion/exhaustive_c0_endpoint_bound.md)
 and [complete cone reduction](research/type7_completion/solver_remaining_c0_opposite_cones.md)
@@ -274,7 +280,12 @@ remains available as an independent necessary condition. Its
 [one-collinear-cap extension](research/type7_completion/remaining_c1_one_collinear.md)
 now covers all such interior ray-2 C1 limits, including both zero-edge
 cases. Eight further CNFs independently replayed. The remaining
-C0 cases, height boundaries, ray-2 both-collinear C1 limits, and the
+two-collinear-cap boundary now has a
+[common-line reduction](research/type7_completion/remaining_c1_flat_reduction.md):
+all four cap edges positive forces all transverse points onto one
+line, and two zero-edge order orbits have parallel cap directions.
+Its fifteen CNFs independently replayed. The remaining C0 cases,
+height boundaries, ray-2 both-collinear C1 limits, and the
 Lean assembly remain open; neither full marking is yet excluded.
 
 See [Type 7 reconstruction, rigidity and two elongated branches](research/type7_focus/README.md). The anchor-leaf reconstruction proves at most two embedded candidates per intrinsic placement on every marking. Using the earlier necessary clique-sign archive, the weighted mirror-distance identity and the checkerboard twist test strengthen this to **uniqueness up to congruence from the 24 labeled edge lengths**, conditional on the earlier strict-support and orientation-projection proof premises. The exact finite checker ran on the current input archives: 308/316 clique patterns have a unanimous anchor; the eight others have no admissible checkerboard partner. This is a rigidity result, not a universality result.

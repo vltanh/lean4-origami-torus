@@ -32,6 +32,9 @@ RUP_FOCUSED_OPTIONS = {
     'sat.probing': False,
     'sat.probing_binary': False,
     'sat.subsumption': False,
+    # Dynamic learned-clause minimization can also emit a non-RUP step.
+    # Disabling it is confined to this independently checked fallback.
+    'sat.dyn_sub_res': False,
     'sat.simplify.delay': 2147483647,
 }
 
