@@ -17,12 +17,13 @@
 \newcommand{\C}{\mathbb C}
 \newcommand{\covol}{\operatorname{covol}}
 \newcommand{\dd}{\mathrm d}
-\newcommand{\release}{b391bdb86a7287c6034a77b1b3792cabd00425bb}
+\newcommand{\release}{bd3a0e03908481d738df30233cf95c641a1d3f71}
+\newcommand{\reporef}[2]{\href{https://github.com/vltanh/lean4-origami-torus/blob/\release/#1}{#2}}
 \newcommand{\src}[2]{\href{https://github.com/vltanh/lean4-origami-torus/blob/\release/#1}{\texttt{#2}}}
 
 \title[Eight-vertex origami tori]{An existence classification for eight-vertex origami tori}
 \author{The-Anh Vu-Le}
-\date{Draft, November 27, 2026}
+\date{Draft, November 28, 2026}
 \subjclass[2020]{52C25, 57Q05}
 \keywords{Paper torus, flat torus, triangulation, determinant signs, formal proof}
 
@@ -30,7 +31,7 @@
 
 \begin{abstract}
 Of the seven simplicial triangulations of the torus on eight vertices,
-exactly Types \(3\)--\(7\) in Lutz numbering admit embedded realizations
+exactly Types \(3\)--\(7\) admit embedded realizations
 in \(\R^3\) with all cone angles equal to \(2\pi\). Lander's argument
 rules out Type \(1\). We resolve his conjecture for Type \(2\) by a
 determinant-sign refutation. We formalize the known universality of
@@ -39,11 +40,13 @@ Type \(6\) face list by a diagonal exchange and fixed-period inflation.
 For Types \(4\) and \(7\) we construct embeddings with rank nine for
 the angle and marked modulus map at every reduced modulus off the
 sharp-rhombic ray. This completes the rectangular ray for Type \(7\).
-For Type \(5\) a dyadic-grid radical construction works throughout
-an explicit closed box adjoining the square. The remaining universality
-questions concern the sharp-rhombic ray for Types \(4\) and \(7\)
-and the rest of the reduced domain for Type \(5\). The nonexistence
-and realization theorems are formalized in Lean~4.
+Type \(5\) realizes every flat torus outside the hexagonal similarity
+class. Off the sharp-rhombic ray we open a planar configuration by
+successive folds at fixed periods. On the open ray an exact polynomial
+certificate gives the required signs. Lean verifies the separation
+criteria and explicit Type \(5\) embeddings on two modulus boxes.
+Universality remains open on the sharp-rhombic ray for Types \(4\)
+and \(7\), and at its hexagonal endpoint for Type \(5\).
 \end{abstract}
 
 \maketitle
@@ -108,17 +111,23 @@ The triangulation \(K_3\) realizes \(T_\Lambda\) for every rank-two
 lattice \(\Lambda\).
 \end{theorem}
 
+\begin{theorem}\label{thm:type4}
+For every \(\tau\in D_{<1/2}\), the triangulation \(K_4\) realizes
+\(T_{\Z+\Z\tau}\), with rank nine for the spatial angle and marked
+modulus map.
+\end{theorem}
+
+\begin{theorem}\label{thm:type5}
+The triangulation \(K_5\) realizes \(T_\Lambda\) for every rank-two
+lattice whose similarity class differs from that of
+\(\Z+\Z\bigl((1+i\sqrt3)/2\bigr)\).
+\end{theorem}
+
 \begin{theorem}\label{thm:type6}
 The triangulation \(K_6\) realizes \(T_\Lambda\) for every rank-two
 lattice \(\Lambda\). The embedding can be chosen so that the spatial
 map to seven cone angles and the two real components of a locally
 developed marked modulus has rank nine at its vertex coordinates.
-\end{theorem}
-
-\begin{theorem}\label{thm:type4}
-For every \(\tau\in D_{<1/2}\), the triangulation \(K_4\) realizes
-\(T_{\Z+\Z\tau}\), with rank nine for the spatial angle and marked
-modulus map.
 \end{theorem}
 
 \begin{theorem}\label{thm:type7}
@@ -127,8 +136,9 @@ For every \(\tau\in D_{<1/2}\), the triangulation \(K_7\) realizes
 modulus map.
 \end{theorem}
 
-In particular, \(K_7\) realizes every rectangular lattice torus,
-with arbitrary scale.
+In particular, \(K_4\), \(K_5\), and \(K_7\) each realize every
+rectangular lattice torus at arbitrary scale. For \(K_5\) we also give
+explicit radical witnesses on two closed sets of moduli.
 
 \begin{theorem}\label{thm:type5square}
 The triangulation \(K_5\) admits a realization of \(T_{\Z+\Z i}\) whose
@@ -136,9 +146,13 @@ coordinates are given by rational arithmetic and square roots.
 \end{theorem}
 
 \begin{theorem}\label{thm:type5box}
-The triangulation \(K_5\) realizes \(T_{\Z+\Z(x+iy)}\) whenever
+The triangulation \(K_5\) realizes \(T_{\Z+\Z(x+iy)}\) throughout
+each of the following boxes.
 \[
- 0\le x\le 2^{-36},\qquad 1\le y\le 1+2^{-36}.
+\begin{aligned}
+ 0\le x\le 2^{-36},&\qquad 1\le y\le 1+2^{-36},\\
+ |x-1/4|\le 2^{-80},&\qquad |y^2-31/16|\le 2^{-80},\quad y>0 .
+\end{aligned}
 \]
 \end{theorem}
 
@@ -152,7 +166,7 @@ prior results and the contribution for each type.
 \small
 \begin{tabularx}{\linewidth}{@{}cXX@{}}
 \toprule
-Type & Prior work & This paper and its Lean formalization\\
+Type & Prior work & Result and verification\\
 \midrule
 1 & Lander deduced nonexistence by a star collapse and the
     seven-vertex lower bound \cite[\S6]{lander}. &
@@ -169,8 +183,8 @@ Type & Prior work & This paper and its Lean formalization\\
     Constructs and verifies rank-nine embeddings for all
     \(\tau\in D_{<1/2}\), including all rectangles.\\[1pt]
 5 & Numerical square realizations \cite[\S6]{lander}. &
-    Gives a dyadic-grid radical construction for the square and
-    an explicit box of nearby moduli.\\[1pt]
+    Realizes every nonhexagonal torus by folds and exact sign
+    certificates. Lean verifies two boxes and both separation criteria.\\[1pt]
 6 & Numerical square realizations \cite[\S6]{lander}. &
     Gives a universal construction on the Type \(6\) face list by a
     diagonal exchange on Type \(3\) and verifies rank nine.\\[1pt]
@@ -332,7 +346,7 @@ notation. The input unit clause \((1)\) and the input clause formed
 by adjoining \(-1\) to the new clause give the replay in this case.
 
 The replay and the indexing of its inputs appear in the
-\src{OrigamiTorus/Type2/Certificate.lean}{Type 2 certificate}.
+\src{OrigamiTorus/EightVertex/Type2/Certificate.lean}{Type 2 certificate}.
 Lean checks the connection to the geometric clauses and the replay
 itself. The perturbation is only a means of obtaining strict signs
 and imposes no genericity requirement on the original flat
@@ -360,7 +374,7 @@ four-direction perimeter inequality. Generic perturbation yields
 Grassmann--Pl\"ucker restrictions. On the particular collapsed
 face list these give 2,100 clauses. Lean verifies the 733 input
 clauses used in a 418-step refutation in
-\src{OrigamiTorus/Type1/Certificate.lean}{Type1/Certificate.lean}.
+\src{OrigamiTorus/EightVertex/Type1/Certificate.lean}{Type1/Certificate.lean}.
 This gives a proof of Theorem~\ref{thm:type1} on the collapsed complex
 and formalizes the obstruction needed by Lander's star reduction.
 Schwartz's theorem concerns all seven-vertex paper tori
@@ -507,7 +521,7 @@ Write the signed area or volume as a cubic in \(1-s,s\), plus
 of the cubic and nonnegative coefficients of the linear polynomial
 prove the claimed strict sign on the closed strip. The sign table,
 including permutation parity, is in
-\src{OrigamiTorus/Type6/Signs.lean}{Type6/Signs.lean}.
+\src{OrigamiTorus/EightVertex/Type6/Signs.lean}{Type6/Signs.lean}.
 The 70 volumes for the first chart's vector are nonzero.
 In the second chart, the auxiliary vector
 \((0,-2017,0,-2,-1,-3,0,1430)\) has all 70 volumes nonzero.
@@ -531,7 +545,7 @@ first at \(6\), and both coordinates of intrinsic vertices
 base is twice the difference of the weighted dot products of the
 folded and intrinsic edge vectors with the endpoint motions.
 The coefficient elimination in
-\src{OrigamiTorus/Type6/Rank.lean}{Type6/Rank.lean}
+\src{OrigamiTorus/EightVertex/Type6/Rank.lean}{Type6/Rank.lean}
 proves that the square derivative has trivial kernel on both
 charts. It uses \(h=w-1+x^2\ge0\) to justify every nonzero factor
 canceled in the row operations.
@@ -615,8 +629,8 @@ preserves invertibility. The same fixed-period inflation and area
 argument, now using the original positively oriented face lifts,
 verify Theorem~\ref{thm:type3}. The stress argument and quotient
 proof are given in
-\src{OrigamiTorus/Type3/Rank.lean}{Type3/Rank.lean} and
-\src{OrigamiTorus/Type3/Universal.lean}{Type3/Universal.lean}.
+\src{OrigamiTorus/EightVertex/Type3/Rank.lean}{Type3/Rank.lean} and
+\src{OrigamiTorus/EightVertex/Type3/Universal.lean}{Type3/Universal.lean}.
 
 \section{The trapezoidal constructions for Types 4 and 7}\label{sec:strip}
 
@@ -687,7 +701,7 @@ therefore multiply to one. Every cone angle is a positive
 multiple of \(2\pi\), and the sixteen faces have total angle
 \(16\pi\), so every cone angle is \(2\pi\). The flip preserves
 these angle sums. The full chord calculation is in
-\src{docs/Type4.md}{docs/Type4.md}.
+\src{docs/EightVertex/Type4.md}{Type 4 proof}.
 
 For the periods, unfold the six faces adjacent to the marking
 paths \(4\to2\to3\to4\) and \(5\to2\to0\to5\). The loops meet at
@@ -713,7 +727,7 @@ and vary the modulus independently. The resulting horizontal rank
 is nine. The flip preserves the angle map in a planar
 neighborhood of the base, and both planar charts give the same
 marked ratio before and after the flip. Lean checks the rank
-calculation in \src{OrigamiTorus/Type4/StripRank.lean}{Type4/StripRank.lean}.
+calculation in \src{OrigamiTorus/EightVertex/Type4/StripRank.lean}{Type4/StripRank.lean}.
 
 There are six height cells, cut at \(0,1/10,1/5,3/10,2/5,9/20,1/2\).
 The first five are closed and the last excludes \(1/2\).
@@ -729,8 +743,8 @@ cell uses the first height polynomial evaluated at \(1+s\),
 and the third adds \((1+h)/100\) to the cleared height of vertex
 \(3\). The other cells share the \(K_4\) height rows.
 The finite data are in
-\src{OrigamiTorus/Type4/LiftWideData.lean}{Type4/LiftWideData.lean}
-and \src{OrigamiTorus/Type7/WideData.lean}{Type7/WideData.lean}.
+\src{OrigamiTorus/EightVertex/Type4/LiftWideData.lean}{Type4/LiftWideData.lean}
+and \src{OrigamiTorus/EightVertex/Type7/WideData.lean}{Type7/WideData.lean}.
 
 With these embedded lift directions, the rank-nine angular and
 marked-modulus equations admit an implicit-function correction at
@@ -765,12 +779,14 @@ periods read off the translations of \(v\) and \(uv\), a unimodular
 change of basis. The shifted face lifts have total area equal to
 one period cell. The checked developments and area identities for
 both lists are in
-\src{OrigamiTorus/Type7/IntrinsicLifts.lean}{Type7/IntrinsicLifts.lean}
-and \src{OrigamiTorus/Type7/Tiling.lean}{Type7/Tiling.lean}.
+\src{OrigamiTorus/EightVertex/Type7/IntrinsicLifts.lean}{Type7/IntrinsicLifts.lean}
+and \src{OrigamiTorus/EightVertex/Type7/Tiling.lean}{Type7/Tiling.lean}.
 The quotient argument finishes the realizations in
 Theorems~\ref{thm:type4} and~\ref{thm:type7}.
 
-\section{Exact radical realizations of Type 5}\label{sec:radicals}
+\section{Type 5 embeddings outside the hexagonal class}\label{sec:radicals}
+
+\subsection*{Radical reconstruction and two modulus boxes}
 
 Work in the labeling of Appendix~\ref{sec:facelists}. The anchors
 are \(1,2,5\), the roots are \(3,4\), and the leaves are \(0,6,7\).
@@ -793,7 +809,7 @@ They are the fixed-\(s\) instance of the
  \end{aligned}
 \]
 At the square, multiplying by 64 gives the four grid points
-\((29,-32+64s^2),(32-64s^2,5),(-4,27),(-2,-12)\).
+\((29,-32+64s^2)\), \((32-64s^2,5)\), \((-4,27)\), and \((-2,-12)\).
 
 To reconstruct a vertex \(j\), write \(u\in\R^2\) for its
 intrinsic position, \(v\in\R^3\) for its spatial position, and
@@ -842,10 +858,22 @@ is 2 in lattice coordinates, since all terms depending on the
 vertex representatives cancel in pairs. Physical coordinates
 multiply this area by \(y\). The argument in
 Section~\ref{sec:method} gives the desired lattice
-quotients. The formulas and interval checks are in
-\href{https://github.com/vltanh/lean4-origami-torus/blob/HEAD/OrigamiTorus/EightVertex/Type5/Square.lean}{\texttt{Type5/Square.lean}} and
-\href{https://github.com/vltanh/lean4-origami-torus/blob/HEAD/OrigamiTorus/EightVertex/Type5/ContinuationCertificate.lean}{\texttt{Type5/ContinuationCertificate.lean}}.
-This proves Theorems~\ref{thm:type5square} and~\ref{thm:type5box}.
+quotients. This proves Theorem~\ref{thm:type5square} and the
+near-square case of Theorem~\ref{thm:type5box}.
+\src{OrigamiTorus/EightVertex/Type5/ContinuationTorus.lean}{Near-square construction}.
+
+For the second box the core coordinates \((p_x,yp_y)\) stay fixed
+as \((x,y^2)\) varies around \((1/4,31/16)\). The same root and leaf
+choices solve the length equations. Enclosing each of the forty
+intrinsic and spatial coordinates in an interval of radius \(2^{-30}\)
+gives a lower bound \(7/1000\) on every marked double area. The
+seventeen off-ray determinants used below have their required signs
+with absolute values greater than \(4\cdot10^{-7}\). The degree-one
+development and spatial separation therefore prove the second case of
+Theorem~\ref{thm:type5box}. The
+\reporef{docs/EightVertex/Type5HandProof.md}{rational core and enclosure tables}
+give the data for both estimates.
+\src{OrigamiTorus/EightVertex/Type5/OffRayBase.lean}{Oblique-box theorem}.
 
 The same length elimination bounds the number of reconstruction
 candidates for a fixed marking and four intrinsic core points.
@@ -858,7 +886,120 @@ at each root and at each leaf, giving at most \(2^5=32\)
 candidates. Some candidates can fail the embedding and face
 conditions. The completeness statement takes the marked lifts
 as input. See
-\src{OrigamiTorus/Type5/MarkedReduction.lean}{Type5/MarkedReduction.lean}.
+\src{OrigamiTorus/EightVertex/Type5/MarkedReduction.lean}{Type5/MarkedReduction.lean}.
+
+\subsection*{Seventeen determinants and seven separating planes}
+
+Write \([abcd]=\det(r_b-r_a,r_c-r_a,r_d-r_a)\) for spatial points
+\(r_i\). The following sign lists refer to the indicated ordering of
+the four labels. Either row suffices for embeddedness of the affine
+realization of \(K_5\).
+\begin{center}
+\small
+\begin{tabular}{@{}ll@{}}
+\toprule
+Family & Required brackets\\
+\midrule
+Off the ray & \texttt{1234- 1235+ 1245- 1345- 2345+ 0125+ 0135- 0234- 0245+}\\
+            & \texttt{1236- 1247+ 1357- 2357- 2456- 0246+ 0456+ 2367-}\\[2pt]
+Open ray    & \texttt{0125+ 0126+ 0134- 0136- 0234- 1234+ 1236- 1237+ 1245+}\\
+            & \texttt{1345- 1356+ 1357- 1456+ 2345+ 2347- 2456- 2467-}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+For fixed \(u,v\), put \(D_{ab}=[uvab]\). The three-term identity
+\[
+ D_{ab}D_{cd}-D_{ac}D_{bd}+D_{ad}D_{bc}=0
+\]
+propagates the strict signs. For instance, the off-ray row gives
+\([0245][2346]=[0234][2456]+[0246][2345]>0\), hence \([2346]>0\).
+Fourteen such deductions determine the required sides of the planes
+\(056,124,125,135,236,246,356\). For the open ray, the alternating sum
+of the five core brackets first gives \([1235]>0\). Twelve three-term
+identities then give the sides of \(126,127,134,136,145,234,246\).
+
+For each row, every disjoint pair of subfaces lies on opposite closed
+sides of one of its seven planes. The
+\reporef{docs/EightVertex/Type5HandProof.md}{incidence tables}
+list all 51 maximal pairs, comprising 30 edge--triangle pairs and
+21 triangle--triangle pairs. For the assigned plane, the zero
+vertices in each support belong to its three defining labels.
+A strictly signed fourth vertex guarantees that the three are
+affinely independent. If two convex combinations of disjoint supports
+coincided, their common point would lie in the plane. All weights on
+strictly signed vertices would vanish, contradicting uniqueness of
+barycentric coordinates on the plane triangle. Subtracting common
+weights reduces an arbitrary collision to the disjoint case.
+This proves both criteria even when an unlisted bracket is zero.
+
+\subsection*{Realizing the signs at fixed periods}
+
+For \(\tau=x+iy\in D_{<1/2}\), put \(T=|\tau|^2\).
+The quantities \(1-2x\) and \(T-2x\) are strictly positive.
+The \reporef{docs/EightVertex/Type5OffRayConstruction.md}{successive-fold construction}
+uses them to choose a marked planar configuration at this particular
+modulus. Its sixteen marked faces are positively oriented.
+The rectangular boundary requires the first nonzero terms of the
+projected areas at the coincident limiting points \(0,2\).
+
+Open the two triangles on hinge \(04\) by shortening the squared
+distance between their opposite vertices \(2,5\) relative to its
+unfolded value. If their perpendicular altitudes are \(u,v>0\),
+folding through angle \(\theta\) shortens this distance by
+\(2uv(1-\cos\theta)\). Choose the negative height at \(4\), then a
+small positive height at \(3\) and a still smaller positive height at
+\(0\). The two remaining ties place \(6\) in the plane \(123\) and
+\(7\) in the plane \(135\). The linear equations for each leaf are
+nonsingular there. Fifteen required brackets already have their strict
+signs. Release the ties on the hinges \(36,57\) by squared shortenings
+of order \(s^2\). The two folding directions give opposite signs of
+\([1236]\) and of \([1357]\). The implicit function theorem preserves
+the two remaining length equations at each leaf, and the leaves share
+no edge. Choose both signs negative. Small enough \(s>0\) preserves
+the other signs and all marked face orientations.
+
+On the open sharp-rhombic ray put \(t=y^2-3/4>0\) and
+\(u=t/(1+2t)\). The
+\reporef{docs/EightVertex/Type5SharpEmbeddings.md}{sharp-ray core}
+specifies each intrinsic core point by two dot products with the
+periods, both rational functions of \(u\). Take positive
+root heights at both \(3,4\). For one leaf write \(K_i=(r_i,p_i)\)
+for its five neighbors in their intrinsic lifts and use the quadratic
+form \(Q(r,p)=|r|^2-|p|^2\).
+The mixed Gram matrix \(S_{ij}=-Q(K_i-K_j)/2\) vanishes on the
+diagonal and the link edges and has positive entries on the
+complementary five-cycle. In this case
+\(c=\mathbf1^TS^{-1}\mathbf1>0\). The point
+\(Z_0=\sum_i(S^{-1}\mathbf1)_iK_i/c\) satisfies
+\(Q(K_i-Z_0)=-1/c\) for every \(i\). Subtracting the leaf equations
+restricts a solution to the line \(Z_0+\R N\) orthogonal for \(Q\)
+to the four core differences. Since \(Q(N)>0\), precisely two
+solutions occur, \(Z_0\pm N/\sqrt{cQ(N)}\). The
+\reporef{docs/EightVertex/Type5PositiveCycle.md}{five-cycle proof}
+also gives continuous choices and nonzero intrinsic face areas.
+
+At \(u=1/4\), direct enclosures choose the branches with positive
+marked faces and the open-ray bracket signs. To propagate the signs,
+a plane containing a leaf forces an equality between its squared
+dual normal length times \(\det S\) and a quadratic form with matrix
+\(\operatorname{adj}S\). For a plane through two core points and two
+leaves the two corresponding binary quadratic forms must have a
+common projective zero. The
+\reporef{docs/EightVertex/Type5SharpSigns.md}{univariate certificate}
+excludes all these equalities throughout \(0<u<1/2\). Its rational
+sign test on an interval \((l,r)\) expands
+\((1+z)^n p((l+rz)/(1+z))\), where \(n=\deg p\). Coefficients
+of one weak sign, at least one strict, give the strict sign for every
+\(z>0\). Subdivisions check their shared endpoints separately.
+Continuity carries the base-point signs and face orientations to the
+whole open ray.
+
+In both families the 24 marked edge equalities imply that corresponding
+triangles are congruent. The positive degree-one development identifies
+the intrinsic complex with the prescribed quotient. The corresponding
+seventeen signs give the spatial embedding. Similarity transports the
+construction to every scale, proving Theorem~\ref{thm:type5}.
 
 \Needspace{10\baselineskip}
 \section{Remaining universality questions}\label{sec:remaining}
@@ -881,15 +1022,15 @@ limits to \(H=1\) and \(a=1/2\) as \(x\) approaches \(1/2\).
 Vertices \(6\) and \(7\) of its unflipped base coincide there, so the
 nondegenerate-base inflation argument needs different input on the ray.
 
-For \(K_5\), the Lean-certified box has hyperbolic area \(r^2/(1+r)\)
-with \(r=2^{-36}\), since its side lengths in modulus coordinates
-are \(r\) and its lower edge is at \(y=1\). The reduced domain \(D\)
-has hyperbolic area \(\pi/6\).
-The \href{https://github.com/vltanh/lean4-origami-torus/blob/fe5a6eee0cf14dc8cfb0614505d63812f1bbfa25/research/type5_completion/dyadic_scale.md}{interval proof for the varying unfolding parameter}
-covers the larger box \(0\le x\le 1/4096,\ 1\le y\le 1+1/4096\)
-and the rectangular interval \(x=0,\ 1\le y\le 41/40\) for all
-sufficiently small positive \(s\), uniformly over these sets.
-The sharp-rhombic ray and elongated moduli remain open for this type.
+For \(K_5\), Theorem~\ref{thm:type5} leaves the single modulus
+\(\tau_{\rm hex}=(1+i\sqrt3)/2\). In the sharp-ray family the
+limiting roots \(3\) and \(4\) coincide there. This explains the
+failure of that particular construction at the endpoint. An embedding
+at \(\tau_{\rm hex}\) would prove universality for \(K_5\).
+The \reporef{docs/EightVertex/Type5HexagonalAngles.md}{hexagonal reduction}
+forces face \(125\) onto the convex hull and reduces existence to
+twelve polynomial feasibility cases. Their joint exclusion, or a
+solution of any one of them, remains open.
 
 \subsection*{Markings and spatial lifts}
 
@@ -977,13 +1118,10 @@ choice of intrinsic positions for it.
 
 The Lean~4 development is available in the
 \href{https://github.com/vltanh/lean4-origami-torus}{origami-torus repository}.
-The dyadic-grid witnesses are linked to the repository's default branch.
-The other Lean proof-source links refer to the pinned
-\href{https://github.com/vltanh/lean4-origami-torus/commit/\release}{source revision}.
-That revision includes the proof notes, exact coordinate tables,
-and complete finite certificates. The toolchain is Lean~4.36.0
-with pinned Mathlib dependencies. In the current checkout, each
-eight-vertex type has a standalone Palomar Challenge and Solution.
+The \href{https://github.com/vltanh/lean4-origami-torus/commit/\release}{pinned revision}
+contains the Lean sources, proof notes and exact certificates used
+here. The toolchain is Lean~4.36.0 with pinned Mathlib dependencies.
+Each type has a standalone Palomar Challenge and Solution.
 For example, the Type~\(2\) entry can be checked from the repository root.
 {\small
 \begin{verbatim}
@@ -993,7 +1131,7 @@ lake env lake comparator --config="$entry/comparator.json"
 \end{verbatim}
 }
 The
-\href{https://github.com/vltanh/lean4-origami-torus/blob/HEAD/palomar/OrigamiTorus/README.md}{Palomar index}
+\reporef{palomar/OrigamiTorus/README.md}{Palomar index}
 lists the standalone configurations and the scope of each entry.
 It also lists a seven-vertex entry, which proves Schwartz's
 nonexistence theorem by a checked classification up to relabeling
@@ -1008,21 +1146,34 @@ Result & Declaration under \texttt{OrigamiTorus}\\
 Theorem~\ref{thm:type1}&\texttt{Type1.nonexistence}\\
 Theorem~\ref{thm:type2}&\texttt{Type2.type2\_nonexistence}\\
 Theorem~\ref{thm:type3}&\texttt{Type3.universal}\\
-Theorem~\ref{thm:type6}&\texttt{type6\_regular\_universal}\\
 Theorem~\ref{thm:type4}&\texttt{Type4.open\_strip\_regular\_realizes}\\
+Type \(5\), square&\texttt{Type5.square\_complex\_by\_faces}\\
+Type \(5\), near-square box&\texttt{Type5.Continuation.torus\_by\_faces}\\
+Type \(5\), oblique box&\texttt{Type5.OffRayBase.torus\_by\_faces}\\
+Type \(5\), off-ray separation&\texttt{Type5.OffRay.spatial\_embedding}\\
+Type \(5\), sharp-ray separation&\texttt{Type5.SharpRay.spatial\_embedding}\\
+Type \(5\), leaf choices&\texttt{Type5.positive\_cycle\_completions}\\
+Theorem~\ref{thm:type6}&\texttt{type6\_regular\_universal}\\
 Theorem~\ref{thm:type7}&\texttt{Type7.open\_strip\_regular\_realizes}\\
-Theorem~\ref{thm:type5square}&\texttt{Type5.square\_torus}\\
-Theorem~\ref{thm:type5box}&\texttt{Type5.Continuation.torus\_by\_faces}\\
 \bottomrule
 \end{tabularx}
 \end{center}
-For the square, \texttt{Type5.square\_torus} verifies the embedding
-built from the dyadic-grid core and radical coordinates in \texttt{Type5/Square.lean}.
-The local comparison checks the independently stated Challenge claims
-against the Solution proofs. The finite proofs replay through Lean's
-kernel and require no SAT solver at proof-checking time. The project
-\src{docs/VERIFICATION.md}{verification notes} record the precise
-scope of the comparisons.
+The independent Challenges compare nonexistence for Types \(1,2\),
+universality for Types \(3,6\), and strip embeddings for Types
+\(4,7\). For Types \(4,6,7\) the strip or universal theorem asserts rank nine at the spatial vertices
+defining the embedding. Its marked modulus uses the period curves
+selected by that chart. The Type \(7\) entry
+also compares rectangular existence at arbitrary scale. The Type \(5\)
+entry compares the square, the two modulus boxes, both separation
+criteria and the two-completion theorem.
+The successive choices and implicit-function arguments for arbitrary
+off-ray periods and the uniform polynomial inequalities on the open
+ray remain outside the complete Lean proofs.
+The Type \(2\) refutation replays in Lean's kernel. The separate exact
+Type \(5\) parameter checks can be reproduced from the same checkout
+with the off-ray \texttt{separation} and open-ray \texttt{sharp-signs}
+commands of \texttt{python -m scripts.type5\_rectangles}.
+\reporef{docs/VERIFICATION.md}{Verification scope and replay instructions}.
 
 \subsection*{Acknowledgments}
 The planar formulas underlying the Type \(3\) and Type \(6\)
@@ -1045,7 +1196,8 @@ The strings \(abc\) denote triangular faces with vertex labels
 \(a,b,c\). The lists below specify the triangulations regardless
 of the starting point on an oriented face. They use the labeling
 in the public numerical data of Lander and Trettel
-\cite{data}. The proof of Theorem~\ref{thm:type2} uses the
+\cite{data}, which credit Lutz for the labels of Types \(1\)--\(6\)
+and Schwartz for those of Type \(7\). The proof of Theorem~\ref{thm:type2} uses the
 relabeling given in Section~\ref{sec:obstruction}.
 
 \begin{center}
@@ -1103,7 +1255,7 @@ For Type \(5\), the right table gives the shifts in the Type \(5\)
 labeling and applies to both radical constructions. The
 shift data are defined in
 \src{OrigamiTorus/Defs.lean}{Defs.lean} and
-\src{OrigamiTorus/Type5/Square.lean}{Type5/Square.lean}.
+\src{OrigamiTorus/EightVertex/Type5/Square.lean}{Type5/Square.lean}.
 
 \begin{thebibliography}{99}
 
