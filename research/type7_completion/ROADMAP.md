@@ -1,6 +1,6 @@
 # Type 7: finish a whole marking
 
-## Status after the reorientation — 28 November 2026
+## Status after the geometric reorientation — 28 November 2026
 
 **Type 7 universality remains open.** The missing result is a mathematical
 obstruction or construction, followed by its Lean proof. This update does
@@ -23,6 +23,60 @@ it did not re-audit every earlier analytic case. Principal references are
 the [geometric audit](geometric_audit.md),
 [ray-3 theorem](ray3_boundedness.md), and
 [complete interior ray-2 C1 theorem](remaining_ray2_c1_exclusion.md).
+
+## Geometric completion target
+
+The next proof target is a geometric comparison for the two annuli,
+not further subdivision of the fixed finite cover. The new
+[transport-phase proof](geometric_transport.md) establishes one invariant
+through both orders of the intermediate heights in regular C0. Its
+scope requires nondegenerate leading face charts; the boundary extension
+is still part of the completion problem.
+
+Parameterize each perimeter-one section clockwise by arclength `sigma`,
+and write `tau=2z`. The circulation
+
+\[
+J=\int_0^1 P_\sigma\mathbin{\cdot}P_\tau\,d\sigma
+\]
+
+is independent of height. Anchoring the direct annulus at edge `01`
+gives `J_B=-h0`; anchoring the other at edge `36` gives `J_A=D`,
+where `D=h3+h4+h5-1`. The full original metric, including its product
+scales, supplies these identities. In particular, a horizontal crease
+at equal intermediate heights is not handled by assuming that equal
+perimeters suffice.
+
+For `L=|P3|`, `M=|P6|`, and `d0=1/2-h0`, define
+
+\[
+\Delta=d_0+L+M-J_A.
+\]
+
+The marking equations force **`Delta=0` in ray 1 and `Delta=1` in ray 2**.
+A geometric proof of **`0<Delta<1`** for the actual nested,
+metric-compatible sweeps would exclude both in this regular setting.
+That strict inequality is **not proved**.
+
+There is a concrete comparison identity: exchanging a growing cap edge
+with a shrinking cap edge changes `J` by
+`a_i*b_j*(1-e_i dot f_j) >= 0`. The nine cap-pair weights sum to one.
+What remains is to justify an ordered positive comparison through the
+actual intermediate vertices `4,5`; their directions cannot simply be
+replaced by cap directions. Equal perimeter and nesting alone do not
+supply that step. The two annuli's transport energies also need not be
+equal, because their intrinsic height corrections have opposite signs.
+
+The exact identity checker and an independent review passed:
+
+```sh
+python research/type7_completion/geometric_transport.py
+```
+
+This is a geometric reduction, not a new exclusion. To close a whole
+marking, the comparison must also cover collapsing faces and caps,
+endpoint heights, and arbitrary collapse rates. Strictness on the
+regular interior cannot be extended to those boundaries by continuity.
 
 ## Fixed finite completion ledger
 
@@ -47,7 +101,7 @@ The finite maximum of 536 such thresholds would close both markings.
 The earlier C0/C1 proofs have not been certified as closing any of these
 whole branches; their stratum counts are not added to this ledger.
 
-The latest attempt completed the uniform compilation and exact algebraic
+The algebraic attempt completed the uniform compilation and exact algebraic
 reduction below. It did **not** prove any of the 536 branches infeasible.
 
 ## The negative completion target
