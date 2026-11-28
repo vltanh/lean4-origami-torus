@@ -126,6 +126,10 @@ The new [proof and ledger](planar_patterns.md) enumerates the entire regular pla
 
 The [geometric saturated-route theorem](saturated_routes.md) characterizes distance-preserving intrinsic lifts of a regular mixed-star planar folding: they must come from an unfolded face component or a straight degree-two crease chain. At the hexagon, fourteen complete remaining classes (72 masks) have an unlisted lift forced to tie a known route by a sum of only two to four shortest inequalities, all with coefficient one. The [standard-library integer verifier](verify_saturated_routes.py) checks every certificate and symmetry orbit. **62 classes / 343 masks remain** in the regular planar ledger. The earlier six geometric exclusions are not double-counted. This does not settle arbitrary spatial embeddings or the elongated cells; no Lean theorem is added.
 
+## Constructive pivot: small-rational core — 2026-11-27
+
+The active direction is now positive construction, not closing the regular-planar exclusion ledger. [A single simple radical family](simple_family.md) with six low-denominator core constants and a fixed perturbation $2^{-20}$ certifies every rectangular modulus $x=0$, $1\le y\le 41/40$ and the two-dimensional box $0\le x\le 1/1024$, $1\le y\le 513/512$. A new signed-Gram product identity for the leaf discriminants permits stable exact interval verification. [Standard-library verifier](verify_simple_family.py) passed all 460 accepted subboxes and the square point. This is a research proof, not a new Lean theorem; universality remains open. The 62-class regular-planar ledger and the 0/19 elongated ledger are unchanged. Prioritize extending this formula or deriving a different simple constructive chart, rather than pursuing further restricted negative cases.
+
 ## 1. What would finish Type 5?
 
 Existence is already established. The remaining question has two possible
