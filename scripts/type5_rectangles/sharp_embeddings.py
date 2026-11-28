@@ -10,8 +10,8 @@ from .laurent import Laurent, System
 from .shear import ShearArithmetic
 
 
-def placement(complex_, y, t, u, constant, sqrt):
-    """Here t = y² - 3/4, u = t/(1+2t) and the periods are (1,0), (1/2,y)."""
+def core_coordinates(t, u, constant):
+    """Return the two dot products with the sharp periods for each core vertex."""
     half = constant(F(1, 2))
     s = constant(F(-3, 20))
     g = constant(F(147, 62410)) * (1 + u/4)
@@ -20,14 +20,17 @@ def placement(complex_, y, t, u, constant, sqrt):
     split = u**4/16384
     t_norm = 1 + t
 
-    def point(x, dot_b):
-        return x, (dot_b-half*x)/y
+    return {1: (0, 0),
+            2: (s, -t_norm/2 + split),
+            3: (half - g*u**2, beta - s),
+            4: (s - h*u**2, t_norm*(half + s - u/10)),
+            5: (u/36 - half, -t_norm/2 + 3*split)}
 
-    core = {1: (0, 0),
-            2: point(s, -t_norm/2 + split),
-            3: point(half - g*u**2, beta - s),
-            4: point(s - h*u**2, t_norm*(half + s - u/10)),
-            5: point(u/36 - half, -t_norm/2 + 3*split)}
+
+def placement(complex_, y, t, u, constant, sqrt):
+    """Here t = y² - 3/4, u = t/(1+2t) and the periods are (1,0), (1/2,y)."""
+    half = constant(F(1, 2))
+    core = {i: (x, (dot_b-half*x)/y) for i, (x, dot_b) in core_coordinates(t, u, constant).items()}
     return complex_.reconstruct(core, half, y, sqrt, root4=1, leaf_signs=(1, -1, 1))
 
 

@@ -37,6 +37,8 @@ Put \(d=1/2-x\), \(U=1/T\), \(w=d-9d^2/32\), \(q=w-1/2\), and \(D=7d/16\). The d
 
 Choose the fourth point by the reflected height-zero leaf equation described for the equal-length arc. Set its first coordinate to \(-3/32\) and add \(d^4/(1024y)\) to the second coordinate obtained from that equation. Place anchors 1, 2, 5 in the horizontal plane, and take positive height at 3 and negative height at 4. The verifier works in the scaled coordinates \((h,yk)\) for a physical point \((h,k)\). Both horizontal coordinates and both squared heights are rational functions of \(d,U\). It checks nonzero denominators for the reduced coordinate formulas, both positive squared heights, all nine core edge equations, and positive area on the anchor face 152. In particular anchors 1, 2, 5 and root 3 span three-space. [Fourth-point equation](Type5Rhombic.md#choosing-the-core) · [Core formulas](../../scripts/type5_rectangles/reduced.py)
 
+A second construction uses successively smaller folds at each fixed modulus. [Off-ray hand proof](Type5OffRayConstruction.md)
+
 ### The two choices at each leaf
 
 Fix a leaf \(j\in\{0,6,7\}\). For its five core neighbors let \(K_i=(r_i,p_i-K_{ij})\in\mathbb R^{3,2}\), where \(K_{ij}\) in the second component denotes the marked period shift. Use the quadratic form \(Q(r,p)=\lVert r\rVert^2-\lVert p\rVert^2\). A simultaneous spatial and intrinsic leaf position \(Z\) must satisfy \(Q(K_i-Z)=0\) for every neighbor. Write \(S_{ik}=-Q(K_i-K_k)/2\). This construction uses the positive five-cycle completion argument from the archived Type 5 research. [Positive completion theorem and proof](https://github.com/vltanh/lean4-origami-torus/blob/fe5a6eee0cf14dc8cfb0614505d63812f1bbfa25/research/type5_completion/leaf_geometry.md)
@@ -61,7 +63,7 @@ Set \(w=S^{-1}\mathbf1/c\) and \(Z_0=\sum_i w_i K_i\). The hyperplane of coeffic
 \[
 Z_0\ \pm\ \frac{N}{\sqrt{cQ(N)}} .
 \]
-They are continuous throughout the parameter rectangle. The four subtracted equations specify the affine normal line, so these are all solutions. Different leaves have no edge in common with one another and their choices are independent.
+They are continuous throughout the parameter rectangle. The four subtracted equations specify the affine normal line, so these are all solutions. The leaf theorem, continuity of both choices, and nondegeneracy of the incident intrinsic faces have Lean proofs. [Hand proof and formal statements](Type5PositiveCycle.md) Different leaves have no edge in common with one another and their choices are independent.
 
 ### Why the chosen faces stay positive
 
@@ -79,7 +81,7 @@ Write \([abcd]\) for the oriented spatial tetrahedron determinant in increasing 
 | One leaf | \(0125+,\ 0135-,\ 0234-,\ 0245+,\ 1236-,\ 1247+,\ 1357-,\ 2357-,\ 2456-\) |
 | Two leaves | \(0246+,\ 0456+,\ 2367-\) |
 
-The verifier reads these signs at the base point and allows each of the other tetrahedron determinants to have either strict sign or to vanish. For any pair of common columns, the three signed products in the Grassmann–Plücker relation sum to zero. For any five homogeneous affine points, the five alternating four-point determinants also sum to zero by expansion along a repeated row of ones. Each zero sum containing a strict sign must contain the opposite strict sign. The verifier encodes these necessary conditions, the 17 signs, and the assertion that at least one of the 138 separation tests fails. It checks a resolution refutation by reverse unit propagation. Thus throughout any region with these 17 signs, every disjoint edge–face pair is separated. The finite incidence and barycentric argument then gives spatial injectivity. [Sign implication and replay](../../scripts/type5_rectangles/separation.py) · [From disjoint pairs to an embedding](Type5Rectangles.md#from-signs-to-a-torus)
+Fourteen applications of the three-term Grassmann–Plücker identity give the sides of seven planes through labeled triples. Every pair of disjoint subfaces lies in opposite closed half-spaces for one of these planes, and its zero vertices belong to that plane's affinely independent triple. Uniqueness of barycentric coordinates rules out intersection. The hand proof lists the fourteen identities and all 51 maximal pairs. Lean verifies the implication even when an unlisted bracket vanishes. The earlier resolution proof gives an independent check. [Hand proof](Type5HandProof.md) · [Lean theorem](../../OrigamiTorus/EightVertex/Type5/OffRaySeparation.lean) · [Resolution replay](../../scripts/type5_rectangles/separation.py)
 
 To show the brackets keep their base-point signs, it suffices to exclude their zeros throughout the connected parameter rectangle. Scale the spatial coordinates to \((r_x,yr_y,r_z/h_3)\), where \(h_3>0\). All core coordinates lie in \(\mathbb Q(d,U)(g)\), with \(g=\sqrt{h_4^2/h_3^2}\). The five core brackets are computed directly. For an element \(a+bg\) the signs of the rational functions \(a,b\), or of \(a^2-b^2g^2\) and the dominant term, suffice on the cells checked here. All rational sign checks cover the full rectangle. [Core and one-leaf signs](../../scripts/type5_rectangles/projections.py)
 

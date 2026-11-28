@@ -82,7 +82,7 @@ def oblique(complex_):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("part", choices=("all", "finite", "cusp", "oblique", "rhombic", "reduced", "separation", "sharp", "generic", "core-bounds", "opening", "height-cones", "sharp-embeddings", "hex-angles", "hex-hinge"),
+    parser.add_argument("part", choices=("all", "finite", "cusp", "oblique", "rhombic", "reduced", "separation", "sharp", "generic", "core-bounds", "opening", "height-cones", "sharp-embeddings", "sharp-signs", "hex-angles", "hex-hinge"),
                         default="all", nargs="?")
     args = parser.parse_args()
     if not __debug__:
@@ -104,6 +104,9 @@ def main():
         verify(complex_)
     if args.part in ("all", "sharp-embeddings"):
         from .sharp_embeddings import verify
+        verify(complex_)
+    if args.part in ("all", "sharp-signs"):
+        from .sharp_signs import verify
         verify(complex_)
     if args.part in ("all", "opening"):
         from .sharp_opening import verify

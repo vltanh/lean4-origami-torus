@@ -24,6 +24,8 @@ Lean checks all 54 strict Voronoi inequalities for the nine core edges. Applying
 
 ## Verifying the embedding for all heights
 
+A second proof uses the same seventeen determinant signs on the whole ray. Its seven separating planes have a hand proof verified in Lean. The uniform signs are certified separately by one-variable polynomial calculations. [Determinant proof](Type5HandProof.md#the-sharp-ray-determinant-criterion) · [Uniform sign argument](Type5SharpSigns.md)
+
 The verifier reads the face orientations and the integer shifts from Lean. It checks positive radicands and nonzero divisors in the reconstruction, positive orientation of all 16 marked intrinsic triangles, and strict separation for every one of the 138 disjoint edge–face pairs. For each pair, the alternating four-point determinants give its affine dependence. After reversing the signs on the triangular face, two certified opposite signs exclude a common point. The incidence check reduces every excess triangle intersection to one of these pairs. The marked signed double areas sum to $2y$, so the positively oriented development has degree one and identifies the abstract surface with the prescribed lattice quotient. [Separation and quotient proofs](Type5Rectangles.md#from-signs-to-a-torus) · [Marked area identity](../../OrigamiTorus/EightVertex/Type5/Periodic.lean)
 
 | Parameter range | Verified enclosure |

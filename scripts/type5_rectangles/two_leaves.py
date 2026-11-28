@@ -51,7 +51,7 @@ class PolynomialPair:
         return self.new(self.a**2+self.radicand*self.b**2, 2*self.a*self.b)
 
 
-def primitive(values):
+def primitive(values, check_factor):
     """Divide a polynomial vector by a common, everywhere nonzero scalar."""
     parts = sorted((p for v in values for p in (v.a, v.b) if p), key=lambda p: sum(p.degrees()))
     if not parts:
@@ -61,7 +61,7 @@ def primitive(values):
         divisor = divisor.gcd(part)
         if divisor.degrees() == (0, 0):
             return values, ONE
-    polynomial_sign(divisor)
+    check_factor(divisor)
     return [v.new(v.a/divisor, v.b/divisor) for v in values], divisor
 
 
@@ -76,8 +76,9 @@ def square_parts(p):
 
 
 class PencilField:
-    def __init__(self, volumes):
+    def __init__(self, volumes, check_factor):
         self.volumes = volumes
+        self.check_factor = check_factor
         radicand = volumes.generator.radicand
         top, a, b = square_parts(radicand.numerator)
         bottom, c, d = square_parts(radicand.denominator)
@@ -85,8 +86,8 @@ class PencilField:
         # The polynomial norm below checks both choices. Clearing scale is valid
         # on the whole domain including each half-open rectangle's right edges.
         self.scale, self.square = Rational(a, c*d), b*d*(top/bottom)
-        polynomial_sign(self.scale.numerator)
-        polynomial_sign(self.scale.denominator)
+        check_factor(self.scale.numerator)
+        check_factor(self.scale.denominator)
         residual = self.scale**2 * Rational(self.square) - radicand
         if not residual.numerator.is_zero():
             raise ArithmeticError("incorrect square extraction")
@@ -100,10 +101,10 @@ class PencilField:
             for value in pair:
                 other = value.denominator
                 denominator = (denominator/denominator.gcd(other))*other
-        polynomial_sign(denominator)
+        self.check_factor(denominator)
         pairs = [self.zero.new(a.numerator*(denominator/a.denominator),
                                b.numerator*(denominator/b.denominator)) for a, b in coeffs]
-        reduced, divisor = primitive(pairs)
+        reduced, divisor = primitive(pairs, self.check_factor)
         return reduced, Rational(denominator, divisor)
 
 
@@ -154,17 +155,24 @@ def binary_pencil(field, points, point_scale, edge, leaf):
     volumes, core = field.volumes, field.volumes.core
     a, b = edge
     e = subtract3(points[b], points[a])
-    # Each edge joins a height-zero anchor to a root with a strictly nonzero
-    # height. These two covectors are independent and span its normal pencil.
-    # Their individual multipliers depend only on the edge, shared by both leaves.
-    normals = [primitive(v)[0] for v in [(e[2], field.zero, -e[0]), (field.zero, e[2], -e[1])]]
+    # Each covector pair spans the edge's normal plane, with the same basis
+    # for both leaves. The anchor triangle is nondegenerate and each root has
+    # nonzero height. A horizontal anchor edge uses a vertical second normal.
+    roots = {a, b} & {3, 4}
+    if not roots:
+        basis = [(-e[1], e[0], field.zero), (field.zero, field.zero, field.zero.new(ONE, ZERO))]
+    elif len(roots) == 1:
+        basis = [(e[2], field.zero, -e[0]), (field.zero, e[2], -e[1])]
+    else:
+        raise ValueError("the plane pencil requires an anchor endpoint")
+    normals = [primitive(v, field.check_factor)[0] for v in basis]
     weights, weight_scale = field.clear(volumes.weights[leaf])
     determinant = reduce(mul, weights).scale(2)
     cycle = CYCLES[leaf]
     indices = [i for i, v in enumerate(cycle) if v not in edge]
     entries = [dot3(normal, subtract3(points[cycle[i]], points[a]))
                * (weights[(i+1)%5]*weights[(i+3)%5]) for normal in normals for i in indices]
-    entries, divisor = primitive(entries)
+    entries, divisor = primitive(entries, field.check_factor)
     terms = [entries[:3], entries[3:]]
     # The (i,l) adjugate entry is the product of the two alternating weight
     # products above, times +1 at cyclic distance 0 or 1, and -1 at distance 2.
@@ -190,12 +198,12 @@ def binary_pencil(field, points, point_scale, edge, leaf):
         norm = sum((k*x*y for k, x, y in zip(metric[1:], normals[i], normals[j], strict=True)), field.zero)
         return metric[0]*adj-determinant*norm
 
-    return primitive([coefficient(0, 0), coefficient(0, 1).scale(2), coefficient(1, 1)])[0]
+    return primitive([coefficient(0, 0), coefficient(0, 1).scale(2), coefficient(1, 1)], field.check_factor)[0]
 
 
-def verify(volumes, brackets):
+def verify(volumes, brackets, *, check_factor=polynomial_sign, check_norm=fast_polynomial_sign):
     """Exclude coplanarity for the three two-leaf brackets in the sparse sign list."""
-    field = PencilField(volumes)
+    field = PencilField(volumes, check_factor)
     vertices = sorted(volumes.points)
     coordinates, scale = field.clear([q for v in vertices for q in volumes.points[v]])
     points = {v: coordinates[3*i:3*i+3] for i, v in enumerate(vertices)}
@@ -206,8 +214,8 @@ def verify(volumes, brackets):
         D, E, F = binary_pencil(field, points, scale, (a, b), k)
         # Two binary quadratics As²+Bst+Ct², Ds²+Est+Ft² share a projective
         # root only if (AF-CD)² - (AE-BD)(BF-CE) is zero. This includes t=0.
-        h, k0, l = primitive([A*E-B*D, A*F-C*D, B*F-C*E])[0]
-        res = primitive([k0.square()-h*l])[0][0]
-        fast_polynomial_sign(res.a**2-field.square*res.b**2)
+        h, k0, l = primitive([A*E-B*D, A*F-C*D, B*F-C*E], check_factor)[0]
+        res = primitive([k0.square()-h*l], check_factor)[0][0]
+        check_norm(res.a**2-field.square*res.b**2)
         labels = ''.join(map(str, bracket))
-        print(f"Certified the two-leaf bracket {labels} throughout the reduced domain.", flush=True)
+        print(f"Certified the two-leaf bracket {labels} throughout the parameter domain.", flush=True)

@@ -36,9 +36,14 @@ public import OrigamiTorus.EightVertex.Type5.HexagonalMetric
 public import OrigamiTorus.EightVertex.Type5.HingeChart
 public import OrigamiTorus.EightVertex.Type5.HingeStress
 public import OrigamiTorus.EightVertex.Type5.HarmonicGap
+public import OrigamiTorus.EightVertex.Type5.LeafEliminant
 public import OrigamiTorus.EightVertex.Type5.LeafRank
 public import OrigamiTorus.EightVertex.Type5.MarkedReduction
 public import OrigamiTorus.EightVertex.Type5.Normalize
+public import OrigamiTorus.EightVertex.Type5.OffRayOpening
+public import OrigamiTorus.EightVertex.Type5.OffRayBase
+public import OrigamiTorus.EightVertex.Type5.PositiveCycle
+public import OrigamiTorus.EightVertex.Type5.SharpRaySeparation
 public import OrigamiTorus.EightVertex.Type5.Periodic
 public import OrigamiTorus.EightVertex.Type5.PlanarFold
 public import OrigamiTorus.EightVertex.Type5.ProjectedFaces

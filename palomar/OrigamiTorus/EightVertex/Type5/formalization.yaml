@@ -1,11 +1,11 @@
 version: v0.4
 project:
-  name: Dyadic-grid Type 5 origami tori near the square
+  name: Type 5 origami tori, leaf completions and spatial separation
   description: >-
-    The Lutz Type 5 triangulation realizes every lattice torus of modulus x+iy with
-    0 ≤ x ≤ 2⁻³⁶ and 1 ≤ y ≤ 1+2⁻³⁶, including the unit square. The witnesses use a dyadic-grid
-    core with unfolding parameter 1/512 and exact radicals. The proofs verify face lengths,
-    embeddedness, and one-sheeted development to the specified lattice quotient.
+    The Lutz Type 5 triangulation embeds the square and every torus in two explicit modulus
+    boxes, one near the square and one about (1+i√31)/4. Two sets of seventeen oriented
+    tetrahedron signs each suffice for a closed spatial embedding. A positive five-cycle of
+    squared-distance deficits gives exactly two simultaneous spatial and intrinsic leaf positions.
   authors:
   - The-Anh Vu-Le
   responsible_maintainers:
@@ -23,6 +23,14 @@ sources:
   type: original-proof
   relationship: other
   note: The coordinates, quadratic choices, and modulus box are given in docs/EightVertex/Type5.md.
+- title: Spatial separation and the oblique Type 5 modulus box
+  type: original-proof
+  relationship: other
+  note: docs/EightVertex/Type5HandProof.md gives the determinant identities, incidence tables, and oblique core.
+- title: Completing a Type 5 leaf
+  type: original-proof
+  relationship: other
+  note: docs/EightVertex/Type5PositiveCycle.md gives the mixed Gram construction and its two real solutions.
 - title: The two most symmetric flat tori as eight-vertex paper tori
   authors:
   - Fabian Lander
@@ -40,8 +48,10 @@ sources:
     Type 5 triangulation.
 status:
   scope: >-
-    The comparison covers the square metric and the stated box. The explicit radical vertex
-    choices are constructed and checked in the library.
+    The comparison covers three unconditional metric-existence statements, two spatial
+    separation implications, and a five-point completion theorem. The full nonhexagonal
+    existence theorem still has parameter-dependent steps outside Lean. Existence at the
+    hexagonal modulus is open.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -72,6 +82,22 @@ alignment:
     status: proved
   - source: docs/EightVertex/Type5.md, The near-square box
     lean: OrigamiTorusType5Challenge.type5_nonrectangular_box
+    module: OrigamiTorus.EightVertex.Type5.Challenge
+    status: proved
+  - source: docs/EightVertex/Type5HandProof.md, A flat torus in the off-ray family
+    lean: OrigamiTorusType5Challenge.type5_oblique_box
+    module: OrigamiTorus.EightVertex.Type5.Challenge
+    status: proved
+  - source: docs/EightVertex/Type5HandProof.md, Seven planes suffice
+    lean: OrigamiTorusType5Challenge.type5_off_ray_separation
+    module: OrigamiTorus.EightVertex.Type5.Challenge
+    status: proved
+  - source: docs/EightVertex/Type5HandProof.md, The sharp-ray determinant criterion
+    lean: OrigamiTorusType5Challenge.type5_sharp_ray_separation
+    module: OrigamiTorus.EightVertex.Type5.Challenge
+    status: proved
+  - source: docs/EightVertex/Type5PositiveCycle.md, Completing a Type 5 leaf
+    lean: OrigamiTorusType5Challenge.type5_leaf_completions
     module: OrigamiTorus.EightVertex.Type5.Challenge
     status: proved
 acknowledgements: The-Anh Vu-Le directed and maintains the work. OpenAI Codex (GPT-6) contributed

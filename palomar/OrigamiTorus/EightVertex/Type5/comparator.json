@@ -3,7 +3,11 @@
   "solution_module": "OrigamiTorus.EightVertex.Type5.Solution",
   "theorem_names": [
     "OrigamiTorusType5Challenge.type5_square",
-    "OrigamiTorusType5Challenge.type5_nonrectangular_box"
+    "OrigamiTorusType5Challenge.type5_nonrectangular_box",
+    "OrigamiTorusType5Challenge.type5_oblique_box",
+    "OrigamiTorusType5Challenge.type5_off_ray_separation",
+    "OrigamiTorusType5Challenge.type5_sharp_ray_separation",
+    "OrigamiTorusType5Challenge.type5_leaf_completions"
   ],
   "definition_names": [],
   "permitted_axioms": [

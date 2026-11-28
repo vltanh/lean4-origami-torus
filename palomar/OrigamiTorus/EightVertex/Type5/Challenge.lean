@@ -1,6 +1,7 @@
 module
 
 public import Mathlib.Basic.Real.Basic
+public import Mathlib.LinearAlgebra.Matrix.Notation
 public import Mathlib.Data.Fin.VecNotation
 public import Mathlib.Algebra.BigOperators.Fin
 public import Mathlib.Algebra.Module.Prod
@@ -17,7 +18,8 @@ import Mathlib.Tactic
 # Type 5 origami tori
 
 The Type 5 face complex admits piecewise-isometric embeddings for the
-unit square and for every modulus in the specified closed near-square box.
+unit square and for every modulus in the two specified boxes. Two signed-volume
+criteria imply spatial embeddedness. The mixed five-cycle gives two leaf completions.
 -/
 
 @[expose] public section
@@ -30,6 +32,15 @@ abbrev Triangle := Vertex × Vertex × Vertex
 def triangleVertices (f : Triangle) : List Vertex := [f.1, f.2.1, f.2.2]
 
 abbrev Point3 := ℝ × ℝ × ℝ
+
+def determinant3 (a b c : Point3) : ℝ :=
+  a.1 * (b.2.1*c.2.2 - b.2.2*c.2.1) -
+  a.2.1 * (b.1*c.2.2 - b.2.2*c.1) +
+  a.2.2 * (b.1*c.2.1 - b.2.1*c.1)
+
+/-- Affine determinant with the four rows `(1, point)`. -/
+def affineBracket (a b c d : Point3) : ℝ :=
+  determinant3 (b-a) (c-a) (d-a)
 
 def triangleVertexSet (f : Triangle) : Finset Vertex := (triangleVertices f).toFinset
 
@@ -63,6 +74,22 @@ abbrev ComplexTorus (u v : ℂ) := ℂ ⧸ complexPeriodSubgroup u v
 def complexTorusProjection (u v : ℂ) (p : ℂ) : ComplexTorus u v := p
 
 namespace Type5
+
+open scoped Matrix
+
+def pentagonGram {R : Type*} [Zero R] (a b c d e : R) : Matrix (Fin 5) (Fin 5) R :=
+  !![0,0,a,b,0;
+    0,0,0,c,d;
+    a,0,0,0,e;
+    b,c,0,0,0;
+    0,d,e,0,0]
+
+/-- Three spatial coordinates followed by the two intrinsic coordinates. -/
+abbrev MixedPoint := Fin 5 → ℝ
+
+def mixedDot (u v : MixedPoint) : ℝ :=
+  u 0*v 0 + u 1*v 1 + u 2*v 2 - u 3*v 3 - u 4*v 4
+
 
 abbrev Plane (R : Type*) := R × R
 abbrev Space (R : Type*) := R × R × R
@@ -121,6 +148,66 @@ theorem type5_nonrectangular_box (x y : ℝ)
         v.val ∈ faceWeights (triangleVertexSet f) →
         Type5.squared3 (F (H u) - F (H v)) =
           dist (∑ i, u.val i • P f i) (∑ i, v.val i • P f i)^2 := by
+  sorry
+
+/-- An oblique box about the off-ray base modulus (1+i√31)/4. -/
+theorem type5_oblique_box (x y : ℝ) (hy : 0 < y)
+    (hx : x ∈ Set.Icc (1/4 - 1/2^80) (1/4 + 1/2^80))
+    (hv : y^2 ∈ Set.Icc (31/16 - 1/2^80) (31/16 + 1/2^80)) :
+    let a : ℂ := 1
+    let b : ℂ := x+y*Complex.I
+    let fs : List Triangle :=
+      [(0,1,2), (0,3,1), (0,2,4), (0,5,3), (0,4,5), (1,5,2), (1,3,6), (1,6,4),
+        (1,4,7), (1,7,5), (2,6,3), (2,3,7), (2,7,4), (2,5,6), (3,5,7), (4,6,5)]
+    ∃ (H : triangleWeightSpace fs ≃ₜ ComplexTorus a b)
+      (F : ComplexTorus a b → Point3) (Q : Vertex → Point3) (P : Triangle → Vertex → ℂ),
+      Topology.IsClosedEmbedding F ∧
+      (∀ u, F (H u) = evaluateTriangles fs Q u) ∧
+      (∀ f ∈ fs, ∀ u, u.val ∈ faceWeights (triangleVertexSet f) →
+        H u = complexTorusProjection a b (∑ i, u.val i • P f i)) ∧
+      ∀ f ∈ fs, ∀ u v,
+        u.val ∈ faceWeights (triangleVertexSet f) →
+        v.val ∈ faceWeights (triangleVertexSet f) →
+        Type5.squared3 (F (H u) - F (H v)) =
+          dist (∑ i, u.val i • P f i) (∑ i, v.val i • P f i)^2 := by
+  sorry
+
+/-- The off-ray determinant signs separate the labeled spatial complex. -/
+theorem type5_off_ray_separation (r : Vertex → Point3) :
+    let fs : List Triangle :=
+      [(0,1,2), (0,3,1), (0,2,4), (0,5,3), (0,4,5), (1,5,2), (1,3,6), (1,6,4),
+        (1,4,7), (1,7,5), (2,6,3), (2,3,7), (2,7,4), (2,5,6), (3,5,7), (4,6,5)]
+    let B (a b c d : Vertex) := affineBracket (r a) (r b) (r c) (r d)
+    B 1 2 3 4 < 0 ∧ 0 < B 1 2 3 5 ∧ B 1 2 4 5 < 0 ∧
+      B 1 3 4 5 < 0 ∧ 0 < B 2 3 4 5 ∧ 0 < B 0 1 2 5 ∧
+      B 0 1 3 5 < 0 ∧ B 0 2 3 4 < 0 ∧ 0 < B 0 2 4 5 ∧
+      B 1 2 3 6 < 0 ∧ 0 < B 1 2 4 7 ∧ B 1 3 5 7 < 0 ∧
+      B 2 3 5 7 < 0 ∧ B 2 4 5 6 < 0 ∧ 0 < B 0 2 4 6 ∧
+      0 < B 0 4 5 6 ∧ B 2 3 6 7 < 0 →
+      Topology.IsClosedEmbedding (evaluateTriangles fs r) := by
+  sorry
+
+/-- The sharp-ray determinant signs separate the labeled spatial complex. -/
+theorem type5_sharp_ray_separation (r : Vertex → Point3) :
+    let fs : List Triangle :=
+      [(0,1,2), (0,3,1), (0,2,4), (0,5,3), (0,4,5), (1,5,2), (1,3,6), (1,6,4),
+        (1,4,7), (1,7,5), (2,6,3), (2,3,7), (2,7,4), (2,5,6), (3,5,7), (4,6,5)]
+    let B (a b c d : Vertex) := affineBracket (r a) (r b) (r c) (r d)
+    0 < B 0 1 2 5 ∧ 0 < B 0 1 2 6 ∧ B 0 1 3 4 < 0 ∧
+      B 0 1 3 6 < 0 ∧ B 0 2 3 4 < 0 ∧ 0 < B 1 2 3 4 ∧
+      B 1 2 3 6 < 0 ∧ 0 < B 1 2 3 7 ∧ 0 < B 1 2 4 5 ∧
+      B 1 3 4 5 < 0 ∧ 0 < B 1 3 5 6 ∧ B 1 3 5 7 < 0 ∧
+      0 < B 1 4 5 6 ∧ 0 < B 2 3 4 5 ∧ B 2 3 4 7 < 0 ∧
+      B 2 4 5 6 < 0 ∧ B 2 4 6 7 < 0 →
+      Topology.IsClosedEmbedding (evaluateTriangles fs r) := by
+  sorry
+
+/-- A five-cycle of strict squared-distance deficits determines two completions of the leaf. -/
+theorem type5_leaf_completions (K : Fin 5 → Type5.MixedPoint) {a b c d e : ℝ}
+    (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (hd : 0 < d) (he : 0 < e)
+    (hK : ∀ i j, Type5.mixedDot (K i-K j) (K i-K j) = -2*Type5.pentagonGram a b c d e i j) :
+    ∃ p q : Type5.MixedPoint, p ≠ q ∧ ∀ z : Type5.MixedPoint,
+      (∀ i, Type5.mixedDot (K i-z) (K i-z) = 0) ↔ z = p ∨ z = q := by
   sorry
 
 end OrigamiTorusType5Challenge

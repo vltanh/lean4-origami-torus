@@ -244,6 +244,33 @@ theorem marked_map_by_faces {x y : ℝ} {p : Vertex → Plane ℝ} {r : Vertex �
     exact marked_weighted_face_metric hedge (index f) u v (by simpa only [hindex f hf] using hu)
       (by simpa only [hindex f hf] using hv)
 
+/-- An embedded spatial placement, positive marked face areas and matching marked
+edge lengths give a piecewise-isometric embedding of the prescribed lattice quotient. -/
+theorem marked_embedding_by_faces {x y : ℝ} {p : Vertex → Plane ℝ} {r : Vertex → Point3}
+    (hedge : ∀ {a b : Vertex}, orderedEdge a b ∈ edgeList →
+      squared3 (r b-r a) = squared2 (p b-p a+shift x y a b))
+    (hy : 0 < y) (ha : ∀ f ∈ faces, 0 < markedFaceCross (shift x y) p f)
+    (hr : Topology.IsClosedEmbedding (evaluateTriangles faces r)) :
+    let τ : ℂ := x+y*Complex.I
+    ∃ (H : triangleWeightSpace faces ≃ₜ ComplexTorus 1 τ)
+      (F : ComplexTorus 1 τ → Point3) (P : Triangle → Vertex → ℂ),
+      Topology.IsClosedEmbedding F ∧
+      (∀ u, F (H u) = evaluateTriangles faces r u) ∧
+      (∀ f ∈ faces, ∀ u, u.val ∈ faceWeights (triangleVertexSet f) →
+        H u = complexTorusProjection 1 τ (∑ i, u.val i • P f i)) ∧
+      ∀ f ∈ faces, ∀ u v,
+        u.val ∈ faceWeights (triangleVertexSet f) →
+        v.val ∈ faceWeights (triangleVertexSet f) →
+        squared3 (F (H u)-F (H v)) =
+          dist (∑ i, u.val i • P f i) (∑ i, v.val i • P f i)^2 := by
+  obtain ⟨H,F,P,_,hF,hP,hmetric⟩ := marked_map_by_faces hedge hy ha
+  refine ⟨H,F,P,?_,hF,hP,hmetric⟩
+  have heq : F = evaluateTriangles faces r ∘ H.symm := by
+    funext z
+    simpa using hF (H.symm z)
+  rw [heq]
+  exact hr.comp H.symm.isClosedEmbedding
+
 /-- The dyadic-grid formula realizes every lattice torus in the near-square
 box by an embedded, piecewise-isometric Type 5 surface. -/
 theorem torus_by_faces {x y : ℝ} (h : ModulusBox x y) :
@@ -259,13 +286,7 @@ theorem torus_by_faces {x y : ℝ} (h : ModulusBox x y) :
         v.val ∈ faceWeights (triangleVertexSet f) →
         squared3 (F (H u)-F (H v)) =
           dist (∑ i, u.val i • P f i) (∑ i, v.val i • P f i)^2 := by
-  obtain ⟨H,F,P,_,hF,hP,hmetric⟩ := marked_map_by_faces (all_edge_lengths h) (modulus_bounds h).2.2.1
-    (fun _ hf => intrinsic_positive h hf)
-  refine ⟨H,F,P,?_,hF,hP,hmetric⟩
-  have heq : F = evaluateTriangles faces (extrinsic x y) ∘ H.symm := by
-    funext z
-    simpa using hF (H.symm z)
-  rw [heq]
-  exact (spatial_embedding h).comp H.symm.isClosedEmbedding
+  exact marked_embedding_by_faces (all_edge_lengths h) (modulus_bounds h).2.2.1
+    (fun _ hf => intrinsic_positive h hf) (spatial_embedding h)
 
 end OrigamiTorus.Type5.Continuation

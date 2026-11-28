@@ -14,10 +14,10 @@ PALETTE = tuple(tuple(map(int, word)) for word in
                 "0125 0135 0234 0245 0246 0456 1234 1235 1236 1245 1247 1345 1357 2345 2357 2367 2456".split())
 
 
-def rational_sign(value):
+def rational_sign(value, sign=polynomial_sign):
     if value.numerator.is_zero():
         return 0
-    return polynomial_sign(value.numerator)*polynomial_sign(value.denominator)
+    return sign(value.numerator)*sign(value.denominator)
 
 
 class Element:
@@ -55,19 +55,19 @@ class Element:
 
     __rmul__ = __mul__
 
-    def sign(self):
+    def sign(self, sign=rational_sign):
         try:
-            a, b = rational_sign(self.a), rational_sign(self.b)
+            a, b = sign(self.a), sign(self.b)
         except ArithmeticError:
             pass
         else:
             if a*b >= 0:
                 return a or b
-        norm = rational_sign(self.a**2-self.b**2*self.radicand)
+        norm = sign(self.a**2-self.b**2*self.radicand)
         if norm > 0:
-            return rational_sign(self.a)
+            return sign(self.a)
         if norm < 0:
-            return rational_sign(self.b)
+            return sign(self.b)
         raise ArithmeticError("quadratic norm vanished")
 
 
@@ -80,13 +80,16 @@ def dot3(v, w):
 
 
 class CoreVolumes:
-    def __init__(self, core):
+    def __init__(self, core, *, root4=-1):
+        if root4 not in (-1, 1):
+            raise ValueError("root4 must be a height sign")
         self.core = core
+        self.root4 = root4
         # Spatial coordinates (r_x, y*r_y, r_z/h_3) differ by a positive determinant.
         self.generator = Element(core.height_sq[4]/core.height_sq[3], 0, 1)
         constant = self.generator.new
         self.points = {i: (constant(v[0]), constant(v[1]),
-                           -self.generator if i == 4 else constant(int(i == 3)))
+                           root4*self.generator if i == 4 else constant(int(i == 3)))
                        for i, v in core.xy.items()}
 
     @cached_property
@@ -100,7 +103,7 @@ class CoreVolumes:
                 v = subtract(a, b)
                 horizontal = subtract(s.xy[i], s.xy[j])
                 h = (s.dot(v, v)-s.dot(horizontal, horizontal)-s.height_sq[i]-s.height_sq[j])/2
-                result[leaf].append(self.generator.new(h, -s.height_sq[3] if {i,j} == {3,4} else 0))
+                result[leaf].append(self.generator.new(h, self.root4*s.height_sq[3] if {i,j} == {3,4} else 0))
         return result
 
     def single_leaf(self, leaf, triple):
