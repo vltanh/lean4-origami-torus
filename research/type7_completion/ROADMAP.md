@@ -643,6 +643,15 @@ feasible vanishing pivot. The two canonical families each have a sparse
 identity set valid on their whole closed parameter domain. This retains
 global metric compatibility in twenty projected variables.
 
+For the regular part of the first canonical family, the
+[angular cover](exhaustive_c0_angles.md) has only eighteen patterns of
+fifteen anchor cross products. Its two completeness/orientation CNFs
+independently replayed in 0.366 seconds. In ray 1 the metric forces
+`T36<0` on this regular domain; proving the opposite inequality from
+each angular pattern is a smaller remaining target. The bounded
+quadratic LP and PSD pilots produced no certificate. Height endpoints
+and degenerate cap triangles are outside this regular-case cover.
+
 In the two-block `04` limit of ray 1, the
 [focal-ellipse and weak-sign proof](remaining_ray1_mask04.md) forces all
 eight transverse points onto one common line, with `h0=h4=1/2` and
